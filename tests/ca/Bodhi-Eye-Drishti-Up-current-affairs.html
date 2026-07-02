@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Bodhi Classes — परीक्षा</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* =========================================================================
+   BODHI CLASSES — परीक्षा इंजन
+   रचना एवं डिज़ाइन: आदित्य चौहान
+   ========================================================================= */
+:root{
+  --ink:#0b1428;            /* गहरा नेवी — आधार */
+  --ink-2:#111e3c;          /* कार्ड नेवी */
+  --ink-3:#16264c;          /* उठा हुआ तल */
+  --line:rgba(212,175,55,.16);
+  --gold:#d4af37;
+  --gold-2:#f0c75e;
+  --gold-soft:rgba(212,175,55,.12);
+  --saffron:#ff8a3d;
+  --saffron-2:#ff6b35;
+  --emerald:#2fbf86;
+  --emerald-soft:rgba(47,191,134,.14);
+  --rose:#ff5d73;
+  --rose-soft:rgba(255,93,115,.13);
+  --violet:#9d7bff;
+  --parchment:#f6efdd;      /* गर्म सफ़ेद टेक्स्ट */
+  --muted:#9db0d0;
+  --muted-2:#6f82a6;
+  --r-lg:22px;
+  --r-md:16px;
+  --r-sm:11px;
+  --shadow:0 24px 60px -28px rgba(0,0,0,.85);
+  --display:"Rozha One", serif;
+  --body:"Noto Sans Devanagari", system-ui, sans-serif;
+  --num:"Sora", system-ui, sans-serif;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--body);
+  color:var(--parchment);
+  background:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+/* परिवेशी पृष्ठभूमि — शांत सोने की आभा, बेमतलब चहल-पहल नहीं */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(1100px 620px at 78% -8%, rgba(63,86,160,.34), transparent 60%),
+    radial-gradient(900px 600px at 6% 8%, rgba(255,138,61,.10), transparent 55%),
+    radial-gradient(1200px 900px at 50% 116%, rgba(212,175,55,.10), transparent 60%),
+    linear-gradient(180deg,#0a1226,#0b1428 40%,#0a1023);
+}
+/* कोने का मंद बोधि-चक्र — हस्ताक्षर का संकेत, दबा हुआ */
+.bc-motif{
+  position:fixed;z-index:0;pointer-events:none;opacity:.05;
+  right:-180px;top:-140px;width:560px;height:560px;color:var(--gold);
+}
+.bc-motif.b{right:auto;left:-200px;top:auto;bottom:-220px;opacity:.04;transform:rotate(18deg)}
+
+#confetti{position:fixed;inset:0;z-index:60;pointer-events:none}
+
+.bc-app{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:26px 20px 44px;}
+
+/* ===== साझा तत्व ===== */
+.bc-brand{display:flex;align-items:center;gap:13px}
+.bc-leaf{width:42px;height:42px;flex:0 0 auto;filter:drop-shadow(0 4px 10px rgba(212,175,55,.35))}
+.bc-brand-name{font-family:var(--display);font-size:26px;line-height:1;letter-spacing:.3px;
+  background:linear-gradient(180deg,#fbe9b0,#d4af37 70%,#b8902a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.bc-brand-sub{font-size:11px;letter-spacing:3.5px;text-transform:uppercase;color:var(--gold);opacity:.8;margin-top:3px;font-weight:600}
+
+.bc-screen{animation:bcFade .55s cubic-bezier(.2,.7,.2,1) both}
+@keyframes bcFade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+[hidden]{display:none !important}
+
+.bc-rule{height:1px;border:0;margin:0;background:linear-gradient(90deg,transparent,var(--gold-soft) 18%,rgba(212,175,55,.4),var(--gold-soft) 82%,transparent)}
+
+/* ===== आवरण (COVER) ===== */
+.cover-top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.cover-tag{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);
+  border:1px solid var(--line);background:var(--gold-soft);padding:7px 14px;border-radius:999px;font-weight:600}
+.cover-hero{text-align:center;padding:46px 8px 12px}
+.cover-eyebrow{font-size:13px;letter-spacing:4px;text-transform:uppercase;color:var(--saffron);font-weight:600;margin-bottom:14px}
+.cover-title{font-family:var(--display);font-size:clamp(34px,6.4vw,62px);line-height:1.05;margin:0 auto;max-width:16ch;
+  background:linear-gradient(180deg,#fff7e6,#f3d98c 55%,#cda23a);-webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 1px 0 rgba(0,0,0,.2)}
+.cover-desc{color:var(--muted);font-size:16px;max-width:60ch;margin:18px auto 0;line-height:1.7}
+
+.meta-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:34px auto 0;max-width:880px}
+.meta-card{flex:1 1 160px;min-width:150px;background:linear-gradient(180deg,var(--ink-3),var(--ink-2));
+  border:1px solid var(--line);border-radius:var(--r-md);padding:18px 18px 16px;position:relative;overflow:hidden}
+.meta-card::after{content:"";position:absolute;left:0;top:0;height:100%;width:3px;background:linear-gradient(180deg,var(--gold-2),var(--saffron))}
+.meta-k{font-size:12px;letter-spacing:.5px;color:var(--muted);display:flex;align-items:center;gap:7px}
+.meta-v{font-family:var(--num);font-weight:800;font-size:30px;margin-top:8px;color:var(--parchment)}
+.meta-v small{font-family:var(--body);font-weight:600;font-size:13px;color:var(--muted);margin-left:4px}
+
+.instructions{background:linear-gradient(180deg,var(--ink-2),rgba(17,30,60,.55));border:1px solid var(--line);
+  border-radius:var(--r-lg);padding:26px 28px;max-width:880px;margin:30px auto 0}
+.instructions h3{font-family:var(--display);font-size:24px;margin:0 0 4px;color:var(--gold-2);font-weight:400}
+.instructions .sub{color:var(--muted-2);font-size:13px;margin-bottom:16px}
+.ins-list{counter-reset:ins;list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.ins-list li{position:relative;padding-left:42px;color:#dfe7f5;line-height:1.6;font-size:15px}
+.ins-list li::before{counter-increment:ins;content:counter(ins);position:absolute;left:0;top:-1px;
+  width:28px;height:28px;border-radius:9px;display:grid;place-items:center;font-family:var(--num);font-weight:700;font-size:14px;
+  color:var(--ink);background:linear-gradient(160deg,var(--gold-2),var(--gold));box-shadow:0 6px 14px -6px rgba(212,175,55,.6)}
+
+.cta-wrap{text-align:center;margin:34px auto 0}
+.btn{font-family:var(--body);font-weight:700;border:0;cursor:pointer;border-radius:13px;
+  transition:transform .15s ease,box-shadow .25s ease,background .25s ease,border-color .25s;
+  font-size:16px;display:inline-flex;align-items:center;justify-content:center;gap:10px}
+.btn:active{transform:translateY(1px) scale(.99)}
+.btn-primary{position:relative;color:#2a1c05;padding:17px 40px;font-size:18px;
+  background:linear-gradient(120deg,#ffd36a,#ffb347 45%,#ff8a3d);
+  box-shadow:0 18px 40px -16px rgba(255,138,61,.7),inset 0 1px 0 rgba(255,255,255,.5)}
+.btn-primary::before{content:"";position:absolute;inset:0;border-radius:13px;padding:1px;
+  background:linear-gradient(120deg,#fff3cf,transparent 40%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;opacity:.7}
+.btn-primary:hover{box-shadow:0 22px 50px -14px rgba(255,138,61,.85);transform:translateY(-2px)}
+.btn-ghost{background:var(--gold-soft);color:var(--gold-2);border:1px solid var(--line);padding:14px 26px}
+.btn-ghost:hover{border-color:rgba(212,175,55,.45);background:rgba(212,175,55,.16)}
+.btn-quiet{background:transparent;color:var(--muted);border:1px solid rgba(157,176,208,.22);padding:13px 22px}
+.btn-quiet:hover{color:var(--parchment);border-color:rgba(157,176,208,.45)}
+.btn[disabled]{opacity:.4;cursor:not-allowed;transform:none}
+
+/* ===== परीक्षा शीर्ष पट्टी ===== */
+.exam-bar{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:12px 16px;margin:-6px -4px 20px;border-radius:16px;
+  background:linear-gradient(180deg,rgba(13,22,46,.96),rgba(13,22,46,.82));backdrop-filter:blur(10px);
+  border:1px solid var(--line);box-shadow:0 12px 30px -22px rgba(0,0,0,.9)}
+.exam-bar .bc-brand-name{font-size:20px}
+.exam-bar .bc-leaf{width:32px;height:32px}
+.timer{font-family:var(--num);font-weight:800;font-size:22px;letter-spacing:.5px;
+  display:inline-flex;align-items:center;gap:9px;padding:9px 18px;border-radius:999px;
+  color:var(--gold-2);background:var(--gold-soft);border:1px solid var(--line)}
+.timer svg{width:17px;height:17px}
+.timer.warn{color:#fff;background:linear-gradient(120deg,var(--rose),#ff7a52);border-color:transparent;animation:pulse 1s ease-in-out infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 7px rgba(255,93,115,.16)}}
+.bar-actions{display:flex;gap:9px;align-items:center}
+.icon-btn{background:var(--gold-soft);border:1px solid var(--line);color:var(--gold-2);width:42px;height:42px;border-radius:12px;
+  cursor:pointer;display:grid;place-items:center;transition:.2s}
+.icon-btn:hover{background:rgba(212,175,55,.18)}
+.icon-btn svg{width:20px;height:20px}
+
+/* प्रगति */
+.progress-shell{height:7px;border-radius:999px;background:rgba(157,176,208,.14);overflow:hidden;margin:0 0 22px}
+.progress-fill{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--gold-2),var(--saffron));
+  transition:width .4s cubic-bezier(.2,.7,.2,1)}
+
+/* परीक्षा लेआउट */
+.exam-grid{display:grid;grid-template-columns:1fr 270px;gap:22px;align-items:start}
+
+.q-card{background:linear-gradient(180deg,var(--ink-2),rgba(15,25,52,.7));border:1px solid var(--line);
+  border-radius:var(--r-lg);padding:28px 30px 26px;box-shadow:var(--shadow);min-height:340px}
+.q-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;flex-wrap:wrap}
+.q-no{font-family:var(--num);font-weight:700;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold)}
+.q-no b{color:var(--parchment);font-size:18px;margin:0 3px}
+.q-marks{display:flex;gap:8px}
+.chip{font-family:var(--num);font-size:12px;font-weight:600;padding:6px 12px;border-radius:999px;border:1px solid var(--line)}
+.chip.pos{color:var(--emerald);background:var(--emerald-soft);border-color:transparent}
+.chip.neg{color:var(--rose);background:var(--rose-soft);border-color:transparent}
+.q-text{font-size:19px;line-height:1.65;color:#eef2fa;font-weight:500;margin-bottom:22px}
+.q-text .q-pre{display:block;color:var(--muted);font-size:15px;margin-bottom:10px;font-weight:400}
+
+.options{display:grid;gap:12px}
+.opt{display:flex;align-items:flex-start;gap:14px;width:100%;text-align:right;cursor:pointer;
+  background:linear-gradient(180deg,rgba(22,38,76,.6),rgba(17,30,60,.5));border:1.5px solid rgba(157,176,208,.16);
+  border-radius:14px;padding:15px 16px;transition:transform .14s ease,border-color .2s,background .2s,box-shadow .2s;
+  color:#e6ecf7;font-size:16px;line-height:1.5;font-family:var(--body)}
+.opt:hover{border-color:rgba(212,175,55,.45);transform:translateX(-3px);background:rgba(22,38,76,.85)}
+.opt .key{flex:0 0 auto;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;
+  font-family:var(--num);font-weight:700;font-size:15px;color:var(--gold-2);background:var(--gold-soft);
+  border:1px solid var(--line);transition:.2s}
+.opt .txt{flex:1 1 auto;padding-top:4px;text-align:right}
+.opt.sel{border-color:var(--gold);background:linear-gradient(180deg,rgba(212,175,55,.16),rgba(212,175,55,.07));
+  box-shadow:0 10px 26px -16px rgba(212,175,55,.7)}
+.opt.sel .key{background:linear-gradient(160deg,var(--gold-2),var(--gold));color:var(--ink);border-color:transparent}
+
+/* नेविगेशन */
+.nav-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:22px;flex-wrap:wrap}
+.nav-left{display:flex;gap:10px;flex-wrap:wrap}
+
+/* प्रश्न पैनल (साइड) */
+.palette{background:linear-gradient(180deg,var(--ink-2),rgba(15,25,52,.65));border:1px solid var(--line);
+  border-radius:var(--r-lg);padding:20px 18px;position:sticky;top:84px}
+.palette h4{margin:0 0 4px;font-family:var(--display);font-weight:400;font-size:19px;color:var(--gold-2)}
+.palette .pcount{font-size:12px;color:var(--muted-2);margin-bottom:14px}
+.pgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-bottom:18px}
+.pnum{aspect-ratio:1/1;border-radius:10px;border:1.5px solid rgba(157,176,208,.22);background:rgba(22,38,76,.5);
+  color:var(--muted);font-family:var(--num);font-weight:700;font-size:14px;cursor:pointer;display:grid;place-items:center;
+  transition:.16s;position:relative}
+.pnum:hover{transform:translateY(-2px)}
+.pnum.answered{background:var(--emerald-soft);border-color:transparent;color:#86f0c2}
+.pnum.notans{background:var(--rose-soft);border-color:transparent;color:#ffb3bf}
+.pnum.marked{background:rgba(157,123,255,.16);border-color:transparent;color:#cdbcff}
+.pnum.marked.answered::after{content:"";position:absolute;right:5px;bottom:5px;width:7px;height:7px;border-radius:50%;
+  background:var(--emerald);box-shadow:0 0 0 2px var(--ink-2)}
+.pnum.current{outline:2px solid var(--gold);outline-offset:2px;color:var(--gold-2)}
+.legend{display:grid;gap:9px;font-size:12.5px;color:var(--muted)}
+.legend span{display:flex;align-items:center;gap:9px}
+.dot{width:14px;height:14px;border-radius:5px;flex:0 0 auto;border:1px solid rgba(157,176,208,.22)}
+.dot.an{background:var(--emerald-soft);border-color:transparent}
+.dot.na{background:var(--rose-soft);border-color:transparent}
+.dot.mk{background:rgba(157,123,255,.18);border-color:transparent}
+.dot.nv{background:rgba(22,38,76,.6)}
+.palette .submit-side{margin-top:18px;width:100%}
+
+/* ===== परिणाम (RESULT) ===== */
+.result-head{text-align:center;margin-bottom:8px}
+.result-eyebrow{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--saffron);font-weight:600}
+.result-title{font-family:var(--display);font-size:clamp(30px,5vw,48px);margin:8px 0 0;
+  background:linear-gradient(180deg,#fff7e6,#f3d98c 60%,#cda23a);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+.score-stage{display:grid;grid-template-columns:auto 1fr;gap:34px;align-items:center;
+  background:linear-gradient(180deg,var(--ink-2),rgba(15,25,52,.6));border:1px solid var(--line);
+  border-radius:26px;padding:34px;margin:24px 0;box-shadow:var(--shadow)}
+.ring-wrap{position:relative;width:230px;height:230px;justify-self:center}
+.ring-wrap svg{transform:rotate(-90deg);width:100%;height:100%}
+.ring-center{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.ring-pct{font-family:var(--num);font-weight:800;font-size:54px;line-height:1;
+  background:linear-gradient(180deg,#fbe9b0,#d4af37);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ring-pct span{font-size:24px}
+.ring-label{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:8px}
+
+.score-side .verdict{font-family:var(--display);font-size:26px;line-height:1.25;color:var(--gold-2);font-weight:400;margin-bottom:6px}
+.score-side .sub{color:var(--muted);font-size:14px;margin-bottom:22px;line-height:1.6}
+.score-big{font-family:var(--num);font-weight:800;font-size:40px;color:var(--parchment)}
+.score-big small{font-size:18px;color:var(--muted);font-weight:600}
+
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:6px 0 26px}
+.stat{background:linear-gradient(180deg,var(--ink-3),var(--ink-2));border:1px solid var(--line);border-radius:var(--r-md);
+  padding:18px 14px;text-align:center;position:relative;overflow:hidden}
+.stat .sv{font-family:var(--num);font-weight:800;font-size:30px;line-height:1}
+.stat .sk{font-size:12.5px;color:var(--muted);margin-top:7px;display:flex;align-items:center;justify-content:center;gap:6px}
+.stat.ok .sv{color:var(--emerald)} .stat.no .sv{color:var(--rose)}
+.stat.sk0 .sv{color:var(--muted)} .stat.tm .sv{color:var(--gold-2)}
+.stat svg{width:14px;height:14px}
+
+.result-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* ===== समीक्षा (REVIEW) ===== */
+.review-head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:22px}
+.review-head h2{font-family:var(--display);font-weight:400;font-size:30px;margin:0;color:var(--gold-2)}
+.rfilters{display:flex;gap:8px;flex-wrap:wrap}
+.rfilter{font-family:var(--body);font-size:13.5px;font-weight:600;padding:8px 15px;border-radius:999px;cursor:pointer;
+  border:1px solid var(--line);background:transparent;color:var(--muted);transition:.18s}
+.rfilter.active{color:var(--ink);background:linear-gradient(160deg,var(--gold-2),var(--gold));border-color:transparent}
+.rev-card{background:linear-gradient(180deg,var(--ink-2),rgba(15,25,52,.6));border:1px solid var(--line);
+  border-left-width:4px;border-radius:var(--r-md);padding:22px 24px;margin-bottom:16px}
+.rev-card.correct{border-left-color:var(--emerald)}
+.rev-card.wrong{border-left-color:var(--rose)}
+.rev-card.skip{border-left-color:var(--muted-2)}
+.rev-top{display:flex;align-items:center;gap:11px;margin-bottom:12px;flex-wrap:wrap}
+.rev-badge{font-family:var(--num);font-size:11.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;
+  padding:5px 11px;border-radius:999px}
+.rev-badge.correct{color:var(--emerald);background:var(--emerald-soft)}
+.rev-badge.wrong{color:var(--rose);background:var(--rose-soft)}
+.rev-badge.skip{color:var(--muted);background:rgba(157,176,208,.12)}
+.rev-qno{font-family:var(--num);font-weight:700;color:var(--gold);font-size:13px}
+.rev-q{font-size:17px;line-height:1.6;color:#eef2fa;font-weight:500;margin-bottom:16px}
+.rev-opts{display:grid;gap:9px;margin-bottom:6px}
+.rev-opt{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border-radius:11px;font-size:15px;line-height:1.5;
+  border:1.5px solid rgba(157,176,208,.14);background:rgba(22,38,76,.4);color:#d7dff0}
+.rev-opt .rkey{flex:0 0 auto;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;
+  font-family:var(--num);font-weight:700;font-size:13px;color:var(--muted);background:rgba(157,176,208,.12)}
+.rev-opt .rtxt{flex:1;text-align:right}
+.rev-opt.is-correct{border-color:transparent;background:var(--emerald-soft);color:#bff3da}
+.rev-opt.is-correct .rkey{background:var(--emerald);color:#04140d}
+.rev-opt.is-wrong{border-color:transparent;background:var(--rose-soft);color:#ffc9d1}
+.rev-opt.is-wrong .rkey{background:var(--rose);color:#1a0508}
+.rev-mark{margin-right:auto;font-family:var(--num);font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:5px}
+.rev-opt.is-correct .rev-mark{color:#7af0bf}
+.rev-opt.is-wrong .rev-mark{color:#ff9aa8}
+.explain{margin-top:14px;background:linear-gradient(180deg,var(--gold-soft),rgba(212,175,55,.04));
+  border:1px solid var(--line);border-radius:12px;padding:15px 17px}
+.explain .et{font-family:var(--num);font-size:11.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);
+  margin-bottom:7px;display:flex;align-items:center;gap:7px}
+.explain p{margin:0;color:#e3e9f5;line-height:1.7;font-size:14.5px}
+
+/* ===== मॉडल / ड्रॉअर ===== */
+.overlay{position:fixed;inset:0;z-index:50;background:rgba(5,9,20,.72);backdrop-filter:blur(4px);
+  display:grid;place-items:center;padding:20px;animation:bcFade .25s ease both}
+.modal{background:linear-gradient(180deg,var(--ink-3),var(--ink-2));border:1px solid var(--line);border-radius:22px;
+  padding:30px 30px 26px;max-width:440px;width:100%;text-align:center;box-shadow:var(--shadow)}
+.modal h3{font-family:var(--display);font-weight:400;font-size:26px;margin:0 0 6px;color:var(--gold-2)}
+.modal p{color:var(--muted);font-size:14.5px;margin:0 0 18px;line-height:1.6}
+.modal-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin:0 0 22px}
+.ms{background:rgba(22,38,76,.5);border:1px solid var(--line);border-radius:13px;padding:13px 8px}
+.ms .v{font-family:var(--num);font-weight:800;font-size:24px}
+.ms .k{font-size:11.5px;color:var(--muted);margin-top:4px}
+.ms.a .v{color:var(--emerald)} .ms.b .v{color:var(--rose)} .ms.c .v{color:var(--gold-2)}
+.modal-actions{display:flex;gap:11px}
+.modal-actions .btn{flex:1}
+
+/* मोबाइल पैनल बटन */
+.palette-fab{display:none}
+
+/* फुटर / श्रेय */
+.bc-credit{text-align:center;margin-top:40px;padding-top:22px;border-top:1px solid var(--line)}
+.bc-credit .made{font-family:var(--display);font-size:18px;color:var(--gold-2);font-weight:400;letter-spacing:.3px}
+.bc-credit .made b{background:linear-gradient(180deg,#fbe9b0,#d4af37);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:400}
+.bc-credit .meta{font-size:12px;color:var(--muted-2);margin-top:6px;letter-spacing:.4px}
+.bc-credit .meta b{color:var(--gold)}
+.bc-credit .join-cap{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--muted-2);font-weight:600;margin-bottom:13px}
+.bc-credit .social{display:flex;align-items:center;justify-content:center;gap:13px;margin-bottom:18px}
+.soc{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;text-decoration:none;border:1px solid var(--line);background:linear-gradient(180deg,var(--ink-3),var(--ink-2));transition:transform .18s ease,box-shadow .25s,border-color .25s}
+.soc svg{width:26px;height:26px;display:block}
+.soc:hover{transform:translateY(-3px)}
+.soc.tg:hover{border-color:#229ED9;box-shadow:0 14px 30px -14px rgba(34,158,217,.75)}
+.soc.yt:hover{border-color:#FF0033;box-shadow:0 14px 30px -14px rgba(255,0,51,.65)}
+
+/* ===== उत्तरदायी (RESPONSIVE) ===== */
+@media (max-width:880px){
+  .exam-grid{grid-template-columns:1fr}
+  .palette{display:none}
+  .score-stage{grid-template-columns:1fr;text-align:center;gap:22px;padding:26px 20px}
+  .ring-wrap{width:200px;height:200px}
+  .score-side .sub{margin-left:auto;margin-right:auto;max-width:46ch}
+  .palette-fab{display:inline-flex;position:fixed;right:18px;bottom:18px;z-index:35;
+    background:linear-gradient(160deg,var(--gold-2),var(--gold));color:var(--ink);border:0;cursor:pointer;
+    padding:14px 18px;border-radius:999px;font-family:var(--body);font-weight:700;align-items:center;gap:9px;
+    box-shadow:0 16px 36px -14px rgba(212,175,55,.7)}
+  .palette-fab svg{width:18px;height:18px}
+  .drawer{position:fixed;inset:auto 0 0 0;z-index:55;background:linear-gradient(180deg,var(--ink-3),var(--ink-2));
+    border-top:1px solid var(--line);border-radius:24px 24px 0 0;padding:22px 20px 28px;max-height:78vh;overflow:auto;
+    animation:drawerUp .3s cubic-bezier(.2,.7,.2,1) both;box-shadow:0 -20px 50px -20px rgba(0,0,0,.8)}
+  @keyframes drawerUp{from{transform:translateY(100%)}to{transform:none}}
+  .pgrid{grid-template-columns:repeat(6,1fr)}
+}
+@media (max-width:560px){
+  .bc-app{padding:18px 14px 36px}
+  .q-card{padding:22px 18px}
+  .q-text{font-size:17px}
+  .opt{font-size:15px;padding:13px 13px}
+  .stat-row{grid-template-columns:repeat(2,1fr)}
+  .meta-card{flex:1 1 44%}
+  .instructions{padding:22px 18px}
+  .cover-title{font-size:34px}
+  .nav-row .btn{flex:1}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms !important;transition-duration:.001ms !important}
+}
+:focus-visible{outline:2px solid var(--gold-2);outline-offset:2px;border-radius:6px}
+</style>
+</head>
+<body>
+
+<!-- मंद बोधि-चक्र (हस्ताक्षर पृष्ठभूमि) -->
+<svg class="bc-motif" viewBox="0 0 200 200" fill="none" aria-hidden="true">
+  <circle cx="100" cy="100" r="96" stroke="currentColor" stroke-width="1"/>
+  <circle cx="100" cy="100" r="62" stroke="currentColor" stroke-width="1"/>
+  <circle cx="100" cy="100" r="26" stroke="currentColor" stroke-width="1.5"/>
+  <g stroke="currentColor" stroke-width="1">
+    <line x1="100" y1="4" x2="100" y2="196"/><line x1="4" y1="100" x2="196" y2="100"/>
+    <line x1="32" y1="32" x2="168" y2="168"/><line x1="168" y1="32" x2="32" y2="168"/>
+    <line x1="66" y1="14" x2="134" y2="186"/><line x1="134" y1="14" x2="66" y2="186"/>
+    <line x1="14" y1="66" x2="186" y2="134"/><line x1="186" y1="66" x2="14" y2="134"/>
+  </g>
+</svg>
+<svg class="bc-motif b" viewBox="0 0 200 200" fill="none" aria-hidden="true">
+  <circle cx="100" cy="100" r="96" stroke="currentColor" stroke-width="1"/>
+  <circle cx="100" cy="100" r="50" stroke="currentColor" stroke-width="1"/>
+  <g stroke="currentColor" stroke-width="1">
+    <line x1="100" y1="4" x2="100" y2="196"/><line x1="4" y1="100" x2="196" y2="100"/>
+    <line x1="32" y1="32" x2="168" y2="168"/><line x1="168" y1="32" x2="32" y2="168"/>
+  </g>
+</svg>
+
+<canvas id="confetti"></canvas>
+
+<div class="bc-app">
+
+  <!-- ============================= आवरण ============================= -->
+  <section id="screen-cover" class="bc-screen">
+    <div class="cover-top">
+      <div class="bc-brand">
+        <svg class="bc-leaf" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#f5d98c"/><stop offset="1" stop-color="#c9962e"/></linearGradient></defs>
+          <path d="M32 4C20 14 9 23 9 36c0 11 9 19 20 20 0 2-2 4-4 5h14c-2-1-4-3-4-5 11-1 20-9 20-20C55 23 44 14 32 4Z"
+                fill="url(#lg)"/>
+          <path d="M32 9v44M32 24c-5 1-9 4-12 8M32 24c5 1 9 4 12 8M32 36c-3 1-6 3-8 6M32 36c3 1 6 3 8 6"
+                stroke="#0b1428" stroke-width="1.6" stroke-linecap="round" opacity=".55"/>
+        </svg>
+        <div>
+          <div class="bc-brand-name">Bodhi Classes</div>
+          <div class="bc-brand-sub">UPSC · UPPCS</div>
+        </div>
+      </div>
+      <span class="cover-tag" id="cv-tag">मॉक टेस्ट</span>
+    </div>
+
+    <div class="cover-hero">
+      <div class="cover-eyebrow" id="cv-eyebrow">अभ्यास परीक्षा</div>
+      <h1 class="cover-title" id="cv-title">परीक्षा शीर्षक</h1>
+      <p class="cover-desc" id="cv-desc"></p>
+    </div>
+
+    <div class="meta-row" id="cv-meta"></div>
+
+    <div class="instructions">
+      <h3>परीक्षा निर्देश</h3>
+      <div class="sub">शुरू करने से पहले एक बार अवश्य पढ़ें</div>
+      <ol class="ins-list" id="cv-ins"></ol>
+    </div>
+
+    <div class="cta-wrap">
+      <button class="btn btn-primary" id="startBtn">
+        परीक्षा शुरू करें
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+
+    <div class="bc-credit">
+      <div class="join-cap">हमसे जुड़ें</div>
+      <div class="social">
+        <a class="soc tg" href="https://t.me/bodhiclassesupsc" target="_blank" rel="noopener" title="Telegram — Bodhi Classes" aria-label="Telegram पर जुड़ें"><svg viewBox="0 0 24 24" fill="none"><path fill="#229ED9" d="M9.417 15.181l-.397 5.584c.568 0 .814-.244 1.109-.537l2.663-2.545 5.518 4.041c1.012.564 1.725.267 1.998-.931l3.622-16.972.001-.001c.321-1.496-.541-2.081-1.527-1.714L1.116 9.85c-1.473.571-1.45 1.394-.25 1.766l5.347 1.665 12.418-7.78c.584-.387 1.115-.173.678.214z"/></svg></a>
+        <a class="soc yt" href="https://youtube.com/@bodhiclasses?si=h7ktDvvJwYedkpKg" target="_blank" rel="noopener" title="YouTube — Bodhi Classes" aria-label="YouTube पर जुड़ें"><svg viewBox="0 0 24 24" fill="none"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+      </div>
+      <div class="made">Designed by <b>Aditya Chauhan</b></div>
+      <div class="meta">© Bodhi Classes · <b>@BodhiClasses</b> · सभी अधिकार सुरक्षित</div>
+    </div>
+  </section>
+
+  <!-- ============================= परीक्षा ============================= -->
+  <section id="screen-quiz" class="bc-screen" hidden>
+    <div class="exam-bar">
+      <div class="bc-brand">
+        <svg class="bc-leaf" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <defs><linearGradient id="lg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f5d98c"/><stop offset="1" stop-color="#c9962e"/></linearGradient></defs>
+          <path d="M32 4C20 14 9 23 9 36c0 11 9 19 20 20 0 2-2 4-4 5h14c-2-1-4-3-4-5 11-1 20-9 20-20C55 23 44 14 32 4Z" fill="url(#lg2)"/></svg>
+        <div class="bc-brand-name">Bodhi Classes</div>
+      </div>
+      <div class="timer" id="timer">
+        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="13" r="8" stroke="currentColor" stroke-width="2"/><path d="M12 9v4l2.5 2.5M9 2h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <span id="timerText">--:--</span>
+      </div>
+      <div class="bar-actions">
+        <button class="btn btn-ghost" id="submitTop" style="padding:11px 20px;font-size:14px">परीक्षा समाप्त करें</button>
+      </div>
+    </div>
+
+    <div class="progress-shell"><div class="progress-fill" id="progressFill"></div></div>
+
+    <div class="exam-grid">
+      <div>
+        <div class="q-card" id="qCard"><!-- JS --></div>
+        <div class="nav-row">
+          <div class="nav-left">
+            <button class="btn btn-quiet" id="prevBtn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              पिछला
+            </button>
+            <button class="btn btn-ghost" id="markBtn">समीक्षा हेतु चिह्नित करें</button>
+          </div>
+          <button class="btn btn-primary" id="nextBtn" style="padding:14px 30px;font-size:16px">
+            अगला
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <aside class="palette" id="paletteSide">
+        <h4>प्रश्न सूची</h4>
+        <div class="pcount" id="pCount"></div>
+        <div class="pgrid" id="pGrid"></div>
+        <div class="legend">
+          <span><i class="dot an"></i> उत्तर दिया गया</span>
+          <span><i class="dot na"></i> देखा, उत्तर नहीं</span>
+          <span><i class="dot mk"></i> समीक्षा हेतु चिह्नित</span>
+          <span><i class="dot nv"></i> अभी नहीं देखा</span>
+        </div>
+        <button class="btn btn-ghost submit-side" id="submitSide">परीक्षा समाप्त करें</button>
+      </aside>
+    </div>
+
+    <button class="palette-fab" id="paletteFab">
+      <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2"/><rect x="14" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2"/><rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2"/><rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2"/></svg>
+      प्रश्न सूची
+    </button>
+  </section>
+
+  <!-- ============================= परिणाम ============================= -->
+  <section id="screen-result" class="bc-screen" hidden>
+    <div class="result-head">
+      <div class="result-eyebrow">परिणाम घोषित</div>
+      <h1 class="result-title">आपका प्रदर्शन</h1>
+    </div>
+
+    <div class="score-stage">
+      <div class="ring-wrap">
+        <svg viewBox="0 0 240 240">
+          <defs>
+            <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#f0c75e"/><stop offset="1" stop-color="#ff8a3d"/>
+            </linearGradient>
+          </defs>
+          <circle cx="120" cy="120" r="100" fill="none" stroke="rgba(157,176,208,.14)" stroke-width="16"/>
+          <circle id="ringFg" cx="120" cy="120" r="100" fill="none" stroke="url(#ringGrad)" stroke-width="16"
+                  stroke-linecap="round" stroke-dasharray="628.3" stroke-dashoffset="628.3"
+                  style="filter:drop-shadow(0 0 10px rgba(255,138,61,.5))"/>
+        </svg>
+        <div class="ring-center">
+          <div class="ring-pct"><span id="ringPctNum">0</span><span>%</span></div>
+          <div class="ring-label">शुद्धता</div>
+        </div>
+      </div>
+      <div class="score-side">
+        <div class="verdict" id="verdict"></div>
+        <div class="sub" id="verdictSub"></div>
+        <div class="score-big"><span id="scoreGot">0</span><small> / <span id="scoreMax">0</span> अंक</small></div>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat ok"><div class="sv" id="stCorrect">0</div><div class="sk"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#2fbf86" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>सही</div></div>
+      <div class="stat no"><div class="sv" id="stWrong">0</div><div class="sk"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="#ff5d73" stroke-width="2.4" stroke-linecap="round"/></svg>गलत</div></div>
+      <div class="stat sk0"><div class="sv" id="stSkip">0</div><div class="sk"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="#9db0d0" stroke-width="2"/></svg>अनुत्तरित</div></div>
+      <div class="stat tm"><div class="sv" id="stTime">0:00</div><div class="sk"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="13" r="8" stroke="#f0c75e" stroke-width="2"/><path d="M12 9v4l2.5 2.5" stroke="#f0c75e" stroke-width="2" stroke-linecap="round"/></svg>लगा समय</div></div>
+    </div>
+
+    <div class="result-actions">
+      <button class="btn btn-primary" id="reviewBtn">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg>
+        समाधान देखें
+      </button>
+      <button class="btn btn-ghost" id="retryBtn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v4h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        पुनः प्रयास करें
+      </button>
+    </div>
+
+    <div class="bc-credit">
+      <div class="join-cap">हमसे जुड़ें</div>
+      <div class="social">
+        <a class="soc tg" href="https://t.me/bodhiclassesupsc" target="_blank" rel="noopener" title="Telegram — Bodhi Classes" aria-label="Telegram पर जुड़ें"><svg viewBox="0 0 24 24" fill="none"><path fill="#229ED9" d="M9.417 15.181l-.397 5.584c.568 0 .814-.244 1.109-.537l2.663-2.545 5.518 4.041c1.012.564 1.725.267 1.998-.931l3.622-16.972.001-.001c.321-1.496-.541-2.081-1.527-1.714L1.116 9.85c-1.473.571-1.45 1.394-.25 1.766l5.347 1.665 12.418-7.78c.584-.387 1.115-.173.678.214z"/></svg></a>
+        <a class="soc yt" href="https://youtube.com/@bodhiclasses?si=h7ktDvvJwYedkpKg" target="_blank" rel="noopener" title="YouTube — Bodhi Classes" aria-label="YouTube पर जुड़ें"><svg viewBox="0 0 24 24" fill="none"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+      </div>
+      <div class="made">Designed by <b>Aditya Chauhan</b></div>
+      <div class="meta">© Bodhi Classes · <b>@BodhiClasses</b></div>
+    </div>
+  </section>
+
+  <!-- ============================= समीक्षा ============================= -->
+  <section id="screen-review" class="bc-screen" hidden>
+    <div class="review-head">
+      <h2>समाधान एवं समीक्षा</h2>
+      <div class="rfilters" id="rFilters">
+        <button class="rfilter active" data-f="all">सभी</button>
+        <button class="rfilter" data-f="correct">सही</button>
+        <button class="rfilter" data-f="wrong">गलत</button>
+        <button class="rfilter" data-f="skip">अनुत्तरित</button>
+      </div>
+    </div>
+    <div id="reviewList"><!-- JS --></div>
+    <div class="cta-wrap">
+      <button class="btn btn-ghost" id="backToResult">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        परिणाम पर लौटें
+      </button>
+    </div>
+    <div class="bc-credit">
+      <div class="join-cap">हमसे जुड़ें</div>
+      <div class="social">
+        <a class="soc tg" href="https://t.me/bodhiclassesupsc" target="_blank" rel="noopener" title="Telegram — Bodhi Classes" aria-label="Telegram पर जुड़ें"><svg viewBox="0 0 24 24" fill="none"><path fill="#229ED9" d="M9.417 15.181l-.397 5.584c.568 0 .814-.244 1.109-.537l2.663-2.545 5.518 4.041c1.012.564 1.725.267 1.998-.931l3.622-16.972.001-.001c.321-1.496-.541-2.081-1.527-1.714L1.116 9.85c-1.473.571-1.45 1.394-.25 1.766l5.347 1.665 12.418-7.78c.584-.387 1.115-.173.678.214z"/></svg></a>
+        <a class="soc yt" href="https://youtube.com/@bodhiclasses?si=h7ktDvvJwYedkpKg" target="_blank" rel="noopener" title="YouTube — Bodhi Classes" aria-label="YouTube पर जुड़ें"><svg viewBox="0 0 24 24" fill="none"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+      </div>
+      <div class="made">Designed by <b>Aditya Chauhan</b></div>
+      <div class="meta">© Bodhi Classes · <b>@BodhiClasses</b></div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+/* =========================================================================
+   ★★★  यहाँ अपने प्रश्न जोड़ें — बस इतना ही करना है  ★★★
+   -------------------------------------------------------------------------
+   • title / subtitle      : परीक्षा का नाम
+   • durationMinutes        : कुल समय (मिनट में)। 0 लिखें तो टाइमर नहीं चलेगा।
+   • marksPerQuestion       : हर सही उत्तर के अंक
+   • negativeMarks          : हर गलत उत्तर पर कटने वाले अंक (0 = कोई कटौती नहीं)
+   • questions[]            : प्रश्नों की सूची
+        q          → प्रश्न
+        options    → विकल्प (4 या जितने हों)
+        answer     → सही विकल्प का अक्षर: "A" / "B" / "C" / "D"
+        explanation→ व्याख्या (समीक्षा में दिखेगी)
+        statement  → (वैकल्पिक) प्रश्न से ऊपर दिखने वाली कथन-पंक्ति
+   नया प्रश्न जोड़ने के लिए { ... } वाला पूरा खंड कॉपी कर के पेस्ट कर दें।
+   ========================================================================= */
+const TEST = {"title":"Eye Drishti Unit 1 current affairs","subtitle":"UPSC / UPPCS · सामान्य अध्ययन","tag":"अभ्यास परीक्षा","durationMinutes":30,"marksPerQuestion":2,"negativeMarks":0.66,"questions":[{"q":"प्रोजेक्ट गंगा (PROJECT GANGA) के पूर्ण रूप 'Government Assisted Network for Growth and Advancement' के संदर्भ में, इसका मुख्य उद्देश्य क्या है?","options":["गंगा नदी की स्वच्छता और घाटों का आधुनिकीकरण करना","ग्रामीण क्षेत्रों में अंतिम छोर तक डिजिटल कनेक्टिविटी सुनिश्चित करना","उत्तर प्रदेश के सभी सरकारी स्कूलों में मुफ्त वाई-फाई देना","राज्य में जल परिवहन को बढ़ावा देना ---"],"answer":"A","explanation":""},{"q":"प्रोजेक्ट गंगा के तहत उत्तर प्रदेश सरकार ने कितने लाख परिवारों को हाई-स्पीड इंटरनेट कनेक्टिविटी प्रदान करने का लक्ष्य रखा है?","options":["10 लाख परिवार","15 लाख परिवार","20 लाख परिवार","25 लाख परिवार ---"],"answer":"A","explanation":""},{"q":"जून 2026 में मुख्यमंत्री शहरी विस्तारीकरण/नए शहर प्रोत्साहन योजना के तहत किन तीन शहरों में आधुनिक सैटेलाइट टाउन (नए शहर) बसाने के लिए पहली किस्त मंजूर की गई?","options":["आगरा, बरेली और प्रयागराज","लखनऊ, कानपुर और वाराणसी","मेरठ, गाजियाबाद और अलीगढ़","गोरखपुर, झांसी और मुरादाबाद ---"],"answer":"A","explanation":""},{"q":"मुख्यमंत्री शहरी विस्तारीकरण/नए शहर प्रोत्साहन योजना के अंतर्गत चयनित तीन शहरों के लिए कुल कितनी 'सीड कैपिटल' (Seed Capital) को मंजूरी प्रदान की गई है?","options":["225.00 करोड़ रुपये","500.00 करोड़ रुपये","1470.16 करोड़ रुपये","355.06 करोड़ रुपये ---"],"answer":"A","explanation":""},{"q":"उत्तर प्रदेश मंत्रिमंडल द्वारा जून 2026 में प्रदेश के 5 जिलों में नवीन जेलों के निर्माण को मंजूरी दी गई। निम्नलिखित में से कौन सा जिला इस सूची में शामिल नहीं है?","options":["औरैया","ललितपुर","वाराणसी","भदोही ---"],"answer":"A","explanation":""},{"q":"उत्तर प्रदेश खरीफ विपणन वर्ष 2025-26 (रबी फसल) हेतु स्वीकृत मक्का खरीद नीति के तहत मक्के का न्यूनतम समर्थन मूल्य (MSP) प्रति क्विंटल कितना निर्धारित किया गया है?","options":["2200 रुपये","2400 रुपये","2585 रुपये","2150 रुपये ---"],"answer":"A","explanation":""},{"q":"मई 2026 में लखनऊ में रक्षा मंत्री राजनाथ सिंह और मुख्यमंत्री योगी आदित्यनाथ द्वारा उद्घाटन की गई 'नौसेना शौर्य वाटिका' के संदर्भ में सत्य कथन चुनिए:","options":["यह दो एकड़ से अधिक क्षेत्र में 19 करोड़ रुपये की लागत से निर्मित एक खुला संग्रहालय है।","यह भारतीय वायुसेना के पराक्रम को समर्पित है।","यह गोमती नदी के बीच में निर्मित एक कृत्रिम द्वीप है।","इसका निर्माण पूरी तरह से भारतीय नौसेना के बजट से हुआ है। ---"],"answer":"A","explanation":""},{"q":"मई 2026 के मध्य 'एआई ट्रांसफॉर्मेशन कॉन्क्लेव, 2026' का आयोजन उत्तर प्रदेश के किस शहर में किया गया?","options":["ग्रेटर नोएडा","प्रयागराज","गोरखपुर","लखनऊ ---"],"answer":"A","explanation":""},{"q":"उत्तर प्रदेश सरकार ने देश की पहली 'एआई सिटी' (AI City) विकसित करने के लिए लखनऊ की 'वृंदावन योजना' हेतु कितनी राशि के विशेष बजट की घोषणा की है?","options":["225 करोड़ रुपये","368 करोड़ रुपये","500 करोड़ रुपये","145 करोड़ रुपये ---"],"answer":"A","explanation":""},{"q":"एआई ट्रांसफॉर्मेशन कॉन्क्लेव, 2026 के दौरान 'यूपी एआई मिशन' के लिए विशेष रूप से कितने बजट की घोषणा की गई?","options":["368 करोड़ रुपये","1000 करोड़ रुपये","225 करोड़ रुपये","583.20 करोड़ रुपये ---"],"answer":"A","explanation":""},{"q":"'फ्रूट होराइजन, 2026' कार्यक्रम का आयोजन मई 2026 में कहाँ किया गया, जिसका मुख्य उद्देश्य फल उत्पादन, गुणवत्ता, प्रोसेसिंग और निर्यात को बढ़ावा देना है?","options":["ICAR-केंद्रीय उपोष्ण कटिबंधीय बागवानी संस्थान, लखनऊ","इलाहाबाद विश्वविद्यालय, प्रयागराज","मदन मोहन मालवीय प्रौद्योगिकी विश्वविद्यालय, गोरखपुर","चंद्रशेखर आजाद कृषि विश्वविद्यालय, कानपुर ---"],"answer":"A","explanation":""},{"q":"मई 2026 में प्रयागराज में आयोजित 'उत्तर प्रौद्योगिकी संगोष्ठी, 2026' का मुख्य विषय (Theme) क्या था?","options":["डिजिटल उत्तर प्रदेश और सुशासन","एआई और स्वास्थ्य नवाचार का संगम","मेक इन यूपी - रक्षा और एयरोस्पेस","रक्षा त्रिवेणी संगम— जहाँ प्रौद्योगिकी, उद्योग और सैनिक क्षमता का संगम होता है ---"],"answer":"A","explanation":""},{"q":"भारतीय रेलवे ने मई 2026 में उत्तर प्रदेश के किस स्थान पर स्थित मॉडर्न कोच फैक्ट्री से '100वीं वंदे भारत ट्रेन' को रवाना किया?","options":["वाराणसी (मडुआडीह)","रायबरेली (लालगंज)","गोरखपुर","झांसी ---"],"answer":"A","explanation":""},{"q":"कृषि और प्रसंस्कृत खाद्य उत्पाद निर्यात विकास प्राधिकरण (APEDA) ने उत्तर प्रदेश के किस जिले के 'टांडा विजैसी' में देश का पहला बासमती और जैविक प्रशिक्षण केंद्र-सह-प्रदर्शन फार्म स्थापित करने के लिए समझौता किया है?","options":["लखीमपुर खीरी","बहराइच","पीलीभीत","बरेली ---"],"answer":"A","explanation":""},{"q":"पीलीभीत में देश का पहला बासमती और जैविक प्रशिक्षण केंद्र स्थापित करने के लिए उत्तर प्रदेश सरकार और APEDA के बीच कितने वर्ष का पट्टा (Lease) समझौता हस्ताक्षरित हुआ है?","options":["70 वर्ष","50 वर्ष","99 वर्ष","30 वर्ष ---"],"answer":"A","explanation":""},{"q":"अप्रैल 2026 में लखनऊ में 'उत्तर क्षेत्र कृषि सम्मेलन, 2026' का आयोजन निम्नलिखित में से किसके द्वारा किया गया?","options":["उत्तर प्रदेश कृषि अनुसंधान परिषद (UPCAR)","कृषि एवं किसान कल्याण मंत्रालय, भारत सरकार","नाबार्ड (NABARD) उत्तर प्रदेश क्षेत्रीय कार्यालय","नीति आयोग ---"],"answer":"A","explanation":""},{"q":"अप्रैल 2026 में रॉकलिंक इंडिया द्वारा उत्तर प्रदेश के सिकंदराबाद में देश की पहली एकीकृत लिथियम-आयन बैटरी और दुर्लभ पृथ्वी पुनर्चक्रण (Rare Earth Recycling) सुविधा का उद्घाटन किया गया। सिकंदराबाद उत्तर प्रदेश के किस जिले में स्थित है?","options":["गौतम बुद्ध नगर","गाजियाबाद","हापुड़","बुलंदशहर ---"],"answer":"A","explanation":""},{"q":"अप्रैल 2026 में प्रधानमंत्री नरेंद्र मोदी द्वारा उत्तर प्रदेश के हरदोई में उद्घाटन किए गए 'गंगा एक्सप्रेस-वे' की कुल लंबाई कितनी है?","options":["512 किमी.","602 किमी.","594 किमी.","650 किमी. ---"],"answer":"A","explanation":""},{"q":"गंगा एक्सप्रेस-वे (Ganga Expressway) के संदर्भ में निम्नलिखित कथनों पर विचार कीजिए: 1. इस एक्सप्रेस-वे की कुल लंबाई 594 किमी है और यह कुल 36,230 करोड़ रुपये की लागत से निर्मित है। 2. इस परियोजना से लाभान्वित होने वाले जिलों में मेरठ, बुलंदशहर, बदायूं, हरदोई, रायबरेली और प्रयागराज शामिल हैं। उपर्युक्त में से कौन सा/से कथन सत्य है/हैं?","options":["केवल 1","केवल 2","1 और 2 दोनों","न तो 1 और न ही 2 ---"],"answer":"A","explanation":""},{"q":"मार्च-अप्रैल 2026 के मध्य 'इंडियास्किल्स राष्ट्रीय प्रतियोगिता, 2025-26' का आयोजन उत्तर प्रदेश के किस शहर में किया गया?","options":["लखनऊ","ग्रेटर नोएडा","कानपुर","आगरा ---"],"answer":"A","explanation":""},{"q":"मार्च 2026 में 'यूपी इंटरनेशनल फिल्म कॉन्क्लेव, 2026' का आयोजन फिल्म सोसायटी ऑफ इंडिया द्वारा यूपी टूरिज्म और फिल्म बंधु के सहयोग से कहाँ किया गया?","options":["भारतेंदु नाट्य अकादमी, लखनऊ","डॉ. राम मनोहर लोहिया अवध विश्वविद्यालय, अयोध्या","फिल्म सिटी, नोएडा","संगीत नाटक अकादमी, गोमती नगर, लखनऊ ---"],"answer":"A","explanation":""},{"q":"मार्च 2026 में मुख्यमंत्री योगी आदित्यनाथ ने गोरखपुर औद्योगिक विकास प्राधिकरण क्षेत्र (GIDA) में सॉफ्टवेयर टेक्नोलॉजी पार्क्स ऑफ इंडिया (STPI) द्वारा विकसित पार्क का उद्घाटन किया। यह पार्क कितने एकड़ भूमि पर फैला है?","options":["लगभग 3.5 एकड़","लगभग 5.0 एकड़","लगभग 10 एकड़","लगभग 2.5 एकड़ ---"],"answer":"A","explanation":""},{"q":"गोरखपुर शहर को सोलर सिटी के रूप में विकसित करने के लिए मार्च 2026 में किस झील/ताल में 20 मेगावाट क्षमता के फ्लोटिंग सोलर प्लांट की स्थापना को स्वीकृति दी गई?","options":["रामगढ़ ताल","बखिरा झील","चिलुआताल","कीठम झील ---"],"answer":"A","explanation":""},{"q":"उत्तर प्रदेश के गोरखपुर में लगभग 500 करोड़ रुपये की लागत से स्थापित होने वाले देश के पहले समर्पित वन विश्वविद्यालय का नाम क्या होगा?","options":["उत्तर प्रदेश पर्यावरण एवं वन्यजीव विश्वविद्यालय","उत्तर प्रदेश वानिकी एवं औद्यानिकी विश्वविद्यालय","योगी आदित्यनाथ वानिकी अनुसंधान संस्थान","उत्तर प्रदेश प्राकृत विज्ञान विश्वविद्यालय ---"],"answer":"A","explanation":""},{"q":"अगस्त 2025 में मुख्यमंत्री योगी आदित्यनाथ द्वारा गोरखपुर जिले में टोरेंट समूह के किस संयंत्र का लोकार्पण किया गया, जो उत्तर प्रदेश का पहला ऐसा संयंत्र है?","options":["कोयला गैसीकरण संयंत्र","लिथियम रिसाइक्लिंग संयंत्र","एथेनॉल ब्लेंडिंग संयंत्र","ग्रीन हाइड्रोजन संयंत्र ---"],"answer":"A","explanation":""},{"q":"निवेश मित्र 3.0 (Nivesh Mitra 3.0) सिंगल विंडो पोर्टल के संदर्भ में निम्नलिखित कथनों पर विचार कीजिए: 1. यह निवेशकों के अनुभव को आसान बनाने के लिए डिज़ाइन किया गया एक डिजिटल प्लेटफ़ॉर्म है। 2. इसमें 43 से अधिक विभागों की 530 से अधिक सेवाओं को समेकित करके 200 से कम किया गया है। उपर्युक्त में से कौन सा/से कथन सत्य है/हैं?","options":["केवल 1","केवल 2","1 और 2 दोनों","न तो 1 और न ही 2 ---"],"answer":"A","explanation":""},{"q":"उत्तर प्रदेश राजस्व संहिता (संशोधन) अध्यादेश, 2026 जिसे राज्यपाल द्वारा 8 अप्रैल, 2026 को प्रख्यापित किया गया, मूल रूप से 'उत्तर प्रदेश राजस्व संहिता, 2006' की किस धारा में संशोधन करता है?","options":["धारा 60","धारा 72","धारा 80","धारा 95 ---"],"answer":"A","explanation":""},{"q":"उत्तर प्रदेश मंत्रिमंडल द्वारा रबी विपणन वर्ष 2026-27 हेतु मंजूर की गई गेहूं क्रय नीति के तहत गेहूं के न्यूनतम समर्थन मूल्य (MSP) में कितने रुपये प्रति क्विंटल की वृद्धि की गई है?","options":["110 रुपये","160 रुपये","200 रुपये","150 रुपये ---"],"answer":"A","explanation":""},{"q":"उत्तर प्रदेश मल्टी मॉडल लॉजिस्टिक्स पार्क नीति, 2024 के तहत ग्रेटर नोएडा में कितनी एकड़ भूमि पर मल्टी मॉडल लॉजिस्टिक्स पार्क (MMLP) की स्थापना को मंजूरी दी गई है?","options":["100.50 एकड़","250.75 एकड़","150.00 एकड़","174.12 एकड़ ---"],"answer":"A","explanation":""},{"q":"जनवरी 2026 में भारत की पहली सरकारी अस्पताल-आधारित आर्टिफिशियली इंटेलिजेंस (AI) क्लीनिक उत्तर प्रदेश के किस संस्थान में शुरू की गई है?","options":["गवर्नमेंट इंस्टीट्यूट ऑफ मेडिकल साइंसेज (GIMS), ग्रेटर नोएडा","संजय गांधी स्नातकोत्तर आयुर्विज्ञान संस्थान (SGPGI), लखनऊ","किंग जॉर्ज मेडिकल यूनिवर्सिटी (KGMU), लखनऊ","बाबा राघव दास मेडिकल कॉलेज, गोरखपुर ---"],"answer":"A","explanation":""},{"q":"नवंबर 2025 में केंद्रीय मंत्री मनोहर लाल ने ग्रेटर नोएडा में एनटीपीसी के अनुसंधान एवं विकास केंद्र-नेट्रा (NETRA) में भारत की सबसे बड़ी और पहली 3 मेगावाट/घंटे क्षमता वाली किस प्रणाली का उद्घाटन किया?","options":["सोडियम-सल्फर बैटरी प्रणाली","लिथियम-आयन फॉस्फेट प्रणाली","वेनेडियम रेडॉक्स फ्लो बैटरी प्रणाली","हाइड्रोजन फ्यूल सेल स्टोरेज प्रणाली ---"],"answer":"A","explanation":""},{"q":"मार्च 2026 में मंजूर की गई 'नवयुग पालिका योजना' के तहत उत्तर प्रदेश सरकार द्वारा कुल 5 वर्षों में कितनी धनराशि का व्यय भार संभावित है?","options":["145 करोड़ रुपये","2916 करोड़ रुपये","583.20 करोड़ रुपये","3700 करोड़ रुपये ---"],"answer":"A","explanation":""},{"q":"'नवयुग पालिका योजना' के संदर्भ में निम्नलिखित कथनों पर विचार कीजिए: 1. यह योजना जनपद मुख्यालय के नगरीय निकायों (नगर निगम को छोड़कर) को उच्च गुणवत्तापूर्ण एवं सतत विकास के साथ स्मार्ट नगरीय सेवाएं प्रदान करने हेतु शुरू की गई है। 2. यह पूर्णतः राज्य सरकार द्वारा वित्तपोषित योजना है जिसकी समयावधि 5 वर्ष (वित्तीय वर्ष 2025-26 से 2029-30) तक होगी। उपर्युक्त में से कौन सा/से कथन सत्य है/हैं?","options":["केवल 1","केवल 2","1 और 2 दोनों","न तो 1 और न ही 2 ---"],"answer":"A","explanation":""},{"q":"उत्तर प्रदेश ब्रज तीर्थ विकास परिषद की पहल पर भारत का पहला 'राष्ट्रीय गौ-संस्कृति संग्रहालय' कहाँ स्थापित किया जा रहा है?","options":["पंडित दीनदयाल उपाध्याय पशु चिकित्सा विज्ञान विश्वविद्यालय परिसर, मथुरा","भारतीय पशु चिकित्सा अनुसंधान संस्थान (IVRI), बरेली","गौ अनुसंधान केंद्र, वृंदावन","आचार्य नरेंद्र देव कृषि विश्वविद्यालय, अयोध्या ---"],"answer":"A","explanation":""},{"q":"मार्च 2026 में स्वीकृत 'मुख्यमंत्री ग्राम परिवहन योजना, 2026' के तहत गांवों को ब्लॉक, तहसील और जिला मुख्यालयों से जोड़ने के लिए कितनी सीट क्षमता वाले छोटे वाहनों को चलाने की अनुमति दी गई है?","options":["10-15 सीट क्षमता","30-40 सीट क्षमता","15-28 सीट क्षमता","5-12 सीट क्षमता ---"],"answer":"A","explanation":""},{"q":"मुख्यमंत्री ग्राम परिवहन योजना, 2026 के नियमों के अनुसार राष्ट्रीय राजधानी क्षेत्र (NCR) में आने वाले उत्तर प्रदेश के जिलों में किस प्रकार के वाहनों को चलाने की ही अनुमति होगी?","options":["केवल इलेक्ट्रिक वाहन","केवल सीएनजी या इलेक्ट्रिक वाहन","केवल बीएस-VI डीजल वाहन","केवल हाइब्रिड वाहन ---"],"answer":"A","explanation":""},{"q":"मार्च 2026 में भारतीय सेना की सेंट्रल कमांड द्वारा उत्तर प्रदेश के किस शहर में 'पहला रणनीतिक संचार सम्मेलन, 2026' आयोजित किया गया?","options":["प्रयागराज","आगरा","मेरठ","लखनऊ ---"],"answer":"A","explanation":""},{"q":"फरवरी 2026 में प्रधानमंत्री नरेंद्र मोदी ने मेरठ के किस स्टेशन से 'मेरठ मेट्रो और नमो भारत ट्रेन' की एकीकृत सेवा को हरी झंडी दिखाई, जहाँ पहली बार रैपिड रेल और मेट्रो सेवाएं एक ही मंच पर उपलब्ध कराई गई हैं?","options":["शताब्दी नगर नमो भारत स्टेशन","मोदीनगर उत्तर स्टेशन","साहिबाबाद आरआरटीएस स्टेशन","मेरठ सेंट्रल स्टेशन ---"],"answer":"A","explanation":""},{"q":"फरवरी 2026 में मुख्यमंत्री योगी आदित्यनाथ ने उत्तर प्रदेश के किस शहर में आईबीएम (IBM) के 'आर्टिफिशियली इंटेलिजेंस (AI) गवर्नमेंट टेक्नोलॉजी इनोवेशन सेंटर' का उद्घाटन किया?","options":["ग्रेटर नोएडा","कानपुर","लखनऊ","वाराणसी ---"],"answer":"A","explanation":""},{"q":"जनवरी 2026 में उत्तर प्रदेश के किस विश्वविद्यालय में प्रदेश के पहले 'राज्य विश्वविद्यालय स्तरीय ब्रेल पुस्तकालय' का शुभारंभ किया गया?","options":["लखनऊ विश्वविद्यालय, लखनऊ","डॉ. शकुंतला मिश्रा राष्ट्रीय पुनर्वास विश्वविद्यालय, लखनऊ","सिद्धार्थ विश्वविद्यालय, कपिलवस्तु","महात्मा ज्योतिबा फुले रुहेलखंड विश्वविद्यालय, बरेली ---"],"answer":"A","explanation":""},{"q":"यमुना एक्सप्रेस-वे औद्योगिक विकास प्राधिकरण (YEIDA) क्षेत्र में लगभग 3700 करोड़ रुपये के निवेश से स्थापित होने वाली 'एचसीएल-फॉक्सकॉन संयुक्त उद्यम परियोजना' का संबंध किससे है?","options":["इलेक्ट्रिक वाहन असेंबली","डेटा सेंटर नेटवर्क स्थापना","ड्रोन विनिर्माण और प्रशिक्षण","सेमीकंडक्टर असेंबली, टेस्टिंग, मार्किंग और पैकेजिंग (ATMP) ---"],"answer":"A","explanation":""},{"q":"फरवरी 2026 में गोरखपुर में प्रस्तावित अंतर्राष्ट्रीय क्रिकेट स्टेडियम के निर्माण के संबंध में उत्तर प्रदेश सरकार और किस महारत्न कंपनी के मध्य समझौता-ज्ञापन (MoU) पर हस्ताक्षर किए गए हैं, जिसके तहत वह सीएसआर निधि से 60 करोड़ रुपये का सहयोग देगी?","options":["इंडियन ऑयल कॉर्पोरेशन लिमिटेड (IOCL)","भारत हैवी इलेक्ट्रिकल्स लिमिटेड (BHEL)","राष्ट्रीय ताप विद्युत निगम (NTPC)","तेल एवं प्राकृतिक गैस निगम (ONGC) ---"],"answer":"A","explanation":""},{"q":"जनवरी 2026 में उत्तर प्रदेश मंत्रिमंडल द्वारा माध्यमिक और बेसिक शिक्षा विभागों के कार्यरत शिक्षकों, गैर-शिक्षण कर्मचारियों तथा उनके आश्रितों के लिए मंजूर की गई कैशलेस चिकित्सा उपचार योजना की कुल अनुमानित व्यय राशि कितनी है?","options":["225 करोड़ रुपये","368 करोड़ रुपये","448 करोड़ रुपये","500 करोड़ रुपये ---"],"answer":"A","explanation":""},{"q":"जनवरी 2026 के मध्य '86वां अखिल भारतीय पीठासीन अधिकारी सम्मेलन (AIPOC), 2026' उत्तर प्रदेश में कहाँ आयोजित किया गया, जिसमें लोकसभा अध्यक्ष ओम बिरला ने भी भाग लिया?","options":["प्रयागराज उच्च न्यायालय","उत्तर प्रदेश विधानसभा, लखनऊ","मंडलीय संभाग कार्यालय, वाराणसी","इंदिरा गांधी प्रतिष्ठान, लखनऊ ---"],"answer":"A","explanation":""},{"q":"जनवरी 2026 में इंडियाएआई (IndiaAI) मिशन और उत्तर प्रदेश विकास प्रणाली निगम लिमिटेड (UPDESCO) के बीच हुए समझौते के तहत पूरे उत्तर प्रदेश में कुल कितने 'डेटा एवं एआई लैब' स्थापित किए जाने की योजना है?","options":["50 लैब्स","100 लैब्स","43 लैब्स","65 लैब्स ---"],"answer":"A","explanation":""},{"q":"जनवरी 2026 में स्वच्छ भारत मिशन-शहरी के अंतर्गत शिवरी ठोस अपशिष्ट प्रबंधन संयंत्र के शुभारंभ के साथ ही कौन सा शहर उत्तर प्रदेश का पहला 'जीरो-फ्रेश वेस्ट डंप' शहर बन गया है?","options":["लखनऊ","नोएडा","गाजियाबाद","कानपुर ---"],"answer":"A","explanation":""},{"q":"दिसंबर 2025 में केंद्रीय मंत्री सर्बानंद सोनोवाल ने भारत के पहले स्वदेशी 'हाइड्रोजन फ्यूल सेल यात्री जहाज' की व्यावसायिक सेवा का शुभारंभ उत्तर प्रदेश के किस घाट से किया?","options":["अस्सी घाट, वाराणसी","दशाश्वमेध घाट, वाराणसी","नमो घाट, वाराणसी","हरिश्चंद्र घाट, वाराणसी ---"],"answer":"A","explanation":""},{"q":"उत्तर प्रदेश स्वच्छ वायु प्रबंधन कार्यक्रम (UPCAMP) के संदर्भ में निम्नलिखित कथनों पर विचार कीजिए: 1. इस कार्यक्रम के वित्तपोषण के लिए विश्व बैंक के कार्यकारी निदेशकों द्वारा 299.66 मिलियन डॉलर की राशि मंजूर की गई है। 2. इसके तहत लखनऊ, कानपुर, वाराणसी और गोरखपुर में 15,000 इलेक्ट्रिक थ्री-व्हीलर और 500 इलेक्ट्रिक बसें शुरू की जाएंगी। उपर्युक्त में से कौन सा/से कथन सत्य है/हैं?","options":["केवल 1","केवल 2","1 और 2 दोनों","न तो 1 और न ही 2 ---"],"answer":"A","explanation":""},{"q":"दिसंबर 2025 में उत्तर प्रदेश मंत्रिमंडल द्वारा अयोध्या में प्रस्तावित 'विश्व स्तरीय मंदिर संग्रहालय' की परियोजना को 52.102 एकड़ में विस्तारित करने की मंजूरी दी गई। इस संग्रहालय का निर्माण और संचालन किस संस्था द्वारा अपने कॉर्पोरेट सामाजिक जिम्मेदारी (CSR) फंड से किया जा रहा है?","options":["रिलायंस इंडस्ट्रीज","अडाणी समूह","एलएंडटी (L&T)","टाटा संस (Tata Sons) ---"],"answer":"A","explanation":""},{"q":"जुलाई 2025 में उत्तर प्रदेश मंत्रिमंडल द्वारा स्वीकृत 49.960 किमी लंबे 'ग्रीनफील्ड लिंक एक्सप्रेस-वे' का मुख्य उद्देश्य किन दो बड़े एक्सप्रेस-वे को आपस में जोड़ना है?","options":["आगरा-लखनऊ एक्सप्रेस-वे और पूर्वांचल एक्सप्रेस-वे","गंगा एक्सप्रेस-वे और यमुना एक्सप्रेस-वे","बुंदेलखंड एक्सप्रेस-वे और पूर्वांचल एक्सप्रेस-वे","गोरखपुर लिंक एक्सप्रेस-वे और गंगा एक्सप्रेस-वे --- उत्तर कुंजी एवं विस्तृत व्याख्या (Answer Key & Detailed Rationale) | प्रश्न संख्या | सही उत्तर | प्रश्न संख्या | सही उत्तर | |---|---|---|---| | प्रश्न 1 | **B** | प्रश्न 26 | **C** | | प्रश्न 2 | **C** | प्रश्न 27 | **C** | | प्रश्न 3 | **A** | प्रश्न 28 | **B** | | प्रश्न 4 | **D** | प्रश्न 29 | **D** | | प्रश्न 5 | **C** | प्रश्न 30 | **A** | | प्रश्न 6 | **B** | प्रश्न 31 | **C** | | प्रश्न 7 | **A** | प्रश्न 32 | **B** | | प्रश्न 8 | **D** | प्रश्न 33 | **C** | | प्रश्न 9 | **B** | प्रश्न 34 | **A** | | प्रश्न 10 | **C** | प्रश्न 35 | **C** | | प्रश्न 11 | **A** | प्रश्न 36 | **B** | | प्रश्न 12 | **D** | प्रश्न 37 | **D** | | प्रश्न 13 | **B** | प्रश्न 38 | **A** | | प्रश्न 14 | **C** | प्रश्न 39 | **C** | | प्रश्न 15 | **A** | प्रश्न 40 | **B** | | प्रश्न 16 | **B** | प्रश्न 41 | **D** | | प्रश्न 17 | **D** | प्रश्न 42 | **A** | | प्रश्न 18 | **C** | प्रश्न 43 | **C** | | प्रश्न 19 | **C** | प्रश्न 44 | **B** | | प्रश्न 20 | **B** | प्रश्न 45 | **D** | | प्रश्न 21 | **D** | प्रश्न 46 | **A** | | प्रश्न 22 | **A** | प्रश्न 47 | **C** | | प्रश्न 23 | **C** | प्रश्न 48 | **C** | | प्रश्न 24 | **B** | प्रश्न 49 | **D** | | प्रश्न 25 | **D** | प्रश्न 50 | **A** | विस्तृत विश्लेषण (Detailed Explanations): **प्रश्न 1: सही उत्तर (B)**"],"answer":"A","explanation":"9 जून, 2026 को शुरू किए गए प्रोजेक्ट गंगा का मुख्य उद्देश्य ग्रामीण क्षेत्रों में अंतिम छोर तक डिजिटल कनेक्टिविटी सुनिश्चित करना, डिजिटल शिक्षा, टेलीमेडिसिन और ई-गवर्नेंस का विस्तार करना है। **प्रश्न 2: सही उत्तर (C)** इस पहल के माध्यम से सरकार का लक्ष्य लगभग 20 लाख परिवारों को हाई-स्पीड इंटरनेट कनेक्टिविटी प्रदान करना और 1 लाख से अधिक प्रत्यक्ष एवं अप्रत्यक्ष रोजगार पैदा करना है। **प्रश्न 3: सही उत्तर (A)** 3 जून, 2026 को उत्तर प्रदेश मंत्रिमंडल ने मुख्यमंत्री शहरी विस्तारीकरण योजना के तहत आगरा, बरेली और प्रयागराज में आधुनिक सैटेलाइट टाउन बसाने के लिए 225 करोड़ रुपये की पहली किस्त मंजूर की। **प्रश्न 4: सही उत्तर (D)** इन तीन शहरों (आगरा, बरेली, प्रयागराज) के लिए कुल 355.06 करोड़ रुपये की सीड कैपिटल को मंजूरी दी गई है, जिसमें से 225 करोड़ रुपये की पहली किस्त जारी की जा रही है। **प्रश्न 5: सही उत्तर (C)** नवीन जेलों का निर्माण कानपुर, मुरादाबाद, ललितपुर, औरैया और भदोही में किया जाएगा। इसमें वाराणसी शामिल नहीं है। इसकी कुल लागत 1470.16 करोड़ रुपये है। **प्रश्न 6: सही उत्तर (B)** 3 जून, 2026 को स्वीकृत नीति के अनुसार इस बार मक्के का न्यूनतम समर्थन मूल्य (MSP) 2400 रुपये प्रति क्विंटल निर्धारित किया गया है। **प्रश्न 7: सही उत्तर (A)** 30 मई, 2026 को लखनऊ में इसका उद्घाटन हुआ। यह दो एकड़ से अधिक क्षेत्र में 19 करोड़ की लागत से बना खुला संग्रहालय है जो भारतीय नौसेना की भावना और पराक्रम को समर्पित है। **प्रश्न 8: सही उत्तर (D)** 14-16 मई, 2026 के मध्य एआई ट्रांसफॉर्मेशन कॉन्क्लेव, 2026 का आयोजन लखनऊ में किया गया, जिसमें डिजिटल कायाकल्प और ट्रिलियन डॉलर इकोनॉमी के लक्ष्य पर मंथन हुआ। **प्रश्न 9: सही उत्तर (B)** उत्तर प्रदेश सरकार ने लखनऊ की वृंदावन योजना में 368 करोड़ रुपये की लागत से देश की पहली एआई सिटी को हरी झंडी दी है। **प्रश्न 10: सही उत्तर (C)** कॉन्क्लेव में पहली बार 'यूपी एआई मिशन' के लिए 225 करोड़ रुपये का विशेष बजट आवंटित किया गया है। **प्रश्न 11: सही उत्तर (A)** 6-7 मई, 2026 के मध्य 'फ्रूट होराइजन, 2026' का आयोजन लखनऊ स्थित ICAR-CISH (केंद्रीय उपोष्णकटिबंधीय संस्थान) में किया गया था। **प्रश्न 12: सही उत्तर (D)** 4-6 मई, 2026 को प्रयागराज में आयोजित इस संगोष्ठी का मुख्य विषय 'रक्षा त्रिवेणी संगम—जहाँ प्रौद्योगिकी, उद्योग और सैनिक क्षमता का संगम होता है' था, जिसका उद्घाटन रक्षा मंत्री राजनाथ सिंह ने किया। **प्रश्न 13: सही उत्तर (B)** 2 मई, 2026 को भारतीय रेलवे ने रायबरेली (लालगंज) स्थित मॉडर्न कोच फैक्ट्री से 100वीं वंदे भारत ट्रेन को रवाना किया। यह ट्रेन सेट वहीं निर्मित किया गया है। **प्रश्न 14: सही उत्तर (C)** 30 अप्रैल, 2026 को APEDA ने पीलीभीत के टांडा विजैसी में बासमती और जैविक प्रशिक्षण केंद्र-सह-प्रदर्शन फार्म की स्थापना हेतु समझौता किया। यह देश का ऐसा पहला केंद्र होगा। **प्रश्न 15: सही उत्तर (A)** यह समझौता उत्तर प्रदेश सरकार के साथ 70 वर्ष के पट्टे (लीज) के समझौते पर हस्ताक्षरित हुआ है। **प्रश्न 16: सही उत्तर (B)** 24 अप्रैल, 2026 को इस सम्मेलन का आयोजन लखनऊ में कृषि एवं किसान कल्याण मंत्रालय, भारत सरकार द्वारा किया गया था। **प्रश्न 17: सही उत्तर (D)** यह अनूठी सुविधा उत्तर प्रदेश के बुलंदशहर जिले के सिकंदराबाद औद्योगिक क्षेत्र में स्थित है। **प्रश्न 18: सही उत्तर (C)** 29 अप्रैल, 2026 को प्रधानमंत्री ने हरदोई में 594 किमी. लंबे एक्सेस कंट्रोल्ड ग्रीनफील्ड गंगा एक्सप्रेस-वे का उद्घाटन किया, जिसकी कुल लागत 36,230 करोड़ रुपये है। **प्रश्न 19: सही उत्तर (C)** दोनों कथन बिल्कुल सही हैं। गंगा एक्सप्रेस-वे 594 किमी लंबा है और मेरठ से शुरू होकर प्रयागराज तक जाता है, जिसमें बुलंदशहर, अमरोहा, संभल, बदायूं, शाहजहांपुर, हरदोई, उन्नाव, रायबरेली और प्रतापगढ़ शामिल हैं। **प्रश्न 20: सही उत्तर (B)** 29 मार्च से 2 अप्रैल, 2026 के मध्य यह प्रतियोगिता ग्रेटर नोएडा में कौशल विकास और उद्यमिता मंत्रालय के तत्वावधान में आयोजित हुई। **प्रश्न 21: सही उत्तर (D)** 30-31 मार्च, 2026 के मध्य इसका आयोजन संगीत नाटक अकादमी, गोमती नगर, लखनऊ में किया गया था। **प्रश्न 22: सही उत्तर (A)** उत्तर प्रदेश सरकार के सहयोग से यह पार्क लगभग 3.5 एकड़ भूमि पर लगभग 20 करोड़ रुपये की लागत से गीडा (GIDA) में निर्मित किया गया है। **प्रश्न 23: सही उत्तर (C)** 23 मार्च, 2026 को उत्तर प्रदेश मंत्रिमंडल ने गोरखपुर के चिलुआताल में 20 मेगावाट क्षमता के फ्लोटिंग सोलर प्लांट की स्थापना को स्वीकृति दी। **प्रश्न 24: सही उत्तर (B)** गोरखपुर में लगभग 500 करोड़ की लागत से उत्तर प्रदेश के पहले समर्पित वन विश्वविद्यालय 'उत्तर प्रदेश वानिकी एवं औद्यानिकी विश्वविद्यालय' की स्थापना की जाएगी। **प्रश्न 25: सही उत्तर (D)** 17 अगस्त, 2025 को मुख्यमंत्री ने गोरखपुर में टोरेंट समूह के 'ग्रीन हाइड्रोजन संयंत्र' का लोकार्पण किया। यह उत्तर प्रदेश का पहला ग्रीन हाइड्रोजन संयंत्र है। **प्रश्न 26: सही उत्तर (C)** दोनों कथन सत्य हैं। 24 मार्च, 2026 को लॉन्च इस पोर्टल में 43 से अधिक विभागों की 530 से अधिक सेवाओं को सरल बनाकर 200 से कम सेवाओं में समेकित किया गया है। **प्रश्न 27: सही उत्तर (C)** इस अध्यादेश का उद्देश्य 'उत्तर प्रदेश राजस्व संहिता, 2006' की धारा 80 की उपधारा 8 में संशोधन करना है, जिससे औद्योगिक और आवास विकास क्षेत्रों में गैर-कृषिक उद्घोषणा की प्रक्रिया सरल हो सके। **प्रश्न 28: सही उत्तर (B)** नीति के तहत गेहूं के न्यूनतम समर्थन मूल्य (MSP) में 160 रुपये प्रति क्विंटल की वृद्धि की गई है, जिससे अब खरीद दर 2585 रुपये प्रति क्विंटल हो गई है। **प्रश्न 29: सही उत्तर (D)** 23 मार्च, 2026 को उत्तर प्रदेश मंत्रिमंडल द्वारा ग्रेटर नोएडा में 174.12 एकड़ भूमि पर मल्टी मॉडल लॉजिस्टिक्स पार्क (MMLP) की स्थापना हेतु नियम और ब्रोशर को मंजूरी दी गई। **प्रश्न 30: सही उत्तर (A)** जनवरी 2026 में ग्रेटर नोएडा में स्थित गवर्नमेंट इंस्टीट्यूट ऑफ मेडिकल साइंसेज (GIMS) में भारत की पहली सरकारी अस्पताल-आधारित एआई क्लीनिक शुरू की गई है। **प्रश्न 31: सही उत्तर (C)** 11 नवंबर, 2025 को ग्रेटर नोएडा स्थित NETRA में भारत की पहली और सबसे बड़ी 3 मेगावाट/घंटे क्षमता वाली 'वेनेडियम रेडॉक्स फ्लो बैटरी प्रणाली' का उद्घाटन किया गया। **प्रश्न 32: सही उत्तर (B)** इस योजना में शामिल 58 नगरीय निकायों के लिए प्रतिवर्ष 583.20 करोड़ रुपये और कुल 5 वर्षों में 2916 करोड़ रुपये की धनराशि का व्यय भार संभावित है। **प्रश्न 33: सही उत्तर (C)** दोनों कथन सत्य हैं। यह योजना जिला मुख्यालय की पालिकाओं (नगर निगमों को छोड़कर) के कायाकल्प के लिए लाई गई है और शत-प्रतिशत राज्य सरकार द्वारा पोषित है। **प्रश्न 34: सही उत्तर (A)** भारत का पहला राष्ट्रीय गौ-संस्कृति संग्रहालय मथुरा स्थित पं. दीनदयाल उपाध्याय पशु चिकित्सा विज्ञान विश्वविद्यालय एवं गौ-अनुसंधान संस्थान परिसर में स्थापित किया जा रहा है। **प्रश्न 35: सही उत्तर (C)** इस योजना में 15-28 सीट क्षमता वाले छोटे वाहन (लगभग 7 मीटर लंबाई) चलाए जाएंगे। ये डीजल, सीएनजी और इलेक्ट्रिक हो सकते हैं। **प्रश्न 36: सही उत्तर (B)** योजना के प्रावधानों के अनुसार, एनसीआर (NCR) क्षेत्र के अंतर्गत आने वाले जिलों में केवल सीएनजी (CNG) या इलेक्ट्रिक वाहन ही चलाने की अनुमति होगी। **प्रश्न 37: सही उत्तर (D)** 7 मार्च, 2026 को इस सम्मेलन का आयोजन भारतीय सेना की सेंट्रल कमांड द्वारा लखनऊ, उत्तर प्रदेश में किया गया था। **प्रश्न 38: सही उत्तर (A)** 22 फरवरी, 2026 को प्रधानमंत्री ने मेरठ के शताब्दी नगर नमो भारत स्टेशन से मेरठ मेट्रो और नमो भारत ट्रेन की एकीकृत सेवाओं को हरी झंडी दिखाई। **प्रश्न 39: सही उत्तर (C)** 22 फरवरी, 2026 को लखनऊ में आईबीएम के 'आर्टिफिशियली इंटेलिजेंस (AI) गवर्नमेंट टेक्नोलॉजी इनोवेशन सेंटर' का उद्घाटन किया गया। **प्रश्न 40: सही उत्तर (B)** 4 जनवरी, 2026 को लुई ब्रेल की जयंती के अवसर पर डॉ. शकुंतला मिश्रा पुनर्वास विश्वविद्यालय, लखनऊ में राज्य का पहला विश्वविद्यालय स्तरीय ब्रेल पुस्तकालय शुरू किया गया। **प्रश्न 41: सही उत्तर (D)** 21 फरवरी, 2026 को शिलान्यास की गई यह परियोजना इंडिया चिप प्राइवेट लिमिटेड द्वारा मॉडिफाइड स्कीम फॉर सेमीकंडक्टर असेंबली, टेस्टिंग, मार्किंग और पैकेजिंग (ATMP) के अंतर्गत स्थापित की जा रही है। **प्रश्न 42: सही उत्तर (A)** 19 फरवरी, 2026 को लखनऊ में यूपी सरकार और इंडियन ऑयल कॉर्पोरेशन (IOCL) के मध्य गोरखपुर स्टेडियम के निर्माण हेतु समझौता हुआ, जिसमें IOCL कॉर्पोरेट सामाजिक जिम्मेदारी (CSR) निधि से 60 करोड़ रुपये देगा। **प्रश्न 43: सही उत्तर (C)** 29 जनवरी, 2026 को स्वीकृत इस योजना से लगभग 15 लाख लोग लाभान्वित होंगे और इसकी कुल अनुमानित व्यय राशि 448 करोड़ रुपये है। **प्रश्न 44: सही उत्तर (B)** 19-21 जनवरी, 2026 के मध्य 86वें अखिल भारतीय पीठासीन अधिकारी सम्मेलन का आयोजन उत्तर प्रदेश विधानसभा, लखनऊ में किया गया था। **प्रश्न 45: सही उत्तर (D)** 12 जनवरी, 2026 को हुए समझौते के तहत उत्तर प्रदेश में कुल 65 डेटा एवं एआई लैब स्थापित किए जाने की योजना है। **प्रश्न 46: सही उत्तर (A)** लखनऊ ने शिवरी संयंत्र के शुभारंभ के साथ नगर पालिका ठोस अपशिष्ट का 100% वैज्ञानिक प्रसंस्करण सुनिश्चित कर उत्तर प्रदेश का पहला 'जीरो-फ्रेश वेस्ट डंप' शहर बनने का गौरव प्राप्त किया है। **प्रश्न 47: सही उत्तर (C)** 11 दिसंबर, 2025 को कोचीन शिपयार्ड लिमिटेड द्वारा निर्मित भारत के पहले स्वदेशी हाइड्रोजन फ्यूल सेल यात्री जहाज की कमर्शियल सेवा का शुभारंभ वाराणसी के नमो घाट से किया गया। **प्रश्न 48: सही उत्तर (C)** दोनों कथन बिल्कुल सही हैं। दिसंबर 2025 में विश्व बैंक द्वारा यूपीकैंप (UPCAMP) के लिए 299.66 मिलियन डॉलर स्वीकृत किए गए, जिसके तहत परिवहन क्षेत्र में बड़े पैमाने पर इलेक्ट्रिक वाहनों का संचालन इन चार प्रमुख प्रदूषित शहरों में किया जाएगा। **प्रश्न 49: सही उत्तर (D)** अयोध्या में प्रस्तावित विश्व स्तरीय मंदिर संग्रहालय परियोजना का निर्माण और संचालन 'टाटा संस' द्वारा अपने सीएसआर (CSR) फंड से किया जा रहा है। **प्रश्न 50: सही उत्तर (A)** यह नियंत्रित ग्रीनफील्ड लिंक एक्सप्रेस-वे आगरा-लखनऊ एक्सप्रेस-वे (भलिया ग्राम) को पूर्वांचल एक्सप्रेस-वे (पहासा ग्राम) से जोड़ेगा। इसकी कुल लागत 4775.84 करोड़ रुपये निर्धारित है।"}]};
+/* ====================  प्रश्न यहीं तक — नीचे इंजन है  ==================== */
+
+
+/* ----------------------------- इंजन ----------------------------- */
+const LETTERS = "ABCDEFGH";
+const $ = (id) => document.getElementById(id);
+const Q = TEST.questions;
+const N = Q.length;
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+const state = {
+  idx: 0,
+  answers: new Array(N).fill(null),
+  marked: new Array(N).fill(false),
+  visited: new Array(N).fill(false),
+  timeLeft: (TEST.durationMinutes || 0) * 60,
+  timer: null,
+  startTs: 0,
+  finished: false
+};
+
+function answerIndex(qObj){
+  let a = qObj.answer;
+  if (typeof a === "number") return (a >= 1 && a <= qObj.options.length) ? a - 1 : a;
+  if (typeof a === "string"){
+    const up = a.trim().toUpperCase();
+    const i = LETTERS.indexOf(up);
+    if (i !== -1) return i;
+    const n = parseInt(up, 10);
+    if (!isNaN(n)) return n - 1;
+  }
+  return -1;
+}
+
+/* ---------- आवरण भरें ---------- */
+function buildCover(){
+  $("cv-title").textContent = TEST.title || "परीक्षा";
+  $("cv-eyebrow").textContent = TEST.subtitle || "अभ्यास परीक्षा";
+  $("cv-tag").textContent = TEST.tag || "मॉक टेस्ट";
+  $("cv-desc").textContent = "कुल " + N + " प्रश्न · सावधानी से पढ़ें, समय का ध्यान रखें और प्रत्येक प्रश्न का उत्तर सोच-समझकर दें। शुभकामनाएँ!";
+
+  const totalMarks = N * (TEST.marksPerQuestion || 1);
+  const meta = [
+    {k:"प्रश्न", v:N, s:""},
+    {k:"कुल अंक", v:totalMarks, s:""},
+    {k:"समय", v:(TEST.durationMinutes ? TEST.durationMinutes : "∞"), s:(TEST.durationMinutes ? "मिनट" : "")},
+    {k:"ऋणात्मक", v:(TEST.negativeMarks ? ("−"+TEST.negativeMarks) : "0"), s:"प्रति गलत"}
+  ];
+  $("cv-meta").innerHTML = meta.map(m =>
+    `<div class="meta-card"><div class="meta-k">${m.k}</div><div class="meta-v">${m.v}<small>${m.s}</small></div></div>`
+  ).join("");
+
+  const negTxt = TEST.negativeMarks
+    ? `प्रत्येक गलत उत्तर पर <b>${TEST.negativeMarks} अंक</b> की कटौती होगी — अनुमान लगाने से पहले सोचें।`
+    : `इस परीक्षा में ग़लत उत्तर पर कोई ऋणात्मक अंकन नहीं है।`;
+  const timeTxt = TEST.durationMinutes
+    ? `निर्धारित समय <b>${TEST.durationMinutes} मिनट</b> है; समय समाप्त होते ही परीक्षा स्वतः जमा हो जाएगी।`
+    : `इस परीक्षा में कोई समय-सीमा नहीं है, फिर भी अभ्यास हेतु गति बनाए रखें।`;
+  const ins = [
+    `कुल <b>${N} प्रश्न</b> हैं और प्रत्येक के <b>${TEST.marksPerQuestion} अंक</b> निर्धारित हैं।`,
+    timeTxt,
+    negTxt,
+    `किसी प्रश्न पर संदेह हो तो उसे <b>“समीक्षा हेतु चिह्नित”</b> कर आगे बढ़ें और बाद में लौटें।`,
+    `दाईं ओर की <b>प्रश्न सूची</b> से किसी भी प्रश्न पर सीधे जा सकते हैं — हरा अर्थात् उत्तरित।`,
+    `सब हल कर लेने पर <b>“परीक्षा समाप्त करें”</b> दबाएँ; तभी आपका परिणाम और विस्तृत समाधान दिखेगा।`
+  ];
+  $("cv-ins").innerHTML = ins.map(t => `<li>${t}</li>`).join("");
+}
+
+/* ---------- स्क्रीन स्विच ---------- */
+function show(name){
+  ["cover","quiz","result","review"].forEach(s => $("screen-"+s).hidden = (s !== name));
+  window.scrollTo({top:0, behavior: reduced ? "auto" : "smooth"});
+}
+
+/* ---------- परीक्षा आरंभ ---------- */
+function startTest(){
+  state.startTs = Date.now();
+  state.idx = 0;
+  show("quiz");
+  renderQuestion();
+  buildPalette();
+  if (TEST.durationMinutes > 0){ startTimer(); } else { $("timer").style.display = "none"; }
+}
+
+function startTimer(){
+  updateTimer();
+  state.timer = setInterval(() => {
+    state.timeLeft--;
+    updateTimer();
+    if (state.timeLeft <= 0){ clearInterval(state.timer); doSubmit(true); }
+  }, 1000);
+}
+function fmt(s){
+  s = Math.max(0, s);
+  const m = Math.floor(s/60), ss = s%60;
+  return m + ":" + String(ss).padStart(2,"0");
+}
+function updateTimer(){
+  $("timerText").textContent = fmt(state.timeLeft);
+  $("timer").classList.toggle("warn", state.timeLeft <= 60 && state.timeLeft > 0);
+}
+
+/* ---------- प्रश्न रेंडर ---------- */
+function renderQuestion(){
+  const i = state.idx, q = Q[i];
+  state.visited[i] = true;
+
+  const pre = q.statement ? `<span class="q-pre">${q.statement}</span>` : "";
+  const opts = q.options.map((o, k) => {
+    const sel = state.answers[i] === k ? " sel" : "";
+    return `<button class="opt${sel}" data-k="${k}" type="button">
+              <span class="key">${LETTERS[k]}</span>
+              <span class="txt">${o}</span>
+            </button>`;
+  }).join("");
+
+  const neg = TEST.negativeMarks ? `<span class="chip neg">−${TEST.negativeMarks}</span>` : "";
+  $("qCard").innerHTML = `
+    <div class="q-head">
+      <div class="q-no">प्रश्न <b>${i+1}</b> / ${N}</div>
+      <div class="q-marks"><span class="chip pos">+${TEST.marksPerQuestion}</span>${neg}</div>
+    </div>
+    <div class="q-text">${pre}${q.q}</div>
+    <div class="options">${opts}</div>
+  `;
+
+  $("qCard").querySelectorAll(".opt").forEach(b => {
+    b.addEventListener("click", () => selectOption(parseInt(b.dataset.k,10)));
+  });
+
+  $("prevBtn").disabled = (i === 0);
+  $("nextBtn").innerHTML = (i === N-1)
+    ? `परीक्षा समाप्त करें <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+    : `अगला <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+  updateMarkBtn();
+  updateProgress();
+  refreshPalette();
+}
+
+function selectOption(k){
+  state.answers[state.idx] = (state.answers[state.idx] === k) ? null : k; // दोबारा दबाने पर हटे
+  renderQuestion();
+}
+function updateMarkBtn(){
+  const m = state.marked[state.idx];
+  $("markBtn").textContent = m ? "चिह्न हटाएँ" : "समीक्षा हेतु चिह्नित करें";
+  $("markBtn").style.borderColor = m ? "rgba(157,123,255,.5)" : "";
+  $("markBtn").style.color = m ? "#cdbcff" : "";
+}
+function toggleMark(){ state.marked[state.idx] = !state.marked[state.idx]; updateMarkBtn(); refreshPalette(); }
+
+function updateProgress(){
+  const answered = state.answers.filter(a => a !== null).length;
+  $("progressFill").style.width = (answered / N * 100) + "%";
+}
+
+/* ---------- प्रश्न सूची ---------- */
+function buildPalette(){
+  const grid = $("pGrid");
+  grid.innerHTML = "";
+  for (let i=0;i<N;i++){
+    const b = document.createElement("button");
+    b.className = "pnum"; b.textContent = (i+1);
+    b.addEventListener("click", () => { state.idx = i; renderQuestion(); closeDrawer(); });
+    grid.appendChild(b);
+  }
+  refreshPalette();
+}
+function refreshPalette(){
+  const ans = state.answers.filter(a => a !== null).length;
+  $("pCount").textContent = ans + " / " + N + " उत्तरित";
+  document.querySelectorAll("#pGrid .pnum, #drawerGrid .pnum").forEach((b, n) => {
+    const i = n % N;
+    b.className = "pnum";
+    if (state.answers[i] !== null) b.classList.add("answered");
+    else if (state.visited[i]) b.classList.add("notans");
+    if (state.marked[i]) b.classList.add("marked");
+    if (i === state.idx) b.classList.add("current");
+  });
+}
+
+/* ---------- मोबाइल ड्रॉअर ---------- */
+function openDrawer(){
+  if ($("drawerEl")) return;
+  const d = document.createElement("div");
+  d.className = "overlay"; d.id = "drawerOverlay";
+  d.innerHTML = `<div class="drawer" id="drawerEl" onclick="event.stopPropagation()">
+      <h4 style="font-family:var(--display);font-weight:400;font-size:21px;color:var(--gold-2);margin:0 0 4px">प्रश्न सूची</h4>
+      <div class="pcount" id="dCount" style="font-size:12px;color:var(--muted-2);margin-bottom:14px"></div>
+      <div class="pgrid" id="drawerGrid"></div>
+      <button class="btn btn-ghost" style="width:100%;margin-top:6px" onclick="closeDrawer()">बंद करें</button>
+    </div>`;
+  d.addEventListener("click", closeDrawer);
+  document.body.appendChild(d);
+  const g = $("drawerGrid");
+  for (let i=0;i<N;i++){
+    const b = document.createElement("button");
+    b.className="pnum"; b.textContent=(i+1);
+    b.addEventListener("click", ()=>{ state.idx=i; renderQuestion(); closeDrawer(); });
+    g.appendChild(b);
+  }
+  $("dCount").textContent = state.answers.filter(a=>a!==null).length + " / " + N + " उत्तरित";
+  refreshPalette();
+}
+function closeDrawer(){ const o = $("drawerOverlay"); if (o) o.remove(); }
+
+/* ---------- जमा करें (पुष्टि) ---------- */
+function askSubmit(){
+  const answered = state.answers.filter(a => a !== null).length;
+  const left = N - answered;
+  const marked = state.marked.filter(Boolean).length;
+  const ov = document.createElement("div");
+  ov.className = "overlay"; ov.id = "confirmOverlay";
+  ov.innerHTML = `<div class="modal" onclick="event.stopPropagation()">
+      <h3>परीक्षा जमा करें?</h3>
+      <p>जमा करने के बाद उत्तर बदले नहीं जा सकेंगे। एक बार जाँच लें:</p>
+      <div class="modal-stats">
+        <div class="ms a"><div class="v">${answered}</div><div class="k">उत्तरित</div></div>
+        <div class="ms b"><div class="v">${left}</div><div class="k">शेष</div></div>
+        <div class="ms c"><div class="v">${marked}</div><div class="k">चिह्नित</div></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-quiet" onclick="closeConfirm()">वापस जाएँ</button>
+        <button class="btn btn-primary" onclick="closeConfirm(); doSubmit(false)">हाँ, जमा करें</button>
+      </div>
+    </div>`;
+  ov.addEventListener("click", closeConfirm);
+  document.body.appendChild(ov);
+}
+function closeConfirm(){ const o = $("confirmOverlay"); if (o) o.remove(); }
+
+/* ---------- स्कोर गणना ---------- */
+function computeScore(){
+  let correct=0, wrong=0, skipped=0;
+  for (let i=0;i<N;i++){
+    const a = state.answers[i];
+    if (a === null){ skipped++; continue; }
+    if (a === answerIndex(Q[i])) correct++; else wrong++;
+  }
+  const marks = correct * TEST.marksPerQuestion - wrong * (TEST.negativeMarks || 0);
+  const max = N * TEST.marksPerQuestion;
+  const attempted = correct + wrong;
+  const accuracy = attempted ? Math.round(correct / attempted * 100) : 0;
+  return {correct, wrong, skipped, marks, max, accuracy, attempted};
+}
+
+function doSubmit(auto){
+  if (state.finished) return;
+  state.finished = true;
+  if (state.timer) clearInterval(state.timer);
+  closeConfirm(); closeDrawer();
+  const elapsed = TEST.durationMinutes
+    ? (TEST.durationMinutes*60 - Math.max(0,state.timeLeft))
+    : Math.round((Date.now()-state.startTs)/1000);
+  renderResult(computeScore(), elapsed, auto);
+}
+
+/* ---------- परिणाम रेंडर + एनिमेशन ---------- */
+function renderResult(r, elapsed){
+  show("result");
+  const round2 = (x)=> (Math.round(x*100)/100);
+  $("scoreMax").textContent = round2(r.max);
+  $("stTime").textContent = fmt(elapsed);
+
+  let verdict, sub;
+  if (r.accuracy >= 85){ verdict="उत्कृष्ट प्रदर्शन!"; sub="यही सटीकता आपको चयन की ओर ले जाती है। इसी गति और गहराई को बनाए रखें।"; }
+  else if (r.accuracy >= 60){ verdict="बहुत अच्छा!"; sub="आधार मज़बूत है — अब गलतियाँ कम कर के सटीकता और तेज़ करें।"; }
+  else if (r.accuracy >= 40){ verdict="ठीक-ठाक, और मेहनत चाहिए।"; sub="कमज़ोर क्षेत्रों का revision करें और तथ्यों को बार-बार दोहराएँ।"; }
+  else { verdict="अभी आधार और पक्का करें।"; sub="हार नहीं, अभ्यास। समाधान ध्यान से पढ़ें — हर गलती एक नया सबक है।"; }
+  $("verdict").textContent = verdict;
+  $("verdictSub").textContent = sub;
+
+  // गिनती एनिमेशन
+  animateNum($("ringPctNum"), 0, r.accuracy, 1100, v => Math.round(v));
+  animateNum($("scoreGot"), 0, r.marks, 1100, v => {
+    const t = Math.round(v*100)/100;
+    return Number.isInteger(t) ? t : t.toFixed(2);
+  });
+  animateNum($("stCorrect"), 0, r.correct, 900, v=>Math.round(v));
+  animateNum($("stWrong"), 0, r.wrong, 900, v=>Math.round(v));
+  animateNum($("stSkip"), 0, r.skipped, 900, v=>Math.round(v));
+
+  // वलय (ring) भरना
+  const C = 2 * Math.PI * 100;
+  const fg = $("ringFg");
+  fg.style.strokeDashoffset = C;
+  requestAnimationFrame(()=> requestAnimationFrame(()=>{
+    fg.style.transition = reduced ? "none" : "stroke-dashoffset 1.2s cubic-bezier(.2,.7,.2,1)";
+    fg.style.strokeDashoffset = C * (1 - r.accuracy/100);
+  }));
+
+  if (r.accuracy >= 60 && !reduced) setTimeout(fireConfetti, 350);
+}
+
+function animateNum(el, from, to, dur, fmtFn){
+  if (reduced){ el.textContent = fmtFn(to); return; }
+  const t0 = performance.now();
+  function step(t){
+    const p = Math.min(1, (t - t0)/dur);
+    const e = 1 - Math.pow(1-p, 3);
+    el.textContent = fmtFn(from + (to-from)*e);
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+/* ---------- कन्फ़ेटी (बिना लाइब्रेरी) ---------- */
+function fireConfetti(){
+  const cv = $("confetti");
+  const ctx = cv.getContext("2d");
+  const DPR = Math.min(2, window.devicePixelRatio||1);
+  cv.width = innerWidth*DPR; cv.height = innerHeight*DPR; ctx.scale(DPR,DPR);
+  const colors = ["#f0c75e","#d4af37","#ff8a3d","#ff6b35","#ffe9a8","#2fbf86"];
+  const P = [];
+  const cx = innerWidth/2, cy = innerHeight*0.34;
+  for (let i=0;i<140;i++){
+    const a = Math.random()*Math.PI*2, sp = 4 + Math.random()*9;
+    P.push({x:cx, y:cy, vx:Math.cos(a)*sp, vy:Math.sin(a)*sp - 5,
+      w:5+Math.random()*7, h:8+Math.random()*8, rot:Math.random()*6.28,
+      vr:(Math.random()-.5)*.4, c:colors[i%colors.length], life:0});
+  }
+  let frame=0;
+  (function run(){
+    ctx.clearRect(0,0,innerWidth,innerHeight);
+    let alive=false;
+    P.forEach(p=>{
+      p.vy += 0.22; p.x += p.vx; p.y += p.vy; p.vx *= 0.99; p.rot += p.vr; p.life++;
+      if (p.y < innerHeight+40){ alive=true; }
+      ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot);
+      ctx.globalAlpha = Math.max(0, 1 - p.life/170);
+      ctx.fillStyle = p.c; ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);
+      ctx.restore();
+    });
+    frame++;
+    if (alive && frame < 220) requestAnimationFrame(run);
+    else ctx.clearRect(0,0,innerWidth,innerHeight);
+  })();
+}
+
+/* ---------- समीक्षा रेंडर ---------- */
+let reviewFilter = "all";
+function renderReview(){
+  show("review");
+  const list = $("reviewList");
+  list.innerHTML = "";
+  let shown = 0;
+  for (let i=0;i<N;i++){
+    const q = Q[i], ci = answerIndex(q), ua = state.answers[i];
+    let status; // correct / wrong / skip
+    if (ua === null) status = "skip";
+    else if (ua === ci) status = "correct";
+    else status = "wrong";
+    if (reviewFilter !== "all" && reviewFilter !== status) continue;
+    shown++;
+
+    const badgeTxt = status==="correct" ? "सही उत्तर" : status==="wrong" ? "गलत उत्तर" : "अनुत्तरित";
+    const opts = q.options.map((o,k)=>{
+      let cls="", mark="";
+      if (k === ci){ cls="is-correct"; mark=`<span class="rev-mark">✓ सही उत्तर</span>`; }
+      if (k === ua && ua !== ci){ cls="is-wrong"; mark=`<span class="rev-mark">✗ आपका उत्तर</span>`; }
+      return `<div class="rev-opt ${cls}"><span class="rkey">${LETTERS[k]}</span><span class="rtxt">${o}</span>${mark}</div>`;
+    }).join("");
+
+    const pre = q.statement ? `<span style="display:block;color:var(--muted);font-size:14px;margin-bottom:8px;font-weight:400">${q.statement}</span>` : "";
+    list.insertAdjacentHTML("beforeend", `
+      <div class="rev-card ${status}">
+        <div class="rev-top">
+          <span class="rev-qno">प्रश्न ${i+1}</span>
+          <span class="rev-badge ${status}">${badgeTxt}</span>
+        </div>
+        <div class="rev-q">${pre}${q.q}</div>
+        <div class="rev-opts">${opts}</div>
+        ${q.explanation ? `<div class="explain"><div class="et"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2ZM9 21h6M10 17v4M14 17v4" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> व्याख्या</div><p>${q.explanation}</p></div>` : ""}
+      </div>
+    `);
+  }
+  if (shown === 0){
+    list.innerHTML = `<div style="text-align:center;color:var(--muted);padding:50px 0;font-size:15px">इस श्रेणी में कोई प्रश्न नहीं।</div>`;
+  }
+}
+
+/* ---------- रीसेट ---------- */
+function retry(){
+  state.idx = 0;
+  state.answers = new Array(N).fill(null);
+  state.marked = new Array(N).fill(false);
+  state.visited = new Array(N).fill(false);
+  state.timeLeft = (TEST.durationMinutes||0)*60;
+  state.finished = false;
+  if (state.timer) clearInterval(state.timer);
+  $("timer").style.display = TEST.durationMinutes ? "" : "none";
+  startTest();
+}
+
+/* ---------- इवेंट बाइंडिंग ---------- */
+$("startBtn").addEventListener("click", startTest);
+$("prevBtn").addEventListener("click", () => { if (state.idx>0){ state.idx--; renderQuestion(); } });
+$("nextBtn").addEventListener("click", () => {
+  if (state.idx < N-1){ state.idx++; renderQuestion(); } else { askSubmit(); }
+});
+$("markBtn").addEventListener("click", toggleMark);
+$("submitTop").addEventListener("click", askSubmit);
+$("submitSide").addEventListener("click", askSubmit);
+$("paletteFab").addEventListener("click", openDrawer);
+$("reviewBtn").addEventListener("click", renderReview);
+$("retryBtn").addEventListener("click", retry);
+$("backToResult").addEventListener("click", () => show("result"));
+$("rFilters").addEventListener("click", (e) => {
+  const b = e.target.closest(".rfilter"); if (!b) return;
+  document.querySelectorAll(".rfilter").forEach(x => x.classList.remove("active"));
+  b.classList.add("active"); reviewFilter = b.dataset.f; renderReview();
+});
+
+/* कीबोर्ड शॉर्टकट (परीक्षा के दौरान) */
+document.addEventListener("keydown", (e) => {
+  if ($("screen-quiz").hidden) return;
+  if (e.key === "ArrowRight"){ if (state.idx<N-1){ state.idx++; renderQuestion(); } }
+  else if (e.key === "ArrowLeft"){ if (state.idx>0){ state.idx--; renderQuestion(); } }
+  else if (/^[1-9]$/.test(e.key)){
+    const k = parseInt(e.key,10)-1;
+    if (k < Q[state.idx].options.length) selectOption(k);
+  }
+  else if (e.key.toLowerCase() === "m") toggleMark();
+});
+
+/* प्रारंभ */
+buildCover();
+show("cover");
+</script>
+</body>
+</html>
