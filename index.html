@@ -233,6 +233,7 @@ section{position:relative;z-index:3;padding:104px 26px}
 .b-ca{background:rgba(217,174,95,.14);color:var(--gold-hi)}
 .b-gs{background:rgba(127,180,255,.13);color:var(--blue)}
 .b-csat{background:rgba(127,214,164,.13);color:var(--green)}
+.b-ncert{background:rgba(179,153,255,.14);color:#c3b0ff}
 .tcard h3{font-family:'Mukta',sans-serif;font-weight:700;font-size:18.5px;color:var(--cream);line-height:1.5}
 .tgo{margin-top:auto;padding-top:13px;border-top:1px dashed var(--line);color:var(--gold);font-weight:700;font-size:14.5px;transition:color .25s,letter-spacing .25s}
 .tcard:hover .tgo{color:var(--gold-hi);letter-spacing:.4px}
@@ -507,7 +508,7 @@ footer .sh{font-family:'Tiro Devanagari Hindi',serif;font-style:italic;color:var
     <div class="sec-head rv">
       <span class="eyebrow">टेस्ट सीरीज़</span>
       <h2>अभ्यास, परीक्षा की <em>कसौटी</em> पर</h2>
-      <p>करेंट अफेयर्स, सामान्य अध्ययन और CSAT — प्रत्येक टेस्ट परीक्षा के वास्तविक स्तर एवं प्रवृत्ति को ध्यान में रखकर तैयार किया गया है।</p>
+      <p>करेंट अफेयर्स, सामान्य अध्ययन, CSAT और NCERT — प्रत्येक टेस्ट परीक्षा के वास्तविक स्तर एवं प्रवृत्ति को ध्यान में रखकर तैयार किया गया है।</p>
     </div>
 
     <div class="ttabs rv" style="--d:.1s" role="tablist" aria-label="टेस्ट के खण्ड">
@@ -515,6 +516,7 @@ footer .sh{font-family:'Tiro Devanagari Hindi',serif;font-style:italic;color:var
       <button class="ttab" data-filter="ca">करेंट अफेयर्स <span class="cnt" data-cnt="ca"></span></button>
       <button class="ttab" data-filter="gs">सामान्य अध्ययन <span class="cnt" data-cnt="gs"></span></button>
       <button class="ttab" data-filter="csat">CSAT <span class="cnt" data-cnt="csat"></span></button>
+      <button class="ttab" data-filter="ncert">NCERT <span class="cnt" data-cnt="ncert"></span></button>
     </div>
 
     <div class="tgrid" id="testGrid">
@@ -694,8 +696,8 @@ var FINE = window.matchMedia("(pointer: fine)").matches;
    खाली छोड़ने पर साइट स्वयं पहचान लेगी (यही सामान्य स्थिति है)। */
 var CONFIG = { user: "", repo: "" };
 
-var SEC_NAME = { ca: "करेंट अफेयर्स", gs: "सामान्य अध्ययन", csat: "CSAT" };
-var DATA = { ca: [], gs: [], csat: [], notes: [] };
+var SEC_NAME = { ca: "करेंट अफेयर्स", gs: "सामान्य अध्ययन", csat: "CSAT", ncert: "NCERT" };
+var DATA = { ca: [], gs: [], csat: [], ncert: [], notes: [] };
 var FILTER = "all";
 var STATE = "loading";   /* loading | ready | offline | error */
 
@@ -791,9 +793,10 @@ function buildData(tree){
     if (low.indexOf("tests/ca/") === 0 && /\.html?$/.test(low)) DATA.ca.push(p);
     else if (low.indexOf("tests/gs/") === 0 && /\.html?$/.test(low)) DATA.gs.push(p);
     else if (low.indexOf("tests/csat/") === 0 && /\.html?$/.test(low)) DATA.csat.push(p);
+    else if (low.indexOf("tests/ncert/") === 0 && /\.html?$/.test(low)) DATA.ncert.push(p);
     else if (low.indexOf("notes/") === 0 && /\.(html?|pdf)$/.test(low)) DATA.notes.push(p);
   });
-  DATA.ca.sort(nsort).reverse(); DATA.gs.sort(nsort).reverse(); DATA.csat.sort(nsort).reverse(); DATA.notes.sort(nsort).reverse();
+  DATA.ca.sort(nsort).reverse(); DATA.gs.sort(nsort).reverse(); DATA.csat.sort(nsort).reverse(); DATA.ncert.sort(nsort).reverse(); DATA.notes.sort(nsort).reverse();
 }
 
 function stateEl(msg){
@@ -847,7 +850,7 @@ function renderTests(){
   if (STATE === "offline") { grid.appendChild(stateEl("टेस्ट-सूची साइट के GitHub Pages पर प्रकाशित होते ही यहाँ स्वतः दिखाई देगी।")); return; }
   if (STATE === "error")   { grid.appendChild(stateEl("सूची इस समय लोड नहीं हो सकी — कृपया पृष्ठ पुनः खोलें।")); return; }
   if (FILTER === "ca") { renderCaGroups(); return; }
-  var secs = (FILTER === "all") ? ["ca", "gs", "csat"] : [FILTER];
+  var secs = (FILTER === "all") ? ["ca", "gs", "csat", "ncert"] : [FILTER];
   var shown = 0;
   secs.forEach(function(s){
     DATA[s].forEach(function(p){ grid.appendChild(testCard(s, p, shown)); shown++; });
@@ -856,14 +859,14 @@ function renderTests(){
 }
 
 function renderCounts(){
-  var total = DATA.ca.length + DATA.gs.length + DATA.csat.length;
+  var total = DATA.ca.length + DATA.gs.length + DATA.csat.length + DATA.ncert.length;
   var set = function(k, n){
     var el = document.querySelector('[data-cnt="' + k + '"]');
     if (!el) return;
     if (STATE === "ready" && n > 0) { el.textContent = n; el.style.display = "inline-flex"; }
     else { el.style.display = "none"; }
   };
-  set("all", total); set("ca", DATA.ca.length); set("gs", DATA.gs.length); set("csat", DATA.csat.length);
+  set("all", total); set("ca", DATA.ca.length); set("gs", DATA.gs.length); set("csat", DATA.csat.length); set("ncert", DATA.ncert.length);
 }
 
 function renderNotes(){
