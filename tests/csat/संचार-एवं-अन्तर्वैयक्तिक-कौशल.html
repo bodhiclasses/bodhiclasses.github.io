@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>संचार एवं अन्तर्वैयक्तिक कौशल — बोधि मास्टरक्लास | UPPCS CSAT</title>
+<meta name="description" content="UPPCS CSAT के संचार एवं अन्तर्वैयक्तिक कौशल खण्ड की सम्पूर्ण दृश्य मास्टरक्लास — 2023-25 के 48 PYQ, आयोग-शब्दकोश, जाल और जुगाड़ सहित। बोधि क्लासेस।">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0A1430; --navy:#13265C; --royal:#1E40AF; --sky:#3D5FD3;
+  --gold:#C9A227; --gold-deep:#A8841A; --gold-soft:#F0E4BC;
+  --paper:#FBF8F0; --tint:#F5EFDE; --card:#FFFFFF;
+  --line:#E8E1CC; --line2:#D9CFB2;
+  --text:#232A3E; --muted:#5B6178;
+  --trap:#B91C1C; --trapbg:#FBEFED;
+  --pass:#166534; --passbg:#EEF6EE;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--text);font-family:'Noto Sans Devanagari',system-ui,sans-serif;font-size:17px;line-height:1.8;-webkit-font-smoothing:antialiased}
+img,svg{max-width:100%;height:auto;display:block}
+a{color:var(--royal)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 22px}
+.rz{font-family:'Rozha One',serif;font-weight:400}
+.en{font-family:'Poppins',sans-serif}
+p{margin:0 0 14px}
+h2,h3,h4{margin:0 0 12px;color:var(--navy);line-height:1.3}
+h2{font-size:clamp(30px,4.2vw,44px)}
+h3{font-size:19px}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:6px}
+
+/* ---------- शीर्ष पट्टी ---------- */
+.topbar{background:var(--ink);color:#EDE7D2;font-size:13px}
+.topbar .wrap{display:flex;justify-content:space-between;align-items:center;padding-top:9px;padding-bottom:9px;gap:12px;flex-wrap:wrap}
+.topbar b{color:var(--gold);letter-spacing:.22em;font-weight:600}
+.topbar span{opacity:.85}
+
+/* ---------- हीरो ---------- */
+.hero{background:radial-gradient(1100px 480px at 82% -10%,rgba(30,64,175,.5),transparent 60%),radial-gradient(800px 420px at -10% 110%,rgba(201,162,39,.16),transparent 55%),var(--ink);color:#F3EEDD;padding:60px 0 46px;position:relative}
+.hero .kicker{font-family:'Poppins';font-size:12px;font-weight:600;letter-spacing:.34em;color:var(--gold);text-transform:uppercase;margin-bottom:16px}
+.hero h1{font-size:clamp(36px,6.4vw,64px);line-height:1.16;color:#F7F1DC;margin:0 0 14px;max-width:900px}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero .sub{font-size:18px;max-width:780px;color:#CFC9B6;margin-bottom:24px}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:30px}
+.stat{border:1px solid rgba(201,162,39,.45);border-radius:999px;padding:7px 16px;font-size:13.5px;background:rgba(255,255,255,.04)}
+.stat b{font-family:'Poppins';color:var(--gold);font-weight:700;margin-right:6px}
+.heroKv{background:rgba(255,255,255,.045);border:1px solid rgba(201,162,39,.35);border-radius:20px;padding:18px 16px 10px}
+.heroKv figcaption{font-size:13px;color:#B9B29B;text-align:center;padding:8px 6px 6px}
+svg text{font-family:'Noto Sans Devanagari',sans-serif}
+.flow{stroke-dasharray:7 9;animation:dash 1.5s linear infinite}
+.flowR{stroke-dasharray:7 9;animation:dashR 1.9s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-32}}
+@keyframes dashR{to{stroke-dashoffset:32}}
+@media (prefers-reduced-motion:reduce){.flow,.flowR{animation:none}}
+
+/* ---------- चिप नेविगेशन ---------- */
+.nav{position:sticky;top:0;z-index:60;background:rgba(251,248,240,.94);backdrop-filter:blur(9px);border-bottom:1px solid var(--line)}
+.nav .in{display:flex;gap:8px;overflow-x:auto;padding:10px 22px;max-width:1100px;margin:0 auto;scrollbar-width:none}
+.nav .in::-webkit-scrollbar{display:none}
+.nav a{flex:none;font-size:13.5px;font-weight:500;padding:7px 14px;border-radius:999px;border:1px solid var(--line2);color:var(--navy);text-decoration:none;background:#fff;transition:.18s}
+.nav a:hover{border-color:var(--royal)}
+.nav a.on{background:var(--royal);border-color:var(--royal);color:#fff}
+.nav a.pr{background:var(--gold);border-color:var(--gold);color:var(--ink);font-weight:600}
+
+/* ---------- खण्ड ---------- */
+.sec{padding:70px 0;scroll-margin-top:66px}
+.sec--tint{background:var(--tint)}
+.sec--navy{background:var(--ink);color:#EAE5D3}
+.sec--navy h2,.sec--navy h3{color:#F5EED7}
+.sec--navy .lead{color:#C6BFA9}
+.eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.eyebrow .num{font-family:'Poppins';font-weight:700;font-size:14px;color:var(--gold-deep);letter-spacing:.1em}
+.eyebrow .rule{height:1px;width:54px;background:var(--gold)}
+.eyebrow .lb{font-size:13px;letter-spacing:.24em;color:var(--muted)}
+.sec--navy .eyebrow .lb{color:#A9A28B}
+.lead{font-size:18.5px;color:var(--muted);max-width:820px;margin-bottom:26px}
+
+/* ---------- कार्ड और ग्रिड ---------- */
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));margin:22px 0}
+.grid--2{grid-template-columns:repeat(auto-fit,minmax(310px,1fr))}
+.grid--3{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 18px 14px;box-shadow:0 1px 0 rgba(19,38,92,.04)}
+.card h3{display:flex;gap:8px;align-items:baseline}
+.card .stepn{font-family:'Poppins';font-weight:700;color:var(--gold-deep);font-size:14px}
+.card p{font-size:15.5px;line-height:1.75;color:#3A4157;margin-bottom:6px}
+.card--pass{border-top:3px solid var(--pass)}
+.card--trapc{border-top:3px solid var(--trap)}
+.t{font-weight:700;color:var(--royal)}
+.t i{font-family:'Poppins';font-style:normal;font-weight:600;font-size:.8em;color:var(--gold-deep);white-space:nowrap}
+.sec--navy .t{color:#9FB4F5}
+.tag{display:inline-block;font-family:'Poppins';font-size:11px;font-weight:600;letter-spacing:.04em;padding:3px 11px;border-radius:999px;background:#EDF1FC;color:var(--royal);border:1px solid #D3DCF6;vertical-align:middle}
+.kv{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;margin:22px 0}
+.kv figcaption,.cap{font-size:13.5px;color:var(--muted);margin-top:10px}
+figure{margin:0}
+
+/* ---------- जाल और जुगाड़ ---------- */
+.trap{border-left:4px solid var(--trap);background:var(--trapbg);border-radius:0 14px 14px 0;padding:15px 18px;margin:20px 0}
+.trap .lb{display:block;font-weight:700;color:var(--trap);font-size:13px;letter-spacing:.14em;margin-bottom:4px}
+.trap p{margin:0;font-size:15.5px}
+.jug{border-left:4px solid var(--gold);background:#FBF3D9;border-radius:0 14px 14px 0;padding:15px 18px;margin:20px 0}
+.jug .lb{display:block;font-weight:700;color:var(--gold-deep);font-size:13px;letter-spacing:.14em;margin-bottom:4px}
+.jug p{margin:0;font-size:15.5px}
+
+/* ---------- सूचियाँ ---------- */
+ol.n{counter-reset:li;list-style:none;padding:0;margin:14px 0}
+ol.n li{counter-increment:li;position:relative;padding:0 0 12px 44px;font-size:16px}
+ol.n li::before{content:counter(li);position:absolute;left:0;top:2px;width:28px;height:28px;border-radius:50%;background:var(--navy);color:var(--gold-soft);font-family:'Poppins';font-weight:600;font-size:13px;display:flex;align-items:center;justify-content:center}
+
+/* ---------- विशेष दृश्य ---------- */
+.johari{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:640px}
+.jo{border-radius:14px;padding:16px;min-height:120px;border:1px solid var(--line)}
+.jo b{display:block;font-size:17px;margin-bottom:4px}
+.jo span{font-size:13.5px;color:#3A4157}
+.jo1{background:#E7EDFC;border-color:#C7D4F4}
+.jo2{background:#FBF1CF;border-color:#E9D89A}
+.jo3{background:#EFEDE4}
+.jo4{background:#DDE0EA}
+.axis{font-size:12.5px;letter-spacing:.06em;color:var(--muted);margin:4px 0}
+.pac{display:flex;flex-direction:column;align-items:center;gap:10px}
+.pac div{width:150px;height:88px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;font-weight:600;text-align:center;line-height:1.3}
+.pac small{font-family:'Poppins';font-weight:600;opacity:.85}
+.pacP{background:var(--navy)} .pacA{background:var(--royal)} .pacC{background:var(--gold);color:var(--ink)}
+.donutWrap{display:flex;gap:26px;align-items:center;flex-wrap:wrap}
+.donut{width:190px;height:190px;border-radius:50%;background:conic-gradient(var(--royal) 0 7%,var(--gold) 7% 45%,var(--ink) 45% 100%);position:relative;flex:none}
+.donut::after{content:"93%";position:absolute;inset:44px;background:var(--card);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Poppins';font-weight:700;font-size:26px;color:var(--navy)}
+.leg{list-style:none;margin:0;padding:0;font-size:15.5px}
+.leg li{display:flex;gap:10px;align-items:center;padding:5px 0}
+.leg i{width:14px;height:14px;border-radius:4px;flex:none}
+.memrail{display:flex;gap:0;align-items:stretch;flex-wrap:wrap;margin:8px 0}
+.mem{flex:1 1 200px;border:1px solid var(--line);background:var(--card);padding:16px;position:relative}
+.mem:first-child{border-radius:14px 0 0 14px}
+.mem:last-child{border-radius:0 14px 14px 0}
+.mem b{display:block;color:var(--navy)}
+.mem .dur{font-family:'Poppins';font-weight:700;color:var(--gold-deep);font-size:15px}
+.mem .arrow{position:absolute;right:-11px;top:calc(50% - 11px);width:22px;height:22px;background:var(--gold);border-radius:50%;color:var(--ink);font-family:'Poppins';font-weight:700;display:flex;align-items:center;justify-content:center;z-index:2;font-size:13px}
+.chiprow{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 2px}
+.chip{font-size:13.5px;border:1px solid var(--line2);background:#fff;border-radius:999px;padding:4px 12px}
+
+/* ---------- शब्दकोश ---------- */
+.gloss{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.g{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:10px;padding:9px 13px;font-size:15px}
+.g b{color:var(--navy)} .g .en{color:var(--gold-deep);font-weight:600;font-size:.85em}
+
+/* ---------- PYQ ---------- */
+.yrh{display:flex;align-items:center;gap:12px;margin:30px 0 12px}
+.yrh h3{margin:0;font-size:21px}
+.yrh .rule{flex:1;height:1px;background:var(--line2)}
+details.q{background:var(--card);border:1px solid var(--line);border-radius:13px;margin:10px 0;overflow:hidden}
+details.q summary{cursor:pointer;padding:14px 16px;font-weight:600;font-size:15.5px;display:flex;gap:11px;align-items:flex-start;list-style:none;color:var(--navy)}
+details.q summary::-webkit-details-marker{display:none}
+details.q summary::before{content:"+";font-family:'Poppins';font-weight:700;color:var(--gold-deep);flex:none;width:20px;text-align:center}
+details.q[open] summary::before{content:"−"}
+details.q[open] summary{border-bottom:1px dashed var(--line)}
+.q .body{padding:12px 18px 15px 47px;font-size:15.5px;color:#3A4157}
+.ans{display:inline-block;background:var(--passbg);color:var(--pass);border:1px solid #CBE3CC;font-weight:700;padding:2px 12px;border-radius:999px;margin-right:8px;font-size:14.5px}
+.btn{font-family:'Noto Sans Devanagari';font-size:15px;font-weight:600;background:var(--royal);color:#fff;border:none;border-radius:999px;padding:10px 22px;cursor:pointer}
+.btn:hover{background:var(--navy)}
+.btn--ghost{background:transparent;color:var(--royal);border:1.5px solid var(--royal)}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 18px}
+
+/* ---------- विद्वान ---------- */
+.sch{background:rgba(255,255,255,.05);border:1px solid rgba(201,162,39,.3);border-radius:16px;padding:18px}
+.sch .ini{width:46px;height:46px;border-radius:50%;background:var(--gold);color:var(--ink);font-weight:700;font-size:20px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;font-family:'Rozha One'}
+.sch b{display:block;font-size:16.5px;color:#F5EED7}
+.sch span{font-size:14px;color:#C6BFA9;line-height:1.6;display:block}
+
+/* ---------- फुटर ---------- */
+.foot{background:var(--ink);color:#CFC9B6;padding:46px 0 40px}
+.foot .brand{font-family:'Rozha One';font-size:30px;color:var(--gold);margin-bottom:6px}
+.foot .links{display:flex;gap:18px;flex-wrap:wrap;font-size:14.5px;margin-top:14px}
+.foot a{color:#EDE7D2;text-decoration:none;border-bottom:1px solid rgba(201,162,39,.5)}
+.foot .tiny{font-size:12.5px;opacity:.65;margin-top:22px}
+
+@media (max-width:640px){
+  .sec{padding:52px 0}
+  .q .body{padding-left:18px}
+}
+@media print{
+  .nav,.btnrow,.topbar{display:none}
+  .sec{padding:26px 0}
+  body{font-size:13px}
+  .hero{padding:26px 0}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap"><b>बोधि क्लासेस</b><span>UPPCS प्रारंभिक · CSAT विशेष शृंखला</span></div></div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">The Bodhi Masterclass · दृश्य अध्याय</div>
+    <h1 class="rz">संचार एवं <em>अन्तर्वैयक्तिक कौशल</em> — एक ही पन्ने में पूरा किला</h1>
+    <p class="sub">CSAT का वह खण्ड जिससे हर वर्ष 15 से 20 प्रश्न आते हैं और जो communication की किताबों से नहीं, हिंदी मनोविज्ञान की पाठ्यपुस्तकों से बनता है। यह पृष्ठ 2023, 2024 और 2025 के वास्तविक प्रश्नपत्रों को उलटकर बनाया गया है — हर visual किसी पूछे गए प्रश्न की ज़मीन है।</p>
+    <div class="stats">
+      <span class="stat"><b>48</b>PYQ हल सहित (2023–25)</span>
+      <span class="stat"><b>17</b>खण्ड · दृश्य सहित</span>
+      <span class="stat"><b>50+</b>आयोग-शब्दकोश प्रविष्टियाँ</span>
+      <span class="stat"><b>15–20</b>अपेक्षित प्रश्न प्रति वर्ष</span>
+    </div>
+    <figure class="heroKv">
+      <svg viewBox="0 0 940 250" role="img" aria-label="संचार प्रक्रिया का परिपथ चित्र">
+        <defs>
+          <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C9A227"/></marker>
+        </defs>
+        <rect x="14" y="14" width="912" height="196" rx="18" fill="none" stroke="#C9A227" stroke-opacity=".35" stroke-dasharray="3 7"/>
+        <text x="34" y="40" font-size="13" fill="#C9A227" letter-spacing="2">सन्दर्भ · CONTEXT — हर संचार इसी घेरे के भीतर घटता है</text>
+        <circle cx="88" cy="128" r="30" fill="#1E40AF"/>
+        <text x="88" y="133" text-anchor="middle" font-size="13" fill="#F7F1DC" font-weight="600">प्रेषक</text>
+        <text x="88" y="185" text-anchor="middle" font-size="11.5" fill="#B9B29B">Source</text>
+        <rect x="150" y="102" width="128" height="52" rx="10" fill="none" stroke="#C9A227" stroke-width="1.4"/>
+        <text x="214" y="124" text-anchor="middle" font-size="13.5" fill="#F7F1DC" font-weight="600">संकेतीकरण</text>
+        <text x="214" y="143" text-anchor="middle" font-size="10.5" fill="#B9B29B">Encoding</text>
+        <line x1="118" y1="128" x2="148" y2="128" stroke="#C9A227" stroke-width="1.6" marker-end="url(#ar)"/>
+        <line x1="278" y1="128" x2="648" y2="128" stroke="#8FA4E8" stroke-width="2" class="flow" marker-end="url(#ar)"/>
+        <rect x="418" y="112" width="96" height="32" rx="8" fill="#0A1430" stroke="#3D5FD3"/>
+        <text x="466" y="133" text-anchor="middle" font-size="12.5" fill="#F7F1DC">संदेश ➜ माध्यम</text>
+        <path d="M466 58 l-9 22 h13 l-11 24" fill="none" stroke="#E25555" stroke-width="2.4"/>
+        <text x="466" y="48" text-anchor="middle" font-size="12.5" fill="#E88" font-weight="600">शोर · Noise</text>
+        <rect x="652" y="102" width="140" height="52" rx="10" fill="none" stroke="#C9A227" stroke-width="1.4"/>
+        <text x="722" y="124" text-anchor="middle" font-size="13.5" fill="#F7F1DC" font-weight="600">विसंकेतीकरण</text>
+        <text x="722" y="143" text-anchor="middle" font-size="10.5" fill="#B9B29B">Decoding</text>
+        <line x1="792" y1="128" x2="822" y2="128" stroke="#C9A227" stroke-width="1.6" marker-end="url(#ar)"/>
+        <circle cx="856" cy="128" r="30" fill="#1E40AF"/>
+        <text x="856" y="126" text-anchor="middle" font-size="12" fill="#F7F1DC" font-weight="600">प्राप्त-</text>
+        <text x="856" y="141" text-anchor="middle" font-size="12" fill="#F7F1DC" font-weight="600">कर्ता</text>
+        <path d="M846 162 C 700 236, 240 236, 96 162" fill="none" stroke="#C9A227" stroke-width="1.8" class="flowR" marker-end="url(#ar)"/>
+        <text x="470" y="222" text-anchor="middle" font-size="13" fill="#C9A227" font-weight="600">प्रतिपुष्टि · Feedback — लौटता जवाब, चक्र यहीं पूरा होता है</text>
+      </svg>
+      <figcaption>संचार-परिपथ: विचार को संकेत का कपड़ा प्रेषक पहनाता है, उतारकर अर्थ प्राप्तकर्ता निकालता है — बीच में शोर टकराता है, अंत में प्रतिपुष्टि लौटती है।</figcaption>
+    </figure>
+  </div>
+</header>
+
+<nav class="nav" aria-label="खण्ड सूची"><div class="in">
+  <a href="#s1">01 प्रक्रिया</a><a href="#s2">02 प्रकार</a><a href="#s3">03 नेटवर्क</a><a href="#s4">04 बाधाएँ</a><a href="#s5">05 श्रवण</a><a href="#s6">06 कौशल</a><a href="#s7">07 देहभाषा</a><a href="#s8">08 मनोविज्ञान</a><a href="#s9">09 निर्णयन</a><a href="#s10">10 समस्या</a><a href="#s11">11 मिलान</a><a href="#s12">12 स्मृति</a><a href="#s13">13 डिजिटल</a><a href="#s14">14 विद्वान</a><a href="#s15">15 शब्दकोश</a><a href="#s16" class="pr">16 PYQ बैंक</a><a href="#s17">17 रिवीज़न</a>
+</div></nav>
+
+<section class="sec" style="padding:54px 0" id="s0">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">निदान</span><span class="rule"></span><span class="lb">पढ़कर भी प्रश्न क्यों नहीं बनते थे</span></div>
+    <div class="grid grid--3">
+      <div class="card card--trapc"><h3>1. किताब ही अलग थी</h3><p>यह खण्ड communication की आम किताबों से नहीं, B.Ed/NET स्तर की हिंदी मनोविज्ञान परंपरा से आता है। तुम संचार की परिभाषा पढ़ते हो, आयोग <span class="t">मानसिक विन्यास <i>Mental Set</i></span> और <span class="t">गुणारोपण <i>Attribution</i></span> पूछता है।</p></div>
+      <div class="card card--trapc"><h3>2. अनुवाद-जाल</h3><p>हॉल में 'अनुनय', 'संकेतीकरण', 'स्वतः शोध', 'असंवादिता' पढ़कर दिमाग अटकता है — जबकि ये वही Persuasion, Encoding, Heuristics, Dissonance हैं जो तुम जानते हो। इसीलिए यहाँ हर शब्द दोनों भाषाओं में है।</p></div>
+      <div class="card card--trapc"><h3>3. सूची-प्रश्न</h3><p>प्रश्न समझ से नहीं, वर्गीकरण-सूचियों से बनते हैं — अंगूरीलता के 4 प्रकार, श्रवण के घटक, कोहलर की समस्या। इस पृष्ठ पर हर सूची तर्क की सीढ़ी से जुड़ी है, ताकि रटना न पड़े।</p></div>
+    </div>
+  </div>
+</section>
+<section class="sec sec--tint" id="s1">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">01</span><span class="rule"></span><span class="lb">बुनियाद</span></div>
+    <h2 class="rz">संचार का अर्थ और प्रक्रिया</h2>
+    <p class="lead">Communication लैटिन <span class="t">Communis <i>= साझा</i></span> से बना है — संचार का काम है विचार को दो दिमागों की साझा सम्पत्ति बना देना। जब तक सामने वाले के दिमाग में वही अर्थ नहीं पहुँचा जो तुम्हारे दिमाग में था, संचार नहीं हुआ — सिर्फ़ शोर हुआ। <span class="tag">PYQ 2024 × 3</span></p>
+    <div class="grid">
+      <div class="card"><h3><span class="stepn">1</span>स्रोत/प्रेषक</h3><p><span class="t">Source/Sender</span> — जिसके दिमाग में विचार जन्मा।</p></div>
+      <div class="card"><h3><span class="stepn">2</span>संकेतीकरण</h3><p><span class="t">Encoding</span> — विचार को शब्दों/संकेतों का कपड़ा पहनाना। PYQ 2024: 'विचारों को संदेश में डालने की प्रक्रिया' = यही।</p></div>
+      <div class="card"><h3><span class="stepn">3</span>संदेश</h3><p><span class="t">Message</span> — कपड़ा पहना हुआ विचार।</p></div>
+      <div class="card"><h3><span class="stepn">4</span>माध्यम</h3><p><span class="t">Channel</span> — जिस रास्ते से संदेश जाता है: हवा, फोन, कागज़।</p></div>
+      <div class="card"><h3><span class="stepn">5</span>प्राप्तकर्ता</h3><p><span class="t">Receiver</span> — जो संदेश पाता है।</p></div>
+      <div class="card"><h3><span class="stepn">6</span>विसंकेतीकरण</h3><p><span class="t">Decoding</span> — संकेतों का कपड़ा उतारकर अर्थ निकालना। आयोग 'असंकेतीकरण' भी लिखता है।</p></div>
+      <div class="card"><h3><span class="stepn">7</span>प्रतिपुष्टि</h3><p><span class="t">Feedback</span> — लौटता जवाब। क्रम-प्रश्न में यह सदा अंतिम पड़ाव है — यही चक्र पूरा करती है।</p></div>
+      <div class="card"><h3><span class="stepn">8</span>शोर + सन्दर्भ</h3><p><span class="t">Noise</span> — हर वह चीज़ जो संदेश बिगाड़े (मानसिक भटकाव भी)। <span class="t">Context</span> — वह परिस्थिति जिससे प्रत्येक सम्प्रेषण प्रभावित होता है (PYQ 2024)।</p></div>
+    </div>
+    <div class="jug"><span class="lb">बोधि जुगाड़</span><p>जो भेजता है वह विचार को संकेत का कपड़ा <b>पहनाता</b> है — संकेतीकरण; जो पाता है वह कपड़ा <b>उतारकर</b> अर्थ निकालता है — विसंकेतीकरण। पहनाना प्रेषक का काम, उतारना प्राप्तकर्ता का। उलटा हुआ, अंक गया।</p></div>
+    <div class="trap"><span class="lb">परीक्षा जाल · PYQ 2024</span><p>क्रम-प्रश्न का सही उत्तर: <b>स्रोत → संदेश → माध्यम → प्राप्तकर्ता → शोर → प्रतिपुष्टि</b>। और A/R जाल: 'स्पष्टता आवश्यक है' (सत्य) पर कारण में लिखा था 'पर्याप्तता व समय-निर्धारण आवश्यक <u>नहीं</u>' — यह असत्य है, दोनों भी आवश्यक हैं। कारण का वाक्य दो बार पढ़ो, 'नहीं' वहीं छिपा होता है।</p></div>
+    <p>प्रमुख मॉडल एक-एक पंक्ति में — <span class="t">शैनन-वीवर <i>1948</i></span>: गणितीय मॉडल, शोर की अवधारणा इसी की देन; <span class="t">बर्लो का SMCR</span>: Source-Message-Channel-Receiver; <span class="t">लासवेल</span>: कौन, क्या, किस माध्यम से, किससे, किस प्रभाव से। प्रभावी संचार के 7C — स्पष्टता, संक्षिप्तता, ठोसपन, शुद्धता, पूर्णता, विचारशीलता, शिष्टता।</p>
+  </div>
+</section>
+
+<section class="sec" id="s2">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">02</span><span class="rule"></span><span class="lb">वर्गीकरण</span></div>
+    <h2 class="rz">संचार के प्रकार — शब्दों से परे की दुनिया</h2>
+    <p class="lead">पहला बँटवारा: <span class="t">वाचिक <i>Verbal</i></span> बनाम <span class="t">अवाचिक <i>Non-verbal</i></span>। मौखिक संचार तेज़ है, तुरंत प्रतिपुष्टि देता है — पर उसमें कहे गए का कोई <b>प्रमाण नहीं रहता</b> (PYQ 2024 A/R: दोनों कथन सत्य, पर प्रमाण-हीनता उपयोगिता की व्याख्या नहीं — उत्तर b)। असली खेल अवाचिक परिवार में है, जहाँ से सबसे चालाक प्रश्न आते हैं।</p>
+    <div class="grid grid--3">
+      <div class="card"><h3>देहभाषा</h3><p><span class="t">Kinesics</span> — हाव-भाव, मुद्रा, चेहरे के भाव। Kinesis का अर्थ ही गति है।</p></div>
+      <div class="card"><h3>पराभाषा</h3><p><span class="t">Paralanguage</span> — स्वर, पिच, गति, ठहराव। Para = साथ-साथ/परे — भाषा के साथ चलने वाला लहजा।</p></div>
+      <div class="card"><h3>समीपता-विज्ञान</h3><p><span class="t">Proxemics</span> — एडवर्ड हॉल की दूरी-विद्या (नीचे चित्र)।</p></div>
+      <div class="card"><h3>स्पर्श · नेत्र · समय</h3><p><span class="t">Haptics</span> स्पर्श, <span class="t">Oculesics</span> आँखों की भाषा, <span class="t">Chronemics</span> समय — देर से आना भी एक संदेश है।</p></div>
+      <div class="card"><h3>वस्तु-संकेत</h3><p><span class="t">Artifactics</span> — कपड़े, गाड़ी, वस्तुएँ क्या बोलती हैं।</p></div>
+      <div class="card"><h3>मौन</h3><p><span class="t">Silence</span> — चुप्पी भी संदेश है; कभी सहमति, कभी विरोध।</p></div>
+    </div>
+    <div class="trap"><span class="lb">परीक्षा जाल · PYQ 2024</span><p><b>पराभाषा में आवाज़ शामिल है, फिर भी यह अवाचिक संचार में गिनी जाती है</b> — क्योंकि यहाँ 'क्या कहा' नहीं, 'कैसे कहा' मायने रखता है। जिसने 'वाचिक' चुना, उसका अंक गया।</p></div>
+    <div class="grid grid--2">
+      <figure class="kv">
+        <svg viewBox="0 0 420 250" role="img" aria-label="हॉल के चार दूरी-क्षेत्र">
+          <circle cx="120" cy="125" r="112" fill="#DDE4F6"/><circle cx="120" cy="125" r="82" fill="#E9EDF9"/><circle cx="120" cy="125" r="52" fill="#F3E9C8"/><circle cx="120" cy="125" r="26" fill="#E4C766"/>
+          <circle cx="120" cy="125" r="6" fill="#0A1430"/>
+          <line x1="120" y1="125" x2="398" y2="34" stroke="#C9A227" stroke-width="1" stroke-dasharray="2 4"/>
+          <line x1="120" y1="125" x2="398" y2="94" stroke="#C9A227" stroke-width="1" stroke-dasharray="2 4"/>
+          <line x1="120" y1="125" x2="398" y2="154" stroke="#C9A227" stroke-width="1" stroke-dasharray="2 4"/>
+          <line x1="120" y1="125" x2="398" y2="214" stroke="#C9A227" stroke-width="1" stroke-dasharray="2 4"/>
+          <text x="212" y="30" font-size="13" fill="#13265C" font-weight="600">सार्वजनिक · 3.6 m से आगे</text>
+          <text x="222" y="90" font-size="13" fill="#13265C" font-weight="600">सामाजिक · 1.2–3.6 m</text>
+          <text x="232" y="150" font-size="13" fill="#13265C" font-weight="600">व्यक्तिगत · 45 cm–1.2 m</text>
+          <text x="242" y="210" font-size="13" fill="#13265C" font-weight="600">अंतरंग · 0–45 cm</text>
+        </svg>
+        <figcaption>प्रॉक्सेमिक्स (एडवर्ड हॉल): व्यक्ति के चारों ओर चार अदृश्य घेरे — रिश्ता जितना गहरा, घेरा उतना छोटा।</figcaption>
+      </figure>
+      <figure class="kv">
+        <div class="donutWrap">
+          <div class="donut" role="img" aria-label="मेहराबियन 7-38-55"></div>
+          <ul class="leg">
+            <li><i style="background:#1E40AF"></i>शब्द <b class="en" style="margin-left:6px">7%</b></li>
+            <li><i style="background:#C9A227"></i>स्वर/पराभाषा <b class="en" style="margin-left:6px">38%</b></li>
+            <li><i style="background:#0A1430"></i>चेहरा/देहभाषा <b class="en" style="margin-left:6px">55%</b></li>
+          </ul>
+        </div>
+        <figcaption>मेहराबियन का 7-38-55 नियम — लगभग 93% संचार अशाब्दिक है। जाल: यह नियम केवल <b>भावनात्मक संदेशों</b> पर लागू है, गणित पढ़ाने पर नहीं।</figcaption>
+      </figure>
+    </div>
+    <h3 style="margin-top:26px">दिशा और स्तर के आधार पर</h3>
+    <div class="chiprow">
+      <span class="chip">अधोगामी <b class="en">Downward</b> — आदेश</span>
+      <span class="chip">ऊर्ध्वगामी <b class="en">Upward</b> — रिपोर्ट/सुझाव</span>
+      <span class="chip">क्षैतिज <b class="en">Horizontal</b> — समन्वय</span>
+      <span class="chip">विकर्ण <b class="en">Diagonal</b> — तिरछा</span>
+    </div>
+    <div class="chiprow">
+      <span class="chip">अन्तःवैयक्तिक <b class="en">Intrapersonal</b> — स्वयं से</span>
+      <span class="chip">अन्तर्वैयक्तिक <b class="en">Interpersonal = Dyadic</b> — दो के बीच</span>
+      <span class="chip">समूह <b class="en">Group</b></span>
+      <span class="chip">जन <b class="en">Mass</b></span>
+    </div>
+    <div class="trap"><span class="lb">परीक्षा जाल · PYQ 2025</span><p>अन्तर्वैयक्तिक संचार का दूसरा नाम = <b>डायडिक (द्विव्यक्तिक) संचार</b>। विकल्प में 'आमने-सामने <u>सार्वजनिक</u> संचार' लिखा था — 'सार्वजनिक' शब्द घुसते ही विकल्प ज़हर, क्योंकि यह संचार निजी है। और सूत्र: 'अन्तः' = भीतर (अपने भीतर की बात), 'अन्तर्' = दो के बीच का फ़ासला — फ़ासला है तो दो लोग हैं।</p></div>
+  </div>
+</section>
+
+<section class="sec sec--tint" id="s3">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">03</span><span class="rule"></span><span class="lb">सबसे अधिक पूछा गया इलाका</span></div>
+    <h2 class="rz">संचार नेटवर्क — रास्तों का नक्शा</h2>
+    <p class="lead">सूचना संगठन में जिन रास्तों से चलती है, वही नेटवर्क। औपचारिक रास्ते नक्शे में खिंचे होते हैं; अनौपचारिक रास्ते रिश्तों के सहारे खुद उग आते हैं — इसीलिए उन्हें <span class="t">अंगूरीलता <i>Grapevine</i></span> कहते हैं।</p>
+    <h3>औपचारिक नेटवर्क के 5 रूप</h3>
+    <div class="grid">
+      <figure class="card"><svg viewBox="0 0 160 90"><line x1="20" y1="45" x2="140" y2="45" stroke="#D9CFB2" stroke-width="2"/><circle cx="20" cy="45" r="8" fill="#1E40AF"/><circle cx="60" cy="45" r="8" fill="#1E40AF"/><circle cx="100" cy="45" r="8" fill="#1E40AF"/><circle cx="140" cy="45" r="8" fill="#1E40AF"/></svg><h3>श्रृंखला <span class="en" style="font-size:.75em;color:var(--gold-deep)">Chain</span></h3><p>सीधी कमान-रेखा। <b>एकल श्रृंखला</b> में बात केवल ठीक ऊपर या ठीक नीचे वाले तक — इसीलिए गोपनीय सूचना का रास्ता यही (PYQ 2024)।</p></figure>
+      <figure class="card"><svg viewBox="0 0 160 90"><line x1="80" y1="78" x2="80" y2="45" stroke="#D9CFB2" stroke-width="2"/><line x1="80" y1="45" x2="50" y2="16" stroke="#D9CFB2" stroke-width="2"/><line x1="80" y1="45" x2="110" y2="16" stroke="#D9CFB2" stroke-width="2"/><circle cx="80" cy="78" r="8" fill="#1E40AF"/><circle cx="80" cy="45" r="8" fill="#1E40AF"/><circle cx="50" cy="16" r="8" fill="#1E40AF"/><circle cx="110" cy="16" r="8" fill="#1E40AF"/></svg><h3>Y नेटवर्क</h3><p>श्रृंखला में एक जगह दो शाखाएँ फूटती हैं — आकृति अंग्रेज़ी Y जैसी।</p></figure>
+      <figure class="card"><svg viewBox="0 0 160 90"><line x1="80" y1="45" x2="80" y2="12" stroke="#D9CFB2" stroke-width="2"/><line x1="80" y1="45" x2="80" y2="78" stroke="#D9CFB2" stroke-width="2"/><line x1="80" y1="45" x2="30" y2="45" stroke="#D9CFB2" stroke-width="2"/><line x1="80" y1="45" x2="130" y2="45" stroke="#D9CFB2" stroke-width="2"/><circle cx="80" cy="45" r="9" fill="#C9A227"/><circle cx="80" cy="12" r="7" fill="#1E40AF"/><circle cx="80" cy="78" r="7" fill="#1E40AF"/><circle cx="30" cy="45" r="7" fill="#1E40AF"/><circle cx="130" cy="45" r="7" fill="#1E40AF"/></svg><h3>चक्र/पहिया <span class="en" style="font-size:.75em;color:var(--gold-deep)">Wheel</span></h3><p>तीलियाँ केंद्र से जुड़ती हैं, आपस में नहीं — नेता केंद्र में, हर बात उसी से होकर।</p></figure>
+      <figure class="card"><svg viewBox="0 0 160 90"><polygon points="80,10 132,38 112,80 48,80 28,38" fill="none" stroke="#D9CFB2" stroke-width="2"/><circle cx="80" cy="10" r="7" fill="#1E40AF"/><circle cx="132" cy="38" r="7" fill="#1E40AF"/><circle cx="112" cy="80" r="7" fill="#1E40AF"/><circle cx="48" cy="80" r="7" fill="#1E40AF"/><circle cx="28" cy="38" r="7" fill="#1E40AF"/></svg><h3>वृत्त <span class="en" style="font-size:.75em;color:var(--gold-deep)">Circle</span></h3><p>हर सदस्य केवल अपने दो पड़ोसियों से जुड़ा — सूचना गोल घूमती है, धीमी।</p></figure>
+      <figure class="card"><svg viewBox="0 0 160 90"><g stroke="#D9CFB2" stroke-width="1.6"><line x1="80" y1="10" x2="132" y2="38"/><line x1="80" y1="10" x2="112" y2="80"/><line x1="80" y1="10" x2="48" y2="80"/><line x1="80" y1="10" x2="28" y2="38"/><line x1="132" y1="38" x2="112" y2="80"/><line x1="132" y1="38" x2="48" y2="80"/><line x1="132" y1="38" x2="28" y2="38"/><line x1="112" y1="80" x2="48" y2="80"/><line x1="112" y1="80" x2="28" y2="38"/><line x1="48" y1="80" x2="28" y2="38"/></g><circle cx="80" cy="10" r="7" fill="#1E40AF"/><circle cx="132" cy="38" r="7" fill="#1E40AF"/><circle cx="112" cy="80" r="7" fill="#1E40AF"/><circle cx="48" cy="80" r="7" fill="#1E40AF"/><circle cx="28" cy="38" r="7" fill="#1E40AF"/></svg><h3>सर्व-मार्ग <span class="en" style="font-size:.75em;color:var(--gold-deep)">All-Channel</span></h3><p>हर सदस्य हर सदस्य से जुड़ा — सबसे खुला, सबसे तेज़, अनुशासन कम।</p></figure>
+    </div>
+    <h3 style="margin-top:26px">अंगूरीलता के 4 प्रकार — कीथ डेविस की सूची, अक्षरशः याद</h3>
+    <div class="grid">
+      <figure class="card"><svg viewBox="0 0 160 90"><path d="M15 70 L50 30 L85 66 L120 26 L148 58" fill="none" stroke="#D9CFB2" stroke-width="2"/><circle cx="15" cy="70" r="7" fill="#1E40AF"/><circle cx="50" cy="30" r="7" fill="#1E40AF"/><circle cx="85" cy="66" r="7" fill="#1E40AF"/><circle cx="120" cy="26" r="7" fill="#1E40AF"/><circle cx="148" cy="58" r="7" fill="#1E40AF"/></svg><h3>एकल कड़ी <span class="en" style="font-size:.75em;color:var(--gold-deep)">Single Strand</span></h3><p>A ने B को, B ने C को — लंबी एक-रेखीय कड़ी; सूचना सबसे ज़्यादा बिगड़ती है।</p></figure>
+      <figure class="card"><svg viewBox="0 0 160 90"><g stroke="#D9CFB2" stroke-width="1.8"><line x1="80" y1="45" x2="80" y2="10"/><line x1="80" y1="45" x2="80" y2="80"/><line x1="80" y1="45" x2="26" y2="20"/><line x1="80" y1="45" x2="134" y2="20"/><line x1="80" y1="45" x2="26" y2="72"/><line x1="80" y1="45" x2="134" y2="72"/></g><circle cx="80" cy="45" r="9" fill="#C9A227"/><circle cx="80" cy="10" r="6" fill="#1E40AF"/><circle cx="80" cy="80" r="6" fill="#1E40AF"/><circle cx="26" cy="20" r="6" fill="#1E40AF"/><circle cx="134" cy="20" r="6" fill="#1E40AF"/><circle cx="26" cy="72" r="6" fill="#1E40AF"/><circle cx="134" cy="72" r="6" fill="#1E40AF"/></svg><h3>गपशप <span class="en" style="font-size:.75em;color:var(--gold-deep)">Gossip</span></h3><p>एक व्यक्ति सबको बताता फिरता है — रोचक, ग़ैर-कामकाजी बातें ऐसे फैलती हैं।</p></figure>
+      <figure class="card"><svg viewBox="0 0 160 90"><g stroke="#D9CFB2" stroke-width="1.8"><line x1="30" y1="30" x2="76" y2="58"/><line x1="76" y1="58" x2="128" y2="24"/><line x1="30" y1="30" x2="110" y2="76"/></g><circle cx="30" cy="30" r="8" fill="#1E40AF"/><circle cx="76" cy="58" r="7" fill="#1E40AF"/><circle cx="128" cy="24" r="7" fill="#1E40AF"/><circle cx="110" cy="76" r="7" fill="#1E40AF"/><circle cx="48" cy="78" r="7" fill="#D9CFB2"/><circle cx="140" cy="60" r="7" fill="#D9CFB2"/></svg><h3>संभाव्यता <span class="en" style="font-size:.75em;color:var(--gold-deep)">Probability</span></h3><p>जो बेतरतीब मिल गया, उसे बता दिया — कौन जानेगा, संयोग तय करता है (धूसर लोग छूट गए)।</p></figure>
+      <figure class="card"><svg viewBox="0 0 160 90"><g stroke="#D9CFB2" stroke-width="1.8"><line x1="26" y1="45" x2="68" y2="22"/><line x1="26" y1="45" x2="68" y2="68"/><line x1="68" y1="22" x2="112" y2="12"/><line x1="68" y1="22" x2="112" y2="34"/><line x1="68" y1="68" x2="112" y2="58"/><line x1="68" y1="68" x2="112" y2="80"/></g><circle cx="26" cy="45" r="8" fill="#C9A227"/><circle cx="68" cy="22" r="7" fill="#1E40AF"/><circle cx="68" cy="68" r="7" fill="#1E40AF"/><circle cx="112" cy="12" r="6" fill="#1E40AF"/><circle cx="112" cy="34" r="6" fill="#1E40AF"/><circle cx="112" cy="58" r="6" fill="#1E40AF"/><circle cx="112" cy="80" r="6" fill="#1E40AF"/></svg><h3>गुच्छ <span class="en" style="font-size:.75em;color:var(--gold-deep)">Cluster</span></h3><p>बात 'सिर्फ़ अपनों' को, वे अपने 'अपनों' को — गुच्छे दर गुच्छे। <b>वास्तविक जीवन में सबसे आम।</b></p></figure>
+    </div>
+    <div class="jug"><span class="lb">बोधि जुगाड़</span><p>अंगूर की बेल बिना नक्शे के जिधर सहारा मिले उधर चढ़ जाती है — वैसे ही अनौपचारिक खबर संगठन-चार्ट देखे बिना रिश्तों के सहारे फैलती है। इसीलिए नाम — <b>अंगूरीलता</b>।</p></div>
+    <div class="trap"><span class="lb">परीक्षा जाल · PYQ 2024</span><p>अनौपचारिक नेटवर्क का प्रकार <b>नहीं</b> = सर्कुलर। 'सर्कुलर' सुनते ही औपचारिक 'वृत्त' से भ्रम होता है — पर कीथ डेविस की सूची <b>चार</b> की है: एकल, गपशप, संभाव्यता, गुच्छ। और अफ़वाह-प्रश्न: इलाज तथ्य देना है, कारण घटाना है, विश्वसनीय स्रोत हैं — <b>तथ्य छिपाना नहीं</b>; अफ़वाह अँधेरे में पलती है, छिपाना अँधेरा बढ़ाना है।</p></div>
+  </div>
+</section>
+
+<section class="sec" id="s4">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">04</span><span class="rule"></span><span class="lb">रुकावटों की पहचान</span></div>
+    <h2 class="rz">संचार की बाधाएँ</h2>
+    <p class="lead">परीक्षा-सूत्र पहले: हर बाधा से पूछो — <b>यह रुकावट कहाँ जन्मी?</b> मन में तो मनोवैज्ञानिक, शब्द में तो शब्दार्थ, माहौल में तो भौतिक, ढाँचे में तो संगठनात्मक। प्रश्न प्रायः 'कौन-सी X बाधा नहीं है' रूप में आता है।</p>
+    <div class="grid">
+      <div class="card"><h3>भौतिक <span class="en" style="font-size:.75em;color:var(--gold-deep)">Physical</span></h3><p>शोर, दूरी, खराब उपकरण, दीवारें — माहौल की रुकावटें।</p></div>
+      <div class="card" style="border-top:3px solid var(--royal)"><h3>मनोवैज्ञानिक <span class="en" style="font-size:.75em;color:var(--gold-deep)">Psychological</span></h3><p>परीक्षा का पसंदीदा इलाका: <span class="t">समय-पूर्व मूल्यांकन <i>Premature Evaluation</i></span>, <span class="t">अनवधान <i>Inattention</i></span>, <span class="t">अविश्वास <i>Distrust</i></span>, भावनाएँ, पूर्वाग्रह, चयनात्मक बोध।</p></div>
+      <div class="card"><h3>शब्दार्थ <span class="en" style="font-size:.75em;color:var(--gold-deep)">Semantic</span></h3><p>कठिन शब्दावली (Jargon), बहुअर्थी शब्द, अनुवाद की गड़बड़।</p></div>
+      <div class="card"><h3>संगठनात्मक <span class="en" style="font-size:.75em;color:var(--gold-deep)">Organizational</span></h3><p>बहुत सारे स्तर — हर स्तर पर संदेश छनता-बिगड़ता है (Filtering); पद-भेद।</p></div>
+      <div class="card"><h3>दैहिक + सांस्कृतिक</h3><p>कम सुनना, थकान (Physiological); इशारों के अलग-अलग सांस्कृतिक अर्थ (Cross-cultural)।</p></div>
+    </div>
+    <div class="jug"><span class="lb">बोधि जुगाड़</span><p><b>समय-पूर्व मूल्यांकन</b> = फल पकने से पहले तोड़ लेना — बात पूरी होने से पहले फ़ैसला। सुनने का कच्चा फल।</p></div>
+    <div class="trap"><span class="lb">परीक्षा जाल · PYQ 2024</span><p>मनोवैज्ञानिक बाधा <b>नहीं</b> = शारीरिक रूप से व्यक्त संदेश (Bodily Expressed Message)। वह देहभाषा का — शारीरिक/अशाब्दिक — पक्ष है, मन की रुकावट नहीं। जो चीज़ 'मन के भीतर' घटे वही मनोवैज्ञानिक।</p></div>
+  </div>
+</section>
+
+<section class="sec sec--tint" id="s5">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">05</span><span class="rule"></span><span class="lb">लेने की कला</span></div>
+    <h2 class="rz">श्रवण और चार बुनियादी कौशल</h2>
+    <p class="lead"><span class="t">सुनना <i>Hearing</i></span> कानों की शारीरिक घटना है; <span class="t">श्रवण <i>Listening</i></span> मन की सक्रिय प्रक्रिया। कान खुले होना काफ़ी नहीं — मन खुला चाहिए।</p>
+    <div class="memrail">
+      <div class="mem"><b>संवेदन</b><span class="en" style="font-size:.8em;color:var(--gold-deep)">Sensing</span><p style="font-size:14px;margin:4px 0 0">ध्वनि का कानों तक पहुँचना</p><span class="arrow">➜</span></div>
+      <div class="mem"><b>समझना</b><span class="en" style="font-size:.8em;color:var(--gold-deep)">Understanding</span><p style="font-size:14px;margin:4px 0 0">अर्थ-निर्धारण</p><span class="arrow">➜</span></div>
+      <div class="mem"><b>मूल्यांकन</b><span class="en" style="font-size:.8em;color:var(--gold-deep)">Evaluating</span><p style="font-size:14px;margin:4px 0 0">बात को तौलना</p><span class="arrow">➜</span></div>
+      <div class="mem"><b>प्रतिक्रिया</b><span class="en" style="font-size:.8em;color:var(--gold-deep)">Responding</span><p style="font-size:14px;margin:4px 0 0">जवाब देना</p><span class="arrow">➜</span></div>
+      <div class="mem"><b>स्मरण</b><span class="en" style="font-size:.8em;color:var(--gold-deep)">Remembering</span><p style="font-size:14px;margin:4px 0 0">याद रखना</p></div>
+    </div>
+    <div class="trap"><span class="lb">परीक्षा जाल · PYQ 2024</span><p>श्रवण का तत्व <b>नहीं</b> = <span class="t">अनुनय <i>Persuasion</i></span>। तर्क की सीढ़ी: श्रवण में हम <b>लेते</b> हैं — ध्वनि, अर्थ, याद; अनुनय में हम <b>थोपते</b> हैं — मत बदलवाते हैं। लेने की सूची में थोपने वाला शब्द घुसपैठिया है।</p></div>
+    <div class="grid grid--2">
+      <div class="card"><h3>चार बुनियादी संप्रेषण कौशल <span class="tag">PYQ 2025</span></h3><p><b>सुनना → बोलना → पढ़ना → लिखना</b> (Listening, Speaking, Reading, Writing)। जुगाड़: यह कुदरत का क्रम है — बच्चा भी पहले सुनता है, फिर बोलता, फिर पढ़ता, आख़िर में लिखता। 'समझना', 'सूचित करना', 'अवलोकन', 'प्रभावी' — ये कौशल के परिणाम हैं, बुनियादी कौशल नहीं।</p></div>
+      <div class="card"><h3>प्रस्तुति की शुरुआत <span class="tag">PYQ 2024</span></h3><p>अच्छा सम्प्रेषक शुरुआत करता है — <span class="t">सुगम पूर्वाभास <i>Ice-breaker</i></span> से। जमी बर्फ़ पर जहाज़ नहीं चलता; श्रोता की झिझक की बर्फ़ जो पहला किस्सा तोड़ दे, वही आइस-ब्रेकर। विकल्पों के अनुवाद भी नोट करो: <span class="t">नानुमिति <i>Non-sequitur</i></span> = अतार्किक निष्कर्ष।</p></div>
+    </div>
+    <p>श्रवण के प्रकार — सक्रिय, निष्क्रिय, समानुभूतिक, आलोचनात्मक, चयनात्मक, सराहनात्मक।</p>
+  </div>
+</section>
+<section class="sec" id="s6">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">06</span><span class="rule"></span><span class="lb">रिश्तों का विज्ञान</span></div>
+    <h2 class="rz">अन्तर्वैयक्तिक कौशल और उनके सिद्धांत</h2>
+    <p class="lead">दूसरों के साथ प्रभावी सम्बन्ध बनाने की योग्यताएँ: <span class="t">समानुभूति <i>Empathy</i></span>, <span class="t">शिष्टाचार <i>Courtesy</i></span>, सकारात्मक सोच, सक्रिय श्रवण, द्वंद्व-प्रबंधन, दलकार्य। समानुभूति बनाम सहानुभूति — सहानुभूति में तुम किनारे खड़े होकर अफ़सोस जताते हो; समानुभूति में सामने वाले के जूते में पैर डालकर वही महसूस करते हो।</p>
+    <div class="trap"><span class="lb">परीक्षा जाल · PYQ 2024</span><p>अन्तर्वैयक्तिक क्रिया का कौशल <b>नहीं</b> = प्रशासनिक शक्ति। कौशल भीतर से सीखा जाता है, शक्ति कुर्सी से मिलती है — जो कुर्सी के साथ आए और कुर्सी के साथ जाए, वह कौशल नहीं।</p></div>
+    <div class="grid grid--2">
+      <figure class="kv">
+        <h3>जोहारी खिड़की <span class="en" style="font-size:.7em;color:var(--gold-deep)">Johari Window</span></h3>
+        <p class="axis">→ ऊपर की पंक्ति: मैं जानता हूँ · नीचे की पंक्ति: मैं नहीं जानता | बायाँ स्तम्भ: दूसरे जानते हैं · दायाँ: दूसरे नहीं जानते</p>
+        <div class="johari">
+          <div class="jo jo1"><b>खुला क्षेत्र · Open/Arena</b><span>मैं भी जानूँ, दूसरे भी जानें — नाम, आदतें</span></div>
+          <div class="jo jo3"><b>छिपा क्षेत्र · Hidden</b><span>मैं जानूँ, दूसरे न जानें — राज़, डर</span></div>
+          <div class="jo jo2"><b>अंधा क्षेत्र · Blind</b><span>दूसरे जानें, मैं न जानूँ — मेरा तकिया-कलाम</span></div>
+          <div class="jo jo4"><b>अज्ञात क्षेत्र · Unknown</b><span>कोई न जाने — दबी क्षमताएँ</span></div>
+        </div>
+        <figcaption>निर्माता: <b>जोसेफ लुफ्ट + हैरिंगटन इंघम</b> (1955)। जुगाड़: Johari कोई संस्कृत शब्द नहीं — <b>Jo</b>seph + <b>Har</b>ry (Harrington) — नाम में ही दोनों निर्माता बैठे हैं। 2024 में विकल्प बनकर आ चुका है — 2026 में सीधे प्रश्न की प्रबल संभावना।</figcaption>
+      </figure>
+      <figure class="kv">
+        <h3>संव्यवहार विश्लेषण <span class="en" style="font-size:.7em;color:var(--gold-deep)">Transactional Analysis</span> <span class="tag">PYQ 2024</span></h3>
+        <div class="pac">
+          <div class="pacP">माता-पिता<small>Parent · सिखाने/डाँटने वाला स्वर</small></div>
+          <div class="pacA">प्रौढ़<small>Adult · तथ्य-तर्क वाला स्वर</small></div>
+          <div class="pacC">बालक<small>Child · भावना-ज़िद वाला स्वर</small></div>
+        </div>
+        <figcaption>जनक: <b>एरिक बर्न</b> — हर बातचीत एक लेन-देन (Transaction) है; तुमने जो भेजा, सामने वाले ने जो लौटाया, उसी सौदे का विश्लेषण। पुस्तक: Games People Play। जाल: विकल्पों में लुफ्ट-इंघम रखे थे — वे जोहारी वाले हैं, फँसना मत।</figcaption>
+      </figure>
+    </div>
+    <div class="grid grid--2">
+      <div class="card"><h3>भावनात्मक बुद्धि — गोलमैन के 5 तत्व</h3><p>आत्म-जागरूकता, आत्म-नियमन, अभिप्रेरणा, समानुभूति, सामाजिक कौशल <span class="en" style="font-size:.85em">(Goleman: Self-awareness, Self-regulation, Motivation, Empathy, Social Skills)</span>।</p></div>
+      <div class="card"><h3>द्वंद्व-प्रबंधन की 5 शैलियाँ (Thomas–Kilmann)</h3><p>प्रतिस्पर्धा, सहयोग, समझौता, परिहार, समायोजन। साथ में — <span class="t">आग्रहिता <i>Assertiveness</i></span>: अपनी बात दृढ़ता से पर सम्मान के साथ; आक्रामकता दूसरे का हक कुचलती है, निष्क्रियता अपना।</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--tint" id="s7">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">07</span><span class="rule"></span><span class="lb">बिना बोले बोलना</span></div>
+    <h2 class="rz">शारीरिक भाषा — शरीर के सात रहस्य</h2>
+    <p class="lead">मुद्रा, हाव-भाव, चेहरे और आँखों से व्यक्त होने वाला अशाब्दिक संचार — जो कुल संचार का लगभग 93% हिस्सा है। PYQ 2024 का कुख्यात प्रश्न: आकर्षक शारीरिक भाषा के सात रहस्य।</p>
+    <div class="grid">
+      <div class="card card--pass"><h3>1. चेहरा</h3><p class="en" style="color:var(--gold-deep);font-weight:600">Face</p></div>
+      <div class="card card--pass"><h3>2. हाव-भाव</h3><p class="en" style="color:var(--gold-deep);font-weight:600">Gestures</p></div>
+      <div class="card card--pass"><h3>3. सिर की हरकत</h3><p class="en" style="color:var(--gold-deep);font-weight:600">Head Movement</p></div>
+      <div class="card card--pass"><h3>4. आँख से सम्पर्क</h3><p class="en" style="color:var(--gold-deep);font-weight:600">Eye Contact</p></div>
+      <div class="card card--pass"><h3>5. मुद्रा/आसन</h3><p class="en" style="color:var(--gold-deep);font-weight:600">Posture</p></div>
+      <div class="card card--pass"><h3>6. क्षेत्र/इलाका</h3><p class="en" style="color:var(--gold-deep);font-weight:600">Territory</p></div>
+      <div class="card card--pass"><h3>7. प्रतिरूपण</h3><p class="en" style="color:var(--gold-deep);font-weight:600">Mirroring</p><p>सामने वाले की मुद्रा की अनजाने नकल — तालमेल और सहमति का संकेत; साक्षात्कार में इसी से सहज किया जाता है।</p></div>
+    </div>
+    <div class="jug"><span class="lb">विलोपन की सीढ़ी — यही असली हथियार</span><p>शारीरिक भाषा के 'रहस्य' वही हो सकते हैं जो <b>शरीर के अंग या शरीर की क्रिया</b> हों। विकल्प-सूची में 'सांस्कृतिक', 'आरामदायक', 'प्रतिबिम्ब' — अमूर्त विशेषण हैं, शरीर-तत्व नहीं; इन्हें काटते ही सही समुच्चय बचता है। स्रोत-विशिष्ट सूची-प्रश्नों में यही विधि भरोसेमंद है।</p></div>
+    <div class="grid grid--3">
+      <div class="card"><h3>शक्ति का संकेत <span class="tag">PYQ 2025</span></h3><p>दो व्यक्तियों में जो देहभाषा में अधिक <b>शिथिल/तनावमुक्त</b> दिखे, वह प्रायः शक्ति-क्रम में ऊँचा होता है (कुंजी में आयु व सामाजिक-आर्थिक स्तर जोड़कर 'उपर्युक्त सभी')। सूत्र: बॉस कुर्सी पर पसरता है, नया कर्मचारी तनकर बैठता है — तनाव नीचे वाले की वर्दी है।</p></div>
+      <div class="card"><h3>सन्दर्भ की ग़ुलामी <span class="tag">PYQ 2025</span></h3><p><b>भाव-भंगिमा और मुद्रा</b> (Gesture and Posture) अन्तर्वैयक्तिक सन्दर्भ से प्रभावित होते हैं — वही हाथ हिलाना दोस्त के सामने अलग, साक्षात्कार बोर्ड के सामने अलग।</p></div>
+      <div class="card"><h3>नियंत्रण का औज़ार <span class="tag">PYQ 2025</span></h3><p>अपने और दूसरों के व्यवहार को नियंत्रित करने के लिए मनुष्य अधिकतर समय <b>शब्दों</b> का प्रयोग करता है — दण्ड-पुरस्कार कभी-कभार, शब्द पल-पल (समझाना, टोकना, आदेश, आत्म-संवाद)।</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="s8">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">08</span><span class="rule"></span><span class="lb">मन का सामाजिक विज्ञान</span></div>
+    <h2 class="rz">अन्तर्वैयक्तिक आकर्षण और सामाजिक मनोविज्ञान</h2>
+    <p class="lead">आकर्षण सामाजिक अंतःक्रिया का हिस्सा है और मनोवैज्ञानिक इसे उत्तरजीविता से जोड़ते हैं — साथ रहने वाले जीव बचे, अकेले मिटे। कारक: <span class="t">समीपता <i>Proximity</i></span>, समानता, शारीरिक आकर्षकता, परिचितता (ज़ायोंक का Mere Exposure Effect), पूरकता — और नीचे वाला 2025 का सितारा।</p>
+    <div class="grid grid--3">
+      <div class="card"><h3>पसन्द की परस्परता <span class="tag">PYQ 2025</span></h3><p><span class="t">Reciprocity of Liking</span> — जो हमें चाहता है, वह अपने-आप अच्छा लगने लगता है; पसन्द का यह पलट-जवाब ही परस्परता। प्रश्न में 'एक-दूसरे को' शब्द ही सुराग था।</p></div>
+      <div class="card"><h3>गुणारोपण <span class="tag">PYQ 2025</span></h3><p><span class="t">Attribution</span> (हाइडर) — अपने और दूसरों के व्यवहार के <b>कारणों की व्याख्या</b>। जुगाड़: गुण + आरोपण = व्यवहार पर 'कारण का आरोप' — देर से आया तो 'आलसी है' (आंतरिक) या 'जाम था' (बाह्य)। दूसरों की ग़लती स्वभाव, अपनी परिस्थिति — मूलभूत गुणारोपण त्रुटि।</p></div>
+      <div class="card"><h3>संज्ञानात्मक असंवादिता <span class="tag">PYQ 2024</span></h3><p><span class="t">Cognitive Dissonance</span> — फेस्टिंगर, 1957। मूल्य-प्रणाली के विरुद्ध सूचना मिलने पर आंतरिक तनाव। जुगाड़: Dissonance संगीत का शब्द है — <b>बेसुरापन</b>; मान्यता और सूचना के सुर न मिलें तो भीतर जो खटकन बजे, वही। आयोग ने दो अनुवाद चलाए हैं: विसंगति और असंवादिता — दोनों एक ही Dissonance।</p></div>
+    </div>
+    <div class="grid grid--2">
+      <div class="card"><h3>संचार-साथियों का चयन <span class="tag">PYQ 2024</span></h3><p>तीन कारक — <b>उपयोगिता, गुप्तता, असंवादिता</b> (Utility, Secrecy, Dissonance)। जुगाड़: साथी वही चुनते हैं जिससे काम भी सधे, राज़ भी रहे, और मन का टकराव भी सम्भले। स्रोत-विशिष्ट तथ्य — तीनों इसी क्रम में पक्के।</p></div>
+      <div class="card"><h3>आस-पास के विकल्प-शब्द</h3><p><span class="t">पूर्वाग्रह <i>Prejudice</i></span> — बिना जाने बनी नकारात्मक धारणा; <span class="t">रूढ़िबद्धता <i>Stereotype</i></span> — पूरे समूह पर एक ठप्पा; <span class="t">विभेदीकरण <i>Discrimination</i></span> — धारणा का व्यवहार में उतरना; <span class="t">परहितवाद <i>Altruism</i></span> — निःस्वार्थ भलाई; <span class="t">सामाजिक समर्थन व्यवहार <i>Prosocial</i></span>।</p></div>
+    </div>
+    <div class="trap"><span class="lb">A/R जाल · PYQ 2024</span><p>A: आकर्षण सामाजिक अंतःक्रिया का भाग है (सत्य)। R: यह उत्तरजीविता हेतु आवश्यक है (सत्य)। पर R बताता है आकर्षण <b>ज़रूरी क्यों है</b>, यह नहीं कि वह <b>भाग क्यों है</b> — 'क्योंकि' लगाकर पढ़ो, वाक्य नहीं जुड़ता। उत्तर: दोनों सत्य, R सही व्याख्या नहीं।</p></div>
+  </div>
+</section>
+
+<section class="sec sec--tint" id="s9">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">09</span><span class="rule"></span><span class="lb">चुनने की कला</span></div>
+    <h2 class="rz">निर्णयन — मैटलिन से एंकरिंग तक</h2>
+    <p class="lead">परीक्षा-प्रसिद्ध परिभाषा (PYQ 2023): 'निर्णयन व्यवहार विकल्पों का <b>मूल्यांकन</b> तथा उनमें से <b>चयन</b> करना है' — <b>मैटलिन</b> (Matlin)। रथस, सैण्ट्रॉक, बैरन भ्रम के लिए रखे गए पाठ्यपुस्तक-लेखक हैं। निर्णयन एक <b>बौद्धिक प्रक्रिया</b> है (PYQ 2024) और अच्छा निर्णय <b>व्यवहार्य व प्राप्य</b> होता है (PYQ 2025) — जल्दबाज़ी, केवल अन्तर्ज्ञान, हितधारकों की उपेक्षा उसके दुर्गुण हैं।</p>
+    <h3>निर्णयन के पूर्वाग्रह — 2025 से शुरू हुआ नया पसंदीदा इलाका</h3>
+    <div class="grid">
+      <div class="card card--trapc"><h3>एंकरिंग <span class="tag">PYQ 2025</span></h3><p><span class="t">Anchoring Bias</span> — <b>पहली</b> प्राप्त सूचना को अत्यधिक भार। जुगाड़: जहाज़ जहाँ लंगर डालता है वहीं अटकता है — दिमाग पहली कीमत पर लंगर डाल देता है, मोल-भाव उसी के इर्द-गिर्द घूमता है।</p></div>
+      <div class="card card--trapc"><h3>पुष्टीकरण</h3><p><span class="t">Confirmation Bias</span> — केवल वही सूचना खोजना-मानना जो अपनी बनी राय की <b>पुष्टि</b> करे।</p></div>
+      <div class="card card--trapc"><h3>उपलब्धता</h3><p><span class="t">Availability Heuristic</span> — जो उदाहरण <b>झट याद</b> आ जाए, उसे ज़्यादा सामान्य मान लेना — विमान दुर्घटना की खबरें देखकर हवाई यात्रा को खतरनाक समझना।</p></div>
+      <div class="card card--trapc"><h3>पश्चदृष्टि</h3><p><span class="t">Hindsight Bias</span> — घटना के <b>बाद</b> कहना 'मुझे पहले से पता था'।</p></div>
+      <div class="card card--trapc"><h3>अति-आत्मविश्वास</h3><p><span class="t">Overconfidence</span> — अपनी सटीकता को बढ़ाकर आँकना।</p></div>
+    </div>
+    <div class="trap"><span class="lb">भेद पक्का करो</span><p>एंकरिंग = <b>पहली</b> सूचना · पुष्टीकरण = <b>पसंदीदा</b> सूचना · उपलब्धता = <b>झट याद आती</b> सूचना · पश्चदृष्टि = <b>बाद की</b> सूचना। 2025 में एंकरिंग-पुष्टीकरण आमने-सामने थे — 'पहली बार प्राप्त जानकारी' वाक्यांश ने एंकरिंग तय किया।</p></div>
+    <div class="grid grid--2">
+      <div class="card"><h3>अभिसारी बनाम अपसारी (गिलफोर्ड)</h3><p><span class="t">अभिसारी <i>Convergent</i></span> — सारे रास्ते <b>एक</b> सही उत्तर पर मिलते हैं (गणित का सवाल) — PYQ 2025: 'केवल एक ही उत्तर वाली समस्या' = यही। <span class="t">अपसारी <i>Divergent</i></span> — एक प्रश्न से <b>अनेक</b> उत्तर फूटते हैं ('ईंट के 100 उपयोग') — सृजनात्मकता की जड़। जुगाड़: Converge = एक बिंदु पर मिलना, Diverge = फैलना। साथ में — <span class="t">पार्श्व चिंतन <i>Lateral Thinking</i></span> (डी बोनो): सीधी लीक छोड़कर तिरछा रास्ता; छह सोच टोपियाँ भी उन्हीं की।</p></div>
+      <div class="card"><h3>साइमन के दो योगदान + गोएठे</h3><p><span class="t">क्रमादेशित/अक्रमादेशित निर्णय <i>Programmed/Non-programmed</i></span> — दोहराव वाले बनाम नए-अनोखे; <span class="t">परिबद्ध विवेकशीलता <i>Bounded Rationality</i></span> — सीमित सूचना-समय में 'काफ़ी अच्छा' विकल्प (Satisficing)। और PYQ 2025 का कथन: <b>'कार्य करना आसान है, सोचना कठिन'</b> — गोएठे (Goethe), Faust के रचयिता।</p></div>
+    </div>
+    <h3>सामूहिक निर्णय/सृजन तकनीकें</h3>
+    <div class="grid">
+      <div class="card"><h3>विचार-मंथन</h3><p><span class="t">Brainstorming</span> — एलेक्स ओस्बोर्न। नियम: पहले मात्रा, आलोचना बाद में।</p></div>
+      <div class="card"><h3>स्टार बर्स्टिंग <span class="tag">PYQ 2024</span></h3><p>रचनात्मक सोच व ब्रेनस्टार्मिंग तकनीक — तारे के छह कोनों पर छह प्रश्न: कौन, क्या, कब, कहाँ, क्यों, कैसे। विचार बीच में, प्रश्न तारे की तरह फूटते हैं — उत्तर नहीं, <b>प्रश्न</b> पैदा करने की विधि।</p></div>
+      <div class="card"><h3>डेल्फी तकनीक</h3><p>विशेषज्ञ दूर-दूर बैठे, गुमनाम प्रश्नावली से बार-बार राय — आमने-सामने कभी नहीं। जुगाड़: डेल्फी मंदिर में दूर बैठे देवता से भविष्य पूछा जाता था।</p></div>
+      <div class="card"><h3>नाममात्र समूह + समूहचिंतन</h3><p><span class="t">NGT</span> — पहले चुपचाप लिखो, फिर बारी-बारी साझा (दबंग आवाज़ों का दबदबा रोकने को)। <span class="t">Groupthink</span> — जेनिस; सहमति की चाह में समूह ग़लत निर्णय ले बैठता है — सामूहिक निर्णय का रोग।</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="s10">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">10</span><span class="rule"></span><span class="lb">2023 का गढ़</span></div>
+    <h2 class="rz">समस्या समाधान — रास्ते बनाम रुकावटें</h2>
+    <p class="lead">2023 में इसी एक खण्ड से 7 प्रश्न आए थे। पूरा खेल दो सूचियों का है — समाधान के <b>रास्ते</b> (विधियाँ) और दिमाग की <b>रुकावटें</b> (बाधाएँ)। प्रश्न प्रायः दोनों को मिलाकर पूछता है: 'कौन-सी विधि नहीं है?'</p>
+    <div class="grid grid--2">
+      <div class="card card--pass"><h3>रास्ते — विधियाँ</h3>
+        <p>1. <span class="t">प्रयास एवं त्रुटि <i>Trial and Error</i></span> — एक-एक हल तब तक, जब तक सफलता न मिले (PYQ 2023); थार्नडाइक की बिल्ली का रास्ता।</p>
+        <p>2. <span class="t">एल्गोरिथम <i>Algorithm</i></span> — नियमबद्ध, कदम-दर-कदम <b>यांत्रिक समाधान</b> (PYQ 2023); सफलता की <b>गारण्टी</b> देने वाली एकमात्र विधि (PYQ 2023)।</p>
+        <p>3. <span class="t">स्वतः शोध <i>Heuristics</i></span> — अंगूठे का नियम, अनुभव-आधारित शॉर्टकट; तेज़ पर गारण्टी नहीं। आयोग का अनुवाद याद रखो: Heuristics = स्वतः शोध।</p>
+        <p>4. <span class="t">अन्तर्दृष्टि/सूझ <i>Insight</i></span> — अचानक 'अहा!' के साथ पूरा हल — कोहलर का रास्ता। आयोग ने दोनों अनुवाद चलाए हैं: सूझबूझ (2023) और अन्तर्दृष्टि (2025)।</p>
+        <p>5. <span class="t">साधन-साध्य विश्लेषण <i>Means-End Analysis</i></span> — नेवेल-साइमन; लक्ष्य का फ़ासला नापकर उप-लक्ष्यों से घटाना। साथ में पश्चगामी खोज और सादृश्य।</p>
+      </div>
+      <div class="card card--trapc"><h3>रुकावटें — बाधाएँ</h3>
+        <p>1. <span class="t">मानसिक विन्यास <i>Mental Set</i></span> — <b>पूर्वानुभव</b> के आधार पर वही पुराना तरीका दोहराने की जड़ प्रवृत्ति (PYQ 2023)। प्रयोग: लचिन्स का जल-पात्र।</p>
+        <p>2. <span class="t">प्रकार्यात्मक स्थिरता <i>Functional Fixedness</i></span> — वस्तु के पारंपरिक उपयोग से आगे न देख पाना; यह मानसिक विन्यास का ही एक रूप है (PYQ 2025)। समाधान में यह <b>बाधा (Blocking)</b> उत्पन्न करती है (PYQ 2023) और विधियों की सूची में घुसा घुसपैठिया यही होता है (PYQ 2023)। प्रयोग: डंकर की मोमबत्ती — 'डिब्बा सिर्फ़ पिन रखने के लिए है' यही जड़ सोच; डिब्बा 'शेल्फ़' दिखा, स्थिरता टूटी।</p>
+        <p>3. भेद-सूत्र: विन्यास <b>विधि</b> पर जड़ता, स्थिरता <b>वस्तु</b> पर — और स्थिरता, विन्यास की छोटी बहन। <span class="t">अन्तरण प्रभाव <i>Transfer Effect</i></span> व्यापक अवधारणा है — पुरानी सीख का नई स्थिति पर असर (सकारात्मक भी); 'समाधान का प्रयास' वाले प्रश्न में उत्तर मानसिक विन्यास ही।</p>
+      </div>
+    </div>
+    <div class="jug"><span class="lb">बोधि जुगाड़</span><p>एल्गोरिथम रसोई की <b>पूरी लिखी recipe</b> है — हर कदम तय, नतीजा पक्का, समय ज़्यादा; स्वतः शोध अनुभवी माँ का <b>'नमक स्वादानुसार'</b> — अंदाज़ा, प्रायः सही, कभी-कभी बिगड़ भी जाता है। 'गारण्टी' शब्द दिखे = एल्गोरिथम; 'शॉर्टकट' दिखे = स्वतः शोध।</p></div>
+    <div class="grid grid--3">
+      <div class="card"><h3>कोहलर की प्रयोगशाला <span class="tag">PYQ 2023</span></h3><p>कोहलर ने प्रयोग की — <b>अप्रत्यक्ष पथ समस्याएँ</b> (Detour Problems); जर्मन Umweg = घुमावदार रास्ता। सीधा रास्ता बंद था तो चिम्पैंजी सुल्तान ने डंडे जोड़कर, बक्से चढ़ाकर घूमकर केला पाया — हल अचानक सूझा, इसीलिए अन्तर्दृष्टि सिद्धांत।</p></div>
+      <div class="card"><h3>पशु-प्रयोगों के कार्य <span class="tag">PYQ 2023</span></h3><p>पशुओं वाले कार्य: पहेली मंजूषा (थार्नडाइक की बिल्लियाँ), अप्रत्यक्ष पथ (कोहलर), दुहरी क्रमान्तरण। पशुओं में प्रयोग <b>नहीं</b> होता — <b>एनाग्राम्स</b>; अक्षरों का खेल भाषा माँगता है, भाषा मनुष्य के पास है।</p></div>
+      <div class="card"><h3>वालस के 4 सृजन-चरण</h3><p>तैयारी → <span class="t">उद्भवन <i>Incubation</i></span> (समस्या को पकने छोड़ना) → <span class="t">प्रबोधन <i>Illumination</i></span> (अहा-क्षण) → सत्यापन। अन्तर्दृष्टि का 'अहा' प्रबोधन-चरण में घटता है — यही कड़ी कोहलर से जुड़ती है। साथ का तथ्य (PYQ 2023): आगमनात्मक तर्क = <b>विशिष्ट से सामान्य</b>।</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--tint" id="s11">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">11</span><span class="rule"></span><span class="lb">हर साल का पक्का प्रश्न</span></div>
+    <h2 class="rz">अधिगम-सिद्धांत मिलान — और पावलव-नियम</h2>
+    <div class="grid grid--3">
+      <div class="card"><h3>थार्नडाइक</h3><p><span class="t">उद्दीपक-अनुक्रिया अनुबन्ध <i>S-R Bond</i></span> / प्रयास-त्रुटि / संयोजनवाद। पहेली मंजूषा में बिल्ली; प्रभाव का नियम।</p></div>
+      <div class="card"><h3>पावलव</h3><p><span class="t">शास्त्रीय अनुबंधन <i>Classical Conditioning</i></span> — कुत्ता और घंटी। बस यही, और कुछ नहीं।</p></div>
+      <div class="card"><h3>स्किनर</h3><p><span class="t">क्रियाप्रसूत/सक्रिय अनुबंधन <i>Operant Conditioning</i></span> — स्किनर बॉक्स में चूहे-कबूतर।</p></div>
+      <div class="card"><h3>कोहलर</h3><p><span class="t">अन्तर्दृष्टि सिद्धांत <i>Insight</i></span> — गेस्टाल्ट सम्प्रदाय; चिम्पैंजी सुल्तान।</p></div>
+      <div class="card"><h3>लेविन</h3><p><span class="t">क्षेत्र सिद्धांत <i>Field Theory</i></span>।</p></div>
+      <div class="card"><h3>गेस्टाल्ट तिकड़ी + बंडूरा</h3><p>वर्दीमर, कोफ्का, कोहलर — 'सम्पूर्ण अंशों के योग से बड़ा'। बंडूरा — सामाजिक अधिगम, बोबो गुड़िया।</p></div>
+    </div>
+    <div class="trap"><span class="lb">पावलव-नियम · PYQ 2023 + 2025</span><p>दोनों बार गलत-मिलान का बलि का बकरा <b>पावलव</b> ही बना — 2023 में उसे उद्दीपन-अनुक्रिया अनुबन्ध (थार्नडाइक का) से जोड़ा, 2025 में गेस्टाल्ट (कोहलर-वर्दीमर-कोफ्का का) से। नियम: पावलव के आगे 'शास्त्रीय अनुबंधन' के सिवा कुछ भी लिखा दिखे — वही गलत जोड़ा है।</p></div>
+  </div>
+</section>
+
+<section class="sec" id="s12">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">12</span><span class="rule"></span><span class="lb">अवधि का खेल</span></div>
+    <h2 class="rz">स्मृति की सीढ़ी</h2>
+    <p class="lead">प्रक्रियाएँ तीन: कूटसंकेतन, भंडारण, पुनरुद्धार। पर परीक्षा का असली प्रश्न <b>अवधि</b> पर आता है — नीचे की सीढ़ी पक्की कर लो।</p>
+    <div class="memrail">
+      <div class="mem"><b>तात्कालिक/संवेदी</b><span class="en" style="font-size:.8em;color:var(--gold-deep)">Sensory Register</span><p style="font-size:14px;margin:6px 0 0">इन्द्रियों की पहली छाप — बिना ध्यान के अपने-आप</p><span class="dur">1 सेकण्ड से कम</span><div class="chiprow"><span class="chip" style="font-size:12px">प्रतिमात्मक (Iconic) ≈ 0.25 से.</span><span class="chip" style="font-size:12px">प्रतिध्वनिक (Echoic) ≈ 3–4 से.</span></div><span class="arrow">➜</span></div>
+      <div class="mem"><b>अल्पकालिक</b><span class="en" style="font-size:.8em;color:var(--gold-deep)">STM</span><p style="font-size:14px;margin:6px 0 0">जिस पर ध्यान दिया, वही यहाँ; क्षमता 7±2 (मिलर)। सक्रिय रूप = कार्यकारी स्मृति (बैडले)</p><span class="dur">15–30 सेकण्ड</span><span class="arrow">➜</span></div>
+      <div class="mem"><b>दीर्घकालिक</b><span class="en" style="font-size:.8em;color:var(--gold-deep)">LTM</span><p style="font-size:14px;margin:6px 0 0">जिसका दोहराव (Rehearsal) हुआ, वही टिकता है</p><span class="dur">लगभग असीमित</span></div>
+    </div>
+    <div class="jug"><span class="lb">बोधि जुगाड़</span><p><b>Icon = चित्र</b> — आँख की छाप पलक झपकते मिटती है; <b>Echo = गूँज</b> — कान की गूँज थोड़ा ठहरती है। चित्र उड़ता है, गूँज ठहरती है।</p></div>
+    <div class="trap"><span class="lb">2025 का बड़ा जाल — स्रोत-पुस्तक की चाल</span><p>'किस स्मृति की अवधि सबसे कम?' विकल्प: तात्कालिक, प्रतिध्वनिक, प्रतिमात्मक, कार्यकारी। हिंदी पाठ्यपुस्तक-परंपरा (आयोग का स्रोत) में <b>तात्कालिक स्मृति = सम्पूर्ण संवेदी रजिस्टर, अवधि 1 सेकण्ड से भी कम</b> — कुंजी-उत्तर यही। बारीकी: पश्चिमी वर्गीकरण में उसके भीतर प्रतिमात्मक (≈0.25 से.) सबसे छोटी उप-स्मृति। सूत्र — विकल्पों में 'तात्कालिक' हो तो वही; सिर्फ़ प्रतिमात्मक बनाम प्रतिध्वनिक की टक्कर हो तो प्रतिमात्मक।</p></div>
+  </div>
+</section>
+<section class="sec sec--tint" id="s13">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">13</span><span class="rule"></span><span class="lb">आज का दफ़्तर</span></div>
+    <h2 class="rz">डिजिटल एवं व्यावसायिक संचार</h2>
+    <div class="grid grid--2">
+      <div class="card"><h3>ईमेल शिष्टाचार <span class="tag">PYQ 2024</span></h3><p>समूह संवाद में ईमेल का उत्तर देते समय बचें — <b>बिना आवश्यकता 'रिप्लाई ऑल' से</b>। जो करना चाहिए (इसलिए गलत विकल्प थे): हस्ताक्षर, वर्तनी-जाँच, विषय-पंक्ति भरना। तर्क: 200 लोगों की सूची में तुम्हारा 'धन्यवाद' 200 इनबॉक्स का कचरा है — जवाब उसी को, जिसके लिए है।</p></div>
+      <div class="card"><h3>ग्रुपवेयर <span class="tag">PYQ 2025</span></h3><p><span class="t">Groupware</span> — वह सॉफ्टवेयर जो <b>कई लोगों को एक साथ</b> उपयोग की अनुमति देता है, ताकि दस्तावेज़ बनें और परियोजनाओं का ट्रैक रहे (आज की भाषा में गूगल डॉक्स जैसी सहयोगी प्रणालियाँ)। चार संकेत — कई लोग + एक साथ + दस्तावेज़ + परियोजना — मिलें तो उत्तर ग्रुपवेयर; 'नेटवर्क' और 'सॉफ्टवेयर' सामान्य शब्द-जाल हैं।</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec sec--navy" id="s14">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">14</span><span class="rule"></span><span class="lb">नाम जो अंक दिलाते हैं</span></div>
+    <h2 class="rz">विद्वान गैलरी</h2>
+    <p class="lead">इस खण्ड के आधे प्रश्न सीधे 'किसने कहा/किसने दिया' हैं। हर नाम के साथ उसकी एक-पंक्ति पहचान।</p>
+    <div class="grid">
+      <div class="sch"><div class="ini">मै</div><b>मैटलिन</b><span>निर्णयन = विकल्पों का मूल्यांकन + चयन (PYQ 2023)</span></div>
+      <div class="sch"><div class="ini">गो</div><b>गोएठे</b><span>'कार्य करना आसान, सोचना कठिन' (PYQ 2025)</span></div>
+      <div class="sch"><div class="ini">ब</div><b>एरिक बर्न</b><span>संव्यवहार विश्लेषण; Games People Play (PYQ 2024)</span></div>
+      <div class="sch"><div class="ini">लु</div><b>लुफ्ट + इंघम</b><span>जोहारी खिड़की, 1955 — Jo + Hari</span></div>
+      <div class="sch"><div class="ini">फे</div><b>फेस्टिंगर</b><span>संज्ञानात्मक असंवादिता, 1957 (PYQ 2024)</span></div>
+      <div class="sch"><div class="ini">हा</div><b>हाइडर</b><span>गुणारोपण सिद्धांत (PYQ 2025)</span></div>
+      <div class="sch"><div class="ini">मे</div><b>मेहराबियन</b><span>7-38-55 नियम — भावनात्मक संदेशों पर</span></div>
+      <div class="sch"><div class="ini">ओ</div><b>ओस्बोर्न</b><span>विचार-मंथन (Brainstorming)</span></div>
+      <div class="sch"><div class="ini">मि</div><b>मिलर</b><span>अल्पकालिक स्मृति की क्षमता 7±2</span></div>
+      <div class="sch"><div class="ini">सा</div><b>हर्बर्ट साइमन</b><span>परिबद्ध विवेकशीलता; क्रमादेशित/अक्रमादेशित निर्णय</span></div>
+      <div class="sch"><div class="ini">गि</div><b>गिलफोर्ड</b><span>अभिसारी और अपसारी चिंतन</span></div>
+      <div class="sch"><div class="ini">बो</div><b>डी बोनो</b><span>पार्श्व चिंतन; छह सोच टोपियाँ</span></div>
+      <div class="sch"><div class="ini">वा</div><b>वालस</b><span>सृजन के 4 चरण — तैयारी, उद्भवन, प्रबोधन, सत्यापन</span></div>
+      <div class="sch"><div class="ini">डे</div><b>कीथ डेविस</b><span>अंगूरीलता के 4 प्रकार</span></div>
+      <div class="sch"><div class="ini">हॉ</div><b>एडवर्ड हॉल</b><span>प्रॉक्सेमिक्स के 4 दूरी-क्षेत्र</span></div>
+      <div class="sch"><div class="ini">जे</div><b>जेनिस</b><span>समूहचिंतन (Groupthink)</span></div>
+      <div class="sch"><div class="ini">गोल</div><b>गोलमैन</b><span>भावनात्मक बुद्धि के 5 तत्व</span></div>
+      <div class="sch"><div class="ini">डं</div><b>डंकर · लचिन्स</b><span>मोमबत्ती प्रयोग (स्थिरता) · जल-पात्र प्रयोग (विन्यास)</span></div>
+      <div class="sch"><div class="ini">था</div><b>थार्नडाइक · पावलव · स्किनर · कोहलर · लेविन</b><span>S-R बंध · शास्त्रीय · क्रियाप्रसूत · अन्तर्दृष्टि · क्षेत्र</span></div>
+      <div class="sch"><div class="ini">शै</div><b>शैनन-वीवर · बर्लो · लासवेल</b><span>गणितीय मॉडल (शोर) · SMCR · कौन-क्या-किससे</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="s15">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">15</span><span class="rule"></span><span class="lb">अनुवाद-जाल तोड़ो</span></div>
+    <h2 class="rz">आयोग की अपनी हिंदी — परीक्षा शब्दकोश</h2>
+    <p class="lead">ये अनुवाद 2023–25 के वास्तविक प्रश्नपत्रों से ही लिए गए हैं — आयोग यही शब्द दोहराता है। हिंदी शब्द अटके तो तुरंत English कॉलम पढ़ना — यह आदत अकेले 2-3 प्रश्न बचाती है।</p>
+    <div class="gloss">
+      <div class="g"><b>संकेतीकरण</b> — <span class="en">Encoding</span></div>
+      <div class="g"><b>असंकेतीकरण/विसंकेतीकरण</b> — <span class="en">Decoding</span></div>
+      <div class="g"><b>अनुनय</b> — <span class="en">Persuasion</span></div>
+      <div class="g"><b>प्रतिपुष्टि</b> — <span class="en">Feedback</span></div>
+      <div class="g"><b>हस्तक्षेप</b> — <span class="en">Interference</span></div>
+      <div class="g"><b>सन्दर्भ</b> — <span class="en">Context</span></div>
+      <div class="g"><b>वाचिक / अवाचिक</b> — <span class="en">Verbal / Non-verbal</span></div>
+      <div class="g"><b>पराभाषा</b> — <span class="en">Paralanguage</span></div>
+      <div class="g"><b>अधोगामी संप्रेषण</b> — <span class="en">Downward Communication</span></div>
+      <div class="g"><b>संवेदन</b> — <span class="en">Sensing</span></div>
+      <div class="g"><b>समानुभूति</b> — <span class="en">Empathy</span></div>
+      <div class="g"><b>शिष्टाचार</b> — <span class="en">Courtesy</span></div>
+      <div class="g"><b>सुगम पूर्वाभास / परिचय सूत्र</b> — <span class="en">Ice-breaker</span></div>
+      <div class="g"><b>नानुमिति</b> — <span class="en">Non-sequitur</span></div>
+      <div class="g"><b>विसंगति / असंवादिता</b> — <span class="en">Dissonance (दोनों अनुवाद चले हैं)</span></div>
+      <div class="g"><b>गुणारोपण</b> — <span class="en">Attribution</span></div>
+      <div class="g"><b>परहितवाद</b> — <span class="en">Altruism</span></div>
+      <div class="g"><b>पसन्द की परस्परता</b> — <span class="en">Reciprocity of Liking</span></div>
+      <div class="g"><b>उपयोगिता / गुप्तता</b> — <span class="en">Utility / Secrecy</span></div>
+      <div class="g"><b>एकल-श्रृंखला / गपशप</b> — <span class="en">Single / Gossip Chain</span></div>
+      <div class="g"><b>संभाव्यता / गुच्छ</b> — <span class="en">Probability / Cluster</span></div>
+      <div class="g"><b>अंगूरीलता</b> — <span class="en">Grapevine</span></div>
+      <div class="g"><b>समय-पूर्व मूल्यांकन</b> — <span class="en">Premature Evaluation</span></div>
+      <div class="g"><b>अनवधान / अविश्वास</b> — <span class="en">Inattention / Distrust</span></div>
+      <div class="g"><b>अभिकथन / कारण</b> — <span class="en">Assertion / Reason</span></div>
+      <div class="g"><b>स्वतः शोध</b> — <span class="en">Heuristics</span></div>
+      <div class="g"><b>यांत्रिक समाधान</b> — <span class="en">Mechanical Solution</span></div>
+      <div class="g"><b>व्यवहारिक नियम</b> — <span class="en">Rule of Thumb</span></div>
+      <div class="g"><b>साधन-साध्य विश्लेषण</b> — <span class="en">Means-End Analysis</span></div>
+      <div class="g"><b>प्रयास एवं त्रुटि</b> — <span class="en">Trial and Error</span></div>
+      <div class="g"><b>सूझबूझ / अन्तर्दृष्टि</b> — <span class="en">Insight (दोनों अनुवाद चले हैं)</span></div>
+      <div class="g"><b>प्रकार्यात्मक स्थिरता</b> — <span class="en">Functional Fixedness</span></div>
+      <div class="g"><b>मानसिक विन्यास</b> — <span class="en">Mental Set</span></div>
+      <div class="g"><b>अन्तरण प्रभाव</b> — <span class="en">Transfer Effect</span></div>
+      <div class="g"><b>बाधा / सहायता</b> — <span class="en">Blocking / Facilitation</span></div>
+      <div class="g"><b>पहेली मंजूषा</b> — <span class="en">Puzzle Box</span></div>
+      <div class="g"><b>अप्रत्यक्ष पथ समस्याएँ</b> — <span class="en">Detour Problems</span></div>
+      <div class="g"><b>दुहरी क्रमान्तरण</b> — <span class="en">Double Alternation</span></div>
+      <div class="g"><b>आगमनात्मक तर्क</b> — <span class="en">Inductive Reasoning</span></div>
+      <div class="g"><b>अभिसारी / अपसारी चिंतन</b> — <span class="en">Convergent / Divergent</span></div>
+      <div class="g"><b>पुष्टीकरण पक्षपात</b> — <span class="en">Confirmation Bias</span></div>
+      <div class="g"><b>उपलब्धता अनुमानी</b> — <span class="en">Availability Heuristic</span></div>
+      <div class="g"><b>पश्चदृष्टि पूर्वाग्रह</b> — <span class="en">Hindsight Bias</span></div>
+      <div class="g"><b>एंकरिंग पूर्वाग्रह</b> — <span class="en">Anchoring Bias</span></div>
+      <div class="g"><b>तात्कालिक स्मृति</b> — <span class="en">Immediate Memory</span></div>
+      <div class="g"><b>प्रतिमात्मक / प्रतिध्वनिक</b> — <span class="en">Iconic / Echoic</span></div>
+      <div class="g"><b>कार्यकारी स्मृति</b> — <span class="en">Working Memory</span></div>
+      <div class="g"><b>उद्दीपक-अनुक्रिया अनुबन्ध</b> — <span class="en">S-R Bond (थार्नडाइक)</span></div>
+      <div class="g"><b>क्रियाप्रसूत / सक्रिय अनुबंधन</b> — <span class="en">Operant Conditioning</span></div>
+      <div class="g"><b>अनुकूलित अनुक्रिया</b> — <span class="en">Classical Conditioning</span></div>
+      <div class="g"><b>पूर्णाकारवाद</b> — <span class="en">Gestalt</span></div>
+      <div class="g"><b>क्षेत्र सिद्धांत</b> — <span class="en">Field Theory</span></div>
+      <div class="g"><b>डायडिक / द्विव्यक्तिक संचार</b> — <span class="en">Dyadic Communication</span></div>
+      <div class="g"><b>उद्भवन / प्रबोधन</b> — <span class="en">Incubation / Illumination</span></div>
+      <div class="g"><b>परिबद्ध विवेकशीलता</b> — <span class="en">Bounded Rationality</span></div>
+      <div class="g"><b>अन्तः / अन्तर्</b> — <span class="en">Intra (भीतर) / Inter (बीच)</span></div>
+    </div>
+    <div class="trap" style="margin-top:24px"><span class="lb">स्थायी नियम</span><p>'अन्तः' = भीतर (Intrapersonal), 'अन्तर्' = दो के बीच (Interpersonal) — पर आयोग की हिंदी में कभी-कभी ढिलाई मिलती है। संदेह होते ही प्रश्नपत्र का English कॉलम मिलाना ही अंतिम बीमा है।</p></div>
+  </div>
+</section>
+
+<section class="sec sec--tint" id="s16">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">16</span><span class="rule"></span><span class="lb">असली मैदान</span></div>
+    <h2 class="rz">PYQ बैंक — 2023 से 2025 के सभी 48 प्रश्न</h2>
+    <p class="lead">पहले खुद उत्तर सोचो, फिर प्रश्न पर टैप करके मिलाओ। हर उत्तर के साथ एक-पंक्ति तर्क है — तर्क याद रहा तो तथ्य अपने-आप याद रहेगा।</p>
+    <div class="btnrow"><button class="btn" id="toggleAns" type="button">सभी उत्तर खोलें</button><button class="btn btn--ghost" type="button" onclick="window.print()">प्रिंट / PDF</button></div>
+
+    <div class="yrh"><h3 class="rz">वर्ष 2023</h3><span class="rule"></span></div>
+    <details class="q"><summary>'निर्णयन व्यवहार विकल्पों का मूल्यांकन तथा उनमें से चयन करना है' — किसने कहा?</summary><div class="body"><span class="ans">मैटलिन</span>मूल्यांकन + चयन वाली पाठ्यपुस्तकीय परिभाषा मैटलिन की; रथस, सैण्ट्रॉक, बैरन भ्रम के लिए रखे लेखक।</div></details>
+    <details class="q"><summary>आगमनात्मक तर्क आधारित है?</summary><div class="body"><span class="ans">विशिष्ट से सामान्य सिद्धांत पर</span>कई उदाहरण देखकर नियम बनाना; निगमनात्मक इसका उल्टा।</div></details>
+    <details class="q"><summary>एल्गोरिथम एक प्रकार है?</summary><div class="body"><span class="ans">यांत्रिक समाधान का</span>कदम-दर-कदम मशीनी विधि।</div></details>
+    <details class="q"><summary>प्रकार्यात्मक स्थिरता समस्या समाधान प्रक्रम में उत्पन्न करती है?</summary><div class="body"><span class="ans">बाधा (Blocking)</span>स्थिरता रोकती है, मदद नहीं करती।</div></details>
+    <details class="q"><summary>प्रयोज्य समस्या का समाधान पूर्वानुभव के आधार पर करने का प्रयास करे तो?</summary><div class="body"><span class="ans">मानसिक विन्यास</span>पुराने तरीके की जड़ पकड़ = विन्यास; अन्तरण प्रभाव व्यापक अवधारणा है।</div></details>
+    <details class="q"><summary>एक सम्भाव्य समाधान के बाद दूसरा, सफलता मिलने तक?</summary><div class="body"><span class="ans">प्रयास एवं त्रुटि</span>थार्नडाइक की बिल्ली वाला रास्ता।</div></details>
+    <details class="q"><summary>समस्या समाधान की विधि के रूप में प्रयोग नहीं होता?</summary><div class="body"><span class="ans">प्रकार्यात्मक स्थिरता</span>वह बाधा है, विधि नहीं — विधियों की सूची में घुसा घुसपैठिया।</div></details>
+    <details class="q"><summary>सफलता की गारण्टी देने वाली विधि?</summary><div class="body"><span class="ans">एल्गोरिथम विधि</span>'गारण्टी' = एल्गोरिथम; 'शॉर्टकट' = स्वतः शोध।</div></details>
+    <details class="q"><summary>कोहलर ने किस प्रकार की समस्या का प्रयोग किया?</summary><div class="body"><span class="ans">अप्रत्यक्ष पथ समस्याएँ (Detour)</span>सीधा रास्ता बंद, घुमावदार हल — सुल्तान चिम्पैंजी।</div></details>
+    <details class="q"><summary>पशु प्रयोज्यों के लिए उपयोग नहीं होता?</summary><div class="body"><span class="ans">एनाग्राम्स</span>अक्षरों का खेल भाषा माँगता है, भाषा मनुष्य के पास है।</div></details>
+    <details class="q"><summary>सही सुमेलित नहीं है? (कोहलर-अंतर्दृष्टि / लेविन-क्षेत्र / स्किनर-सक्रिय / पावलव-उद्दीपन अनुक्रिया)</summary><div class="body"><span class="ans">पावलव – उद्दीपन अनुक्रिया अनुबन्ध</span>वह थार्नडाइक का; पावलव = केवल शास्त्रीय अनुबंधन।</div></details>
+
+    <div class="yrh"><h3 class="rz">वर्ष 2024</h3><span class="rule"></span></div>
+    <details class="q"><summary>प्रत्येक प्रकार का सम्प्रेषण प्रभावित होता है?</summary><div class="body"><span class="ans">सन्दर्भ से</span>परिस्थिति बदलते ही एक ही वाक्य का अर्थ बदल जाता है।</div></details>
+    <details class="q"><summary>गोपनीय सूचना केवल तत्काल उच्चाधिकारी/अधीनस्थ को — कौन-सा तंत्र?</summary><div class="body"><span class="ans">एकल-श्रृंखला</span>सीढ़ी की सीध — ठीक ऊपर या ठीक नीचे।</div></details>
+    <details class="q"><summary>A: मौखिक संचार उपयोगी माध्यम; R: उसमें कहे गए का प्रमाण नहीं रहता।</summary><div class="body"><span class="ans">दोनों सत्य, R सही व्याख्या नहीं</span>प्रमाण-हीनता कमज़ोरी है, उपयोगिता का कारण नहीं।</div></details>
+    <details class="q"><summary>मूल्य-प्रणाली के विरुद्ध सूचना से उत्पन्न आंतरिक तनाव?</summary><div class="body"><span class="ans">संज्ञानात्मक विसंगति</span>फेस्टिंगर — मान्यता और सूचना का बेसुरापन।</div></details>
+    <details class="q"><summary>अनौपचारिक संचार नेटवर्क का प्रकार नहीं?</summary><div class="body"><span class="ans">सर्कुलर</span>कीथ डेविस की सूची चार की — एकल, गपशप, संभाव्यता, गुच्छ।</div></details>
+    <details class="q"><summary>A: संचार की स्पष्टता आवश्यक; R: पर्याप्तता एवं समय-निर्धारण आवश्यक नहीं।</summary><div class="body"><span class="ans">A सत्य, R असत्य</span>पर्याप्तता और समय भी उतने ही आवश्यक हैं — कारण में छिपा 'नहीं' पकड़ो।</div></details>
+    <details class="q"><summary>अफवाह सुलझाने का तरीका नहीं?</summary><div class="body"><span class="ans">समुदाय के नेताओं से तथ्य छिपाना</span>अफवाह अँधेरे में पलती है; छिपाना अँधेरा बढ़ाना है।</div></details>
+    <details class="q"><summary>'संव्यवहार विश्लेषण' सिद्धांत मूलतः किसने विकसित किया?</summary><div class="body"><span class="ans">एरिक बर्न</span>लुफ्ट-इंघम जोहारी वाले हैं — क्रॉस-जाल।</div></details>
+    <details class="q"><summary>संचार में मनोवैज्ञानिक बाधा नहीं?</summary><div class="body"><span class="ans">शारीरिक रूप से व्यक्त संदेश</span>वह देहभाषा है, मन की रुकावट नहीं।</div></details>
+    <details class="q"><summary>विचारों को संदेश में डालने की प्रक्रिया?</summary><div class="body"><span class="ans">संकेतीकरण (Encoding)</span>विचार को संकेत का कपड़ा पहनाना।</div></details>
+    <details class="q"><summary>संचार प्रक्रिया के तत्वों का सही क्रम?</summary><div class="body"><span class="ans">स्रोत → संदेश → माध्यम → प्राप्तकर्ता → शोर → प्रतिपुष्टि</span>प्रतिपुष्टि हमेशा अंतिम — वही चक्र पूरा करती है।</div></details>
+    <details class="q"><summary>श्रवण का तत्व नहीं?</summary><div class="body"><span class="ans">अनुनय (Persuasion)</span>श्रवण लेता है, अनुनय थोपता है।</div></details>
+    <details class="q"><summary>पराभाषा संबंधित है?</summary><div class="body"><span class="ans">अवाचिक संप्रेषण से</span>आवाज़ होते हुए भी 'कैसे कहा' की विद्या — अशाब्दिक।</div></details>
+    <details class="q"><summary>सम्प्रेषण प्रतिभागियों का चयन किन कारकों से प्रभावित?</summary><div class="body"><span class="ans">उपयोगिता, गुप्तता, असंवादिता</span>काम सधे, राज़ रहे, टकराव सम्भले — स्रोत-विशिष्ट तथ्य, रट लो।</div></details>
+    <details class="q"><summary>आकर्षक शारीरिक भाषा के सात रहस्य?</summary><div class="body"><span class="ans">चेहरा, हाव-भाव, सिर की हरकत, नेत्र सम्पर्क, मुद्रा, इलाका, प्रतिरूपण</span>शरीर-तत्व चुनो; 'सांस्कृतिक', 'आरामदायक', 'प्रतिबिम्ब' अमूर्त घुसपैठिए। स्रोत-विशिष्ट प्रश्न — विलोपन-विधि ही हथियार।</div></details>
+    <details class="q"><summary>अन्तर्वैयक्तिक पारस्परिक क्रिया का कौशल नहीं?</summary><div class="body"><span class="ans">प्रशासनिक शक्ति</span>शक्ति कुर्सी से आती है, कौशल भीतर से।</div></details>
+    <details class="q"><summary>अच्छा सम्प्रेषक प्रस्तुतीकरण आरंभ करता है?</summary><div class="body"><span class="ans">सुगम पूर्वाभास (Ice-breaker) से</span>पहले झिझक की बर्फ़ टूटती है।</div></details>
+    <details class="q"><summary>निर्णय लेना किस प्रकार की प्रक्रिया है?</summary><div class="body"><span class="ans">बौद्धिक प्रक्रिया</span>तौलना-चुनना बुद्धि का काम; 'मनोवैज्ञानिक' आकर्षक जाल।</div></details>
+    <details class="q"><summary>'स्टार बर्स्टिंग' क्या है?</summary><div class="body"><span class="ans">रचनात्मक सोच और ब्रेनस्टार्मिंग तकनीक</span>तारे के कोनों पर छह प्रश्न — उत्तर नहीं, प्रश्न पैदा करने की विधि।</div></details>
+    <details class="q"><summary>समूह संवाद में ईमेल का उत्तर देते समय बचें?</summary><div class="body"><span class="ans">बिना आवश्यकता 'रिप्लाई ऑल' से</span>जवाब उसी को, जिसके लिए है।</div></details>
+    <details class="q"><summary>A: अन्तर्वैयक्तिक आकर्षण सामाजिक अंतःक्रिया का भाग; R: यह उत्तरजीविता हेतु आवश्यक है।</summary><div class="body"><span class="ans">दोनों सत्य, R सही व्याख्या नहीं</span>R बताता है आकर्षण ज़रूरी क्यों है, यह नहीं कि वह भाग क्यों है — 'क्योंकि' लगाकर पढ़ो, वाक्य नहीं जुड़ता।</div></details>
+
+    <div class="yrh"><h3 class="rz">वर्ष 2025</h3><span class="rule"></span></div>
+    <details class="q"><summary>कई लोगों को एक साथ सॉफ्टवेयर उपयोग की अनुमति — दस्तावेज़/परियोजना हेतु?</summary><div class="body"><span class="ans">ग्रुपवेयर</span>Group + ware — समूह का सॉफ्टवेयर।</div></details>
+    <details class="q"><summary>अन्तर्वैयक्तिक संचार का दूसरा नाम?</summary><div class="body"><span class="ans">डायडिक (द्विव्यक्तिक) संचार</span>Dyad = दो का जोड़ा; 'सार्वजनिक' शब्द वाले विकल्प ज़हर।</div></details>
+    <details class="q"><summary>सही सुमेलित नहीं? (थार्नडाइक-S-R / पावलव-गेस्टाल्ट / स्किनर-क्रियाप्रसूत / कोहलर-अन्तर्दृष्टि)</summary><div class="body"><span class="ans">पावलव – पूर्णाकारवाद (गेस्टाल्ट)</span>गेस्टाल्ट कोहलर-वर्दीमर-कोफ्का का; पावलव फिर बलि का बकरा।</div></details>
+    <details class="q"><summary>अच्छे निर्णय की विशेषता?</summary><div class="body"><span class="ans">वह व्यवहार्य और प्राप्य होता है</span>जल्दबाज़ी, केवल अन्तर्ज्ञान, हितधारकों की उपेक्षा — तीनों दुर्गुण।</div></details>
+    <details class="q"><summary>समस्या-समाधान की प्रक्रिया जहाँ केवल एक ही उत्तर होता है?</summary><div class="body"><span class="ans">अभिसारी चिंतन</span>Converge = सारे रास्ते एक बिंदु (एक उत्तर) पर।</div></details>
+    <details class="q"><summary>दो व्यक्तियों में जो देहभाषा में अधिक शिथिल दिखे, वह?</summary><div class="body"><span class="ans">कुंजी: उपर्युक्त सभी</span>मूल शोध-बिंदु: शिथिलता उच्च शक्ति/हैसियत का संकेत — तनाव नीचे वाले की वर्दी है।</div></details>
+    <details class="q"><summary>अन्तर्वैयक्तिक सन्दर्भ द्वारा प्रभावित होता है?</summary><div class="body"><span class="ans">भाव (भंगिमा) और मुद्रा</span>वही इशारा दोस्त के सामने अलग, बोर्ड के सामने अलग।</div></details>
+    <details class="q"><summary>समस्या-समाधान के सन्दर्भ में 'कार्य करना आसान है, सोचना कठिन' किसने कहा?</summary><div class="body"><span class="ans">गोएठे</span>जर्मन कवि-विचारक, Faust के रचयिता।</div></details>
+    <details class="q"><summary>मनुष्य व्यवहार-नियंत्रण के लिए अधिकतर समय क्या प्रयुक्त करता है?</summary><div class="body"><span class="ans">शब्द</span>दण्ड-पुरस्कार कभी-कभार, शब्द पल-पल।</div></details>
+    <details class="q"><summary>अपने और दूसरों के व्यवहार की व्याख्या की प्रक्रिया?</summary><div class="body"><span class="ans">गुणारोपण (Attribution)</span>व्यवहार पर 'कारण का आरोप' — हाइडर।</div></details>
+    <details class="q"><summary>लोगों की एक-दूसरे को पसन्द करने की प्रवृत्ति?</summary><div class="body"><span class="ans">पसन्द की परस्परता</span>'एक-दूसरे' शब्द ही परस्परता का सुराग।</div></details>
+    <details class="q"><summary>पहली प्राप्त सूचना को अत्यधिक भार देने वाला पूर्वाग्रह?</summary><div class="body"><span class="ans">एंकरिंग पूर्वाग्रह</span>दिमाग पहली सूचना पर लंगर डाल देता है।</div></details>
+    <details class="q"><summary>चार बुनियादी संप्रेषण कौशल?</summary><div class="body"><span class="ans">सुनना, बोलना, पढ़ना, लिखना</span>बच्चे के सीखने का कुदरती क्रम।</div></details>
+    <details class="q"><summary>किस प्रकार की स्मृति की अवधि सबसे कम?</summary><div class="body"><span class="ans">कुंजी: तात्कालिक स्मृति</span>हिंदी पुस्तक-परंपरा में तात्कालिक = संवेदी रजिस्टर, अवधि 1 सेकण्ड से कम; भीतर प्रतिमात्मक (≈0.25 से.) सबसे छोटी उप-स्मृति — 'तात्कालिक' विकल्प में हो तो वही, वरना प्रतिमात्मक।</div></details>
+    <details class="q"><summary>प्रकार्यात्मक स्थिरता एक प्रकार की क्या होती है?</summary><div class="body"><span class="ans">मानसिक विन्यास</span>वस्तु के पुराने काम की जड़ता — विन्यास की छोटी बहन।</div></details>
+    <details class="q"><summary>श्रेणी-अभ्यास: 'एक सम्भाव्य हल के बाद दूसरा' बनाम 'केवल एक उत्तर' — दोनों में अंतर?</summary><div class="body"><span class="ans">प्रयास-त्रुटि बनाम अभिसारी चिंतन</span>पहला हल खोजने की विधि है, दूसरा समस्या की प्रकृति — 2023 और 2025 दोनों की भाषा साथ रखकर पक्का करो।</div></details>
+  </div>
+</section>
+
+<section class="sec" id="s17">
+  <div class="wrap">
+    <div class="eyebrow"><span class="num">17</span><span class="rule"></span><span class="lb">परीक्षा से पहली रात</span></div>
+    <h2 class="rz">60-सेकण्ड रिवीज़न + हॉल-रणनीति</h2>
+    <ol class="n">
+      <li>Communis = साझा; संकेतीकरण प्रेषक का, विसंकेतीकरण प्राप्तकर्ता का; क्रम में प्रतिपुष्टि सदा अंतिम; हर सम्प्रेषण सन्दर्भ से प्रभावित।</li>
+      <li>मौखिक संचार का प्रमाण नहीं रहता; पराभाषा आवाज़ की विद्या होकर भी अवाचिक; मेहराबियन 7-38-55 केवल भावनात्मक संदेशों पर।</li>
+      <li>हॉल की दूरियाँ: अंतरंग 45 cm तक, व्यक्तिगत 1.2 m, सामाजिक 3.6 m, आगे सार्वजनिक; अन्तर्वैयक्तिक = डायडिक — 'सार्वजनिक' जुड़ा तो गलत।</li>
+      <li>औपचारिक नेटवर्क पाँच: श्रृंखला, Y, चक्र, वृत्त, सर्व-मार्ग; गोपनीयता = एकल-श्रृंखला; अंगूरीलता चार: एकल, गपशप, संभाव्यता, गुच्छ (सबसे आम) — सर्कुलर बाहर; अफवाह का इलाज तथ्य, छिपाव नहीं।</li>
+      <li>मनोवैज्ञानिक बाधाएँ: समय-पूर्व मूल्यांकन, अनवधान, अविश्वास — देहभाषा मनोवैज्ञानिक नहीं।</li>
+      <li>श्रवण के घटक: संवेदन, समझ, मूल्यांकन, प्रतिक्रिया, स्मरण — अनुनय घुसपैठिया; चार कौशल: सुनना-बोलना-पढ़ना-लिखना; प्रस्तुति की शुरुआत आइस-ब्रेकर से।</li>
+      <li>कौशल भीतर से, शक्ति कुर्सी से; संव्यवहार विश्लेषण = बर्न (P-A-C); जोहारी = लुफ्ट+इंघम (खुला-अंधा-छिपा-अज्ञात); गोलमैन के 5 तत्व।</li>
+      <li>सात रहस्य = चेहरा, हाव-भाव, सिर की हरकत, नेत्र सम्पर्क, मुद्रा, इलाका, प्रतिरूपण; शिथिल दिखने वाला शक्ति में ऊँचा; भंगिमा-मुद्रा सन्दर्भ की ग़ुलाम; रोज़ का नियंत्रण-औज़ार = शब्द।</li>
+      <li>आकर्षण-कारक: समीपता, समानता, आकर्षकता, परिचितता, परस्परता; साथी-चयन: उपयोगिता-गुप्तता-असंवादिता; गुणारोपण = हाइडर; असंवादिता = फेस्टिंगर 1957।</li>
+      <li>निर्णयन: परिभाषा मैटलिन, प्रकृति बौद्धिक, अच्छा निर्णय व्यवहार्य-प्राप्य; एंकरिंग = पहली सूचना, पुष्टीकरण = पसंदीदा, उपलब्धता = झट याद, पश्चदृष्टि = 'पहले से पता था'।</li>
+      <li>अभिसारी = एक उत्तर, अपसारी = कई (गिलफोर्ड), पार्श्व = डी बोनो; मंथन ओस्बोर्न, स्टार बर्स्टिंग = छह प्रश्नों वाला तारा, डेल्फी = दूर बैठे गुमनाम विशेषज्ञ, समूहचिंतन = जेनिस; गोएठे: कार्य आसान, सोचना कठिन।</li>
+      <li>गारण्टी = एल्गोरिथम (यांत्रिक), शॉर्टकट = स्वतः शोध, अचानक अहा = अन्तर्दृष्टि (कोहलर, प्रबोधन-चरण), उप-लक्ष्य = साधन-साध्य (नेवेल-साइमन)।</li>
+      <li>विन्यास = विधि की जड़ता (पूर्वानुभव, लचिन्स); स्थिरता = वस्तु की जड़ता (डंकर की मोमबत्ती) — विन्यास का ही प्रकार, समाधान में 'बाधा', विधि नहीं।</li>
+      <li>कोहलर = अप्रत्यक्ष पथ; पशु-कार्य: पहेली मंजूषा, अप्रत्यक्ष पथ, दुहरी क्रमान्तरण — एनाग्राम मनुष्य का; आगमनात्मक = विशिष्ट से सामान्य।</li>
+      <li>पावलव-नियम: उसके आगे 'शास्त्रीय अनुबंधन' के सिवा कुछ भी लिखा हो — वही गलत जोड़ा।</li>
+      <li>स्मृति-सीढ़ी: तात्कालिक/संवेदी (1 से. से कम — प्रतिमात्मक 0.25, प्रतिध्वनिक 3-4 से.) → अल्पकालिक (15-30 से., 7±2) → दीर्घकालिक (∞); 'सबसे कम' पूछे और 'तात्कालिक' विकल्प में हो तो वही।</li>
+      <li>अनावश्यक रिप्लाई ऑल वर्जित; ग्रुपवेयर = कई लोग + एक साथ + दस्तावेज़ + परियोजना।</li>
+      <li>हॉल-रणनीति: 'नहीं' वाले प्रश्न में हर विकल्प पर 'हाँ, यह है' बोलकर जाँचो — जहाँ अटको, प्रायः वही उत्तर; A/R में R के आगे 'क्योंकि' लगाकर A से जोड़ो — वाक्य जुड़े तभी सही व्याख्या; मिलान में सबसे पक्का जोड़ा पहले; अपरिचित सूची में तत्व-प्रकृति से विलोपन; हिंदी शब्द अटके तो English कॉलम; अटको मत — गोला लगाओ, आगे बढ़ो, अंत में विलोपन से लौटो।</li>
+    </ol>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="brand">बोधि क्लासेस</div>
+    <p style="max-width:640px;color:#CFC9B6">समझ पहले, रटना कभी नहीं। यह पृष्ठ 2023–2025 के वास्तविक UPPCS प्रश्नपत्रों के हर संचार-प्रश्न को खोलकर बनाया गया है — साथ में पूरी MD मास्टर नोट्स भी उपलब्ध है।</p>
+    <div class="links">
+      <a href="https://www.youtube.com/@BodhiClasses">YouTube · @BodhiClasses</a>
+      <a href="https://t.me/bodhiclassesupsc">Telegram · bodhiclassesupsc</a>
+    </div>
+    <p class="tiny">© बोधि क्लासेस · UPPCS CSAT शृंखला · अध्याय: संचार एवं अन्तर्वैयक्तिक कौशल</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var btn=document.getElementById('toggleAns');
+  var open=false;
+  function setAll(v){
+    var qs=document.querySelectorAll('#s16 details.q');
+    for(var i=0;i<qs.length;i++){qs[i].open=v;}
+  }
+  if(btn){btn.addEventListener('click',function(){open=!open;setAll(open);btn.textContent=open?'सभी उत्तर बंद करें':'सभी उत्तर खोलें';});}
+  window.addEventListener('beforeprint',function(){setAll(true);});
+  var links=document.querySelectorAll('.nav a');
+  var secs=[];
+  for(var i=0;i<links.length;i++){
+    var id=links[i].getAttribute('href');
+    var el=document.querySelector(id);
+    if(el){secs.push({el:el,link:links[i]});}
+  }
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      for(var j=0;j<entries.length;j++){
+        if(entries[j].isIntersecting){
+          for(var k=0;k<secs.length;k++){secs[k].link.classList.remove('on');}
+          for(var m=0;m<secs.length;m++){
+            if(secs[m].el===entries[j].target){secs[m].link.classList.add('on');secs[m].link.scrollIntoView({block:'nearest',inline:'center'});}
+          }
+        }
+      }
+    },{rootMargin:'-40% 0px -55% 0px'});
+    for(var n=0;n<secs.length;n++){io.observe(secs[n].el);}
+  }
+})();
+</script>
+</body>
+</html>
