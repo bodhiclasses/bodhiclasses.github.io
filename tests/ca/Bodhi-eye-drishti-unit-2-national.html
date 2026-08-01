@@ -204,6 +204,12 @@ body::before{
 .q-en .match-tbl th{color:var(--muted)}
 .mt-intro{margin-bottom:6px}.mt-outro{margin-top:8px}
 .rev-q .q-en{font-size:13.5px}
+.lang-choose{display:flex;align-items:center;gap:10px;justify-content:center;margin:2px 0 22px;flex-wrap:wrap}
+.lc-label{font-size:13px;color:var(--muted)}
+.lang-bar{display:flex;justify-content:flex-end;margin:-4px 0 14px}
+.lang-seg{display:inline-flex;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:10px;padding:3px;gap:2px}
+.lang-b{font-family:inherit;font-size:12.5px;font-weight:600;color:var(--muted);background:transparent;border:0;border-radius:8px;padding:5px 13px;cursor:pointer;transition:.15s}
+.lang-b.on{background:linear-gradient(160deg,var(--gold-2),var(--gold));color:var(--ink)}
 
 .options{display:grid;gap:12px}
 .opt{display:flex;align-items:flex-start;gap:14px;width:100%;text-align:right;cursor:pointer;
@@ -456,6 +462,8 @@ body::before{
 
     <div class="meta-row" id="cv-meta"></div>
 
+    <div class="lang-choose"><span class="lc-label">पढ़ने की भाषा:</span><div class="lang-seg" id="coverLang"></div></div>
+
     <div class="instructions">
       <h3>परीक्षा निर्देश</h3>
       <div class="sub">शुरू करने से पहले एक बार अवश्य पढ़ें</div>
@@ -690,7 +698,9 @@ const state = {
   timeLeft: (TEST.durationMinutes || 0) * 60,
   timer: null,
   startTs: 0,
-  finished: false
+  finished: false,
+  started: false,
+  lang: (function(){ try{ return localStorage.getItem("bodhi_lang")||"hi"; }catch(e){ return "hi"; } })()
 };
 
 function answerIndex(qObj){
@@ -711,6 +721,7 @@ function buildCover(){
   $("cv-title").textContent = TEST.title || "परीक्षा";
   $("cv-eyebrow").textContent = TEST.subtitle || "अभ्यास परीक्षा";
   $("cv-tag").textContent = TEST.tag || "मॉक टेस्ट";
+  if($("coverLang")){ $("coverLang").innerHTML = langSeg(); wireLang($("coverLang")); }
   $("cv-desc").textContent = "कुल " + N + " प्रश्न · सावधानी से पढ़ें, समय का ध्यान रखें और प्रत्येक प्रश्न का उत्तर सोच-समझकर दें। शुभकामनाएँ!";
 
   const totalMarks = N * (TEST.marksPerQuestion || 1);
@@ -756,7 +767,7 @@ function startTest(){
     return;
   }
   $("nameErr").textContent = "";
-  state.studentName = nameVal;
+  state.studentName = nameVal; state.started = true;
   try{ localStorage.setItem("bc_name", nameVal); }catch(e){}
 
   state.startTs = Date.now();
@@ -787,8 +798,20 @@ function updateTimer(){
 
 /* ---------- प्रश्न रेंडर ---------- */
 
-/* ===== द्विभाषी + प्रश्न-प्रकार फ़ॉर्मैटर ===== */
-var LANG_MODE = "bi"; /* "bi"=हिंदी+अंग्रेज़ी, "hi"=केवल हिंदी */
+/* ===== द्विभाषी + प्रश्न-प्रकार फ़ॉर्मैटर + भाषा टॉगल ===== */
+function curLang(){ try{ return (typeof state!=="undefined" && state.lang) ? state.lang : (localStorage.getItem("bodhi_lang")||"hi"); }catch(e){ return "hi"; } }
+function langSeg(){
+  var L=curLang();
+  var o=function(v,t){ return '<button type="button" class="lang-b'+(L===v?" on":"")+'" data-lang="'+v+'">'+t+'</button>'; };
+  return '<div class="lang-seg">'+o("hi","हिंदी")+o("en","English")+o("bi","दोनों")+'</div>';
+}
+function wireLang(root){ if(!root) return; root.querySelectorAll(".lang-b").forEach(function(b){ b.addEventListener("click", function(){ setLang(b.getAttribute("data-lang")); }); }); }
+function setLang(l){
+  try{ state.lang=l; }catch(e){}
+  try{ localStorage.setItem("bodhi_lang", l); }catch(e){}
+  if(typeof state!=="undefined" && state.started){ renderQuestion(); }
+  else { var cl=document.getElementById("coverLang"); if(cl){ cl.innerHTML=langSeg(); wireLang(cl); } }
+}
 function _fmtChunk(t){
   if(!t) return "";
   t = String(t).trim();
@@ -832,13 +855,17 @@ function _split(t){
   return {hi:t.trim(), en:""};
 }
 function fmtQuestion(raw){
-  var b=_split(raw), hi=_renderChunk(b.hi), en=_renderChunk(b.en);
-  if(LANG_MODE==="hi"||!b.en) return '<div class="q-hi">'+hi+'</div>';
-  return '<div class="q-hi">'+hi+'</div><div class="q-en">'+en+'</div>';
+  var b=_split(raw), L=curLang();
+  var hi=_renderChunk(b.hi), en=b.en?_renderChunk(b.en):"";
+  if(L==="hi") return '<div class="q-hi">'+hi+'</div>';
+  if(L==="en") return '<div class="q-hi">'+(en||hi)+'</div>';
+  return '<div class="q-hi">'+hi+'</div>'+(en?'<div class="q-en">'+en+'</div>':"");
 }
 function fmtOption(raw){
-  var b=_split(raw), hi=b.hi.trim(), en=b.en.trim();
-  if(LANG_MODE==="hi"||!en||hi===en) return '<span class="o-hi">'+hi+'</span>';
+  var b=_split(raw), L=curLang(), hi=b.hi.trim(), en=b.en.trim();
+  if(L==="hi") return '<span class="o-hi">'+hi+'</span>';
+  if(L==="en") return '<span class="o-hi">'+(en||hi)+'</span>';
+  if(!en||hi===en) return '<span class="o-hi">'+hi+'</span>';
   return '<span class="o-hi">'+hi+'</span><span class="o-en">'+en+'</span>';
 }
 
@@ -861,10 +888,12 @@ function renderQuestion(){
       <div class="q-no">प्रश्न <b>${i+1}</b> / ${N}</div>
       <div class="q-marks"><span class="chip pos">+${TEST.marksPerQuestion}</span>${neg}</div>
     </div>
+    <div class="lang-bar">${langSeg()}</div>
     <div class="q-text">${pre}${fmtQuestion(q.q)}</div>
     <div class="options">${opts}</div>
   `;
 
+  wireLang($("qCard"));
   $("qCard").querySelectorAll(".opt").forEach(b => {
     b.addEventListener("click", () => selectOption(parseInt(b.dataset.k,10)));
   });
