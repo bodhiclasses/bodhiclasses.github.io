@@ -193,6 +193,17 @@ body::before{
 .chip.neg{color:var(--rose);background:var(--rose-soft);border-color:transparent}
 .q-text{font-size:19px;line-height:1.65;color:#eef2fa;font-weight:500;margin-bottom:22px}
 .q-text .q-pre{display:block;color:var(--muted);font-size:15px;margin-bottom:10px;font-weight:400}
+.q-hi{font-size:19px;line-height:1.72;color:#eef2fa;font-weight:600}
+.q-en{margin-top:11px;padding-top:11px;border-top:1px dashed var(--line);font-size:15px;line-height:1.6;color:var(--muted);font-weight:400}
+.q-hi br,.q-en br{content:"";display:block;margin-top:7px}
+.o-hi{display:block}
+.o-en{display:block;color:var(--muted);font-size:.86em;margin-top:4px}
+.match-tbl{width:100%;border-collapse:collapse;margin:10px 0 4px}
+.match-tbl th,.match-tbl td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top;font-size:.92em}
+.match-tbl th{color:var(--gold);font-weight:700;font-size:.82em;letter-spacing:.5px;background:rgba(212,175,55,.06)}
+.q-en .match-tbl th{color:var(--muted)}
+.mt-intro{margin-bottom:6px}.mt-outro{margin-top:8px}
+.rev-q .q-en{font-size:13.5px}
 
 .options{display:grid;gap:12px}
 .opt{display:flex;align-items:flex-start;gap:14px;width:100%;text-align:right;cursor:pointer;
@@ -775,6 +786,62 @@ function updateTimer(){
 }
 
 /* ---------- प्रश्न रेंडर ---------- */
+
+/* ===== द्विभाषी + प्रश्न-प्रकार फ़ॉर्मैटर ===== */
+var LANG_MODE = "bi"; /* "bi"=हिंदी+अंग्रेज़ी, "hi"=केवल हिंदी */
+function _fmtChunk(t){
+  if(!t) return "";
+  t = String(t).trim();
+  t = t.replace(/\s*(कथन\s*\d+\s*[:：])/g,"<br>$1")
+       .replace(/\s*(Statement\s*\d+\s*[:：])/gi,"<br>$1")
+       .replace(/([।;])\s*(\d+\.\s)/g,"$1<br>$2");
+  t = t.replace(/^(?:<br>)+/,"").replace(/(^|<br>)\s+/g,"$1");
+  return t;
+}
+function _splitItems(seg, re){ return seg.split(re).map(function(s){return s.trim();}).filter(Boolean); }
+function _matchTable(t){
+  var reI=/(सूची|List)[\s\-–—]*I(?!I)\s*(?:\([^)]*\))?\s*[:：]/i;
+  var reII=/(सूची|List)[\s\-–—]*II\s*(?:\([^)]*\))?\s*[:：]/i;
+  var mI=t.match(reI), mII=t.match(reII);
+  if(!mI||!mII||mII.index<=mI.index) return null;
+  var intro=t.slice(0,mI.index).trim();
+  var segI=t.slice(mI.index+mI[0].length,mII.index).trim().replace(/[;।,]\s*$/,"");
+  var rest=t.slice(mII.index+mII[0].length);
+  var mo=rest.match(/(सही\s*मिलान|नीचे\s*दिए|सुमेलित|Choose|Select|Match|कूट)/i);
+  var segII, outro="";
+  if(mo){ segII=rest.slice(0,mo.index).trim(); outro=rest.slice(mo.index).trim(); }
+  else segII=rest.trim();
+  segII=segII.replace(/[;।,]\s*$/,"");
+  var itemsI=_splitItems(segI,/\s*,\s*(?=[A-Z]\.)/);
+  var itemsII=_splitItems(segII,/\s*,\s*(?=\d+\.)/);
+  if(itemsI.length<2||itemsII.length<2) return null;
+  var n=Math.max(itemsI.length,itemsII.length), rows="";
+  for(var k=0;k<n;k++) rows+="<tr><td>"+(itemsI[k]||"")+"</td><td>"+(itemsII[k]||"")+"</td></tr>";
+  var head="<tr><th>"+mI[1]+"-I</th><th>"+mII[1]+"-II</th></tr>";
+  return (intro?'<div class="mt-intro">'+intro+'</div>':"")+
+         '<table class="match-tbl">'+head+rows+'</table>'+
+         (outro?'<div class="mt-outro">'+outro+'</div>':"");
+}
+function _renderChunk(t){ var mt=_matchTable(t); return mt?mt:_fmtChunk(t); }
+function _split(t){
+  t=String(t==null?"":t);
+  var m=t.match(/\s*\/\s*(Question\s*\d+\s*[:：]?)/i);
+  if(m) return {hi:t.slice(0,m.index).trim(), en:t.slice(m.index+m[0].length).trim()};
+  var idx=t.indexOf(" / ");
+  if(idx>=0) return {hi:t.slice(0,idx).trim(), en:t.slice(idx+3).trim()};
+  return {hi:t.trim(), en:""};
+}
+function fmtQuestion(raw){
+  var b=_split(raw), hi=_renderChunk(b.hi), en=_renderChunk(b.en);
+  if(LANG_MODE==="hi"||!b.en) return '<div class="q-hi">'+hi+'</div>';
+  return '<div class="q-hi">'+hi+'</div><div class="q-en">'+en+'</div>';
+}
+function fmtOption(raw){
+  var b=_split(raw), hi=b.hi.trim(), en=b.en.trim();
+  if(LANG_MODE==="hi"||!en||hi===en) return '<span class="o-hi">'+hi+'</span>';
+  return '<span class="o-hi">'+hi+'</span><span class="o-en">'+en+'</span>';
+}
+
 function renderQuestion(){
   const i = state.idx, q = Q[i];
   state.visited[i] = true;
@@ -784,7 +851,7 @@ function renderQuestion(){
     const sel = state.answers[i] === k ? " sel" : "";
     return `<button class="opt${sel}" data-k="${k}" type="button">
               <span class="key">${LETTERS[k]}</span>
-              <span class="txt">${o}</span>
+              <span class="txt">${fmtOption(o)}</span>
             </button>`;
   }).join("");
 
@@ -794,7 +861,7 @@ function renderQuestion(){
       <div class="q-no">प्रश्न <b>${i+1}</b> / ${N}</div>
       <div class="q-marks"><span class="chip pos">+${TEST.marksPerQuestion}</span>${neg}</div>
     </div>
-    <div class="q-text">${pre}${q.q}</div>
+    <div class="q-text">${pre}${fmtQuestion(q.q)}</div>
     <div class="options">${opts}</div>
   `;
 
@@ -1041,7 +1108,7 @@ function renderReview(){
       let cls="", mark="";
       if (k === ci){ cls="is-correct"; mark=`<span class="rev-mark">✓ सही उत्तर</span>`; }
       if (k === ua && ua !== ci){ cls="is-wrong"; mark=`<span class="rev-mark">✗ आपका उत्तर</span>`; }
-      return `<div class="rev-opt ${cls}"><span class="rkey">${LETTERS[k]}</span><span class="rtxt">${o}</span>${mark}</div>`;
+      return `<div class="rev-opt ${cls}"><span class="rkey">${LETTERS[k]}</span><span class="rtxt">${fmtOption(o)}</span>${mark}</div>`;
     }).join("");
 
     const pre = q.statement ? `<span style="display:block;color:var(--muted);font-size:14px;margin-bottom:8px;font-weight:400">${q.statement}</span>` : "";
@@ -1051,7 +1118,7 @@ function renderReview(){
           <span class="rev-qno">प्रश्न ${i+1}</span>
           <span class="rev-badge ${status}">${badgeTxt}</span>
         </div>
-        <div class="rev-q">${pre}${q.q}</div>
+        <div class="rev-q">${pre}${fmtQuestion(q.q)}</div>
         <div class="rev-opts">${opts}</div>
         ${q.explanation ? `<div class="explain"><div class="et"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2ZM9 21h6M10 17v4M14 17v4" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> व्याख्या</div><p>${q.explanation}</p></div>` : ""}
       </div>

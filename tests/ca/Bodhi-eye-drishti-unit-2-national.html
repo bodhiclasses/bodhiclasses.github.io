@@ -123,34 +123,21 @@ body::before{
   transition:.2s;text-align:center}
 .name-gate input:focus{outline:none;border-color:rgba(212,175,55,.5);background:rgba(8,14,30,.85)}
 .ng-err{margin-top:10px;font-size:13px;color:#ffc2cc;min-height:1em}
-
-/* ===== स्टार्ट पेज Top 10 लीडरबोर्ड ===== */
-.start-leaderboard{
-  max-width:660px;margin:20px auto 0;padding:20px 18px 18px;border-radius:var(--r-lg);
-  border:1px solid var(--line);background:linear-gradient(180deg,rgba(22,38,76,.82),rgba(17,30,60,.68));
-  box-shadow:0 18px 42px -28px rgba(0,0,0,.85)
-}
-.slb-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px}
-.slb-title{font-family:var(--display);font-size:21px;font-weight:400;color:var(--gold-2);margin:0 0 2px}
-.slb-sub{font-size:12.5px;color:var(--muted-2);line-height:1.5;margin:0}
-.slb-refresh{flex:0 0 auto;border:1px solid var(--line);background:var(--gold-soft);color:var(--gold-2);
-  border-radius:11px;width:38px;height:38px;display:grid;place-items:center;cursor:pointer;font-family:var(--num);font-weight:800;transition:.2s}
-.slb-refresh:hover{background:rgba(212,175,55,.18);transform:translateY(-1px)}
-.slb-list{display:grid;gap:9px}
-.slb-row{display:grid;grid-template-columns:44px 1fr auto auto;align-items:center;gap:10px;
-  padding:10px 12px;border-radius:13px;background:rgba(8,14,30,.38);border:1px solid rgba(212,175,55,.10)}
-.slb-rank{font-family:var(--num);font-weight:800;color:var(--gold-2);font-size:14px}
-.slb-name{font-size:14px;color:#eef2fa;line-height:1.35;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.slb-score{font-family:var(--num);font-weight:800;color:var(--emerald);font-size:13px}
-.slb-time{font-family:var(--num);font-size:12.5px;color:var(--muted)}
-.slb-empty,.slb-loading,.slb-error{font-size:13.5px;color:var(--muted);line-height:1.55;text-align:center;
-  padding:14px 10px;border-radius:13px;background:rgba(8,14,30,.32);border:1px dashed rgba(212,175,55,.18)}
-.slb-error{color:#ffc2cc;border-color:rgba(255,93,115,.28);background:var(--rose-soft)}
-@media (max-width:560px){
-  .slb-row{grid-template-columns:38px 1fr auto;gap:8px}
-  .slb-time{grid-column:2 / -1;font-size:12px}
-  .start-leaderboard{padding:18px 14px 16px}
-}
+/* कवर पेज — टॉप स्कोर बोर्ड */
+.topboard{background:linear-gradient(180deg,var(--ink-3),var(--ink-2));border:1px solid var(--line);
+  border-radius:var(--r-lg);padding:22px 24px 18px;margin:22px auto 0;max-width:520px;box-shadow:var(--shadow)}
+.topboard h3{font-family:var(--display);font-weight:400;font-size:20px;color:var(--gold-2);margin:0 0 4px;text-align:center}
+.topboard .tb-sub{color:var(--muted);font-size:12.5px;text-align:center;margin:0 0 14px}
+.tb-list{list-style:none;margin:0;padding:0}
+.tb-list li{display:flex;align-items:center;gap:12px;padding:9px 10px;border-radius:10px;font-size:14.5px}
+.tb-list li:nth-child(odd){background:rgba(8,14,30,.45)}
+.tb-rank{width:30px;height:30px;flex:0 0 30px;display:flex;align-items:center;justify-content:center;
+  border-radius:50%;background:var(--gold-soft);color:var(--gold-2);font-weight:700;font-size:13px}
+.tb-list li:nth-child(1) .tb-rank{background:var(--gold);color:#1a1405}
+.tb-list li:nth-child(2) .tb-rank{background:#c8ccd6;color:#20242e}
+.tb-list li:nth-child(3) .tb-rank{background:#cd8a4b;color:#2b1706}
+.tb-name{flex:1;color:var(--parchment);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb-marks{color:var(--emerald);font-weight:700;font-variant-numeric:tabular-nums}
 .btn{font-family:var(--body);font-weight:700;border:0;cursor:pointer;border-radius:13px;
   transition:transform .15s ease,box-shadow .25s ease,background .25s ease,border-color .25s;
   font-size:16px;display:inline-flex;align-items:center;justify-content:center;gap:10px}
@@ -206,6 +193,17 @@ body::before{
 .chip.neg{color:var(--rose);background:var(--rose-soft);border-color:transparent}
 .q-text{font-size:19px;line-height:1.65;color:#eef2fa;font-weight:500;margin-bottom:22px}
 .q-text .q-pre{display:block;color:var(--muted);font-size:15px;margin-bottom:10px;font-weight:400}
+.q-hi{font-size:19px;line-height:1.72;color:#eef2fa;font-weight:600}
+.q-en{margin-top:11px;padding-top:11px;border-top:1px dashed var(--line);font-size:15px;line-height:1.6;color:var(--muted);font-weight:400}
+.q-hi br,.q-en br{content:"";display:block;margin-top:7px}
+.o-hi{display:block}
+.o-en{display:block;color:var(--muted);font-size:.86em;margin-top:4px}
+.match-tbl{width:100%;border-collapse:collapse;margin:10px 0 4px}
+.match-tbl th,.match-tbl td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top;font-size:.92em}
+.match-tbl th{color:var(--gold);font-weight:700;font-size:.82em;letter-spacing:.5px;background:rgba(212,175,55,.06)}
+.q-en .match-tbl th{color:var(--muted)}
+.mt-intro{margin-bottom:6px}.mt-outro{margin-top:8px}
+.rev-q .q-en{font-size:13.5px}
 
 .options{display:grid;gap:12px}
 .opt{display:flex;align-items:flex-start;gap:14px;width:100%;text-align:right;cursor:pointer;
@@ -466,22 +464,15 @@ body::before{
 
     <div class="name-gate">
       <h3>शुरू करने से पहले अपना नाम लिखें</h3>
-      <p class="ng-sub">अपना नाम लिखकर टेस्ट शुरू करें।</p>
+      <p class="ng-sub">यही नाम रैंकिंग सूची में दिखेगा।</p>
       <input type="text" id="studentName" placeholder="अपना पूरा नाम लिखें" maxlength="40" autocomplete="off" />
       <div class="ng-err" id="nameErr"></div>
     </div>
 
-    <div class="start-leaderboard" id="startLeaderboard">
-      <div class="slb-head">
-        <div>
-          <h3 class="slb-title">वर्तमान Top 10</h3>
-          <p class="slb-sub">सबसे अच्छे प्रयास यहाँ दिखेंगे। रैंक में ज्यादा अंक और बराबरी पर कम समय को प्राथमिकता मिलेगी।</p>
-        </div>
-        <button type="button" class="slb-refresh" id="slbRefresh" title="रैंक सूची फिर से लोड करें" aria-label="रैंक सूची फिर से लोड करें">↻</button>
-      </div>
-      <div class="slb-list" id="startTopList">
-        <div class="slb-loading">रैंक सूची लोड हो रही है…</div>
-      </div>
+    <div class="topboard" id="topBoard" hidden>
+      <h3>🏆 इस टेस्ट के टॉप स्कोर</h3>
+      <div class="tb-sub" id="tbSub"></div>
+      <ol class="tb-list" id="tbList"></ol>
     </div>
 
     <div class="cta-wrap">
@@ -795,6 +786,62 @@ function updateTimer(){
 }
 
 /* ---------- प्रश्न रेंडर ---------- */
+
+/* ===== द्विभाषी + प्रश्न-प्रकार फ़ॉर्मैटर ===== */
+var LANG_MODE = "bi"; /* "bi"=हिंदी+अंग्रेज़ी, "hi"=केवल हिंदी */
+function _fmtChunk(t){
+  if(!t) return "";
+  t = String(t).trim();
+  t = t.replace(/\s*(कथन\s*\d+\s*[:：])/g,"<br>$1")
+       .replace(/\s*(Statement\s*\d+\s*[:：])/gi,"<br>$1")
+       .replace(/([।;])\s*(\d+\.\s)/g,"$1<br>$2");
+  t = t.replace(/^(?:<br>)+/,"").replace(/(^|<br>)\s+/g,"$1");
+  return t;
+}
+function _splitItems(seg, re){ return seg.split(re).map(function(s){return s.trim();}).filter(Boolean); }
+function _matchTable(t){
+  var reI=/(सूची|List)[\s\-–—]*I(?!I)\s*(?:\([^)]*\))?\s*[:：]/i;
+  var reII=/(सूची|List)[\s\-–—]*II\s*(?:\([^)]*\))?\s*[:：]/i;
+  var mI=t.match(reI), mII=t.match(reII);
+  if(!mI||!mII||mII.index<=mI.index) return null;
+  var intro=t.slice(0,mI.index).trim();
+  var segI=t.slice(mI.index+mI[0].length,mII.index).trim().replace(/[;।,]\s*$/,"");
+  var rest=t.slice(mII.index+mII[0].length);
+  var mo=rest.match(/(सही\s*मिलान|नीचे\s*दिए|सुमेलित|Choose|Select|Match|कूट)/i);
+  var segII, outro="";
+  if(mo){ segII=rest.slice(0,mo.index).trim(); outro=rest.slice(mo.index).trim(); }
+  else segII=rest.trim();
+  segII=segII.replace(/[;।,]\s*$/,"");
+  var itemsI=_splitItems(segI,/\s*,\s*(?=[A-Z]\.)/);
+  var itemsII=_splitItems(segII,/\s*,\s*(?=\d+\.)/);
+  if(itemsI.length<2||itemsII.length<2) return null;
+  var n=Math.max(itemsI.length,itemsII.length), rows="";
+  for(var k=0;k<n;k++) rows+="<tr><td>"+(itemsI[k]||"")+"</td><td>"+(itemsII[k]||"")+"</td></tr>";
+  var head="<tr><th>"+mI[1]+"-I</th><th>"+mII[1]+"-II</th></tr>";
+  return (intro?'<div class="mt-intro">'+intro+'</div>':"")+
+         '<table class="match-tbl">'+head+rows+'</table>'+
+         (outro?'<div class="mt-outro">'+outro+'</div>':"");
+}
+function _renderChunk(t){ var mt=_matchTable(t); return mt?mt:_fmtChunk(t); }
+function _split(t){
+  t=String(t==null?"":t);
+  var m=t.match(/\s*\/\s*(Question\s*\d+\s*[:：]?)/i);
+  if(m) return {hi:t.slice(0,m.index).trim(), en:t.slice(m.index+m[0].length).trim()};
+  var idx=t.indexOf(" / ");
+  if(idx>=0) return {hi:t.slice(0,idx).trim(), en:t.slice(idx+3).trim()};
+  return {hi:t.trim(), en:""};
+}
+function fmtQuestion(raw){
+  var b=_split(raw), hi=_renderChunk(b.hi), en=_renderChunk(b.en);
+  if(LANG_MODE==="hi"||!b.en) return '<div class="q-hi">'+hi+'</div>';
+  return '<div class="q-hi">'+hi+'</div><div class="q-en">'+en+'</div>';
+}
+function fmtOption(raw){
+  var b=_split(raw), hi=b.hi.trim(), en=b.en.trim();
+  if(LANG_MODE==="hi"||!en||hi===en) return '<span class="o-hi">'+hi+'</span>';
+  return '<span class="o-hi">'+hi+'</span><span class="o-en">'+en+'</span>';
+}
+
 function renderQuestion(){
   const i = state.idx, q = Q[i];
   state.visited[i] = true;
@@ -804,7 +851,7 @@ function renderQuestion(){
     const sel = state.answers[i] === k ? " sel" : "";
     return `<button class="opt${sel}" data-k="${k}" type="button">
               <span class="key">${LETTERS[k]}</span>
-              <span class="txt">${o}</span>
+              <span class="txt">${fmtOption(o)}</span>
             </button>`;
   }).join("");
 
@@ -814,7 +861,7 @@ function renderQuestion(){
       <div class="q-no">प्रश्न <b>${i+1}</b> / ${N}</div>
       <div class="q-marks"><span class="chip pos">+${TEST.marksPerQuestion}</span>${neg}</div>
     </div>
-    <div class="q-text">${pre}${q.q}</div>
+    <div class="q-text">${pre}${fmtQuestion(q.q)}</div>
     <div class="options">${opts}</div>
   `;
 
@@ -1061,7 +1108,7 @@ function renderReview(){
       let cls="", mark="";
       if (k === ci){ cls="is-correct"; mark=`<span class="rev-mark">✓ सही उत्तर</span>`; }
       if (k === ua && ua !== ci){ cls="is-wrong"; mark=`<span class="rev-mark">✗ आपका उत्तर</span>`; }
-      return `<div class="rev-opt ${cls}"><span class="rkey">${LETTERS[k]}</span><span class="rtxt">${o}</span>${mark}</div>`;
+      return `<div class="rev-opt ${cls}"><span class="rkey">${LETTERS[k]}</span><span class="rtxt">${fmtOption(o)}</span>${mark}</div>`;
     }).join("");
 
     const pre = q.statement ? `<span style="display:block;color:var(--muted);font-size:14px;margin-bottom:8px;font-weight:400">${q.statement}</span>` : "";
@@ -1071,7 +1118,7 @@ function renderReview(){
           <span class="rev-qno">प्रश्न ${i+1}</span>
           <span class="rev-badge ${status}">${badgeTxt}</span>
         </div>
-        <div class="rev-q">${pre}${q.q}</div>
+        <div class="rev-q">${pre}${fmtQuestion(q.q)}</div>
         <div class="rev-opts">${opts}</div>
         ${q.explanation ? `<div class="explain"><div class="et"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2ZM9 21h6M10 17v4M14 17v4" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> व्याख्या</div><p>${q.explanation}</p></div>` : ""}
       </div>
@@ -1125,60 +1172,6 @@ async function loadFirebase(){
   return app;
 }
 
-function escapeHtml(s){
-  return String(s ?? "").replace(/[&<>"']/g, (ch) => ({
-    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#039;"
-  }[ch]));
-}
-
-async function loadStartLeaderboard(){
-  const box = $("startTopList");
-  if (!box) return;
-  box.innerHTML = `<div class="slb-loading">रैंक सूची लोड हो रही है…</div>`;
-  try{
-    await loadFirebase();
-    const { getDatabase, ref, query, orderByChild, limitToLast, get } = window.__fbDb;
-    const db = getDatabase(window.__fbApp);
-    const q = query(ref(db, "results/" + TEST_ID), orderByChild("marks"), limitToLast(25));
-    const snap = await get(q);
-    const rows = [];
-    snap.forEach((childSnap) => {
-      const v = childSnap.val() || {};
-      rows.push(v);
-    });
-
-    rows.sort((a,b) => {
-      const dm = (Number(b.marks)||0) - (Number(a.marks)||0);
-      if (dm !== 0) return dm;
-      const dt = (Number(a.timeTaken)||9999999) - (Number(b.timeTaken)||9999999);
-      if (dt !== 0) return dt;
-      return (Number(a.ts)||0) - (Number(b.ts)||0);
-    });
-
-    const top = rows.slice(0,10);
-    if (!top.length){
-      box.innerHTML = `<div class="slb-empty">अभी कोई प्रयास उपलब्ध नहीं है। पहला प्रयास करने वाला विद्यार्थी यहाँ दिखेगा।</div>`;
-      return;
-    }
-
-    box.innerHTML = top.map((r, i) => {
-      const name = escapeHtml((r.name || "Student").slice(0,40));
-      const marks = Number(r.marks || 0);
-      const max = Number(r.max || TEST.questions.length * TEST.marks);
-      const time = fmt(Number(r.timeTaken || 0));
-      return `<div class="slb-row">
-        <div class="slb-rank">#${i+1}</div>
-        <div class="slb-name">${name}</div>
-        <div class="slb-score">${Math.round(marks*100)/100}/${Math.round(max*100)/100}</div>
-        <div class="slb-time">${time}</div>
-      </div>`;
-    }).join("");
-  }catch(err){
-    console.error(err);
-    box.innerHTML = `<div class="slb-error">Top 10 अभी लोड नहीं हो पाया। इंटरनेट/डेटाबेस अनुमति जाँचें।</div>`;
-  }
-}
-
 async function saveRankAuto(){
   $("rkSubText").textContent = "आपका स्कोर सेव किया जा रहा है…";
   $("rkMsg").className = "rk-msg busy";
@@ -1225,6 +1218,38 @@ function openRanking(){
   window.open(url, "_blank");
 }
 
+/* कवर पेज पर टॉप 10 स्कोर — इंटरनेट न हो या डेटा न हो तो चुपचाप छिपा रहेगा */
+async function loadTopBoard(){
+  try{
+    await loadFirebase();
+    const { getDatabase, ref, get } = window.__fbDb;
+    const db = getDatabase(window.__fbApp);
+    const snap = await get(ref(db, "results/" + TEST_ID));
+    const box = $("topBoard"), list = $("tbList"), sub = $("tbSub");
+    if(!snap.exists()){
+      box.hidden = false;
+      sub.textContent = "अभी तक किसी ने यह टेस्ट नहीं दिया — पहला नाम आपका हो सकता है!";
+      list.innerHTML = "";
+      return;
+    }
+    const rows = Object.values(snap.val() || {});
+    rows.sort((a,b)=> (b.marks - a.marks) || ((a.timeTaken||1e9) - (b.timeTaken||1e9)) || ((a.ts||0)-(b.ts||0)));
+    const top = rows.slice(0, 10);
+    list.innerHTML = "";
+    top.forEach((r,i)=>{
+      const li = document.createElement("li");
+      const rk = document.createElement("span"); rk.className="tb-rank"; rk.textContent = i+1;
+      const nm = document.createElement("span"); nm.className="tb-name"; nm.textContent = (r.name||"—").slice(0,40);
+      const mk = document.createElement("span"); mk.className="tb-marks"; mk.textContent = (r.marks!=null?r.marks:"—") + (r.max?(" / "+r.max):"");
+      li.appendChild(rk); li.appendChild(nm); li.appendChild(mk);
+      list.appendChild(li);
+    });
+    sub.textContent = "अब तक " + rows.length + " छात्रों ने यह टेस्ट दिया है";
+    box.hidden = false;
+  }catch(err){ /* ऑफ़लाइन या त्रुटि — बोर्ड नहीं दिखेगा, टेस्ट सामान्य चलेगा */ }
+}
+loadTopBoard();
+
 /* ---------- इवेंट बाइंडिंग ---------- */
 $("startBtn").addEventListener("click", startTest);
 $("prevBtn").addEventListener("click", () => { if (state.idx>0){ state.idx--; renderQuestion(); } });
@@ -1268,8 +1293,6 @@ try{
 }catch(e){}
 $("studentName").addEventListener("keydown", (e)=>{ if (e.key === "Enter") startTest(); });
 $("studentName").addEventListener("input", ()=>{ $("nameErr").textContent = ""; });
-$("slbRefresh").addEventListener("click", loadStartLeaderboard);
-loadStartLeaderboard();
 </script>
 <script defer src="/assets/bodhi-watermark.js"></script>
 </body>

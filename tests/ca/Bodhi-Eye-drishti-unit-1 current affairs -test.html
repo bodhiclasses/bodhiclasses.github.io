@@ -112,6 +112,32 @@ body::before{
   color:var(--ink);background:linear-gradient(160deg,var(--gold-2),var(--gold));box-shadow:0 6px 14px -6px rgba(212,175,55,.6)}
 
 .cta-wrap{text-align:center;margin:34px auto 0}
+
+/* ===== नाम गेट (टेस्ट शुरू करने से पहले) ===== */
+.name-gate{background:linear-gradient(180deg,var(--ink-3),var(--ink-2));border:1px solid var(--line);
+  border-radius:var(--r-lg);padding:26px 26px 24px;margin:30px auto 0;max-width:520px;text-align:center;box-shadow:var(--shadow)}
+.name-gate h3{font-family:var(--display);font-weight:400;font-size:22px;color:var(--gold-2);margin:0 0 6px}
+.name-gate .ng-sub{color:var(--muted);font-size:13.5px;margin:0 0 18px;line-height:1.6}
+.name-gate input{width:100%;font-family:var(--body);font-size:16px;color:var(--parchment);
+  background:rgba(8,14,30,.6);border:1px solid var(--line);border-radius:12px;padding:14px 16px;
+  transition:.2s;text-align:center}
+.name-gate input:focus{outline:none;border-color:rgba(212,175,55,.5);background:rgba(8,14,30,.85)}
+.ng-err{margin-top:10px;font-size:13px;color:#ffc2cc;min-height:1em}
+/* कवर पेज — टॉप स्कोर बोर्ड */
+.topboard{background:linear-gradient(180deg,var(--ink-3),var(--ink-2));border:1px solid var(--line);
+  border-radius:var(--r-lg);padding:22px 24px 18px;margin:22px auto 0;max-width:520px;box-shadow:var(--shadow)}
+.topboard h3{font-family:var(--display);font-weight:400;font-size:20px;color:var(--gold-2);margin:0 0 4px;text-align:center}
+.topboard .tb-sub{color:var(--muted);font-size:12.5px;text-align:center;margin:0 0 14px}
+.tb-list{list-style:none;margin:0;padding:0}
+.tb-list li{display:flex;align-items:center;gap:12px;padding:9px 10px;border-radius:10px;font-size:14.5px}
+.tb-list li:nth-child(odd){background:rgba(8,14,30,.45)}
+.tb-rank{width:30px;height:30px;flex:0 0 30px;display:flex;align-items:center;justify-content:center;
+  border-radius:50%;background:var(--gold-soft);color:var(--gold-2);font-weight:700;font-size:13px}
+.tb-list li:nth-child(1) .tb-rank{background:var(--gold);color:#1a1405}
+.tb-list li:nth-child(2) .tb-rank{background:#c8ccd6;color:#20242e}
+.tb-list li:nth-child(3) .tb-rank{background:#cd8a4b;color:#2b1706}
+.tb-name{flex:1;color:var(--parchment);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb-marks{color:var(--emerald);font-weight:700;font-variant-numeric:tabular-nums}
 .btn{font-family:var(--body);font-weight:700;border:0;cursor:pointer;border-radius:13px;
   transition:transform .15s ease,box-shadow .25s ease,background .25s ease,border-color .25s;
   font-size:16px;display:inline-flex;align-items:center;justify-content:center;gap:10px}
@@ -167,6 +193,17 @@ body::before{
 .chip.neg{color:var(--rose);background:var(--rose-soft);border-color:transparent}
 .q-text{font-size:19px;line-height:1.65;color:#eef2fa;font-weight:500;margin-bottom:22px}
 .q-text .q-pre{display:block;color:var(--muted);font-size:15px;margin-bottom:10px;font-weight:400}
+.q-hi{font-size:19px;line-height:1.72;color:#eef2fa;font-weight:600}
+.q-en{margin-top:11px;padding-top:11px;border-top:1px dashed var(--line);font-size:15px;line-height:1.6;color:var(--muted);font-weight:400}
+.q-hi br,.q-en br{content:"";display:block;margin-top:7px}
+.o-hi{display:block}
+.o-en{display:block;color:var(--muted);font-size:.86em;margin-top:4px}
+.match-tbl{width:100%;border-collapse:collapse;margin:10px 0 4px}
+.match-tbl th,.match-tbl td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top;font-size:.92em}
+.match-tbl th{color:var(--gold);font-weight:700;font-size:.82em;letter-spacing:.5px;background:rgba(212,175,55,.06)}
+.q-en .match-tbl th{color:var(--muted)}
+.mt-intro{margin-bottom:6px}.mt-outro{margin-top:8px}
+.rev-q .q-en{font-size:13.5px}
 
 .options{display:grid;gap:12px}
 .opt{display:flex;align-items:flex-start;gap:14px;width:100%;text-align:right;cursor:pointer;
@@ -243,6 +280,16 @@ body::before{
 .stat svg{width:14px;height:14px}
 
 .result-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* ===== रैंकिंग / लीडरबोर्ड ===== */
+.rank-card{background:linear-gradient(180deg,var(--ink-3),var(--ink-2));border:1px solid var(--line);
+  border-radius:var(--r-lg);padding:26px 26px 24px;margin:26px auto 0;max-width:520px;text-align:center;box-shadow:var(--shadow)}
+.rank-card h3{font-family:var(--display);font-weight:400;font-size:22px;color:var(--gold-2);margin:0 0 6px}
+.rank-card .rk-sub{color:var(--muted);font-size:13.5px;margin:0 0 18px;line-height:1.6}
+.rk-msg{margin-top:14px;font-size:13.5px;line-height:1.6}
+.rk-msg.ok{color:#9af0cb}
+.rk-msg.err{color:#ffc2cc}
+.rk-msg.busy{color:var(--muted)}
 
 /* ===== समीक्षा (REVIEW) ===== */
 .review-head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:22px}
@@ -322,16 +369,20 @@ body::before{
   .score-stage{grid-template-columns:1fr;text-align:center;gap:22px;padding:26px 20px}
   .ring-wrap{width:200px;height:200px}
   .score-side .sub{margin-left:auto;margin-right:auto;max-width:46ch}
-  .palette-fab{display:inline-flex;position:fixed;right:18px;bottom:18px;z-index:35;
+  .palette-fab{display:inline-flex;position:fixed;right:16px;bottom:calc(86px + env(safe-area-inset-bottom,0px));z-index:35;
     background:linear-gradient(160deg,var(--gold-2),var(--gold));color:var(--ink);border:0;cursor:pointer;
-    padding:14px 18px;border-radius:999px;font-family:var(--body);font-weight:700;align-items:center;gap:9px;
-    box-shadow:0 16px 36px -14px rgba(212,175,55,.7)}
-  .palette-fab svg{width:18px;height:18px}
+    padding:12px 16px;border-radius:999px;font-family:var(--body);font-weight:700;align-items:center;gap:8px;
+    font-size:13.5px;box-shadow:0 16px 36px -14px rgba(212,175,55,.7)}
+  .palette-fab svg{width:16px;height:16px}
   .drawer{position:fixed;inset:auto 0 0 0;z-index:55;background:linear-gradient(180deg,var(--ink-3),var(--ink-2));
-    border-top:1px solid var(--line);border-radius:24px 24px 0 0;padding:22px 20px 28px;max-height:78vh;overflow:auto;
+    border-top:1px solid var(--line);border-radius:24px 24px 0 0;padding:16px 20px calc(20px + env(safe-area-inset-bottom,0px));max-height:78vh;overflow:auto;
     animation:drawerUp .3s cubic-bezier(.2,.7,.2,1) both;box-shadow:0 -20px 50px -20px rgba(0,0,0,.8)}
   @keyframes drawerUp{from{transform:translateY(100%)}to{transform:none}}
   .pgrid{grid-template-columns:repeat(6,1fr)}
+  .drawer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+  .drawer-close{flex:0 0 auto;width:34px;height:34px;border-radius:10px;border:1px solid var(--line);
+    background:var(--gold-soft);color:var(--gold-2);display:grid;place-items:center;cursor:pointer}
+  .drawer-close svg{width:16px;height:16px}
 }
 @media (max-width:560px){
   .bc-app{padding:18px 14px 36px}
@@ -409,6 +460,19 @@ body::before{
       <h3>परीक्षा निर्देश</h3>
       <div class="sub">शुरू करने से पहले एक बार अवश्य पढ़ें</div>
       <ol class="ins-list" id="cv-ins"></ol>
+    </div>
+
+    <div class="name-gate">
+      <h3>शुरू करने से पहले अपना नाम लिखें</h3>
+      <p class="ng-sub">यही नाम रैंकिंग सूची में दिखेगा।</p>
+      <input type="text" id="studentName" placeholder="अपना पूरा नाम लिखें" maxlength="40" autocomplete="off" />
+      <div class="ng-err" id="nameErr"></div>
+    </div>
+
+    <div class="topboard" id="topBoard" hidden>
+      <h3>🏆 इस टेस्ट के टॉप स्कोर</h3>
+      <div class="tb-sub" id="tbSub"></div>
+      <ol class="tb-list" id="tbList"></ol>
     </div>
 
     <div class="cta-wrap">
@@ -535,6 +599,18 @@ body::before{
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v4h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         पुनः प्रयास करें
       </button>
+    </div>
+
+    <div class="rank-card">
+      <h3>रैंकिंग सेव हो चुकी है</h3>
+      <p class="rk-sub" id="rkSubText">आपका स्कोर सेव किया जा रहा है…</p>
+      <div id="rkDone" style="display:none">
+        <button class="btn btn-primary" id="rkViewBtn" style="width:100%">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 20V10M12 20V4M20 20v-7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+          पूरी रैंकिंग देखें
+        </button>
+      </div>
+      <div class="rk-msg" id="rkMsg"></div>
     </div>
 
     <div class="bc-credit">
@@ -673,6 +749,16 @@ function show(name){
 
 /* ---------- परीक्षा आरंभ ---------- */
 function startTest(){
+  const nameVal = ($("studentName").value || "").trim();
+  if (!nameVal){
+    $("nameErr").textContent = "कृपया परीक्षा शुरू करने से पहले अपना नाम लिखें।";
+    $("studentName").focus();
+    return;
+  }
+  $("nameErr").textContent = "";
+  state.studentName = nameVal;
+  try{ localStorage.setItem("bc_name", nameVal); }catch(e){}
+
   state.startTs = Date.now();
   state.idx = 0;
   show("quiz");
@@ -700,6 +786,62 @@ function updateTimer(){
 }
 
 /* ---------- प्रश्न रेंडर ---------- */
+
+/* ===== द्विभाषी + प्रश्न-प्रकार फ़ॉर्मैटर ===== */
+var LANG_MODE = "bi"; /* "bi"=हिंदी+अंग्रेज़ी, "hi"=केवल हिंदी */
+function _fmtChunk(t){
+  if(!t) return "";
+  t = String(t).trim();
+  t = t.replace(/\s*(कथन\s*\d+\s*[:：])/g,"<br>$1")
+       .replace(/\s*(Statement\s*\d+\s*[:：])/gi,"<br>$1")
+       .replace(/([।;])\s*(\d+\.\s)/g,"$1<br>$2");
+  t = t.replace(/^(?:<br>)+/,"").replace(/(^|<br>)\s+/g,"$1");
+  return t;
+}
+function _splitItems(seg, re){ return seg.split(re).map(function(s){return s.trim();}).filter(Boolean); }
+function _matchTable(t){
+  var reI=/(सूची|List)[\s\-–—]*I(?!I)\s*(?:\([^)]*\))?\s*[:：]/i;
+  var reII=/(सूची|List)[\s\-–—]*II\s*(?:\([^)]*\))?\s*[:：]/i;
+  var mI=t.match(reI), mII=t.match(reII);
+  if(!mI||!mII||mII.index<=mI.index) return null;
+  var intro=t.slice(0,mI.index).trim();
+  var segI=t.slice(mI.index+mI[0].length,mII.index).trim().replace(/[;।,]\s*$/,"");
+  var rest=t.slice(mII.index+mII[0].length);
+  var mo=rest.match(/(सही\s*मिलान|नीचे\s*दिए|सुमेलित|Choose|Select|Match|कूट)/i);
+  var segII, outro="";
+  if(mo){ segII=rest.slice(0,mo.index).trim(); outro=rest.slice(mo.index).trim(); }
+  else segII=rest.trim();
+  segII=segII.replace(/[;।,]\s*$/,"");
+  var itemsI=_splitItems(segI,/\s*,\s*(?=[A-Z]\.)/);
+  var itemsII=_splitItems(segII,/\s*,\s*(?=\d+\.)/);
+  if(itemsI.length<2||itemsII.length<2) return null;
+  var n=Math.max(itemsI.length,itemsII.length), rows="";
+  for(var k=0;k<n;k++) rows+="<tr><td>"+(itemsI[k]||"")+"</td><td>"+(itemsII[k]||"")+"</td></tr>";
+  var head="<tr><th>"+mI[1]+"-I</th><th>"+mII[1]+"-II</th></tr>";
+  return (intro?'<div class="mt-intro">'+intro+'</div>':"")+
+         '<table class="match-tbl">'+head+rows+'</table>'+
+         (outro?'<div class="mt-outro">'+outro+'</div>':"");
+}
+function _renderChunk(t){ var mt=_matchTable(t); return mt?mt:_fmtChunk(t); }
+function _split(t){
+  t=String(t==null?"":t);
+  var m=t.match(/\s*\/\s*(Question\s*\d+\s*[:：]?)/i);
+  if(m) return {hi:t.slice(0,m.index).trim(), en:t.slice(m.index+m[0].length).trim()};
+  var idx=t.indexOf(" / ");
+  if(idx>=0) return {hi:t.slice(0,idx).trim(), en:t.slice(idx+3).trim()};
+  return {hi:t.trim(), en:""};
+}
+function fmtQuestion(raw){
+  var b=_split(raw), hi=_renderChunk(b.hi), en=_renderChunk(b.en);
+  if(LANG_MODE==="hi"||!b.en) return '<div class="q-hi">'+hi+'</div>';
+  return '<div class="q-hi">'+hi+'</div><div class="q-en">'+en+'</div>';
+}
+function fmtOption(raw){
+  var b=_split(raw), hi=b.hi.trim(), en=b.en.trim();
+  if(LANG_MODE==="hi"||!en||hi===en) return '<span class="o-hi">'+hi+'</span>';
+  return '<span class="o-hi">'+hi+'</span><span class="o-en">'+en+'</span>';
+}
+
 function renderQuestion(){
   const i = state.idx, q = Q[i];
   state.visited[i] = true;
@@ -709,7 +851,7 @@ function renderQuestion(){
     const sel = state.answers[i] === k ? " sel" : "";
     return `<button class="opt${sel}" data-k="${k}" type="button">
               <span class="key">${LETTERS[k]}</span>
-              <span class="txt">${o}</span>
+              <span class="txt">${fmtOption(o)}</span>
             </button>`;
   }).join("");
 
@@ -719,7 +861,7 @@ function renderQuestion(){
       <div class="q-no">प्रश्न <b>${i+1}</b> / ${N}</div>
       <div class="q-marks"><span class="chip pos">+${TEST.marksPerQuestion}</span>${neg}</div>
     </div>
-    <div class="q-text">${pre}${q.q}</div>
+    <div class="q-text">${pre}${fmtQuestion(q.q)}</div>
     <div class="options">${opts}</div>
   `;
 
@@ -785,8 +927,13 @@ function openDrawer(){
   const d = document.createElement("div");
   d.className = "overlay"; d.id = "drawerOverlay";
   d.innerHTML = `<div class="drawer" id="drawerEl" onclick="event.stopPropagation()">
-      <h4 style="font-family:var(--display);font-weight:400;font-size:21px;color:var(--gold-2);margin:0 0 4px">प्रश्न सूची</h4>
-      <div class="pcount" id="dCount" style="font-size:12px;color:var(--muted-2);margin-bottom:14px"></div>
+      <div class="drawer-head">
+        <h4 style="font-family:var(--display);font-weight:400;font-size:21px;color:var(--gold-2);margin:0">प्रश्न सूची</h4>
+        <button class="drawer-close" onclick="closeDrawer()" aria-label="बंद करें" type="button">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="pcount" id="dCount" style="font-size:12px;color:var(--muted-2);margin:2px 0 14px"></div>
       <div class="pgrid" id="drawerGrid"></div>
       <button class="btn btn-ghost" style="width:100%;margin-top:6px" onclick="closeDrawer()">बंद करें</button>
     </div>`;
@@ -858,6 +1005,9 @@ function doSubmit(auto){
 /* ---------- परिणाम रेंडर + एनिमेशन ---------- */
 function renderResult(r, elapsed){
   show("result");
+  state.lastResult = r;
+  state.lastElapsed = elapsed;
+  saveRankAuto();
   const round2 = (x)=> (Math.round(x*100)/100);
   $("scoreMax").textContent = round2(r.max);
   $("stTime").textContent = fmt(elapsed);
@@ -958,7 +1108,7 @@ function renderReview(){
       let cls="", mark="";
       if (k === ci){ cls="is-correct"; mark=`<span class="rev-mark">✓ सही उत्तर</span>`; }
       if (k === ua && ua !== ci){ cls="is-wrong"; mark=`<span class="rev-mark">✗ आपका उत्तर</span>`; }
-      return `<div class="rev-opt ${cls}"><span class="rkey">${LETTERS[k]}</span><span class="rtxt">${o}</span>${mark}</div>`;
+      return `<div class="rev-opt ${cls}"><span class="rkey">${LETTERS[k]}</span><span class="rtxt">${fmtOption(o)}</span>${mark}</div>`;
     }).join("");
 
     const pre = q.statement ? `<span style="display:block;color:var(--muted);font-size:14px;margin-bottom:8px;font-weight:400">${q.statement}</span>` : "";
@@ -968,7 +1118,7 @@ function renderReview(){
           <span class="rev-qno">प्रश्न ${i+1}</span>
           <span class="rev-badge ${status}">${badgeTxt}</span>
         </div>
-        <div class="rev-q">${pre}${q.q}</div>
+        <div class="rev-q">${pre}${fmtQuestion(q.q)}</div>
         <div class="rev-opts">${opts}</div>
         ${q.explanation ? `<div class="explain"><div class="et"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2ZM9 21h6M10 17v4M14 17v4" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> व्याख्या</div><p>${q.explanation}</p></div>` : ""}
       </div>
@@ -992,6 +1142,114 @@ function retry(){
   startTest();
 }
 
+/* ==================== रैंकिंग / लीडरबोर्ड (Firebase) ==================== */
+/* Bodhi Classes — Realtime Database का उपयोग, testId हर टेस्ट के title से अपने-आप बनता है */
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyAfg7Ky-K0BGEJtEAKiD58Gd7D6e9WmvkE",
+  authDomain: "test-7ad3e.firebaseapp.com",
+  databaseURL: "https://test-7ad3e-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "test-7ad3e",
+  storageBucket: "test-7ad3e.firebasestorage.app",
+  messagingSenderId: "1025067934504",
+  appId: "1:1025067934504:web:d1ef23241613001411e61d"
+};
+
+function slugify(s){
+  return (s||"test").trim().toLowerCase()
+    .replace(/[^\u0900-\u097Fa-z0-9]+/g,"-")
+    .replace(/^-+|-+$/g,"")
+    .slice(0,80) || "test";
+}
+const TEST_ID = slugify(TEST.title);
+
+async function loadFirebase(){
+  if (window.__fbApp) return window.__fbApp;
+  const appMod = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js");
+  const dbMod = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js");
+  const app = appMod.initializeApp(FIREBASE_CONFIG);
+  window.__fbApp = app;
+  window.__fbDb = dbMod;
+  return app;
+}
+
+async function saveRankAuto(){
+  $("rkSubText").textContent = "आपका स्कोर सेव किया जा रहा है…";
+  $("rkMsg").className = "rk-msg busy";
+  $("rkMsg").textContent = "";
+  try{
+    await loadFirebase();
+    const { getDatabase, ref, push, set } = window.__fbDb;
+    const db = getDatabase(window.__fbApp);
+    const r = state.lastResult;
+    const entryRef = push(ref(db, "results/" + TEST_ID));
+    await set(entryRef, {
+      name: (state.studentName || "—").slice(0,40),
+      marks: Math.round(r.marks*100)/100,
+      max: r.max,
+      correct: r.correct,
+      wrong: r.wrong,
+      skipped: r.skipped,
+      accuracy: r.accuracy,
+      timeTaken: state.lastElapsed || 0,
+      ts: Date.now()
+    });
+    $("rkSubText").textContent = "✓ आपका स्कोर रैंकिंग सूची में सेव हो गया।";
+    $("rkDone").style.display = "block";
+    $("rkMsg").className = "rk-msg ok";
+    $("rkMsg").textContent = "";
+  }catch(err){
+    $("rkSubText").textContent = "स्कोर सेव नहीं हो पाया।";
+    $("rkMsg").className = "rk-msg err";
+    $("rkMsg").textContent = "इंटरनेट जांचकर पेज को दोबारा खोलें, या नीचे बटन से फिर कोशिश करें।";
+    $("rkDone").style.display = "block";
+    $("rkViewBtn").textContent = "";
+    const retryBtn = document.createElement("button");
+    retryBtn.className = "btn btn-ghost";
+    retryBtn.style.width = "100%";
+    retryBtn.textContent = "दोबारा सेव करें";
+    retryBtn.addEventListener("click", saveRankAuto);
+    $("rkDone").innerHTML = "";
+    $("rkDone").appendChild(retryBtn);
+  }
+}
+
+function openRanking(){
+  const url = "rank.html?test=" + encodeURIComponent(TEST_ID) + "&title=" + encodeURIComponent(TEST.title||"");
+  window.open(url, "_blank");
+}
+
+/* कवर पेज पर टॉप 10 स्कोर — इंटरनेट न हो या डेटा न हो तो चुपचाप छिपा रहेगा */
+async function loadTopBoard(){
+  try{
+    await loadFirebase();
+    const { getDatabase, ref, get } = window.__fbDb;
+    const db = getDatabase(window.__fbApp);
+    const snap = await get(ref(db, "results/" + TEST_ID));
+    const box = $("topBoard"), list = $("tbList"), sub = $("tbSub");
+    if(!snap.exists()){
+      box.hidden = false;
+      sub.textContent = "अभी तक किसी ने यह टेस्ट नहीं दिया — पहला नाम आपका हो सकता है!";
+      list.innerHTML = "";
+      return;
+    }
+    const rows = Object.values(snap.val() || {});
+    rows.sort((a,b)=> (b.marks - a.marks) || ((a.timeTaken||1e9) - (b.timeTaken||1e9)) || ((a.ts||0)-(b.ts||0)));
+    const top = rows.slice(0, 10);
+    list.innerHTML = "";
+    top.forEach((r,i)=>{
+      const li = document.createElement("li");
+      const rk = document.createElement("span"); rk.className="tb-rank"; rk.textContent = i+1;
+      const nm = document.createElement("span"); nm.className="tb-name"; nm.textContent = (r.name||"—").slice(0,40);
+      const mk = document.createElement("span"); mk.className="tb-marks"; mk.textContent = (r.marks!=null?r.marks:"—") + (r.max?(" / "+r.max):"");
+      li.appendChild(rk); li.appendChild(nm); li.appendChild(mk);
+      list.appendChild(li);
+    });
+    sub.textContent = "अब तक " + rows.length + " छात्रों ने यह टेस्ट दिया है";
+    box.hidden = false;
+  }catch(err){ /* ऑफ़लाइन या त्रुटि — बोर्ड नहीं दिखेगा, टेस्ट सामान्य चलेगा */ }
+}
+loadTopBoard();
+
 /* ---------- इवेंट बाइंडिंग ---------- */
 $("startBtn").addEventListener("click", startTest);
 $("prevBtn").addEventListener("click", () => { if (state.idx>0){ state.idx--; renderQuestion(); } });
@@ -1004,6 +1262,9 @@ $("submitSide").addEventListener("click", askSubmit);
 $("paletteFab").addEventListener("click", openDrawer);
 $("reviewBtn").addEventListener("click", renderReview);
 $("retryBtn").addEventListener("click", retry);
+document.addEventListener("click", (e)=>{
+  if (e.target.closest("#rkViewBtn")) openRanking();
+});
 $("backToResult").addEventListener("click", () => show("result"));
 $("rFilters").addEventListener("click", (e) => {
   const b = e.target.closest(".rfilter"); if (!b) return;
@@ -1026,6 +1287,12 @@ document.addEventListener("keydown", (e) => {
 /* प्रारंभ */
 buildCover();
 show("cover");
+try{
+  const savedName = localStorage.getItem("bc_name");
+  if (savedName) $("studentName").value = savedName;
+}catch(e){}
+$("studentName").addEventListener("keydown", (e)=>{ if (e.key === "Enter") startTest(); });
+$("studentName").addEventListener("input", ()=>{ $("nameErr").textContent = ""; });
 </script>
 <script defer src="/assets/bodhi-watermark.js"></script>
 </body>
