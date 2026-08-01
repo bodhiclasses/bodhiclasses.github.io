@@ -698,6 +698,8 @@ var CONFIG = { user: "", repo: "" };
 
 var SEC_NAME = { ca: "करेंट अफेयर्स", gs: "सामान्य अध्ययन", csat: "CSAT", ncert: "NCERT" };
 var DATA = { ca: [], gs: [], csat: [], ncert: [], notes: [] };
+/* अध्याय (टेस्ट नहीं) — इनके कार्ड पर "अध्याय खोलें" दिखेगा; बाक़ी पर "टेस्ट प्रारंभ करें"। */
+var CHAPTERS = { "tests/csat/संचार-एवं-अन्तर्वैयक्तिक-कौशल.html": true };
 var FILTER = "all";
 var STATE = "loading";   /* loading | ready | offline | error */
 
@@ -827,7 +829,7 @@ function testCard(sec, path, idx){
   h.textContent = titleOf(path);
   var g = document.createElement("span");
   g.className = "tgo";
-  g.textContent = "टेस्ट प्रारंभ करें →";
+  g.textContent = CHAPTERS[path] ? "अध्याय खोलें →" : "टेस्ट प्रारंभ करें →";
   a.appendChild(b); a.appendChild(h); a.appendChild(g);
   glowTrack(a);
   return a;
