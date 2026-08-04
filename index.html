@@ -255,6 +255,16 @@ section{position:relative;z-index:3;padding:104px 26px}
 }
 .tgroup span{font-size:16px;color:var(--gold-hi)}
 .tgroup small{font-size:12.5px;color:var(--mist);font-weight:600}
+.tacc-head{grid-column:1/-1;width:100%;cursor:pointer;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:14px;margin:8px 0 2px;padding:17px 22px;border-radius:15px;background:linear-gradient(90deg,rgba(217,174,95,.12),rgba(217,174,95,.03));border:1px solid var(--line);font-family:'Mukta',sans-serif;color:var(--gold-hi);transition:border-color .25s,background .25s}
+.tacc-head:hover{border-color:var(--gold);background:linear-gradient(90deg,rgba(217,174,95,.18),rgba(217,174,95,.05))}
+.tacc-head.open{border-color:var(--gold);background:linear-gradient(90deg,rgba(217,174,95,.22),rgba(217,174,95,.06))}
+.tacc-name{font-size:18px;font-weight:800;letter-spacing:.2px;color:var(--gold-hi)}
+.tacc-meta{display:inline-flex;align-items:center;gap:12px}
+.tacc-unit{font-size:12.5px;color:var(--mist);font-weight:600}
+.tacc-cnt{min-width:26px;height:24px;padding:0 11px;border-radius:20px;background:linear-gradient(135deg,var(--gold-hi),var(--gold));color:var(--ink0);font-size:13px;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
+.tacc-arw{font-size:13px;color:var(--gold);transition:transform .3s;display:inline-block}
+.tacc-head.open .tacc-arw{transform:rotate(180deg)}
+.tacc-item{opacity:1!important;animation:none!important}
 .tfoot{margin-top:30px;text-align:center;font-size:14.5px;color:var(--mist)}
 .tfoot a{color:var(--gold-hi);font-weight:700;border-bottom:1px solid var(--gold-deep);transition:border-color .2s}
 .tfoot a:hover{border-color:var(--gold-hi)}
@@ -699,6 +709,9 @@ var FINE = window.matchMedia("(pointer: fine)").matches;
 var CONFIG = { user: "", repo: "" };
 
 var SEC_NAME = { ca: "करेंट अफेयर्स", gs: "सामान्य अध्ययन", csat: "CSAT", ncert: "NCERT", upsssc: "UPSSSC" };
+var SEC_HEAD = { ca: "करेंट अफेयर्स", gs: "सामान्य अध्ययन", csat: "CSAT", ncert: "NCERT", upsssc: "UPSSSC Exams Special" };
+var SEC_UNIT = { ca: "टेस्ट", gs: "टेस्ट", csat: "टेस्ट", ncert: "टेस्ट", upsssc: "अध्याय" };
+var OPEN_SEC = null;
 var DATA = { ca: [], gs: [], csat: [], ncert: [], upsssc: [], notes: [] };
 /* अध्याय (टेस्ट नहीं) — इनके कार्ड पर "अध्याय खोलें" दिखेगा; बाक़ी पर "टेस्ट प्रारंभ करें"। */
 var CHAPTERS = {
@@ -843,15 +856,61 @@ function testCard(sec, path, idx){
   return a;
 }
 
-function renderCaGroups(){
+function secHead(sec, count){
+  var b = document.createElement("button");
+  b.type = "button";
+  b.className = "tacc-head";
+  b.setAttribute("data-sec", sec);
+  b.setAttribute("aria-expanded", "false");
+  var nm = document.createElement("span");
+  nm.className = "tacc-name";
+  nm.textContent = SEC_HEAD[sec] || SEC_NAME[sec] || sec;
+  var meta = document.createElement("span");
+  meta.className = "tacc-meta";
+  meta.innerHTML = '<span class="tacc-unit">' + (SEC_UNIT[sec] || "टेस्ट") + '</span>' +
+                   '<span class="tacc-cnt">' + count + '</span>' +
+                   '<span class="tacc-arw" aria-hidden="true">▾</span>';
+  b.appendChild(nm); b.appendChild(meta);
+  b.addEventListener("click", function(){
+    OPEN_SEC = (OPEN_SEC === sec) ? null : sec;
+    applyOpen();
+  });
+  return b;
+}
+
+function applyOpen(){
+  [].forEach.call(grid.querySelectorAll(".tacc-head"), function(h){
+    var on = h.getAttribute("data-sec") === OPEN_SEC;
+    h.classList.toggle("open", on);
+    h.setAttribute("aria-expanded", on ? "true" : "false");
+  });
+  [].forEach.call(grid.querySelectorAll("[data-secitem]"), function(el){
+    el.style.display = (el.getAttribute("data-secitem") === OPEN_SEC) ? "" : "none";
+  });
+}
+
+function addCaItems(){
   var shown = 0;
   CA_GROUPS.forEach(function(g){
     var arr = DATA.ca.filter(function(p){ return caGroupOf(p) === g.key; });
     if (!arr.length) return;
-    grid.appendChild(groupTitle(g.label, arr.length));
-    arr.forEach(function(p){ grid.appendChild(testCard("ca", p, shown)); shown++; });
+    var gt = groupTitle(g.label, arr.length);
+    gt.classList.add("tacc-item"); gt.setAttribute("data-secitem", "ca");
+    grid.appendChild(gt);
+    arr.forEach(function(p){
+      var c = testCard("ca", p, shown);
+      c.classList.add("tacc-item"); c.setAttribute("data-secitem", "ca");
+      grid.appendChild(c); shown++;
+    });
   });
-  if (shown === 0) grid.appendChild(stateEl("इस खण्ड में टेस्ट शीघ्र उपलब्ध होंगे।"));
+}
+
+function addSecItems(s){
+  DATA[s].forEach(function(p, i){
+    var c = testCard(s, p, i);
+    c.classList.add("tacc-item"); c.setAttribute("data-secitem", s);
+    grid.appendChild(c);
+  });
 }
 
 function renderTests(){
@@ -859,13 +918,18 @@ function renderTests(){
   if (STATE === "loading") { grid.appendChild(stateEl("टेस्ट-सूची तैयार हो रही है…")); return; }
   if (STATE === "offline") { grid.appendChild(stateEl("टेस्ट-सूची साइट के GitHub Pages पर प्रकाशित होते ही यहाँ स्वतः दिखाई देगी।")); return; }
   if (STATE === "error")   { grid.appendChild(stateEl("सूची इस समय लोड नहीं हो सकी — कृपया पृष्ठ पुनः खोलें।")); return; }
-  if (FILTER === "ca") { renderCaGroups(); return; }
   var secs = (FILTER === "all") ? ["ca", "gs", "csat", "ncert", "upsssc"] : [FILTER];
-  var shown = 0;
+  var any = false;
   secs.forEach(function(s){
-    DATA[s].forEach(function(p){ grid.appendChild(testCard(s, p, shown)); shown++; });
+    var count = DATA[s] ? DATA[s].length : 0;
+    if (!count) return;
+    any = true;
+    grid.appendChild(secHead(s, count));
+    if (s === "ca") addCaItems(); else addSecItems(s);
   });
-  if (shown === 0) grid.appendChild(stateEl("इस खण्ड में टेस्ट शीघ्र उपलब्ध होंगे।"));
+  if (!any) { grid.appendChild(stateEl("इस खण्ड में टेस्ट शीघ्र उपलब्ध होंगे।")); return; }
+  OPEN_SEC = (FILTER === "all") ? null : FILTER;
+  applyOpen();
 }
 
 function renderCounts(){
