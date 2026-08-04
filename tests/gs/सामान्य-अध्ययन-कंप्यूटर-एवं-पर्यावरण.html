@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bodhi Classes — परीक्षा</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Mukta:wght@300;400;500;600;700&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink0:#060B16; --ink1:#0A1426; --ink2:#0E1B33;
+    --glass:rgba(255,255,255,.035);
+    --line:rgba(217,174,95,.16); --line-2:rgba(217,174,95,.34);
+    --gold:#D9AE5F; --gold-hi:#F2CD88; --gold-deep:#8F6B26;
+    --cream:#F2EBDA; --mist:#98A6BE;
+    --blue:#7FB4FF; --green:#7FD6A4; --rose:#FF8FA0;
+    --shadow:0 18px 48px rgba(0,0,0,.45);
+    --radius:20px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; padding:18px;
+    font-family:'Mukta',"Noto Sans Devanagari","Segoe UI",Arial,sans-serif;
+    font-size:16px; color:var(--mist); background:var(--ink0);
+    min-height:100vh; -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(900px 500px at 12% -8%, rgba(217,174,95,.07), transparent 60%),
+      radial-gradient(760px 460px at 100% 0%, rgba(127,180,255,.05), transparent 60%);
+    background-attachment:fixed;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:8px}
+  /* ---------- टॉपबार ---------- */
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:8px 0 20px;color:var(--cream)}
+  .brand{display:flex;align-items:center;gap:13px}
+  .logo{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;
+    background:linear-gradient(160deg,var(--gold-hi),var(--gold-deep));color:#10192b;
+    font-family:'Rozha One',serif;font-size:28px;line-height:1;border:1px solid var(--line-2);
+    box-shadow:0 10px 26px rgba(217,174,95,.18)}
+  .brand h1{margin:0;font-family:'Rozha One',serif;font-weight:400;letter-spacing:.6px;
+    font-size:clamp(22px,3.4vw,34px);line-height:1.1;color:var(--cream)}
+  .brand p{margin:3px 0 0;color:var(--gold);font-weight:600;font-size:12.5px;letter-spacing:2px;text-transform:uppercase}
+  .pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);color:var(--gold);
+    background:var(--glass);padding:9px 14px;border-radius:999px;font-weight:600;font-size:13px;white-space:nowrap}
+  @media(max-width:900px){.topbar{align-items:flex-start;flex-direction:column;gap:10px}}
+  /* ---------- कार्ड ---------- */
+  .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:18px;align-items:stretch}
+  @media(max-width:900px){.hero{grid-template-columns:1fr}}
+  .card{background:linear-gradient(180deg,var(--ink1),rgba(14,27,51,.72));
+    border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .intro{padding:clamp(20px,3.4vw,34px);position:relative}
+  .tag{display:inline-block;background:rgba(217,174,95,.12);color:var(--gold-hi);
+    border:1px solid var(--line-2);padding:6px 13px;border-radius:999px;font-weight:600;font-size:12px;letter-spacing:1px}
+  .intro h2{margin:15px 0 10px;font-family:'Rozha One',serif;font-weight:400;color:var(--cream);
+    font-size:clamp(26px,4.4vw,44px);line-height:1.15;letter-spacing:.2px}
+  .intro h2 span{color:var(--gold);display:inline-block}
+  .intro .sub{font-size:15.5px;line-height:1.75;color:var(--mist);margin:12px 0 20px}
+  .info-grid{display:grid;grid-template-columns:repeat(4,minmax(108px,1fr));gap:10px;margin:22px 0}
+  @media(max-width:700px){.info-grid{grid-template-columns:repeat(2,1fr)}}
+  .info{border-radius:14px;padding:13px;background:var(--glass);border:1px solid var(--line)}
+  .info b{display:block;color:var(--gold-hi);font-size:19px;margin-bottom:3px;font-weight:700}
+  .info span{color:var(--mist);font-size:11px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase}
+  /* ---------- बटन ---------- */
+  .btns{display:flex;flex-wrap:wrap;gap:10px}
+  button{border:0;cursor:pointer;font-family:inherit}
+  .btn{padding:12px 18px;border-radius:13px;font-weight:600;font-size:14.5px;transition:.2s ease;
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none}
+  .btn.primary{background:linear-gradient(160deg,var(--gold-hi),var(--gold));color:#0d1626;
+    box-shadow:0 10px 24px rgba(217,174,95,.22)}
+  .btn.secondary{background:var(--glass);color:var(--gold);border:1px solid var(--line-2)}
+  .btn.light{background:rgba(255,255,255,.05);color:var(--cream);border:1px solid var(--line)}
+  .btn.green{background:linear-gradient(160deg,#8fe3b6,var(--green));color:#062617}
+  .btn:hover{transform:translateY(-2px);filter:brightness(1.06)}
+  .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+  /* ---------- निर्देश ---------- */
+  .rules{padding:22px;background:linear-gradient(160deg,rgba(14,27,51,.95),rgba(10,20,38,.9));color:var(--cream);min-height:100%}
+  .rules h3{margin:0 0 12px;font-family:'Rozha One',serif;font-weight:400;font-size:24px;color:var(--gold)}
+  .rule{display:grid;grid-template-columns:32px 1fr;gap:11px;padding:11px 0;border-bottom:1px dashed var(--line)}
+  .rule:last-child{border-bottom:0}
+  .rule .num{width:32px;height:32px;border-radius:10px;background:rgba(217,174,95,.14);color:var(--gold);
+    display:grid;place-items:center;font-weight:700;font-size:14px}
+  .rule p{margin:0;line-height:1.6;color:var(--mist);font-size:14.5px}
+  /* ---------- नाम बॉक्स ---------- */
+  .name-box{margin-top:18px;padding:18px;background:var(--glass);border:1px solid var(--line);border-radius:16px}
+  .name-box h3{margin:0 0 7px;color:var(--gold-hi);font-size:18px;font-weight:700}
+  .name-box p{margin:0 0 12px;color:var(--mist);font-weight:400;line-height:1.6;font-size:14px}
+  .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:620px){.field-grid{grid-template-columns:1fr}}
+  input{width:100%;font-family:inherit;font-weight:500;font-size:15px;border:1px solid var(--line-2);
+    border-radius:12px;padding:13px 14px;outline:none;background:rgba(6,11,22,.6);color:var(--cream)}
+  input::placeholder{color:#5d6b83}
+  input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(217,174,95,.14)}
+  .error-line{color:var(--rose);min-height:18px;margin-top:8px;font-size:13px;font-weight:600}
+  /* ---------- परीक्षा ---------- */
+  .test-screen,.result-screen{display:none}
+  .exam-shell{display:grid;grid-template-columns:minmax(0,1fr) 292px;gap:16px;align-items:start}
+  @media(max-width:950px){.exam-shell{grid-template-columns:1fr}}
+  .exam-header{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:15px 18px;
+    background:linear-gradient(135deg,rgba(14,27,51,.96),rgba(10,20,38,.9));border-bottom:1px solid var(--line);color:var(--cream)}
+  .exam-header h2{margin:0;font-family:'Rozha One',serif;font-weight:400;font-size:19px;letter-spacing:.3px}
+  .timer{background:rgba(217,174,95,.12);border:1px solid var(--line-2);border-radius:12px;padding:8px 13px;
+    font-weight:700;letter-spacing:.4px;color:var(--gold-hi)}
+  .progress{height:6px;background:rgba(255,255,255,.05);overflow:hidden}
+  .progress>div{height:100%;background:linear-gradient(90deg,var(--gold-deep),var(--gold),var(--gold-hi));width:0%;transition:.25s ease}
+  .question-card{padding:clamp(18px,3vw,26px)}
+  .qmeta{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+  .qno{font-weight:700;color:var(--gold);font-size:16px;letter-spacing:.4px}
+  .topic{background:var(--glass);color:var(--mist);border:1px solid var(--line);padding:6px 11px;
+    border-radius:999px;font-weight:600;font-size:12px}
+  /* ---------- प्रश्न ---------- */
+  .qtext{white-space:pre-line;line-height:1.75;font-size:18.5px;color:#EEF2FA;font-weight:600}
+  .qtext-en{white-space:pre-line;line-height:1.62;font-size:14.5px;color:var(--mist);
+    margin-top:12px;padding-top:12px;border-top:1px dashed var(--line);font-weight:400}
+  .match-tbl{width:100%;border-collapse:collapse;margin:10px 0 4px}
+  .match-tbl th,.match-tbl td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top;font-size:.93em}
+  .match-tbl th{color:var(--gold);font-weight:700;font-size:.8em;letter-spacing:.6px;background:rgba(217,174,95,.06)}
+  .qtext-en .match-tbl th{color:var(--mist)}
+  /* ---------- भाषा टॉगल ---------- */
+  .lang-seg{display:inline-flex;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:10px;padding:3px;gap:2px}
+  .lang-b{font-family:inherit;font-size:12.5px;font-weight:600;color:var(--mist);background:transparent;
+    border:0;border-radius:8px;padding:5px 13px;cursor:pointer;transition:.15s}
+  .lang-b.on{background:linear-gradient(160deg,var(--gold-hi),var(--gold));color:#0d1626}
+  .lang-choose{display:flex;align-items:center;gap:10px;margin:14px 0 0;flex-wrap:wrap}
+  .lc-label{font-size:13px;color:var(--mist)}
+  /* ---------- विकल्प ---------- */
+  .options{display:grid;gap:10px;margin-top:20px}
+  .option{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:start;border:1px solid var(--line);
+    background:var(--glass);border-radius:14px;padding:13px;text-align:left;transition:.18s ease;width:100%}
+  .option:hover{border-color:var(--line-2);background:rgba(217,174,95,.05);transform:translateX(2px)}
+  .option.selected{border-color:var(--gold);background:linear-gradient(180deg,rgba(217,174,95,.15),rgba(217,174,95,.06))}
+  .option .letter{width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.05);display:grid;
+    place-items:center;font-weight:700;color:var(--gold);border:1px solid var(--line)}
+  .option.selected .letter{background:linear-gradient(160deg,var(--gold-hi),var(--gold));color:#0d1626;border-color:transparent}
+  .op-hi{font-weight:600;color:#E9EEF8;line-height:1.5;font-size:15.5px}
+  .op-en{color:var(--mist);line-height:1.4;font-size:13px;margin-top:4px;font-weight:400}
+  .nav-row{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:20px}
+  /* ---------- साइड पैनल ---------- */
+  .side{position:sticky;top:14px}
+  @media(max-width:950px){.side{position:static}}
+  .side-card{padding:18px}
+  .side-title{margin:0 0 12px;color:var(--gold);font-size:17px;font-weight:700}
+  .stats-mini{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:13px}
+  .mini{background:var(--glass);border:1px solid var(--line);border-radius:12px;padding:10px}
+  .mini b{display:block;color:var(--gold-hi);font-size:19px}
+  .mini span{color:var(--mist);font-size:11.5px;font-weight:600}
+  .palette{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+  .dot{height:38px;border-radius:10px;font-weight:700;background:rgba(255,255,255,.045);color:var(--mist);
+    border:1px solid var(--line);transition:.15s}
+  .dot.current{border-color:var(--gold);color:var(--gold-hi);box-shadow:0 0 0 3px rgba(217,174,95,.12)}
+  .dot.answered{background:rgba(127,214,164,.16);color:#9DE9C0;border-color:transparent}
+  .dot.review{background:rgba(217,174,95,.2);color:var(--gold-hi);border-color:transparent}
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin:13px 0 0;color:var(--mist);font-size:11.5px;font-weight:600}
+  .legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:4px;margin-right:5px;
+    vertical-align:-1px;background:rgba(255,255,255,.08)}
+  .legend .l-ans::before{background:rgba(127,214,164,.5)}
+  .legend .l-rev::before{background:rgba(217,174,95,.55)}
+  .legend .l-cur::before{background:var(--gold)}
+  /* ---------- परिणाम ---------- */
+  .result-hero{padding:30px 22px;text-align:center;color:var(--cream);
+    background:radial-gradient(700px 320px at 50% -10%,rgba(217,174,95,.14),transparent 62%),
+      linear-gradient(160deg,rgba(14,27,51,.96),rgba(10,20,38,.92));border-bottom:1px solid var(--line)}
+  .result-hero h2{margin:0;font-family:'Rozha One',serif;font-weight:400;font-size:clamp(26px,4.6vw,42px);color:var(--gold)}
+  .result-hero p{margin:10px auto 0;max-width:760px;line-height:1.7;color:var(--mist);font-size:15px}
+  .student-strip{margin:16px auto 0;max-width:760px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+  .student-strip span{background:var(--glass);border:1px solid var(--line);padding:7px 12px;border-radius:999px;
+    font-weight:600;color:var(--mist);font-size:13px}
+  .score-circle{width:168px;height:168px;border-radius:50%;margin:22px auto 6px;display:grid;place-items:center;
+    background:conic-gradient(var(--gold) 0deg,var(--gold) var(--scoreDeg),rgba(255,255,255,.07) var(--scoreDeg),rgba(255,255,255,.07) 360deg);
+    box-shadow:inset 0 0 0 9px rgba(217,174,95,.08),0 15px 38px rgba(0,0,0,.45)}
+  .score-circle .inner{width:128px;height:128px;border-radius:50%;background:var(--ink1);color:var(--gold-hi);
+    display:grid;place-items:center;font-weight:700;font-size:32px;line-height:1;border:1px solid var(--line)}
+  .score-circle small{display:block;font-size:12px;color:var(--mist);margin-top:5px;font-weight:400}
+  .result-body{padding:22px}
+  .result-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+  @media(max-width:950px){.result-grid{grid-template-columns:repeat(2,1fr)}}
+  .rbox{border-radius:14px;padding:14px;background:var(--glass);border:1px solid var(--line);text-align:center}
+  .rbox b{display:block;color:var(--gold-hi);font-size:23px}
+  .rbox span{color:var(--mist);font-size:12px;font-weight:600}
+  /* ---------- रैंक ---------- */
+  .rank-board{margin-top:18px;display:grid;grid-template-columns:.8fr 1.2fr;gap:12px}
+  @media(max-width:850px){.rank-board{grid-template-columns:1fr}}
+  .rank-card{background:var(--glass);border:1px solid var(--line);border-radius:16px;padding:16px}
+  .rank-card h3{margin:0 0 6px;color:var(--gold);font-size:18px;font-weight:700}
+  .rank-card p{margin:0;color:var(--mist);font-weight:400;line-height:1.6;font-size:14px}
+  .rank-big{font-size:38px;color:var(--gold-hi);font-weight:700;margin:8px 0}
+  .leader-list{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:8px;max-height:340px;overflow:auto}
+  .leader-list li{display:grid;grid-template-columns:42px 1fr auto;align-items:center;gap:9px;
+    background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:12px;padding:10px;font-weight:600;color:var(--cream)}
+  .leader-list .lr{width:32px;height:32px;border-radius:50%;background:rgba(217,174,95,.16);display:grid;
+    place-items:center;color:var(--gold);font-weight:700}
+  .leader-list .score{color:var(--green);font-weight:700}
+  /* ---------- समीक्षा ---------- */
+  .review-list{margin-top:20px;display:grid;gap:12px}
+  .review-item{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--glass)}
+  .review-head{padding:13px 15px;display:flex;justify-content:space-between;gap:10px;align-items:center;
+    background:rgba(255,255,255,.03);border-bottom:1px solid var(--line);color:var(--gold);font-weight:700;font-size:14px}
+  .badge{padding:5px 11px;border-radius:999px;font-weight:600;font-size:12px;white-space:nowrap}
+  .badge.ok{background:rgba(127,214,164,.16);color:#9DE9C0}
+  .badge.bad{background:rgba(255,143,160,.14);color:var(--rose)}
+  .badge.skip{background:rgba(255,255,255,.06);color:var(--mist)}
+  .review-content{padding:15px;line-height:1.7;color:#E4EAF5;font-size:15px}
+  .answer-line{margin-top:10px;padding:11px 13px;background:rgba(217,174,95,.07);border-left:3px solid var(--gold);
+    border-radius:10px;color:var(--cream);font-size:14.5px}
+  .explain{margin-top:10px;color:var(--mist);font-size:14.5px;line-height:1.7}
+  /* ---------- फुटर ---------- */
+  .footer-note{color:var(--mist);text-align:center;margin:20px auto 10px;max-width:920px;padding:11px 16px;
+    font-weight:500;font-size:12.5px;line-height:1.5;background:var(--glass);border:1px solid var(--line);border-radius:999px}
+  @media(max-width:620px){.footer-note{margin:16px 6px 18px;border-radius:16px}}
+  .hidden{display:none!important}
+  /* ---------- प्रिंट ---------- */
+  @media print{
+    body{background:#fff!important;padding:0;color:#111}
+    #bodhi-wm,.topbar,.btns,.side,.exam-header,.progress,.rank-board,.lang-choose,.footer-note{display:none!important}
+    .card{box-shadow:none;border:1px solid #ccc;background:#fff!important}
+    .result-screen{display:block!important}
+    .result-hero{background:#fff!important;color:#111!important;border-bottom:1px solid #ccc}
+    .result-hero h2,.rank-card h3,.review-head{color:#111!important}
+    .result-hero p,.explain,.rbox span,.student-strip span{color:#444!important}
+    .rbox,.review-item,.review-content{background:#fff!important;border-color:#ccc!important;color:#111!important}
+    .rbox b{color:#111!important}
+    .review-item{break-inside:avoid}
+    .answer-line{background:#f4f0e4!important;color:#111!important;border-left-color:#8a6400!important}
+    .badge.ok{background:#d9f7e6!important;color:#065f37!important}
+    .badge.bad{background:#fde2e5!important;color:#8a1020!important}
+    .badge.skip{background:#eee!important;color:#444!important}
+    .match-tbl th{color:#333!important;background:#eee!important}
+    .match-tbl th,.match-tbl td{border-color:#bbb!important;color:#111!important}
+    @page{margin:12mm}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">बो</div>
+        <div><h1>Bodhi Classes</h1><p id="topSub">UPSC · UPPCS</p></div>
+      </div>
+      <div class="pill" id="pillText">🏆 Daily Rank Ready</div>
+    </header>
+    <main id="homeScreen" class="home-screen">
+      <section class="hero">
+        <div class="card intro">
+          <span class="tag" id="tagText">UPPCS Prelims 2026 / RO-ARO</span>
+          <h2 id="homeTitle">Bodhi Classes <span>परीक्षा</span></h2>
+          <p class="sub" id="homeSub">नाम डालकर टेस्ट शुरू करें। Submit के बाद score, analysis और rank section दिखेगा।</p>
+          <div class="info-grid">
+            <div class="info"><b id="qCountBox">0</b><span>प्रश्न</span></div>
+            <div class="info"><b id="timeBox">25 Min</b><span>समय</span></div>
+            <div class="info"><b id="marksBox">+2</b><span>सही पर</span></div>
+            <div class="info"><b id="negBox">-0.66</b><span>गलत पर</span></div>
+          </div>
+          <div class="name-box">
+            <h3>शुरू करने से पहले अपना नाम लिखें</h3>
+            <p>यही नाम आपके परिणाम में दिखेगा।</p>
+            <div class="field-grid" style="grid-template-columns:1fr">
+              <input id="studentName" maxlength="60" placeholder="अपना पूरा नाम लिखें" autocomplete="name" />
+            </div>
+            <div class="lang-choose"><span class="lc-label">पढ़ने की भाषा:</span><div class="lang-seg" id="coverLang"></div></div><div class="error-line" id="nameErr"></div>
+            <div class="btns"><button class="btn primary" onclick="startTest()">परीक्षा शुरू करें →</button></div>
+          </div>
+        </div>
+        <div class="card rules">
+          <h3>परीक्षा निर्देश</h3>
+          <div class="rule"><div class="num">1</div><p>प्रत्येक प्रश्न में चार विकल्प हैं। केवल एक विकल्प सही है।</p></div>
+          <div class="rule"><div class="num">2</div><p>सही उत्तर पर निर्धारित अंक और गलत उत्तर पर निर्धारित ऋणात्मक अंक मिलेंगे। बिना उत्तर वाले प्रश्न पर 0 अंक।</p></div>
+          <div class="rule"><div class="num">3</div><p>किसी प्रश्न को "समीक्षा हेतु चिह्नित" कर सकते हैं और प्रश्न-सूची से किसी भी प्रश्न पर सीधे जा सकते हैं।</p></div>
+          <div class="rule"><div class="num">4</div><p>परीक्षा समाप्त करने पर अंक, शुद्धता, सही/गलत और हर प्रश्न की विस्तृत व्याख्या दिखेगी।</p></div>
+          <div class="rule"><div class="num">5</div><p>ऊपर "पढ़ने की भाषा" से हिंदी, English या दोनों चुन सकते हैं — यह किसी भी समय बदला जा सकता है।</p></div>
+        </div>
+      </section>
+    </main>
+    <main id="testScreen" class="test-screen">
+      <section class="exam-shell">
+        <div class="card">
+          <div class="exam-header"><h2 id="examTitle">Bodhi Classes</h2><div class="timer" id="timer">25:00</div></div>
+          <div class="progress"><div id="progressBar"></div></div>
+          <div class="question-card" id="questionCard">
+            <div class="qmeta"><div class="qno" id="qno">प्रश्न 1 / 0</div><div style="display:flex;gap:9px;align-items:center;flex-wrap:wrap"><div class="topic" id="topic">Topic</div><div class="lang-seg" id="qLang"></div></div></div>
+            <div class="qtext" id="qtext"></div><div class="qtext-en" id="qtextEn"></div><div class="options" id="options"></div>
+            <div class="nav-row"><button class="btn light" onclick="prevQ()">← पिछला</button><button class="btn secondary" onclick="toggleReview()" id="reviewBtn">☆ समीक्षा हेतु चिह्नित करें</button><button class="btn light" onclick="clearAnswer()">उत्तर हटाएँ</button><button class="btn primary" onclick="nextQ()">सहेजें और अगला →</button></div>
+          </div>
+        </div>
+        <aside class="side"><div class="card side-card"><h3 class="side-title">प्रश्न सूची</h3><div class="stats-mini"><div class="mini"><b id="attemptedCount">0</b><span>उत्तरित</span></div><div class="mini"><b id="reviewCount">0</b><span>चिह्नित</span></div></div><div class="palette" id="palette"></div><div class="legend"><span class="l-cur">वर्तमान</span><span class="l-ans">उत्तरित</span><span class="l-rev">चिह्नित</span></div><div style="height:12px"></div><button class="btn primary" style="width:100%" onclick="submitTest()">परीक्षा समाप्त करें</button></div></aside>
+      </section>
+    </main>
+    <main id="resultScreen" class="result-screen">
+      <section class="card">
+        <div class="result-hero"><h2>परिणाम विश्लेषण</h2><p id="resultMessage">आपकी परिणाम-रिपोर्ट तैयार है।</p><div class="student-strip" id="studentStrip"></div><div class="score-circle" id="scoreCircle" style="--scoreDeg: 0deg"><div class="inner"><div><span id="scorePercent">0%</span><small>शुद्धता</small></div></div></div><div class="btns" style="justify-content:center; margin-top:18px"><button class="btn primary" onclick="restartTest()">↻ पुनः प्रयास करें</button><button class="btn light" onclick="window.print()">🖨 प्रिंट / PDF सेव करें</button><a class="btn secondary" href="/">🏠 मुखपृष्ठ पर जाएँ</a></div></div>
+        <div class="result-body">
+          <div class="result-grid"><div class="rbox"><b id="finalMarks">0</b><span>अंक</span></div><div class="rbox"><b id="finalAttempted">0</b><span>उत्तरित</span></div><div class="rbox"><b id="finalCorrect">0</b><span>सही पर</span></div><div class="rbox"><b id="finalWrong">0</b><span>गलत पर</span></div><div class="rbox"><b id="finalAccuracy">0%</b><span>शुद्धता</span></div><div class="rbox"><b id="finalTime">0:00</b><span>लगा समय</span></div></div>
+          <div class="rank-board" id="rankBoard"><div class="rank-card"><h3>आपकी Daily Rank</h3><div class="rank-big" id="ownRank">—</div><p id="rankStatus">आपकी rank यहाँ दिखेगी।</p></div><div class="rank-card"><h3>Top 20 Leaderboard</h3><p id="leaderHint">हर test की leaderboard अलग रहेगी।</p><ol class="leader-list" id="leaderList"></ol></div></div>
+          <div class="review-list" id="reviewList"></div>
+        </div>
+      </section>
+    </main>
+    <div class="footer-note" id="footerNote">© Bodhi Classes · Designed by Aditya Chauhan · @BodhiClasses</div>
+  </div>
+<script>
+const TEST = {"title": "सामान्य अध्ययन कंप्यूटर एवं पर्यावरण", "highlight": "", "shortTitle": "सामान्य अध्ययन कंप्यूटर एवं पर्यावरण", "subtitle": "UPSC / UPPCS · सामान्य अध्ययन", "tag": "UPSC / UPPCS · सामान्य अध्ययन", "pill": "Bodhi Classes · अभ्यास परीक्षा", "description": "कुल 50 प्रश्न · 25 मिनट · सही +2, गलत −0.66। नाम लिखकर परीक्षा शुरू करें; समाप्त करने पर अंक, विश्लेषण और हर प्रश्न की व्याख्या दिखेगी।", "durationMinutes": 25, "marksPerQuestion": 2, "negativeMarks": 0.66, "testId": "bodhi-bodhi-test-99ec7", "footerCredit": "© Bodhi Classes · Designed by Aditya Chauhan · @BodhiClasses", "rankingEnabled": false, "firebaseConfig": {}, "publishDateStr": "", "questions": [{"id": 1, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "कंप्यूटर शब्द लैटिन भाषा के किस मूल शब्द से बना है जिसका अर्थ 'गणना करना' है?", "question_en": "From which root word of the Latin language is the word 'computer' derived, meaning 'to calculate'?", "options": [{"hi": "कंप्यूटैक्स", "en": "Computax"}, {"hi": "कंप्यूटारे", "en": "Computare"}, {"hi": "कंप्यूटैरे", "en": "Computere"}, {"hi": "कंप्यूटस", "en": "Computus"}], "answer": 1, "explanation_hi": "कंप्यूटर शब्द लैटिन भाषा के 'Computare' से बना है जिसका अर्थ गणना करना (To Calculate) होता है।", "explanation_en": "The word 'computer' is derived from the Latin word 'Computare' which means 'to calculate'."}, {"id": 2, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "प्रथम पीढ़ी के प्रसिद्ध इलेक्ट्रॉनिक कंप्यूटर ENIAC का कुल वजन लगभग कितना था?", "question_en": "What was the total weight of the famous first-generation electronic computer ENIAC?", "options": [{"hi": "10 टन", "en": "10 tons"}, {"hi": "20 टन", "en": "20 tons"}, {"hi": "30 टन", "en": "30 tons"}, {"hi": "50 टन", "en": "50 tons"}], "answer": 2, "explanation_hi": "पहली पीढ़ी के कंप्यूटर ENIAC का वजन लगभग 30 टन था तथा इसमें 18,000 वैक्यूम ट्यूब्स लगी थीं।", "explanation_en": "The first-generation computer ENIAC weighed approximately 30 tons and contained 18,000 vacuum tubes."}, {"id": 3, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "दुनिया का पहला माइक्रोप्रोसेसर 'Intel 4004' किस वर्ष विकसित किया गया था?", "question_en": "In which year was the world's first microprocessor 'Intel 4004' developed?", "options": [{"hi": "1971", "en": ""}, {"hi": "1968", "en": ""}, {"hi": "1975", "en": ""}, {"hi": "1980", "en": ""}], "answer": 0, "explanation_hi": "दुनिया का पहला माइक्रोप्रोसेसर 'Intel 4004' वर्ष 1971 में विकसित किया गया था।", "explanation_en": "The world's first microprocessor 'Intel 4004' was developed in the year 1971."}, {"id": 4, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "पंच कार्ड (Punch Card) की कार्यप्रणाली के संदर्भ में 'छिद्र होने' (Holes) का क्या अर्थ होता था?", "question_en": "In the working principle of a Punch Card, what did 'holes' represent?", "options": [{"hi": "डेटा मौजूद नहीं है (0 या Off)", "en": "Data is not present (0 or Off)"}, {"hi": "डेटा मौजूद है (1 या On)", "en": "Data is present (1 or On)"}, {"hi": "सिस्टम एरर", "en": "System Error"}, {"hi": "मशीन रीबूट", "en": "Machine Reboot"}], "answer": 1, "explanation_hi": "पंच कार्ड में बाइनरी सिस्टम की तरह छेद होने का मतलब '1 या On' (डेटा मौजूद है) तथा छेद न होने का मतलब '0 या Off' होता था।", "explanation_en": "In punch cards, similar to the binary system, a hole represented '1 or On' (data present) and no hole represented '0 or Off'."}, {"id": 5, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "कंप्यूटर इतिहास में वर्ष 1843 में दुनिया का पहला कंप्यूटर प्रोग्राम लिखने वाली 'प्रथम प्रोग्रामर' कौन थीं?", "question_en": "Who was the 'first programmer' in computer history to write the world's first computer program in the year 1843?", "options": [{"hi": "ग्रेस हॉपर", "en": "Grace Hopper"}, {"hi": "सोफिया रोबोट", "en": "Sophia Robot"}, {"hi": "एनी कूपर", "en": "Annie Cooper"}, {"hi": "एडा लवलेस", "en": "Ada Lovelace"}], "answer": 3, "explanation_hi": "विश्व की पहली प्रोग्रामर एडा लवलेस (Ada Lovelace) थीं, जिन्होंने 1843 में पहला प्रोग्राम लिखा था।", "explanation_en": "Ada Lovelace was the world's first programmer, who wrote the first program in the year 1843."}, {"id": 6, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "भारतीय मूल के वैज्ञानिक जिन्हें वर्ष 1953 में उनके योगदान हेतु 'फादर ऑफ फाइबर ऑप्टिक्स' कहा जाता है, कौन हैं?", "question_en": "Which scientist of Indian origin is known as the 'Father of Fiber Optics' for his contribution in the year 1953?", "options": [{"hi": "अजय भट्ट", "en": "Ajay Bhatt"}, {"hi": "विजय भटकर", "en": "Vijay Bhatkar"}, {"hi": "रंगास्वामी नरसिम्हन", "en": "Rangaswamy Narasimhan"}, {"hi": "नरेंद्र सिंह कपानी", "en": "Narinder Singh Kapany"}], "answer": 3, "explanation_hi": "नरेंद्र सिंह कपानी को वर्ष 1953 के उनके कार्यों हेतु 'फादर ऑफ फाइबर ऑप्टिक्स' कहा जाता है।", "explanation_en": "Narinder Singh Kapany is referred to as the 'Father of Fiber Optics' for his work in the year 1953."}, {"id": 7, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "बैंकिंग क्षेत्र में प्रयुक्त होने वाला प्रसिद्ध वर्टिकल कोर बैंकिंग सॉफ्टवेयर 'Finacle' किस वर्ष इन्फोसिस द्वारा निष्पादित किया गया था?", "question_en": "In which year was the famous vertical core banking software 'Finacle' executed by Infosys?", "options": [{"hi": "1993", "en": ""}, {"hi": "1991", "en": ""}, {"hi": "1995", "en": ""}, {"hi": "1999", "en": ""}], "answer": 0, "explanation_hi": "इन्फोसिस द्वारा निर्मित प्रसिद्ध बैंकिंग सॉफ्टवेयर 'Finacle' वर्ष 1993 में पेश किया गया था।", "explanation_en": "The famous banking software 'Finacle' created by Infosys was introduced in the year 1993."}, {"id": 8, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "आर्टिफिशियल इंटेलिजेंस (AI) और एक्सपर्ट सिस्टम हेतु प्रयुक्त होने वाली 'Prolog' भाषा का विकास वर्ष 1972 में किसने किया था?", "question_en": "Who developed the 'Prolog' language in the year 1972 for Artificial Intelligence (AI) and expert systems?", "options": [{"hi": "जॉन मैकार्थी", "en": "John McCarthy"}, {"hi": "ग्रेस हॉपर", "en": "Grace Hopper"}, {"hi": "ब्यार्ने स्ट्रॉस्ट्रुप", "en": "Bjarne Stroustrup"}, {"hi": "एलेन कोल्मेरोअर", "en": "Alain Colmerauer"}], "answer": 3, "explanation_hi": "Prolog भाषा का विकास फ्रांस के वैज्ञानिक एलेन कोल्मेरोअर द्वारा वर्ष 1972 में किया गया था।", "explanation_en": "Prolog language was developed by French scientist Alain Colmerauer in the year 1972."}, {"id": 9, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "वर्ष 1969 में नासा के चंद्र मिशन में प्रयुक्त होने वाले अपोलो गाइडेंस कंप्यूटर (AGC) के प्रोसेसर की गति कितनी थी?", "question_en": "What was the processor speed of the Apollo Guidance Computer (AGC) used in NASA's lunar mission in 1969?", "options": [{"hi": "12.000 मेगाहर्ट्ज", "en": "12.000 MHz"}, {"hi": "1.000 मेगाहर्ट्ज", "en": "1.000 MHz"}, {"hi": "0.043 मेगाहर्ट्ज", "en": "0.043 MHz"}, {"hi": "3000.000 मेगाहर्ट्ज", "en": "3000.000 MHz"}], "answer": 2, "explanation_hi": "अपोलो गाइडेंस कंप्यूटर का प्रोसेसर अत्यंत धीमा था जिसकी गति केवल 0.043 MHz थी।", "explanation_en": "The processor of the Apollo Guidance Computer was extremely slow with a speed of only 0.043 MHz."}, {"id": 10, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "मेमोरी से डिकोडर के पास जाने वाला निर्देश सीपीयू के किस रजिस्टर में 'वर्तमान' निर्देश के रूप में सहेजकर रखा जाता है?", "question_en": "Which register of the CPU holds the 'current' instruction fetched from memory for decoding?", "options": [{"hi": "प्रोग्राम काउंटर", "en": "Program Counter"}, {"hi": "मेमोरी एड्रेस रजिस्टर", "en": "Memory Address Register"}, {"hi": "मेमोरी बफर रजिस्टर", "en": "Memory Buffer Register"}, {"hi": "इंस्ट्रक्शन रजिस्टर", "en": "Instruction Register"}], "answer": 3, "explanation_hi": "मेमोरी से आया हुआ 'वर्तमान' निर्देश सबसे पहले इंस्ट्रक्शन रजिस्टर (IR) में होल्ड होता है, जहाँ से डिकोडर इसे डिकोड करता है।", "explanation_en": "The 'current' instruction from memory is first held in the Instruction Register (IR), where it is decoded by the decoder."}, {"id": 11, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "कंप्यूटर प्रोसेसर चिप के बिल्कुल अंदर स्थित सबसे तेज L1 (लेवल 1) कैश मेमोरी का सामान्य आकार कितना होता है?", "question_en": "What is the typical size of the fastest L1 (Level 1) cache memory located inside the CPU processor chip?", "options": [{"hi": "2KB से 64KB", "en": "2KB to 64KB"}, {"hi": "256KB से 512KB", "en": "256KB to 512KB"}, {"hi": "1MB से 2MB", "en": "1MB to 2MB"}, {"hi": "16GB से 32GB", "en": "16GB to 32GB"}], "answer": 0, "explanation_hi": "L1 कैश प्रोसेसर के बिल्कुल अंदर होती है जिसका आकार सबसे छोटा (आमतौर पर 2KB से 64KB) और गति सबसे तेज होती है।", "explanation_en": "L1 cache is inside the CPU core, having the smallest size (typically 2KB to 64KB) and the fastest speed."}, {"id": 12, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "एंड्रॉयड (Android) ऑपरेटिंग सिस्टम अपने आंतरिक संपर्कों और संदेशों को सहेजने हेतु किस हल्के इन-बिल्ट डेटाबेस का उपयोग करता है?", "question_en": "Which lightweight in-built database does the Android operating system use to store internal contacts and messages?", "options": [{"hi": "ओरेकल", "en": "Oracle"}, {"hi": "एसक्यूलाइट", "en": "SQLite"}, {"hi": "मॉन्गो डीबी", "en": "MongoDB"}, {"hi": "माईएसक्यूएल", "en": "MySQL"}], "answer": 1, "explanation_hi": "एंड्रॉयड अपने आंतरिक डेटाबेस प्रबंधन हेतु अत्यंत हल्के डेटाबेस SQLite का उपयोग करता है।", "explanation_en": "Android uses the lightweight SQLite database for its internal database management."}, {"id": 13, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "किस रोम (ROM) चिप की पहचान उसके ऊपर लगी छोटी गोलाकार क्वार्ट्ज क्रिस्टल खिड़की (Window) से होती है जिसे मिटाने हेतु पराबैंगनी किरणों का प्रयोग होता है?", "question_en": "Which ROM chip is identified by a small circular quartz crystal window on top and requires ultraviolet rays to erase its data?", "options": [{"hi": "ईपीरॉम", "en": "EPROM"}, {"hi": "पीरॉम", "en": "PROM"}, {"hi": "ईईपीरॉम", "en": "EEPROM"}, {"hi": "मास्क रोम", "en": "Mask ROM"}], "answer": 0, "explanation_hi": "ईपीरॉम (EPROM) चिप के ऊपर एक गोलाकार काँच (Quartz Window) लगा होता है जिसके डेटा को पराबैंगनी (UV) किरणों द्वारा मिटाया जाता है।", "explanation_en": "EPROM chips have a quartz window on top, allowing data to be erased using ultraviolet (UV) rays."}, {"id": 14, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "स्टैटिक रैम (SRAM) में डेटा बिना रिफ्रेश किए बिजली रहने तक पूरी तरह स्थिर रहता है। इसे बनाने हेतु किस मूल सर्किट का उपयोग किया जाता है?", "question_en": "In Static RAM (SRAM), data remains stable as long as power is supplied without refreshing. Which basic circuit is used to build it?", "options": [{"hi": "कैपेसिटर सर्किट", "en": "Capacitor Circuit"}, {"hi": "डायोड सर्किट", "en": "Diode Circuit"}, {"hi": "रजिस्टर सर्किट", "en": "Register Circuit"}, {"hi": "फ्लिप फ्लॉप सर्किट", "en": "Flip-Flop Circuit"}], "answer": 3, "explanation_hi": "SRAM में डेटा फ्लिप फ्लॉप सर्किट द्वारा स्टोर होता है जिसमें कैपेसिटर की तरह चार्ज लीक नहीं होता, अतः इसे रिफ्रेश करने की जरूरत नहीं होती।", "explanation_en": "SRAM stores data using flip-flop circuits that do not leak charge like capacitors, thus requiring no refresh cycle."}, {"id": 15, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "डेटा विश्वसनीयता और सुरक्षा हेतु सर्वाधिक संतुलित एवं लोकप्रिय 'RAID 5' तकनीकी प्रणाली स्थापित करने हेतु कम से कम कितनी डिस्क (डिट्स) आवश्यक हैं?", "question_en": "What is the minimum number of disks required to establish the highly balanced and popular 'RAID 5' technical storage system?", "options": [{"hi": "1 डिस्क", "en": "1 disk"}, {"hi": "2 डिस्क", "en": "2 disks"}, {"hi": "5 डिस्क", "en": "5 disks"}, {"hi": "3 डिस्क", "en": "3 disks"}], "answer": 3, "explanation_hi": "RAID 5 प्रणाली (स्ट्रिपिंग विथ पैरिटी) को संचालित करने हेतु कम से कम 3 डिस्क होना अनिवार्य है।", "explanation_en": "To run a RAID 5 system (striping with parity), a minimum of 3 disks is mandatory."}, {"id": 16, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "कंप्यूटर रिमोट कंट्रोल और रिमोट एक्सेस हेतु प्रयुक्त होने वाला असुरक्षित (Unsecured) 'Telnet' प्रोटोकॉल किस डिफ़ॉल्ट पोर्ट नंबर का उपयोग करता है?", "question_en": "Which default port number is used by the unsecured 'Telnet' protocol utilized for computer remote control and access?", "options": [{"hi": "पोर्ट 20", "en": "Port 20"}, {"hi": "पोर्ट 23", "en": "Port 23"}, {"hi": "पोर्ट 22", "en": "Port 22"}, {"hi": "पोर्ट 21", "en": "Port 21"}], "answer": 1, "explanation_hi": "असुरक्षित रिमोट एक्सेस प्रोटोकॉल Telnet पोर्ट 23 का उपयोग करता है, जबकि सुरक्षित रिमोट एक्सेस SSH पोर्ट 22 का उपयोग करता है।", "explanation_en": "The unsecured remote access protocol Telnet uses Port 23, whereas secured SSH uses Port 22."}, {"id": 17, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "माइक्रोसॉफ्ट वर्ड के स्टेटस बार के दाएं कोने में स्थित 'ज़ूम स्लाइडर' (Zoom Slider) का न्यूनतम और अधिकतम मान क्रमशः कितना हो सकता है?", "question_en": "What are the minimum and maximum values of the 'Zoom Slider' located in the bottom right corner of MS Word's status bar?", "options": [{"hi": "10% और 500%", "en": "10% and 500%"}, {"hi": "10% और 100%", "en": "10% and 100%"}, {"hi": "5% और 400%", "en": "5% and 400%"}, {"hi": "0% और 1000%", "en": "0% and 1000%"}], "answer": 0, "explanation_hi": "माइक्रोसॉफ्ट वर्ड में दस्तावेज को न्यूनतम 10% और अधिकतम 500% तक ज़ूम किया जा सकता है।", "explanation_en": "In Microsoft Word, a document can be zoomed to a minimum of 10% and a maximum of 500%."}, {"id": 18, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "माइक्रोसॉफ्ट एक्सेल वर्कशीट में किसी भी गणना को शुरू करने हेतु फॉर्मूला हमेशा किस प्रतीक चिह्न से प्रारंभ होना अनिवार्य है?", "question_en": "With which symbol must a formula always begin in an MS Excel worksheet to initiate calculations?", "options": [{"hi": "&", "en": ""}, {"hi": "=", "en": ""}, {"hi": "@", "en": ""}, {"hi": "$", "en": ""}], "answer": 1, "explanation_hi": "एक्सेल का अनिवार्य नियम है कि प्रत्येक फॉर्मूला हमेशा '=' (बराबर) के निशान से शुरू होना चाहिए, अन्यथा वह उसे टेक्स्ट मान लेता है।", "explanation_en": "It is an essential rule in Excel that every formula must start with '=' (equal to), otherwise it is treated as text."}, {"id": 19, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "एक्सेल फॉर्मूला में सेल रेफरेंसिंग के संदर्भ में रो और कॉलम दोनों को 'लॉक' (Absolute Reference) करने हेतु किस चिह्न का प्रयोग किया जाता है?", "question_en": "Which symbol is used to 'lock' both row and column (Absolute Reference) in an Excel cell referencing system?", "options": [{"hi": "#", "en": ""}, {"hi": "@", "en": ""}, {"hi": "$", "en": ""}, {"hi": "&", "en": ""}], "answer": 2, "explanation_hi": "एक्सेल में एब्सोल्यूट रेफरेंस बनाने हेतु रो और कॉलम दोनों के पहले '$' (डॉलर) चिह्न लगाया जाता है जिसे F4 दबाकर लॉक कर सकते हैं।", "explanation_en": "To create an absolute reference in Excel, the '$' (dollar) symbol is placed before both row and column."}, {"id": 20, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "एक्सेल के What-If Analysis के अंतर्गत आने वाला वह कौन सा टूल है जो किसी लक्ष्य तक पहुंचने हेतु 'उल्टी गणना' (Reverse Calculation) करता है?", "question_en": "Which tool under Excel's What-If Analysis is used to perform 'Reverse Calculation' to achieve a specific target result?", "options": [{"hi": "डेटा वैलिडेशन", "en": "Data Validation"}, {"hi": "सिनेरियो मैनेजर", "en": "Scenario Manager"}, {"hi": "पावर क्वेरी", "en": "Power Query"}, {"hi": "गोल सीक", "en": "Goal Seek"}], "answer": 3, "explanation_hi": "गोल सीक (Goal Seek) व्हाट-इफ एनालिसिस का हिस्सा है जो इच्छित परिणाम प्राप्त करने हेतु उल्टी गणना (Reverse Calculation) करता है।", "explanation_en": "Goal Seek is a part of What-If Analysis that performs reverse calculation to find the input needed for a target result."}, {"id": 21, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "जॉन बैकस द्वारा वर्ष 1957 में विकसित दुनिया की पहली उच्च स्तरीय प्रोग्रामिंग भाषा कौन सी थी?", "question_en": "Which was the world's first high-level programming language developed by John Backus in 1957?", "options": [{"hi": "फोर्ट्रान", "en": "FORTRAN"}, {"hi": "लिस्प", "en": "LISP"}, {"hi": "कोबोल", "en": "COBOL"}, {"hi": "पास्कल", "en": "PASCAL"}], "answer": 0, "explanation_hi": "दुनिया की पहली हाई-लेवल प्रोग्रामिंग भाषा फोर्ट्रान (FORTRAN) थी, जिसे जॉन बैकस ने 1957 में जटिल वैज्ञानिक गणनाओं हेतु बनाया था।", "explanation_en": "The world's first high-level programming language was FORTRAN, developed by John Backus in 1957 for scientific computations."}, {"id": 22, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "ऑपरेटिंग सिस्टम के प्रोसेस मैनेजमेंट में प्रयुक्त होने वाला 'fork()' सिस्टम कॉल यदि 'शिशु प्रोसेस' (Child Process) बनाता है, तो वह क्या रिटर्न करता है?", "question_en": "In operating system process management, if the 'fork()' system call successfully creates a child process, what does it return to the child?", "options": [{"hi": "पेरेंट की पीआईडी", "en": "Parent's PID"}, {"hi": "एक (1)", "en": "One (1)"}, {"hi": "ऋणात्मक मान (<0)", "en": "Negative value (<0)"}, {"hi": "शून्य (0)", "en": "Zero (0)"}], "answer": 3, "explanation_hi": "fork() सिस्टम कॉल चाइल्ड प्रोसेस को '0' रिटर्न करता है, पेरेंट को चाइल्ड की PID (>0) तथा त्रुटि होने पर ऋणात्मक मान रिटर्न करता है।", "explanation_en": "The fork() system call returns '0' to the child process, child's PID (>0) to the parent, and a negative value on error."}, {"id": 23, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "रिलेशनल डेटाबेस मैनेजमेंट सिस्टम (RDBMS) के अंतर्गत एक टेबल में उपस्थित कुल कॉलमों (Fields) की संख्या को क्या कहा जाता है?", "question_en": "What is the total number of columns (fields) present in a table called in a Relational Database Management System (RDBMS)?", "options": [{"hi": "टपल", "en": "Tuple"}, {"hi": "कार्डिनलिटी", "en": "Cardinality"}, {"hi": "डिग्री", "en": "Degree"}, {"hi": "व्यू", "en": "View"}], "answer": 2, "explanation_hi": "डेटाबेस में टेबल के कॉलमों (Attributes) की संख्या को 'डिग्री' (Degree) तथा पंक्तियों (Rows) की संख्या को 'कार्डिनलिटी' (Cardinality) कहते हैं।", "explanation_en": "In a database, the number of columns (attributes) is called 'Degree' and the number of rows (tuples) is called 'Cardinality'."}, {"id": 24, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "इंटरनेट कनेक्टिविटी न होने पर अथवा डीएचसीपी (DHCP) सर्वर से आईपी प्राप्त न होने पर विंडोज़ स्वयं कौन सा ऑटोमैटिक प्राइवेट आईपी (APIPA) प्रदान करता है?", "question_en": "Which Automatic Private IP Addressing (APIPA) range does Windows assign to a system when it fails to obtain an IP from a DHCP server?", "options": [{"hi": "10.0.0.x", "en": ""}, {"hi": "169.254.x.x", "en": ""}, {"hi": "192.168.0.x", "en": ""}, {"hi": "172.16.x.x", "en": ""}], "answer": 1, "explanation_hi": "जब डीएचसीपी सर्वर निष्क्रिय हो तो विंडोज स्वतः ही '169.254.x.x' रेंज का लिंक-लोकल आईपी (APIPA) सिस्टम को आवंटित कर देता है।", "explanation_en": "When the DHCP server is inactive, Windows automatically assigns a link-local IP (APIPA) from the '169.254.x.x' range."}, {"id": 25, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "इंटरनेट नेटवर्क कनेक्टिविटी चेक करने और स्वयं के कंप्यूटर का परीक्षण करने हेतु प्रयुक्त होने वाले सुरक्षित रिज़र्व 'लूपबैक एड्रेस' (Loopback Address) की रेंज क्या है?", "question_en": "What is the reserved 'Loopback Address' range used for testing network connectivity and self-loop diagnostics of a computer?", "options": [{"hi": "0.0.0.0 से 0.255.255.255", "en": "0.0.0.0 to 0.255.255.255"}, {"hi": "192.168.0.0 से 192.168.255.255", "en": "192.168.0.0 to 192.168.255.255"}, {"hi": "127.0.0.0 से 127.255.255.255", "en": "127.0.0.0 to 127.255.255.255"}, {"hi": "224.0.0.0 से 239.255.255.255", "en": "224.0.0.0 to 239.255.255.255"}], "answer": 2, "explanation_hi": "नेटवर्क कनेक्टिविटी जाँचने हेतु 127.x.x.x की क्लास-A आईपी रेंज सुरक्षित रखी गई है, जिसे 'लूपबैक एड्रेस' कहते हैं।", "explanation_en": "The Class-A IP range of 127.x.x.x is reserved as the 'Loopback Address' for testing self-network interfaces."}, {"id": 26, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "हार्डवेयर की विशिष्ट भौतिक पहचान बताने वाले 48-बिट मैक (MAC) पते के पहले बाइट का आठवां बिट (LSB) यदि '0' है, तो यह किस प्रकार के प्रसारण को दर्शाता है?", "question_en": "If the 8th bit (LSB) of the first byte of a 48-bit physical MAC address is '0', what type of transmission does it represent?", "options": [{"hi": "यूनिकास्ट (Unicast)", "en": "Unicast"}, {"hi": "मल्टीकास्ट (Multicast)", "en": "Multicast"}, {"hi": "ब्रॉडकास्ट (Broadcast)", "en": "Broadcast"}, {"hi": "एनीकास्ट (Anycast)", "en": "Anycast"}], "answer": 0, "explanation_hi": "मैक एड्रेस के पहले बाइट का 8वां बिट I/G (Individual/Group) बिट होता है, जहाँ '0' यूनिकास्ट तथा '1' मल्टीकास्ट/ब्रॉडकास्ट दर्शाता है।", "explanation_en": "The 8th bit of the first byte of a MAC address is the I/G bit, where '0' denotes Unicast and '1' denotes Multicast/Broadcast."}, {"id": 27, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "वर्ष 1986 में इलेक्ट्रॉनिक्स और सूचना प्रौद्योगिकी मंत्रालय के अंतर्गत देश के प्रमुख शिक्षण संस्थानों को जोड़ने हेतु प्रारंभ किया गया भारत का पहला कंप्यूटर नेटवर्क कौन सा था?", "question_en": "Which was India's first computer network launched in 1986 under MeitY to connect major academic and research institutions?", "options": [{"hi": "निकनेट (NICNET)", "en": "NICNET"}, {"hi": "इरनेट (ERNET)", "en": "ERNET"}, {"hi": "भारतनेट (BharatNet)", "en": "BharatNet"}, {"hi": "एसवान (SWAN)", "en": "SWAN"}], "answer": 1, "explanation_hi": "भारत में इंटरनेट और नेटवर्किंग की नींव रखने वाला पहला नेटवर्क वर्ष 1986 में बना 'ERNET' (Education and Research Network) था।", "explanation_en": "The first network to lay the foundation of internet and networking in India was 'ERNET', established in 1986."}, {"id": 28, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "पर्सनल एरिया नेटवर्क (PAN) के अंतर्गत आने वाले लघु तरंग 'ब्लूटूथ' (Bluetooth) तकनीक का मानक कोड क्या है?", "question_en": "What is the standard IEEE code for 'Bluetooth' technology under Personal Area Network (PAN) systems?", "options": [{"hi": "IEEE 802.3", "en": ""}, {"hi": "IEEE 802.11", "en": ""}, {"hi": "IEEE 802.16", "en": ""}, {"hi": "IEEE 802.15.1", "en": ""}], "answer": 3, "explanation_hi": "ब्लूटूथ का तकनीकी आईईईई मानक कोड IEEE 802.15.1 है, जबकि वाई-फाई का standard 802.11 और ईथरनेट का 802.3 है।", "explanation_en": "The technical IEEE standard code for Bluetooth is IEEE 802.15.1, while Wi-Fi is 802.11 and Ethernet is 802.3."}, {"id": 29, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "10 अंकों वाले अल्फान्यूमेरिक पैन (PAN) कार्ड के अंतर्गत चौथा अक्षर (जैसे P, C, F, G, H, T) क्या दर्शाता है?", "question_en": "What does the fourth character (such as P, C, F, G, H, T) of a 10-digit alphanumeric PAN card indicate?", "options": [{"hi": "कार्डधारक का क्षेत्र", "en": "Cardholder's region"}, {"hi": "कार्डधारक की सरनेम का पहला अक्षर", "en": "First letter of cardholder's surname"}, {"hi": "कार्डधारक का कानूनी स्टेटस", "en": "Cardholder's legal status"}, {"hi": "कार्डधारक की कर सीमा", "en": "Cardholder's tax limit"}], "answer": 2, "explanation_hi": "पैन कार्ड का चौथा अक्षर कार्डधारक का स्टेटस दर्शाता है (जैसे P से Individual, C से Company, F से Firm, G से Govt, H से HUF, T से Trust)।", "explanation_en": "The fourth letter of the PAN card indicates the legal status of the cardholder (e.g. P for Individual, C for Company)."}, {"id": 30, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "डेबिट अथवा क्रेडिट कार्ड पर मौजूद 16 अंकों के कार्ड नंबर की सत्यता की जाँच करने हेतु किस प्रसिद्ध गणितीय एल्गोरिदम (Checksum Digit) का उपयोग होता है?", "question_en": "Which famous mathematical algorithm is used to verify the checksum digit of a 16-digit debit or credit card number?", "options": [{"hi": "डिजक्स्ट्रा एल्गोरिदम", "en": "Dijkstra's Algorithm"}, {"hi": "आरएसए एल्गोरिदम", "en": "RSA Algorithm"}, {"hi": "लुहान एल्गोरिदम", "en": "Luhn Algorithm"}, {"hi": "पेजरैंक एल्गोरिदम", "en": "PageRank Algorithm"}], "answer": 2, "explanation_hi": "क्रेडिट और डेबिट कार्ड के अंतिम चेकसम डिजिट की सत्यता की जांच हेतु 'Luhn Algorithm' का उपयोग किया जाता है।", "explanation_en": "The 'Luhn Algorithm' is used to verify the final checksum digit of credit and debit card numbers."}, {"id": 31, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "भारत सरकार द्वारा 19 अप्रैल 2023 को ₹6,003.65 करोड़ के बजट के साथ 8 वर्षों हेतु किस महत्वाकांक्षी तकनीक आधारित मिशन को मंजूरी दी गई थी?", "question_en": "Which ambitious technology-based mission was approved by the Government of India on 19 April 2023 with a budget of ₹6,003.65 crore for 8 years?", "options": [{"hi": "राष्ट्रीय सुपरकंप्यूटिंग मिशन", "en": "National Supercomputing Mission"}, {"hi": "राष्ट्रीय सेमीकंडक्टर मिशन", "en": "National Semiconductor Mission"}, {"hi": "डिजिटल इंडिया भाषिनी", "en": "Digital India Bhashini"}, {"hi": "राष्ट्रीय क्वांटम मिशन", "en": "National Quantum Mission"}], "answer": 3, "explanation_hi": "भारत सरकार ने 19 अप्रैल 2023 को वित्तीय वर्ष 2023-24 से 2030-31 तक (8 वर्ष) के लिए 'राष्ट्रीय क्वांटम मिशन' को मंजूरी दी थी।", "explanation_en": "The Government of India approved the 'National Quantum Mission' on 19 April 2023 for 8 years (2023-24 to 2030-31)."}, {"id": 32, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "पारंपरिक कंप्यूटर केवल 0 और 1 समझते हैं। अस्पष्ट मानवीय कथनों (जैसे 'थोड़ा ठंडा' या 'बहुत गर्म') को गणितीय रूप से समझने वाला 'फजी लॉजिक' (Fuzzy Logic) वर्ष 1965 में किसने खोजा था?", "question_en": "Fractions of truth between 0 and 1 represent fuzzy logic. Who developed 'Fuzzy Logic' in the year 1965?", "options": [{"hi": "जॉन मैकार्थी", "en": "John McCarthy"}, {"hi": "एलन ट्यूरिंग", "en": "Alan Turing"}, {"hi": "लोटफी जादेह", "en": "Lotfi Zadeh"}, {"hi": "जेफ्री हिंटन", "en": "Geoffrey Hinton"}], "answer": 2, "explanation_hi": "फजी लॉजिक की खोज कैलिफोर्निया विश्वविद्यालय, बर्कले में कार्यरत वैज्ञानिक लोटफी जादेह ने वर्ष 1965 में की थी।", "explanation_en": "Fuzzy logic was developed by Lotfi Zadeh at the University of California, Berkeley, in the year 1965."}, {"id": 33, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "हिल क्लाइंबिंग सर्च एल्गोरिदम की 'स्थानीय शिखर' (Local Maximum) पर फंसने की समस्या को दूर करने हेतु धातु विज्ञान (Metallurgy) की किस शीतलन प्रक्रिया से प्रेरित सर्च विधि का उपयोग होता है?", "question_en": "Which search algorithm inspired by metallurgical cooling processes is used to solve the 'Local Maximum' trapping problem of Hill Climbing?", "options": [{"hi": "सिमुलेटेड एनीलिंग", "en": "Simulated Annealing"}, {"hi": "यूनिफ़ॉर्म कॉस्ट सर्च", "en": "Uniform Cost Search"}, {"hi": "ए-स्टार सर्च (A* Search)", "en": "A-Star Search"}, {"hi": "ग्रीडी बेस्ट-फर्स्ट सर्च", "en": "Greedy Best-First Search"}], "answer": 0, "explanation_hi": "सिमुलेटेड एनीलिंग (Simulated Annealing) धातु विज्ञान की एनीलिंग प्रक्रिया से प्रेरित है, जो खराब चालों की अनुमति देकर लोकल मैक्सिमम से बाहर लाती है।", "explanation_en": "Simulated Annealing is inspired by metallurgy, allowing occasional 'bad moves' to escape local maxima traps."}, {"id": 34, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "पारिस्थितिकी का वह कौन सा प्रसिद्ध नियम है जो यह कहता है कि एक ही निकेत में रहने वाली समान संसाधनों हेतु प्रतिस्पर्धी दो प्रजातियाँ अनिश्चित काल तक साथ नहीं रह सकतीं?", "question_en": "Which famous ecological principle states that closely related species competing for the same resources cannot coexist indefinitely in the same niche?", "options": [{"hi": "लीबिग का न्यूनतम नियम", "en": "Liebig's Law of the Minimum"}, {"hi": "हार्डी-वीनबर्ग का नियम", "en": "Hardy-Weinberg Principle"}, {"hi": "एलन का नियम", "en": "Allen's Rule"}, {"hi": "गॉस का नियम", "en": "Gause's Rule"}], "answer": 3, "explanation_hi": "गॉस का नियम (प्रतिस्पर्धात्मक अपवर्जन सिद्धांत) कहता है कि समान निकेत में समान संसाधनों हेतु प्रतिस्पर्धी दो निकटतम प्रजातियाँ सह-अस्तित्व में नहीं रह सकतीं।", "explanation_en": "Gause's Principle (Competitive Exclusion Principle) states that two species competing for the identical resources cannot coexist indefinitely."}, {"id": 35, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "वह कौन सी प्रजाति है जो संख्या या जैव भार में अत्यंत कम होने के बावजूद अपने पूरे समुदाय के पारिस्थितिकी संतुलन और संरक्षण को बड़े पैमाने पर नियंत्रित करती है?", "question_en": "Which species, despite having low abundance or biomass, exerts a disproportionately large and critical control on its entire ecological community?", "options": [{"hi": "संकेतक प्रजाति", "en": "Indicator species"}, {"hi": "कीस्टोन प्रजाति", "en": "Keystone species"}, {"hi": "विदेशी प्रजाति", "en": "Exotic species"}, {"hi": "लुप्तप्राय प्रजाति", "en": "Endangered species"}], "answer": 1, "explanation_hi": "कीस्टोन प्रजाति (जैसे शेर, बाघ) संख्या में कम होने के बावजूद पूरे पारितंत्र के संतुलन को बनाए रखने में सर्वाधिक महत्वपूर्ण होती हैं।", "explanation_en": "A keystone species, though few in number, plays an exceptionally vital role in maintaining the structure of an ecological community."}, {"id": 36, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "पौधे, जीव-जन्तु एवं उनके भौतिक वातावरण के परस्पर संबंधों को सामूहिक रूप से परिभाषित करने वाले 'पारिस्थितिक तंत्र' (Ecosystem) शब्द का प्रथम प्रयोग वर्ष 1935 में किसने किया था?", "question_en": "Who first used the term 'Ecosystem' in 1935 to define the community of living organisms interacting with their physical environment?", "options": [{"hi": "ए.जी. टांसले", "en": "A.G. Tansley"}, {"hi": "अर्नस्ट हेकेल", "en": "Ernst Haeckel"}, {"hi": "चार्ल्स एल्टन", "en": "Charles Elton"}, {"hi": "रॉबर्ट टी. पेन", "en": "Robert T. Paine"}], "answer": 0, "explanation_hi": "पारिस्थितिक तंत्र (Ecosystem) शब्द का सर्वप्रथम प्रयोग अंग्रेज पारिस्थितिकीविद् ए. जी. टैन्सले ने वर्ष 1935 में किया था।", "explanation_en": "The term 'Ecosystem' was coined by British ecologist A.G. Tansley in the year 1935."}, {"id": 37, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "मानव द्वारा पृथ्वी के प्राकृतिक संसाधनों की मांग और उसकी पुनरुत्पादन क्षमता के मापन हेतु प्रयुक्त होने वाले 'पारिस्थितिकी पदचिह्न' (Ecological Footprint) के माप की अंतर्राष्ट्रीय मानक इकाई क्या है?", "question_en": "What is the international standard unit used to measure the human demand on Earth's ecosystems, known as the Ecological Footprint?", "options": [{"hi": "नैनोमीटर", "en": "Nanometer"}, {"hi": "भूमण्डलीय हेक्टेयर", "en": "Global hectare"}, {"hi": "हॉपस क्यूबिक फुट", "en": "Hoppus Cubic foot"}, {"hi": "क्यूबिक टन", "en": "Cubic ton"}], "answer": 1, "explanation_hi": "पारिस्थितिकी पदचिह्न (Ecological Footprint) के मापन की अंतर्राष्ट्रीय इकाई भूमण्डलीय हेक्टेयर (Global Hectare - gha) है।", "explanation_en": "The measuring unit of the ecological footprint is the Global Hectare (gha), reflecting regenerative capacity."}, {"id": 38, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "मणिपुर की प्रसिद्ध ताजे पानी की लोकटक झील में तैरने वाली सड़ी-गली वनस्पतियों (फुमडिस) पर स्थित विश्व का एकमात्र तैरता हुआ राष्ट्रीय उद्यान कौन सा है?", "question_en": "Which is the world's only floating national park, located on floating decomposed plant materials (phumdis) in Manipur's freshwater Loktak Lake?", "options": [{"hi": "नामदफा राष्ट्रीय उद्यान", "en": "Namdapha National Park"}, {"hi": "केइबुल लामजाओ राष्ट्रीय उद्यान", "en": "Keibul Lamjao National Park"}, {"hi": "भीतरकनिका राष्ट्रीय उद्यान", "en": "Bhitarkanika National Park"}, {"hi": "मानस राष्ट्रीय उद्यान", "en": "Manas National Park"}], "answer": 1, "explanation_hi": "लोकटक झील में तैरने वाली फुमडिस पर स्थित 'केइबुल लामजाओ' राष्ट्रीय उद्यान विश्व का एकमात्र तैरता हुआ राष्ट्रीय उद्यान है जो संगाई हिरण का अंतिम घर है।", "explanation_en": "Keibul Lamjao National Park on Loktak Lake is the only floating national park in the world, home to the Sangai deer."}, {"id": 39, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "वन्यजीव संस्थानों के आंकड़ों और राष्ट्रीय बाघ संरक्षण प्राधिकरण (NTCA) के नियमानुसार भारत में अखिल भारतीय बाघ आकलन अभ्यास (Tiger Census) कितने वर्षों में एक बार किया जाता है?", "question_en": "According to the rules of NTCA and wildlife institutes, how often is the All India Tiger Estimation Exercise (Tiger Census) conducted in India?", "options": [{"hi": "प्रत्येक 4 वर्ष में", "en": "Once every 4 years"}, {"hi": "प्रत्येक 3 वर्ष में", "en": "Once every 3 years"}, {"hi": "प्रत्येक 2 वर्ष में", "en": "Once every 2 years"}, {"hi": "प्रत्येक 5 वर्ष में", "en": "Once every 5 years"}], "answer": 0, "explanation_hi": "अखिल भारतीय बाघ आकलन अभ्यास राष्ट्रीय बाघ संरक्षण प्राधिकरण (NTCA) और राज्य वन विभागों के संयुक्त प्रयासों से प्रत्येक 4 वर्ष में एक बार आयोजित होता है।", "explanation_en": "The All India Tiger Estimation Exercise is conducted once every 4 years under NTCA and state forest departments."}, {"id": 40, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "वर्ष 2011 में हाथियों के संरक्षण और उनके प्रबंधन से जुड़े मुद्दों पर चर्चा हेतु शुरू किया गया वैश्विक अभियान 'E-8' किससे संबंधित है?", "question_en": "What is the global campaign 'E-8', launched in 2011 to discuss conservation and management of species, related to?", "options": [{"hi": "बाघ (Tiger)", "en": "Tiger"}, {"hi": "हाथी (Elephant)", "en": "Elephant"}, {"hi": "गिद्ध (Vulture)", "en": "Vulture"}, {"hi": "घड़ियाल (Gharial)", "en": "Gharial"}], "answer": 1, "explanation_hi": "हाथी-8 (E-8) मिशन हाथी संरक्षण से संबंधित एक अंतर्राष्ट्रीय मंच है, जिसकी पहली बैठक वर्ष 2011 में भारत में आयोजित हुई थी।", "explanation_en": "The Elephant-8 (E-8) mission is a global campaign launched in 2011 for elephant conservation and habitat protection."}, {"id": 41, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "उत्तर प्रदेश के किस नव-घोषित रामसर स्थल के निकट प्रसिद्ध सुर सरोवर पक्षी अभयारण्य और प्राचीन 'कीठम झील' स्थित है?", "question_en": "Near which newly declared Ramsar site of Uttar Pradesh is the famous Sur Sarovar Bird Sanctuary and the ancient 'Keetham Lake' situated?", "options": [{"hi": "झाँसी", "en": "Jhansi"}, {"hi": "वाराणसी", "en": "Varanasi"}, {"hi": "आगरा", "en": "Agra"}, {"hi": "कन्नौज", "en": "Kannauj"}], "answer": 2, "explanation_hi": "आगरा से लगभग 20 किमी दूर स्थित सुर सरोवर पक्षी विहार और कीठम झील को वर्ष 2020 में संरक्षित रामसर स्थल घोषित किया गया है।", "explanation_en": "The Sur Sarovar Bird Sanctuary and Keetham Lake, located near Agra, were declared a protected Ramsar site in 2020."}, {"id": 42, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "यूनेस्को द्वारा आनुवांशिक विभिन्नता और सतत विकास को संतुलित करने हेतु वर्ष 1971 में किस अंतर्राष्ट्रीय कार्यक्रम के तहत 'बायोस्फीयर रिजर्व' (जैवमण्डल आगार) की संकल्पना शुरू की गई थी?", "question_en": "Under which international program initiated by UNESCO in 1971 was the concept of 'Biosphere Reserves' launched to balance conservation and sustainable development?", "options": [{"hi": "मैन एंड बायोस्फीयर (MAB)", "en": "Man and Biosphere (MAB)"}, {"hi": "जैव विविधता अभिसमय (CBD)", "en": "Convention of Biological Diversity (CBD)"}, {"hi": "वैश्विक पर्यावरण सुविधा (GEF)", "en": "Global Environment Facility (GEF)"}, {"hi": "पृथ्वी शिखर सम्मेलन", "en": "Earth Summit"}], "answer": 0, "explanation_hi": "बायोस्फीयर रिजर्व की अवधारणा वर्ष 1971 में यूनेस्को के 'मानव और जीवमंडल' (MAB) कार्यक्रम के अंतर्गत शुरू की गई थी।", "explanation_en": "The concept of Biosphere Reserves was launched in 1971 under UNESCO's 'Man and Biosphere' (MAB) program."}, {"id": 43, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "पशु अधिकारों हेतु समर्पित प्रसिद्ध वैश्विक गैर-सरकारी संगठन 'PETA' (People for the Ethical Treatment of Animals) इंडिया की स्थापना मुंबई में किस वर्ष हुई थी?", "question_en": "In which year was 'PETA' (People for the Ethical Treatment of Animals) India, a famous global animal rights organization, established in Mumbai?", "options": [{"hi": "वर्ष 1998", "en": "Year 1998"}, {"hi": "वर्ष 2000", "en": "Year 2000"}, {"hi": "वर्ष 2002", "en": "Year 2002"}, {"hi": "वर्ष 2005", "en": "Year 2005"}], "answer": 1, "explanation_hi": "पशु अधिकारों हेतु संघर्ष करने वाले वैश्विक संगठन PETA इंडिया की स्थापना जनवरी 2000 में मुंबई में की गई थी।", "explanation_en": "PETA India, the global organization fighting for ethical treatment of animals, was established in Mumbai in January 2000."}, {"id": 44, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "वन्यजीवों के अवैध व्यापार पर नियंत्रण और संगठित अपराधों से निपटने हेतु गठित 'वन्यजीव अपराध नियंत्रण ब्यूरो' (WCCB) का मुख्यालय कहाँ स्थित है?", "question_en": "Where is the headquarters of the 'Wildlife Crime Control Bureau' (WCCB), constituted to combat organized wildlife crimes and illegal trade?", "options": [{"hi": "कोलकाता", "en": "Kolkata"}, {"hi": "नई दिल्ली", "en": "New Delhi"}, {"hi": "देहरादून", "en": "Dehradun"}, {"hi": "चेन्नई", "en": "Chennai"}], "answer": 1, "explanation_hi": "वन्यजीव अपराध नियंत्रण ब्यूरो (WCCB) देश में वन्यजीव अपराधों से निपटने हेतु गठित एक सांविधिक निकाय है जिसका मुख्यालय नई दिल्ली में है।", "explanation_en": "The headquarters of the Wildlife Crime Control Bureau (WCCB), a statutory body to control wildlife crime, is in New Delhi."}, {"id": 45, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "भारत सरकार द्वारा विगत 100 वर्षों के इतिहास में किस एकमात्र बड़ी बिल्ली (वाइल्ड कैट) प्रजाति को वर्ष 1952 में आधिकारिक रूप से विलुप्त घोषित किया गया है?", "question_en": "Which only big cat species has been officially declared extinct in India by the Government of India in the year 1952?", "options": [{"hi": "क्लाउडेड तेंदुआ", "en": "Clouded Leopard"}, {"hi": "हिम तेंदुआ", "en": "Snow Leopard"}, {"hi": "रॉयल बंगाल टाइगर", "en": "Royal Bengal Tiger"}, {"hi": "एशियाई चीता", "en": "Asian Cheetah"}], "answer": 3, "explanation_hi": "भारत सरकार ने देश में चीतों की कम होती आबादी के फलस्वरूप वर्ष 1952 में 'एशियाई चीता' को आधिकारिक रूप से विलुप्त घोषित किया था।", "explanation_en": "The Government of India officially declared the 'Asian Cheetah' extinct in India in 1952 after its complete disappearance."}, {"id": 46, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "हैदराबाद जिले में स्थित प्रसिद्ध 'मृगवनी राष्ट्रीय उद्यान' (Mrugavani National Park) भारत के किस राज्य में स्थित है जिसकी स्थापना 1994 में हुई थी?", "question_en": "In which state of India is the famous 'Mrugavani National Park' located, situated in the Hyderabad district and established in 1994?", "options": [{"hi": "तेलंगाना", "en": "Telangana"}, {"hi": "आंध्र प्रदेश", "en": "Andhra Pradesh"}, {"hi": "केरल", "en": "Kerala"}, {"hi": "तमिलनाडु", "en": "Tamil Nadu"}], "answer": 0, "explanation_hi": "मृगवनी राष्ट्रीय उद्यान तेलंगाना राज्य के हैदराबाद जिले में स्थित है जिसे वर्ष 1994 में राष्ट्रीय उद्यान का दर्जा दिया गया था।", "explanation_en": "Mrugavani National Park is located in the Hyderabad district of Telangana state, established in the year 1994."}, {"id": 47, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "केंद्रीय प्रदूषण नियंत्रण बोर्ड (CPCB) के अनुसार आवासीय क्षेत्रों (Residential Areas) में रात्रि के समय अनुमेय सीमा (Permissible Noise Level) कितनी निर्धारित है?", "question_en": "According to the Central Pollution Control Board (CPCB), what is the permissible noise level limit set for residential areas during the night?", "options": [{"hi": "40 डेसीबल", "en": "40 dB"}, {"hi": "55 डेसीबल", "en": "55 dB"}, {"hi": "45 डेसीबल", "en": "45 dB"}, {"hi": "70 डेसीबल", "en": "70 dB"}], "answer": 2, "explanation_hi": "CPCB के शोर मानकों के अनुसार आवासीय क्षेत्रों में दिन के लिए 55 dB और रात्रि के लिए 45 dB की सीमा निर्धारित की गई है।", "explanation_en": "According to CPCB noise standards, the limit for residential areas is 55 dB during the day and 45 dB during the night."}, {"id": 48, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "राष्ट्रीय स्वच्छ वायु कार्यक्रम (NCAP) के तहत वास्तविक समय में वायु गुणवत्ता डेटा की निगरानी और अपडेट करने हेतु शुरू किया गया 'PRANA' पोर्टल का क्या अर्थ है?", "question_en": "What does the 'PRANA' portal stand for, launched under the National Clean Air Programme (NCAP) to monitor and update air quality data?", "options": [{"hi": "पोर्टल फॉर रेगुलेशन ऑफ एयर पॉल्यूशन इन नॉन-अटेनमेंट टाउंस", "en": "Portal for Regulation of Air Pollution in Non-attainment Towns"}, {"hi": "पॉल्यूशन रिडक्शन एंड नेशनल एयर अलायंस", "en": "Pollution Reduction and National Air Alliance"}, {"hi": "प्रिवेंशन ऑफ रेडिएशन एंड एयर पॉल्यूशन नेटवर्क एसोसिएशन", "en": "Prevention of Radiation and Air Pollution Network Association"}, {"hi": "पब्लिक रिसोर्स फॉर एक्टिव एयर मॉनिटरिंग", "en": "Public Resource for Active Air Monitoring"}], "answer": 0, "explanation_hi": "PRANA का अर्थ Portal for Regulation of Air Pollution in Non-attainment Towns है जो वायु गुणवत्ता की वास्तविक समय में निगरानी करता है।", "explanation_en": "PRANA stands for Portal for Regulation of Air Pollution in Non-attainment Towns, tracking clean air indicators."}, {"id": 49, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "भारत सरकार द्वारा 5 जून 2023 को तटीय क्षेत्रों में मैंग्रोव वनों के संरक्षण और स्थानीय लोगों की आय बढ़ाने हेतु शुरू की गई 'MISHTI' योजना का पूर्ण रूप क्या है?", "question_en": "What is the full form of the 'MISHTI' scheme launched by the Government of India on 5 June 2023 to conserve mangrove forests and generate local incomes?", "options": [{"hi": "मैंग्रोव इनिशिएटिव फॉर सस्टेनेबल हैबिटेट एंड टेरिटोरियल इंटीग्रेशन", "en": "Mangrove Initiative for Sustainable Habitat and Territorial Integration"}, {"hi": "मैंग्रोव इंटीग्रेटेड स्कीम फॉर हैबिटैट एंड टूरिज्म इम्प्रूवमेंट", "en": "Mangrove Integrated Scheme for Habitat and Tourism Improvement"}, {"hi": "मैंग्रोव इनिशिएटिव फॉर शोरलाइन हैबिटैट्स एंड टैन्जिबल इनकम्स", "en": "Mangrove Initiative for Shoreline Habitats & Tangible Incomes"}, {"hi": "मरीन इनिशिएटिव फॉर सस्टेनेबल हैबिटैट एंड ट्रेड इंटीग्रेशन", "en": "Marine Initiative for Sustainable Habitat and Trade Integration"}], "answer": 2, "explanation_hi": "MISHTI का पूर्ण रूप Mangrove Initiative for Shoreline Habitats & Tangible Incomes है जिसका शुभारंभ विश्व पर्यावरण दिवस 2023 पर किया गया।", "explanation_en": "MISHTI stands for Mangrove Initiative for Shoreline Habitats & Tangible Incomes, protecting ecological shorelines."}, {"id": 50, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "वैश्विक तापन और जलवायु परिवर्तन को कम करने हेतु वर्ष 1990 में राष्ट्रीय स्तर पर 'कार्बन टैक्स' (Carbon Tax) लगाने वाला विश्व का प्रथम देश कौन सा था?", "question_en": "Which country was the first in the world to introduce a national 'Carbon Tax' in 1990 to counter global warming and carbon emissions?", "options": [{"hi": "ऑस्ट्रेलिया", "en": "Australia"}, {"hi": "स्वीडन", "en": "Sweden"}, {"hi": "फिनलैंड", "en": "Finland"}, {"hi": "कनाडा", "en": "Canada"}], "answer": 2, "explanation_hi": "हरित गृह गैसों के उत्सर्जन को कम करने के लिए वर्ष 1990 में राष्ट्रीय स्तर पर कार्बन टैक्स लगाने वाला पहला देश फिनलैंड था, जिसके बाद 1991 में स्वीडन ने लगाया।", "explanation_en": "Finland was the first country in the world to introduce a national carbon tax in 1990, followed by Sweden in 1991."}]};
+
+/* ===== Bodhi — भाषा टॉगल + प्रश्न-प्रकार फ़ॉर्मैटर ===== */
+var BODHI_LANG = (function(){ try{ return localStorage.getItem("bodhi_lang")||"hi"; }catch(e){ return "hi"; } })();
+function langSegHTML(){
+  var L=BODHI_LANG, o=function(v,t){ return '<button type="button" class="lang-b'+(L===v?" on":"")+'" data-lang="'+v+'">'+t+'</button>'; };
+  return o("hi","हिंदी")+o("en","English")+o("bi","दोनों");
+}
+function paintLang(){
+  ["qLang","coverLang"].forEach(function(id){
+    var box=document.getElementById(id); if(!box) return;
+    box.innerHTML=langSegHTML();
+    box.querySelectorAll(".lang-b").forEach(function(b){
+      b.addEventListener("click",function(){ setBodhiLang(b.getAttribute("data-lang")); });
+    });
+  });
+}
+function setBodhiLang(l){
+  BODHI_LANG=l;
+  try{ localStorage.setItem("bodhi_lang",l); }catch(e){}
+  paintLang();
+  try{ if(typeof renderQuestion==="function" && document.getElementById("testScreen")
+        && document.getElementById("testScreen").style.display==="block"){ renderQuestion(); } }catch(e){}
+  try{ if(typeof renderReview==="function" && document.getElementById("resultScreen")
+        && document.getElementById("resultScreen").style.display==="block"){ renderReview(); } }catch(e){}
+}
+function bodhiEsc(t){ return String(t==null?"":t)
+  .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function _bodhiPoints(t){
+  /* कथन 1/2, Statement 1/2, तथा "1. … 2. …" बिंदुओं को नई पंक्ति में तोड़ो */
+  t = t.replace(/\s*(कथन\s*\d+\s*[:：])/g,"\n$1")
+       .replace(/\s*(Statement\s*\d+\s*[:：])/gi,"\n$1")
+       .replace(/([।;?])\s*(\d+\.\s)/g,"$1\n$2")
+       .replace(/(\?|\:)\s*(\d+\.\s)/g,"$1\n$2")
+       .replace(/([।;,])\s*(\d+\.\s)/g,"$1\n$2");
+  return t.replace(/^\n+/,"").replace(/\n[ \t]+/g,"\n");
+}
+function _bodhiMatchTable(raw){
+  var t=String(raw);
+  var reI=/(सूची|List)[\s\-–—]*I(?!I)\s*(?:\([^)]*\))?\s*[:：]/i;
+  var reII=/(सूची|List)[\s\-–—]*II\s*(?:\([^)]*\))?\s*[:：]/i;
+  var mI=t.match(reI), mII=t.match(reII);
+  if(!mI||!mII||mII.index<=mI.index) return null;
+  var intro=t.slice(0,mI.index).trim();
+  var segI=t.slice(mI.index+mI[0].length,mII.index).trim().replace(/[;।,]\s*$/,"");
+  var rest=t.slice(mII.index+mII[0].length);
+  var mo=rest.match(/(सही\s*मिलान|नीचे\s*दिए|सुमेलित|Choose|Select|Match|कूट)/i);
+  var segII, outro="";
+  if(mo){ segII=rest.slice(0,mo.index).trim(); outro=rest.slice(mo.index).trim(); }
+  else segII=rest.trim();
+  segII=segII.replace(/[;।,]\s*$/,"");
+  var sp=function(seg,re){ return seg.split(re).map(function(x){return x.trim();}).filter(Boolean); };
+  var A=sp(segI,/\s*,\s*(?=[A-Z]\.)/), B=sp(segII,/\s*,\s*(?=\d+\.)/);
+  if(A.length<2||B.length<2) return null;
+  var n=Math.max(A.length,B.length), rows="";
+  for(var k=0;k<n;k++) rows+="<tr><td>"+bodhiEsc(A[k]||"")+"</td><td>"+bodhiEsc(B[k]||"")+"</td></tr>";
+  return (intro?bodhiEsc(intro)+"\n":"")
+       + '<table class="match-tbl"><tr><th>'+bodhiEsc(mI[1])+'-I</th><th>'+bodhiEsc(mII[1])+'-II</th></tr>'+rows+'</table>'
+       + (outro?bodhiEsc(outro):"");
+}
+function bodhiFmt(raw){
+  if(!raw) return "";
+  var mt=_bodhiMatchTable(raw);
+  if(mt) return mt;
+  return bodhiEsc(_bodhiPoints(String(raw)));
+}
+
+const QUESTIONS = Array.isArray(TEST.questions) ? TEST.questions : [];
+const letters = ["A", "B", "C", "D"];
+const TOTAL_TIME_SECONDS = Math.max(0, Number(TEST.durationMinutes || 0) * 60);
+const MARKS = Number(TEST.marksPerQuestion || 2);
+const NEG = Number(TEST.negativeMarks || 0);
+const RANKING_ENABLED = Boolean(TEST.rankingEnabled && TEST.firebaseConfig && TEST.firebaseConfig.projectId);
+const FIREBASE_CONFIG = TEST.firebaseConfig || null;
+let current = 0, answers = [], review = [], remaining = TOTAL_TIME_SECONDS, timerId = null, startedAt = 0;
+let studentName = "", lastResult = null, testActive = false;
+const LEADER_TOP = 20;
+const TEST_KEY = String(TEST.testId || "bodhi-test");
+const PROG_KEY = "jaiho_prog_" + TEST_KEY;
+function storeGet(k){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : null; }catch(e){ return null; } }
+function storeSet(k, obj){ try{ localStorage.setItem(k, JSON.stringify(obj)); }catch(e){} }
+function storeDel(k){ try{ localStorage.removeItem(k); }catch(e){} }
+function saveProgress(){ if(!testActive) return; storeSet(PROG_KEY, {v:1, name:studentName, answers:answers, review:review, current:current, remaining:remaining, startedAt:startedAt, savedAt:Date.now()}); }
+async function tryResume(){
+  const p = storeGet(PROG_KEY);
+  if(!p || !p.name || !Array.isArray(p.answers) || p.answers.length !== QUESTIONS.length) return;
+  const ok = await askConfirm(p.name + " — इसी test का आपका अधूरा प्रयास मिला। क्या वहीं से जारी करें?\n(रद्द करने पर अधूरा प्रयास हटेगा और नया शुरू होगा।)", "वहीं से जारी करें", "नया शुरू करें");
+  if(!ok){ storeDel(PROG_KEY); return; }
+  studentName = String(p.name);
+  answers = p.answers.map(a => (a === null || a === undefined) ? null : Number(a));
+  review = (Array.isArray(p.review) && p.review.length === QUESTIONS.length) ? p.review.map(Boolean) : Array(QUESTIONS.length).fill(false);
+  current = Math.min(Math.max(0, Number(p.current) || 0), QUESTIONS.length - 1);
+  remaining = TOTAL_TIME_SECONDS ? Math.max(5, Math.min(TOTAL_TIME_SECONDS, Number(p.remaining) || TOTAL_TIME_SECONDS)) : 0;
+  startedAt = Number(p.startedAt) || Date.now();
+  testActive = true;
+  el("homeScreen").style.display = "none"; el("resultScreen").style.display = "none"; el("testScreen").style.display = "block";
+  renderQuestion(); startTimer(); requestAnimationFrame(()=>scrollToQuestion("auto"));
+}
+function el(id){ return document.getElementById(id); }
+function askConfirm(message, okText, cancelText){
+  return new Promise(resolve=>{
+    var old = document.getElementById("jhConfirmOverlay");
+    if(old) old.remove();
+    var ov = document.createElement("div");
+    ov.id = "jhConfirmOverlay";
+    ov.style.cssText = "position:fixed;inset:0;z-index:99999;background:rgba(3,7,16,.72);display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px);";
+    var box = document.createElement("div");
+    box.style.cssText = "background:linear-gradient(180deg,#0A1426,#0E1B33);border:1px solid rgba(217,174,95,.34);max-width:420px;width:100%;border-radius:18px;padding:22px;box-shadow:0 22px 60px rgba(0,0,0,.55);font-family:'Mukta',Arial,sans-serif;";
+    var msg = document.createElement("p");
+    msg.style.cssText = "margin:0 0 18px;color:#F2EBDA;font-weight:500;line-height:1.7;font-size:15.5px;white-space:pre-line;";
+    msg.textContent = message;
+    var row = document.createElement("div");
+    row.style.cssText = "display:flex;gap:10px;flex-wrap:wrap;";
+    var okBtn = document.createElement("button");
+    okBtn.textContent = okText || "ठीक है";
+    okBtn.style.cssText = "flex:1;min-width:120px;border:0;cursor:pointer;padding:13px 16px;border-radius:13px;font-weight:900;font-size:15px;font-family:inherit;background:linear-gradient(160deg,#F2CD88,#D9AE5F);color:#0d1626;";
+    var cancelBtn = document.createElement("button");
+    cancelBtn.textContent = cancelText || "रद्द करें";
+    cancelBtn.style.cssText = "flex:1;min-width:120px;border:0;cursor:pointer;padding:13px 16px;border-radius:13px;font-weight:900;font-size:15px;font-family:inherit;background:rgba(255,255,255,.06);color:#98A6BE;";
+    function done(val){ ov.remove(); resolve(val); }
+    okBtn.addEventListener("click", function(){ done(true); });
+    cancelBtn.addEventListener("click", function(){ done(false); });
+    row.appendChild(cancelBtn); row.appendChild(okBtn);
+    box.appendChild(msg); box.appendChild(row);
+    ov.appendChild(box); document.body.appendChild(ov);
+  });
+}
+function escapeHTML(s){ return String(s ?? "").replace(/[&<>"']/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m])); }
+function numClean(n){ return Number.isInteger(Number(n)) ? String(Number(n)) : String(Number(n).toFixed(2)).replace(/\.00$/,""); }
+function formatTime(sec){ sec=Math.max(0, Math.floor(sec||0)); const m=Math.floor(sec/60), s=sec%60; return `${m}:${String(s).padStart(2,"0")}`; }
+function splitTitle(title, hi){ if(!String(hi||"").trim()) return escapeHTML(String(title||"परीक्षा")); const t=String(title||"Bodhi Classes परीक्षा"); const h=String(hi||"").trim(); if(h && t.toLowerCase().includes(h.toLowerCase())){ const i=t.toLowerCase().indexOf(h.toLowerCase()); return `${escapeHTML(t.slice(0,i))}<span>${escapeHTML(t.slice(i,i+h.length))}</span>${escapeHTML(t.slice(i+h.length))}`; } return `${escapeHTML(t)} <span>Test</span>`; }
+function initHome(){
+  document.title = `Bodhi Classes — ${TEST.title || "परीक्षा"}`;
+  el("topSub").textContent = TEST.subtitle || "UPPCS Prelims 2026 / RO-ARO Practice";
+  el("pillText").textContent = TEST.pill || "🏆 Daily Rank Ready";
+  el("tagText").textContent = TEST.tag || "UPPCS Prelims 2026 / RO-ARO";
+  el("homeTitle").innerHTML = splitTitle(TEST.title, TEST.highlight);
+  el("homeSub").textContent = TEST.description || "नाम डालकर टेस्ट शुरू करें। Submit के बाद score, analysis और rank section दिखेगा।";
+  el("qCountBox").textContent = QUESTIONS.length;
+  el("timeBox").textContent = TOTAL_TIME_SECONDS ? `${TEST.durationMinutes} मिनट` : "असीमित";
+  el("marksBox").textContent = `+${numClean(MARKS)}`;
+  el("negBox").textContent = NEG ? `-${numClean(NEG)}` : "0";
+  el("examTitle").textContent = `Bodhi Classes · ${TEST.shortTitle || TEST.title || "परीक्षा"}`;
+  if(!TEST.rankingEnabled){ var _rb=el("rankBoard"); if(_rb) _rb.style.display="none"; }
+    paintLang();
+    el("footerNote").textContent = TEST.footerCredit || "© Bodhi Classes · Designed by Aditya Chauhan · @BodhiClasses";
+  answers = Array(QUESTIONS.length).fill(null); review = Array(QUESTIONS.length).fill(false);
+  if(!QUESTIONS.length){ el("nameErr").textContent = "इस परीक्षा में प्रश्न नहीं मिले।"; }
+}
+function scrollToQuestion(behavior="smooth"){
+  const target = el("questionCard") || document.querySelector(".question-card");
+  if(target) target.scrollIntoView({behavior, block:"start"});
+}
+function renderWithoutJump(changeFn){
+  const y = window.scrollY;
+  changeFn();
+  requestAnimationFrame(()=>window.scrollTo({top:y, left:0, behavior:"auto"}));
+}
+function startTest(){
+  const n = el("studentName").value.trim().replace(/\s+/g," ");
+  if(!n){ el("nameErr").textContent = "कृपया अपना नाम लिखें।"; el("studentName").focus(); return; }
+  if(!QUESTIONS.length){ el("nameErr").textContent = "प्रश्न नहीं मिले।"; return; }
+  studentName = n; current = 0; answers = Array(QUESTIONS.length).fill(null); review = Array(QUESTIONS.length).fill(false); remaining = TOTAL_TIME_SECONDS; startedAt = Date.now(); testActive = true;
+  el("homeScreen").style.display = "none"; el("resultScreen").style.display = "none"; el("testScreen").style.display = "block";
+  renderQuestion(); startTimer(); saveProgress(); requestAnimationFrame(()=>scrollToQuestion("smooth"));
+}
+function startTimer(){ if(timerId) clearInterval(timerId); el("timer").textContent = TOTAL_TIME_SECONDS ? formatTime(remaining) : "असीमित"; if(!TOTAL_TIME_SECONDS) return; timerId = setInterval(()=>{ remaining--; el("timer").textContent = formatTime(remaining); if(remaining % 5 === 0) saveProgress(); if(remaining <= 60) el("timer").style.background = "rgba(232,24,24,.75)"; if(remaining <= 0){ clearInterval(timerId); calculateResult(true); } },1000); }
+function renderQuestion(){
+  const q = QUESTIONS[current]; if(!q) return;
+  el("qno").textContent = `प्रश्न ${current+1} / ${QUESTIONS.length}`;
+  el("topic").textContent = [q.topic_hi, q.topic_en].filter(Boolean).join(" / ") || "General Studies";
+  var _hi=q.question_hi||"", _en=q.question_en||"";
+    if(BODHI_LANG==="en" && _en){ el("qtext").innerHTML = bodhiFmt(_en); el("qtextEn").classList.add("hidden"); }
+    else { el("qtext").innerHTML = bodhiFmt(_hi||_en);
+           if(BODHI_LANG==="bi" && _en && _hi){ el("qtextEn").innerHTML = bodhiFmt(_en); el("qtextEn").classList.remove("hidden"); }
+           else { el("qtextEn").innerHTML=""; el("qtextEn").classList.add("hidden"); } }
+    paintLang();
+  el("options").innerHTML = (q.options||[]).map((op,i)=>{var oh=(op&&op.hi)||"", oe=(op&&op.en)||"";var body = (BODHI_LANG==="en"&&oe) ? `<div class="op-hi">${bodhiEsc(oe)}</div>` : (BODHI_LANG==="bi"&&oe&&oe!==oh) ? `<div class="op-hi">${bodhiEsc(oh)}</div><div class="op-en">${bodhiEsc(oe)}</div>` : `<div class="op-hi">${bodhiEsc(oh||oe)}</div>`;return `<button class="option ${answers[current]===i?"selected":""}" onclick="selectAnswer(${i})"><div class="letter">${letters[i]}</div><div>${body}</div></button>`;}).join("");
+  el("reviewBtn").textContent = review[current] ? "★ समीक्षा हेतु चिह्नित" : "☆ समीक्षा हेतु चिह्नित करें";
+  const done = answers.filter(a=>a!==null).length; el("progressBar").style.width = `${(done/QUESTIONS.length)*100}%`;
+  renderPalette(); updateMiniStats();
+}
+function renderPalette(){ el("palette").innerHTML = QUESTIONS.map((_,i)=>`<button class="dot ${i===current?"current":""} ${answers[i]!==null?"answered":""} ${review[i]?"review":""}" onclick="goQ(${i})">${i+1}</button>`).join(""); }
+function updateMiniStats(){ el("attemptedCount").textContent = answers.filter(a=>a!==null).length; el("reviewCount").textContent = review.filter(Boolean).length; }
+function selectAnswer(i){ answers[current]=i; renderQuestion(); saveProgress(); }
+function clearAnswer(){ answers[current]=null; renderQuestion(); saveProgress(); }
+function toggleReview(){ review[current]=!review[current]; renderQuestion(); saveProgress(); }
+function nextQ(){ if(current < QUESTIONS.length-1){ renderWithoutJump(()=>{ current++; renderQuestion(); saveProgress(); }); } }
+function prevQ(){ if(current > 0){ renderWithoutJump(()=>{ current--; renderQuestion(); saveProgress(); }); } }
+function goQ(i){ renderWithoutJump(()=>{ current=i; renderQuestion(); saveProgress(); }); }
+async function submitTest(){ const left = answers.filter(a=>a===null).length; const msg = left ? `${left} प्रश्न अभी अनुत्तरित हैं। फिर भी परीक्षा समाप्त करनी है?` : "परीक्षा समाप्त करनी है?"; if(await askConfirm(msg, "हाँ, समाप्त करें", "अभी नहीं")) calculateResult(false); }
+function calculateResult(auto){
+  if(timerId) clearInterval(timerId);
+  testActive = false; storeDel(PROG_KEY);
+  const timeTaken = startedAt ? Math.floor((Date.now()-startedAt)/1000) : (TOTAL_TIME_SECONDS - remaining);
+  let correct=0, wrong=0, attempted=0;
+  QUESTIONS.forEach((q,i)=>{ if(answers[i]!==null){ attempted++; if(answers[i]===q.answer) correct++; else wrong++; } });
+  const skipped = QUESTIONS.length - attempted; const marks = correct*MARKS - wrong*NEG; const maxMarks = QUESTIONS.length*MARKS; const percent = maxMarks ? Math.max(0, Math.round((marks/maxMarks)*100)) : 0; const accuracy = attempted ? Math.round((correct/attempted)*100) : 0;
+  let band = "अभ्यास जारी रखें — व्याख्या पढ़कर कमज़ोर हिस्से मज़बूत करें।";
+  if(percent >= 80) band = "बहुत अच्छा प्रदर्शन! अब गति और पेचीदा कथनों पर पकड़ और मज़बूत करें।"; else if(percent >= 60) band = "अच्छा प्रयास। गलत प्रश्नों की व्याख्या से दोहराव कीजिए।"; else if(percent >= 40) band = "औसत प्रदर्शन। अवधारणाएँ और तथ्य क्रमबद्ध ढंग से पढ़ें।"; else band = "मूल दोहराव आवश्यक है। व्याख्या वाला भाग ध्यान से पढ़ें।";
+  lastResult = { testId: TEST.testId || "bodhi-test", testTitle: TEST.title || "Jai Ho Study Test", name: studentName, score: Number(marks.toFixed(2)), maxMarks: Number(maxMarks.toFixed(2)), percent, attempted, correct, wrong, skipped, accuracy, timeTaken, totalQuestions: QUESTIONS.length, submittedAt: new Date().toISOString() };
+  el("resultMessage").textContent = auto ? `समय समाप्त! ${band}` : band;
+  el("studentStrip").innerHTML = `<span>नाम: ${escapeHTML(studentName)}</span><span>लगा समय: ${formatTime(timeTaken)}</span><span>प्रश्न: ${QUESTIONS.length}</span>`;
+  el("finalMarks").textContent = `${marks.toFixed(2)} / ${numClean(maxMarks)}`; el("finalAttempted").textContent = attempted; el("finalCorrect").textContent = correct; el("finalWrong").textContent = wrong; el("finalAccuracy").textContent = `${accuracy}%`; el("finalTime").textContent = formatTime(timeTaken); el("scorePercent").textContent = `${percent}%`; el("scoreCircle").style.setProperty("--scoreDeg", `${percent*3.6}deg`);
+  renderReview(); saveAttemptAndLoadRank(lastResult);
+  el("testScreen").style.display = "none"; el("resultScreen").style.display = "block"; window.scrollTo({top:0, behavior:"smooth"});
+}
+function renderReview(){ el("reviewList").innerHTML = QUESTIONS.map((q,i)=>{
+  const user = answers[i];
+  const status = user===null ? "skip" : (user===q.answer ? "ok" : "bad");
+  const statusText = user===null ? "अनुत्तरित" : (user===q.answer ? "सही" : "गलत");
+  const optTxt = function(o){ if(!o) return "";
+    var oh=o.hi||"", oe=o.en||"";
+    if(BODHI_LANG==="en" && oe) return oe;
+    if(BODHI_LANG==="bi" && oe && oe!==oh) return oh+" / "+oe;
+    return oh||oe; };
+  const utext = user===null ? "—" : `${letters[user]}. ${optTxt(q.options[user])}`;
+  const correctText = `${letters[q.answer]}. ${optTxt(q.options[q.answer])}`;
+  var qMain = (BODHI_LANG==="en" && q.question_en) ? q.question_en : (q.question_hi||q.question_en||"");
+  var qSub  = (BODHI_LANG==="bi" && q.question_en && q.question_hi) ? q.question_en : "";
+  var eMain = (BODHI_LANG==="en" && q.explanation_en) ? q.explanation_en : (q.explanation_hi||q.explanation_en||"");
+  var eSub  = (BODHI_LANG==="bi" && q.explanation_en && q.explanation_hi) ? q.explanation_en : "";
+  return `<div class="review-item"><div class="review-head"><strong>प्रश्न ${i+1}</strong>`
+    + `<span class="badge ${status}">${statusText}</span></div>`
+    + `<div class="review-content"><div style="white-space:pre-line"><b>${bodhiFmt(qMain)}</b></div>`
+    + (qSub?`<div class="qtext-en" style="white-space:pre-line">${bodhiFmt(qSub)}</div>`:"")
+    + `<div class="answer-line"><b>आपका उत्तर:</b> ${escapeHTML(utext)}<br><b>सही उत्तर:</b> ${escapeHTML(correctText)}</div>`
+    + (eMain?`<div class="explain"><b>व्याख्या:</b> ${escapeHTML(eMain)}`
+        + (eSub?`<br><span style="opacity:.75">${escapeHTML(eSub)}</span>`:"") + `</div>`:"")
+    + `</div></div>`;
+}).join(""); }
+function restartTest(){ current=0; answers=Array(QUESTIONS.length).fill(null); review=Array(QUESTIONS.length).fill(false); remaining=TOTAL_TIME_SECONDS; studentName=""; startedAt=0; testActive=false; storeDel(PROG_KEY); if(timerId) clearInterval(timerId); el("studentName").value=""; el("nameErr").textContent=""; el("timer").style.background="rgba(255,255,255,.15)"; el("resultScreen").style.display="none"; el("homeScreen").style.display="block"; setTimeout(()=>el("studentName").focus(),50); window.scrollTo({top:0, behavior:"smooth"}); }
+let fbBundle = null;
+function normalizeKey(s){
+  return String(s||"").trim().toLowerCase().replace(/[^a-z0-9\u0900-\u097f]+/g,"-").replace(/^-+|-+$/g,"").slice(0,90) || "student";
+}
+function getLocalUid(){
+  const key = "jaiho_rank_local_uid";
+  try{
+    let uid = localStorage.getItem(key);
+    if(!uid){
+      uid = "local-" + Math.random().toString(36).slice(2) + "-" + Date.now().toString(36);
+      localStorage.setItem(key, uid);
+    }
+    return uid;
+  }catch(e){
+    return "local-" + Math.random().toString(36).slice(2) + "-" + Date.now().toString(36);
+  }
+}
+function makeRankSort(score,timeTaken,submittedMs){
+  const scorePart = String(100000000000 - Math.round(Number(score||0)*100)).padStart(12,"0");
+  const timePart = String(Math.max(0, Math.floor(Number(timeTaken||0)))).padStart(7,"0");
+  const datePart = String(Number(submittedMs||Date.now())).padStart(13,"0");
+  return `${scorePart}_${timePart}_${datePart}`;
+}
+function withTimeout(promise, ms, message){
+  let timer;
+  const timeout = new Promise((_, reject)=>{ timer = setTimeout(()=>reject(new Error(message || "Firebase timeout")), ms); });
+  return Promise.race([promise, timeout]).finally(()=>clearTimeout(timer));
+}
+function loadScript(src){
+  return new Promise((resolve, reject)=>{
+    var existing = document.querySelector('script[data-fb="1"][src="'+src+'"]');
+    if(existing){ resolve(); return; }
+    var s = document.createElement("script");
+    s.src = src; s.async = true; s.setAttribute("data-fb","1");
+    s.onload = ()=>resolve();
+    s.onerror = ()=>reject(new Error("Firebase SDK load नहीं हुआ। Internet ON रखें।"));
+    document.head.appendChild(s);
+  });
+}
+async function ensureFirebaseSdk(){
+  if(window.firebase && firebase.initializeApp && firebase.firestore) return;
+  await loadScript("https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js");
+  await loadScript("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js");
+}
+async function getFirebase(){
+  if(fbBundle) return fbBundle;
+  if(!FIREBASE_CONFIG || !FIREBASE_CONFIG.projectId) throw new Error("Firebase config missing");
+  await ensureFirebaseSdk();
+  if(!window.firebase || !firebase.initializeApp || !firebase.firestore){
+    throw new Error("Firebase SDK load नहीं हुआ। Internet ON रखें। अगर local file में दिक्कत हो तो HTML को hosting/link से खोलें।");
+  }
+  const app = firebase.apps && firebase.apps.length ? firebase.app() : firebase.initializeApp(FIREBASE_CONFIG);
+  const db = firebase.firestore(app);
+  const user = { uid: getLocalUid() };
+  const fs = {
+    doc: (dbRef, ...path)=>dbRef.doc(path.join("/")),
+    collection: (dbRef, ...path)=>dbRef.collection(path.join("/")),
+    setDoc: (ref, data, opts)=>withTimeout(ref.set(data, opts), 20000, "Firestore write timeout. Rules और Internet check करें."),
+    getDoc: (ref)=>withTimeout(ref.get(), 20000, "Firestore read timeout. Rules और Internet check करें."),
+    serverTimestamp: ()=>firebase.firestore.FieldValue.serverTimestamp(),
+    query: (base, ...ops)=>ops.reduce((q,op)=>op(q), base),
+    orderBy: (field, dir)=>q=>q.orderBy(field, dir),
+    limit: (n)=>q=>q.limit(n),
+    getDocs: (q)=>withTimeout(q.get(), 20000, "Firestore read timeout. Rules और Internet check करें.")
+  };
+  fbBundle = {db, user, fs};
+  return fbBundle;
+}
+function renderRankList(items){
+  const top = items.slice(0, LEADER_TOP);
+  if(!top.length){ el("leaderList").innerHTML = ""; el("leaderHint").textContent = "अभी इस test में कोई rank data नहीं है।"; return; }
+  el("leaderHint").textContent = `इसी test की live Top ${LEADER_TOP} list — पूरी rank list सर के dashboard से आएगी।`;
+  el("leaderList").innerHTML = top.map((x,i)=>`<li><span class="lr">${i+1}</span><div><b>${escapeHTML(x.name||"Student")}</b><br><small>${x.accuracy!=null?`Accuracy ${x.accuracy}%`:""} ${x.timeTaken!=null?`• Time ${formatTime(x.timeTaken)}`:""}</small></div><span class="score">${escapeHTML(x.score ?? 0)}</span></li>`).join("");
+}
+function todayDateStr(){ const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+async function saveAttemptAndLoadRank(result){
+  el("ownRank").textContent = "—"; el("leaderList").innerHTML = "";
+  if(TEST.publishDateStr && TEST.publishDateStr !== todayDateStr()){
+    el("rankStatus").textContent = "यह टेस्ट अपनी launch वाली तारीख़ (" + TEST.publishDateStr + ") को ही live rank के लिए active था। अब यह सिर्फ़ practice के तौर पर काम करेगा — आपके marks और result पूरी तरह सुरक्षित हैं।";
+    el("leaderHint").textContent = "पुराने दिन के टेस्ट में अब live rank नहीं दिखेगी — नए दिन के टेस्ट में rank ज़रूर दिखेगी।";
+    return;
+  }
+  if(!RANKING_ENABLED || !FIREBASE_CONFIG){
+    el("rankStatus").textContent = "इस टेस्ट में live rank चालू नहीं है — यह सिर्फ़ practice के लिए है। आपके marks और result पूरी तरह दिखेंगे।";
+    el("leaderHint").textContent = "live rank चालू होने पर Top " + LEADER_TOP + " यहाँ अपने-आप दिखेगा।";
+    return;
+  }
+  el("rankStatus").textContent = "Rank निकाली जा रही है…";
+  el("leaderHint").textContent = "Leaderboard load हो रही है…";
+  try{
+    const testId = normalizeKey(result.testId || TEST.testId || "bodhi-test");
+    const nameKey = normalizeKey(result.name || "student");
+
+    const localDoneKey = "jaiho_done_" + testId + "_" + nameKey;
+    const localDone = storeGet(localDoneKey);
+    if(localDone && localDone.rankSort){
+      el("ownRank").textContent = "#" + (localDone.rank != null ? localDone.rank : "—");
+      el("rankStatus").textContent = "यह Retake practice था — rank में नहीं गिना गया। आपकी असली rank पहले प्रयास (" + numClean(localDone.score || 0) + " marks) से है: " + localDone.rank + " / " + localDone.total + ". (यह आपके phone में save है, extra internet/reads खर्च नहीं हुए।) Retake जितनी बार चाहें करें।";
+      renderRankList(Array.isArray(localDone.topList) ? localDone.topList : []);
+      return;
+    }
+
+    const {db,user,fs} = await withTimeout(getFirebase(), 20000, "Firebase connect timeout. Internet check करें.");
+    const submittedMs = Date.now();
+    const attemptId = "n-" + nameKey + "-" + user.uid;
+    const col = fs.collection(db,"tests",testId,"attempts");
+    const attemptRef = fs.doc(db,"tests",testId,"attempts",attemptId);
+
+    let firstData = null; let isRetake = false;
+    const snap = await fs.getDoc(attemptRef);
+    if(snap && snap.exists){ firstData = snap.data(); isRetake = true; }
+
+    if(!isRetake){
+      const rankSort = makeRankSort(result.score, result.timeTaken, submittedMs);
+      const payload = { ...result, testId, attemptId, uid: user.uid, studentKey: nameKey,
+        name: result.name || "Student", score: Number(result.score || 0),
+        timeTaken: Number(result.timeTaken || 0), accuracy: Number(result.accuracy || 0),
+        rankSort, submittedMs, submittedServerAt: fs.serverTimestamp() };
+      try{
+        await fs.setDoc(attemptRef, payload);
+        firstData = payload;
+      }catch(werr){
+        const again = await fs.getDoc(attemptRef);
+        if(again && again.exists){ firstData = again.data(); isRetake = true; }
+        else throw werr;
+      }
+      if(!isRetake){
+        await fs.setDoc(fs.doc(db,"tests",testId), {
+          testId,
+          title: result.testTitle || TEST.title || "Jai Ho Study Test",
+          shortTitle: TEST.shortTitle || "",
+          subtitle: TEST.subtitle || "UPPCS Prelims 2026 / RO-ARO",
+          totalQuestions: result.totalQuestions || QUESTIONS.length,
+          maxMarks: result.maxMarks || QUESTIONS.length*MARKS,
+          updatedAtMs: submittedMs,
+          updatedAt: fs.serverTimestamp(),
+          footerCredit: TEST.footerCredit || "© Bodhi Classes · Designed by Aditya Chauhan · @BodhiClasses"
+        }, {merge:true});
+      }
+    }
+
+    const myRankSort = String(firstData.rankSort || "");
+    let rank = null, total = null;
+    if(typeof col.count === "function"){
+      const belowSnap = await withTimeout(col.where("rankSort","<",myRankSort).count().get(), 20000, "Rank count timeout");
+      const totalSnap = await withTimeout(col.count().get(), 20000, "Total count timeout");
+      rank = Number(belowSnap.data().count) + 1;
+      total = Number(totalSnap.data().count);
+    } else {
+      const listSnap = await fs.getDocs(fs.query(col, fs.orderBy("rankSort","asc"), fs.limit(1000)));
+      const ids = listSnap.docs.map(d=>d.id);
+      const pos = ids.indexOf(attemptId);
+      rank = pos >= 0 ? pos + 1 : null;
+      total = listSnap.size >= 1000 ? "1000+" : listSnap.size;
+    }
+
+    const topSnap = await fs.getDocs(fs.query(col, fs.orderBy("rankSort","asc"), fs.limit(LEADER_TOP)));
+    const topListData = topSnap.docs.map(d=>d.data());
+    renderRankList(topListData);
+    try{ storeSet(localDoneKey, { rankSort: myRankSort, rank: rank, total: total, score: (firstData && firstData.score != null ? firstData.score : 0), topList: topListData, ts: Date.now() }); }catch(e){}
+
+    if(rank != null){
+      el("ownRank").textContent = "#" + rank;
+      if(isRetake){
+        el("rankStatus").textContent = `यह Retake practice था — rank में नहीं गिना गया। आपकी असली rank पहले प्रयास (${numClean(firstData.score || 0)} marks) से है: ${rank} / ${total}. Retake जितनी बार चाहें करें।`;
+      } else {
+        el("rankStatus").textContent = `आपकी rank इस test में ${rank} / ${total} है (पहला प्रयास)। Tie में ज़्यादा marks, कम time, फिर पहले submit ऊपर रहता है।`;
+      }
+    } else {
+      el("ownRank").textContent = "—";
+      el("rankStatus").textContent = "Rank data sync में थोड़ी देर लग रही है — कुछ देर बाद Retake के submit पर फिर दिखेगी।";
+    }
+  }catch(err){
+    console.error(err);
+    const errText = String(err && err.message ? err.message : err || "");
+    const errCode = String(err && err.code ? err.code : "");
+    const isQuotaIssue = errCode.indexOf("resource-exhausted") !== -1 || /quota|resource.exhausted|exceeded|429/i.test(errText);
+    el("ownRank").textContent = "—";
+    if(isQuotaIssue){
+      el("rankStatus").textContent = "आज रैंक लिस्ट अभी बहुत व्यस्त चल रही है — आपके marks और result पूरी तरह सुरक्षित हैं। Rank कुछ देर बाद या कल अपने आप दिखने लगेगी।";
+      el("leaderHint").textContent = "थोड़ी देर बाद Retake करके submit करने पर Top 20 list फिर दिख जाएगी।";
+    } else {
+      el("rankStatus").textContent = "अभी rank list नहीं आ पाई — कोई चिंता की बात नहीं, आपके marks और result पूरी तरह सुरक्षित हैं।";
+      el("leaderHint").textContent = "थोड़ी देर बाद Retake करके submit करने पर rank दिख जाएगी।";
+    }
+  }
+}
+window.addEventListener("beforeunload", (e)=>{ if(testActive){ e.preventDefault(); e.returnValue = ""; } });
+window.addEventListener("DOMContentLoaded", ()=>{ try{ initHome(); }catch(e){ console.error(e); } try{ tryResume(); }catch(e){ console.error(e); } });
+</script>
+<script defer src="/assets/bodhi-watermark.js"></script>
+</body>
+</html>
