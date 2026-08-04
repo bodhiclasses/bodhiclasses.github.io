@@ -709,13 +709,13 @@ var FINE = window.matchMedia("(pointer: fine)").matches;
 var CONFIG = { user: "", repo: "" };
 
 var SEC_NAME = { ca: "करेंट अफेयर्स", gs: "सामान्य अध्ययन", csat: "CSAT", ncert: "NCERT", upsssc: "UPSSSC" };
-var SEC_HEAD = { ca: "करेंट अफेयर्स", gs: "सामान्य अध्ययन", csat: "CSAT", ncert: "NCERT", upsssc: "UPSSSC Exams Special" };
-var SEC_UNIT = { ca: "टेस्ट", gs: "टेस्ट", csat: "टेस्ट", ncert: "टेस्ट", upsssc: "अध्याय" };
+var SEC_HEAD = { ca: "करेंट अफेयर्स", gs: "सामान्य अध्ययन", csat: "CSAT", ncert: "NCERT", upsssc: "UPSSSC SPECIAL CONTENT" };
+var SEC_UNIT = { ca: "टेस्ट", gs: "टेस्ट", csat: "", ncert: "टेस्ट", upsssc: "अध्याय" };
 var OPEN_SEC = null;
 var DATA = { ca: [], gs: [], csat: [], ncert: [], upsssc: [], notes: [] };
 /* अध्याय (टेस्ट नहीं) — इनके कार्ड पर "अध्याय खोलें" दिखेगा; बाक़ी पर "टेस्ट प्रारंभ करें"। */
 var CHAPTERS = {
-  "tests/csat/संचार-एवं-अन्तर्वैयक्तिक-कौशल.html": true,
+  "tests/csat/content/संचार-एवं-अन्तर्वैयक्तिक-कौशल.html": true,
   "tests/upsssc/आपदा-प्रबंधन-रिवीजन-नोट्स.html": true,
   "tests/upsssc/एक्सेल-महाकोश.html": true,
   "tests/upsssc/DI-विजय-यंत्र.html": true
@@ -757,6 +757,14 @@ var CA_GROUPS = [
   { key: "anya", label: "अन्य" }
 ];
 
+var CSAT_GROUPS = [
+  { key: "content", label: "सामग्री", unit: "अध्याय" },
+  { key: "test",    label: "टेस्ट",   unit: "टेस्ट" }
+];
+function csatGroupOf(path){
+  return path.toLowerCase().indexOf("tests/csat/test/") === 0 ? "test" : "content";
+}
+
 function caGroupOf(path){
   var low = path.toLowerCase();
   if (low.indexOf("tests/ca/eye-drishti-current-affairs-2026/") === 0 ||
@@ -770,13 +778,13 @@ function caGroupOf(path){
   return "anya";
 }
 
-function groupTitle(label, count){
+function groupTitle(label, count, unit){
   var d = document.createElement("div");
   d.className = "tgroup";
   var s = document.createElement("span");
   s.textContent = label;
   var c = document.createElement("small");
-  c.textContent = count + " टेस्ट";
+  c.textContent = count > 0 ? (count + " " + (unit || "टेस्ट")) : "शीघ्र उपलब्ध";
   d.appendChild(s); d.appendChild(c);
   return d;
 }
@@ -867,7 +875,8 @@ function secHead(sec, count){
   nm.textContent = SEC_HEAD[sec] || SEC_NAME[sec] || sec;
   var meta = document.createElement("span");
   meta.className = "tacc-meta";
-  meta.innerHTML = '<span class="tacc-unit">' + (SEC_UNIT[sec] || "टेस्ट") + '</span>' +
+  var unit = SEC_UNIT.hasOwnProperty(sec) ? SEC_UNIT[sec] : "टेस्ट";
+  meta.innerHTML = (unit ? '<span class="tacc-unit">' + unit + '</span>' : '') +
                    '<span class="tacc-cnt">' + count + '</span>' +
                    '<span class="tacc-arw" aria-hidden="true">▾</span>';
   b.appendChild(nm); b.appendChild(meta);
@@ -905,6 +914,21 @@ function addCaItems(){
   });
 }
 
+function addCsatItems(){
+  var shown = 0;
+  CSAT_GROUPS.forEach(function(g){
+    var arr = DATA.csat.filter(function(p){ return csatGroupOf(p) === g.key; });
+    var gt = groupTitle(g.label, arr.length, g.unit);
+    gt.classList.add("tacc-item"); gt.setAttribute("data-secitem", "csat");
+    grid.appendChild(gt);
+    arr.forEach(function(p){
+      var c = testCard("csat", p, shown);
+      c.classList.add("tacc-item"); c.setAttribute("data-secitem", "csat");
+      grid.appendChild(c); shown++;
+    });
+  });
+}
+
 function addSecItems(s){
   DATA[s].forEach(function(p, i){
     var c = testCard(s, p, i);
@@ -925,7 +949,9 @@ function renderTests(){
     if (!count) return;
     any = true;
     grid.appendChild(secHead(s, count));
-    if (s === "ca") addCaItems(); else addSecItems(s);
+    if (s === "ca") addCaItems();
+    else if (s === "csat") addCsatItems();
+    else addSecItems(s);
   });
   if (!any) { grid.appendChild(stateEl("इस खण्ड में टेस्ट शीघ्र उपलब्ध होंगे।")); return; }
   OPEN_SEC = (FILTER === "all") ? null : FILTER;
