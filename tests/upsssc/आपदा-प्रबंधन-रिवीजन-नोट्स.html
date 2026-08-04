@@ -1,0 +1,766 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>आपदा प्रबंधन — Disaster Management | प्रीलिम्स रिवीजन नोट्स</title>
+<meta name="description" content="UPSSSC / Lower PCS प्रीलिम्स के लिए आपदा प्रबंधन (Disaster Management) के सम्पूर्ण सत्यापित तथ्य — इन्फोग्राफिक रिवीजन नोट्स।">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Mukta:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink-900:#0B1F2A; --ink-800:#10303F;
+  --brand-700:#0E4D5C; --brand-600:#116B7C; --brand-500:#1591A3;
+  --teal-400:#35B7C7; --teal-100:#D6F1F4;
+  --sev-low:#2FA36B; --sev-mod:#F2B01E; --sev-high:#F2731C; --sev-sev:#E23A2E; --sev-sev-d:#B31E17;
+  --paper:#F7FAFB; --surface:#FFFFFF; --surface-2:#EEF4F6; --line:#DCE6EA;
+  --muted:#5C7079; --text:#10303F;
+  --grad-hero:linear-gradient(150deg,#0B1F2A 0%,#0E4D5C 60%,#116B7C 100%);
+  --grad-alert:linear-gradient(90deg,#F2B01E 0%,#F2731C 50%,#E23A2E 100%);
+  --font-hi:"Mukta","Noto Sans Devanagari",system-ui,sans-serif;
+  --font-en:"Inter","Mukta",system-ui,-apple-system,sans-serif;
+  --wrap:1120px; --wrap-narrow:760px;
+  --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px; --s8:64px;
+  --radius:16px;
+  --e1:0 1px 2px rgba(11,31,42,.06),0 1px 1px rgba(11,31,42,.04);
+  --e2:0 4px 16px rgba(11,31,42,.08);
+  --e3:0 12px 32px rgba(11,31,42,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-hi);background:var(--paper);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.eng,.num{font-family:var(--font-en);font-feature-settings:"tnum" 1}
+h1,h2,h3,h4{line-height:1.2;color:var(--ink-900)}
+a{color:var(--brand-500)}
+.wrap{max-width:var(--wrap);margin:0 auto;padding-inline:clamp(16px,5vw,32px)}
+.narrow{max-width:var(--wrap-narrow)}
+
+/* skip link */
+.skip{position:absolute;left:-999px;top:0;background:var(--ink-900);color:#fff;padding:10px 16px;border-radius:8px;z-index:200}
+.skip:focus{left:12px;top:12px}
+
+/* progress */
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--grad-alert);z-index:120}
+
+/* nav */
+nav.chips{position:sticky;top:0;z-index:100;backdrop-filter:blur(10px);background:color-mix(in srgb,var(--paper) 82%,transparent);border-bottom:1px solid var(--line)}
+.chips-inner{display:flex;gap:8px;overflow-x:auto;padding:10px clamp(16px,5vw,32px);scroll-snap-type:x proximity;scrollbar-width:none}
+.chips-inner::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;scroll-snap-align:center;display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font:600 .875rem var(--font-hi);color:var(--text);cursor:pointer;text-decoration:none;transition:.2s;white-space:nowrap}
+.chip:hover{border-color:var(--teal-400)}
+.chip.is-active{background:var(--brand-700);color:#fff;border-color:transparent}
+
+/* hero */
+header.hero{position:relative;background:var(--grad-hero);color:#fff;overflow:hidden;border-bottom:4px solid transparent;border-image:var(--grad-alert) 1}
+header.hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 1px 1px,rgba(255,255,255,.10) 1px,transparent 0);background-size:26px 26px;opacity:.5}
+header.hero::after{content:"";position:absolute;top:-120px;right:-80px;width:420px;height:420px;background:radial-gradient(circle,rgba(53,183,199,.35),transparent 65%);pointer-events:none}
+.hero-in{position:relative;padding-block:clamp(48px,9vw,86px) clamp(40px,7vw,64px)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:var(--teal-100);padding:6px 14px;border-radius:999px;font-size:.8rem;font-weight:700;letter-spacing:.02em}
+header.hero h1{color:#fff;font-size:clamp(2rem,6vw,3.25rem);font-weight:800;letter-spacing:-.01em;margin:18px 0 6px}
+.hero-sub{font-family:var(--font-en);color:var(--teal-400);font-weight:700;font-size:clamp(1.05rem,3vw,1.5rem);letter-spacing:.01em}
+.hero-lead{color:#D9EAEE;max-width:60ch;margin-top:14px;font-size:1.02rem}
+.hero-pills{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.hpill{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:12px 16px;min-width:120px}
+.hpill b{display:block;font-family:var(--font-en);font-size:1.55rem;font-weight:800;color:#fff;line-height:1}
+.hpill span{font-size:.82rem;color:var(--teal-100)}
+.scroll-hint{margin-top:30px;display:inline-flex;align-items:center;gap:8px;color:var(--teal-100);font-size:.85rem;opacity:.9}
+.scroll-hint svg{animation:bob 1.6s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+
+/* sections */
+main{display:block}
+section{padding:clamp(48px,8vw,88px) 0;border-bottom:1px solid var(--line)}
+.sec-head{margin-bottom:var(--s6)}
+.sec-eyebrow{color:var(--brand-500);font-weight:700;font-size:.9rem;display:inline-flex;align-items:center;gap:8px;margin-bottom:8px}
+section h2{font-size:clamp(1.5rem,4vw,2.15rem);font-weight:700;scroll-margin-top:76px}
+.sec-note{color:var(--muted);margin-top:8px;max-width:66ch}
+
+/* generic card */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--e1);padding:var(--s5);transition:.25s cubic-bezier(.22,.61,.36,1)}
+.card:hover{transform:translateY(-4px);box-shadow:var(--e3)}
+.grid{display:grid;gap:var(--s5)}
+.g-auto{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.g-2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+
+/* fact cards */
+.fact{position:relative;overflow:hidden}
+.fact::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--brand-500)}
+.fact .icon{width:44px;height:44px;border-radius:12px;background:var(--teal-100);color:var(--brand-700);display:grid;place-items:center;margin-bottom:14px;transition:.25s}
+.fact:hover .icon{background:var(--teal-400);color:#fff}
+.fact .stat{font-family:var(--font-en);font-weight:800;font-size:clamp(2rem,6vw,2.9rem);color:var(--ink-900);line-height:1;font-feature-settings:"tnum" 1}
+.fact .unit{font-family:var(--font-en);font-weight:600;font-size:1rem;color:var(--muted);margin-left:4px}
+.fact h4{margin-top:8px;font-size:1.05rem}
+.fact p{color:var(--muted);font-size:.9rem;margin-top:2px}
+
+/* callout */
+.callout{border-left:4px solid var(--brand-500);background:var(--surface-2);border-radius:12px;padding:16px 20px}
+.callout.note{border-color:var(--sev-mod)}
+.callout.crit{border-color:var(--sev-sev)}
+.callout .lbl{font-weight:700;font-size:.82rem;color:var(--brand-500);display:flex;align-items:center;gap:7px;margin-bottom:6px}
+.callout.note .lbl{color:#B07D06}
+.callout.crit .lbl{color:var(--sev-sev-d)}
+.callout b.term{color:var(--ink-900)}
+
+/* risk formula */
+.formula{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:14px;background:var(--ink-900);color:#fff;border-radius:16px;padding:26px 20px;margin-top:var(--s5)}
+.formula .box{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:12px;padding:12px 18px;text-align:center;min-width:104px}
+.formula .box b{display:block;font-size:1.05rem;color:#fff}
+.formula .box span{font-size:.78rem;color:var(--teal-100)}
+.formula .op{font-family:var(--font-en);font-size:1.8rem;font-weight:800;color:var(--teal-400)}
+.frac{display:inline-flex;flex-direction:column;align-items:center}
+.frac .bar{width:100%;height:2px;background:var(--teal-400);margin:6px 0}
+
+/* type/zone tiles */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+.tile{border-radius:14px;padding:16px;color:#fff;position:relative;overflow:hidden;transition:.25s;min-height:118px;display:flex;flex-direction:column;justify-content:space-between}
+.tile:hover{transform:translateY(-4px);box-shadow:var(--e3)}
+.tile .ti{display:flex;align-items:center;justify-content:space-between}
+.tile .ti svg{opacity:.9}
+.tile h4{color:#fff;font-size:1.02rem;margin-top:6px}
+.tile small{font-size:.8rem;opacity:.92}
+.tile .rn{font-family:var(--font-en);font-weight:800;font-size:2rem;line-height:1}
+.sev-dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:18px;font-size:.85rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+
+/* two-col cycle */
+.cycle{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--s5)}
+.phase{border-radius:16px;padding:20px;border:1px solid var(--line)}
+.phase.pre{background:linear-gradient(180deg,#E9F6F8,#fff)}
+.phase.post{background:linear-gradient(180deg,#FFF3E3,#fff)}
+.phase h3{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.phase .tag{font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:999px;color:#fff}
+.pre .tag{background:var(--brand-600)}
+.post .tag{background:var(--sev-high)}
+.step{display:flex;gap:12px;padding:11px 0;border-top:1px dashed var(--line)}
+.step:first-of-type{border-top:none}
+.step .n{flex:0 0 28px;height:28px;border-radius:8px;display:grid;place-items:center;font-family:var(--font-en);font-weight:700;font-size:.9rem;color:#fff}
+.pre .step .n{background:var(--brand-500)}
+.post .step .n{background:var(--sev-high)}
+.step b{color:var(--ink-900)}
+.step p{color:var(--muted);font-size:.88rem}
+
+/* timeline */
+.tl{position:relative;margin-top:var(--s6)}
+.tl::before{content:"";position:absolute;left:19px;top:6px;bottom:6px;width:3px;background:var(--grad-alert);border-radius:3px}
+.tnode{position:relative;padding:0 0 26px 56px}
+.tnode .dot{position:absolute;left:10px;top:4px;width:22px;height:22px;border-radius:50%;background:#fff;border:4px solid var(--sev-high);box-shadow:0 0 0 4px rgba(242,115,28,.15)}
+.tnode .yr{display:inline-block;font-family:var(--font-en);font-weight:800;font-size:.9rem;background:var(--brand-700);color:#fff;padding:3px 12px;border-radius:999px}
+.tnode h4{margin:8px 0 4px;font-size:1.12rem}
+.tnode p{color:var(--muted);font-size:.92rem}
+.ribbon{display:inline-block;font-size:.72rem;font-weight:700;background:var(--sev-high);color:#fff;padding:3px 10px;border-radius:6px;margin-left:8px}
+.kw{display:inline-block;margin-top:8px;font-size:.78rem;background:var(--teal-100);color:var(--brand-700);padding:4px 11px;border-radius:999px;font-weight:600}
+
+/* pyramid */
+.pyr{display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:var(--s5)}
+.tier{color:#fff;border-radius:14px;padding:18px 22px;width:100%;max-width:640px;text-align:center;position:relative}
+.tier.t1{background:var(--brand-700);max-width:440px}
+.tier.t2{background:var(--brand-600);max-width:540px}
+.tier.t3{background:var(--brand-500);max-width:640px}
+.tier b.nm{display:block;font-size:1.15rem}
+.tier .en{font-family:var(--font-en);font-size:.82rem;opacity:.9}
+.tier .head{margin-top:6px;font-size:.9rem;background:rgba(255,255,255,.15);display:inline-block;padding:4px 12px;border-radius:999px}
+.connector{width:2px;height:16px;background:var(--line)}
+.satellites{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:22px}
+.sat{border:1px dashed var(--brand-500);border-radius:12px;padding:14px;background:var(--surface-2)}
+.sat b{color:var(--brand-700)}
+.sat p{color:var(--muted);font-size:.85rem;margin-top:3px}
+
+/* sections table-like rows (act) */
+.rows{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:var(--s5)}
+.row{display:grep;display:grid;grid-template-columns:120px 1fr;gap:12px;padding:13px 16px;border-top:1px solid var(--line);align-items:baseline}
+.row:first-child{border-top:none;background:var(--surface-2)}
+.row .k{font-family:var(--font-en);font-weight:700;color:var(--brand-700)}
+.row .v{color:var(--text)}
+.row.hl .k{color:var(--sev-sev-d)}
+@media(max-width:520px){.row{grid-template-columns:96px 1fr}}
+
+/* compare */
+.compare{display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:stretch;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.compare .side{padding:18px}
+.compare .side h4{margin-bottom:10px}
+.compare .side ul{list-style:none}
+.compare .side li{padding:6px 0;border-top:1px dashed var(--line);font-size:.92rem;color:var(--text)}
+.compare .side li:first-child{border-top:none}
+.compare .mid{display:grid;place-items:center;background:var(--ink-900);color:#fff;font-weight:800;font-family:var(--font-en);padding:0 6px}
+.chipm{display:inline-block;font-size:.75rem;font-weight:700;color:#fff;padding:3px 12px;border-radius:999px;margin-bottom:8px}
+@media(max-width:560px){.compare{grid-template-columns:1fr}.compare .mid{padding:8px}}
+
+/* MCQ */
+.mcq{position:relative;border:1.5px solid var(--sev-high);border-radius:16px;background:linear-gradient(180deg,#FFF7EC,#fff);padding:22px;overflow:hidden}
+.mcq::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--grad-alert)}
+.mcq .badge{position:absolute;top:14px;right:14px;font-size:.72rem;font-weight:700;background:var(--sev-high);color:#fff;padding:4px 11px;border-radius:999px}
+.mcq .q{font-weight:700;color:var(--ink-900);margin:6px 60px 12px 0}
+.mcq ol{list-style:none;counter-reset:opt}
+.mcq ol li{counter-increment:opt;padding:8px 12px;border:1px solid var(--line);border-radius:10px;margin-bottom:8px;background:#fff;font-size:.94rem}
+.mcq ol li::before{content:counter(opt,upper-alpha) ". ";font-family:var(--font-en);font-weight:700;color:var(--brand-600)}
+.mcq details{margin-top:6px}
+.mcq summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-weight:700;color:var(--brand-700);background:var(--teal-100);padding:8px 14px;border-radius:10px}
+.mcq summary::-webkit-details-marker{display:none}
+.mcq summary .chev{transition:.25s}
+.mcq details[open] summary .chev{transform:rotate(90deg)}
+.mcq .ans{margin-top:10px;padding:12px 14px;border-radius:10px;background:#EAF7EF;border:1px solid #BFE6CF;color:#1B5E37;font-weight:600}
+.mcq .ans .ok{display:inline-block;background:var(--sev-low);color:#fff;font-size:.72rem;padding:2px 9px;border-radius:999px;margin-right:8px}
+
+/* one-liner list */
+.oneliners{columns:2;column-gap:26px}
+.oneliners li{break-inside:avoid;list-style:none;padding:9px 0 9px 26px;position:relative;border-top:1px solid var(--line);font-size:.94rem}
+.oneliners li:first-child,.oneliners li:nth-child(1){border-top:none}
+.oneliners li::before{content:"";position:absolute;left:0;top:15px;width:9px;height:9px;border-radius:2px;background:var(--sev-high)}
+.oneliners li b{color:var(--ink-900)}
+@media(max-width:640px){.oneliners{columns:1}}
+
+/* footer */
+footer{background:var(--ink-900);color:#D9EAEE;padding:40px 0;border-top:4px solid transparent;border-image:var(--grad-alert) 1}
+footer h3{color:#fff;margin-bottom:8px}
+footer a{color:var(--teal-400)}
+.btnprint{display:inline-flex;align-items:center;gap:8px;background:var(--teal-400);color:var(--ink-900);border:none;font:700 .95rem var(--font-hi);padding:11px 20px;border-radius:12px;cursor:pointer;margin-top:14px}
+.btnprint:hover{background:#fff}
+.src{font-size:.8rem;color:#8FAAB2;margin-top:16px;line-height:1.6}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(16px)}
+.reveal.in{opacity:1;transform:none;transition:.6s cubic-bezier(.22,.61,.36,1)}
+
+/* mid divider hazard tape (rare) */
+.tape{height:4px;background:var(--grad-alert);border-radius:3px;max-width:120px;margin-top:6px}
+
+/* author byline + watermark */
+.byline{display:inline-flex;align-items:center;gap:8px;margin-top:16px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.20);padding:7px 15px;border-radius:999px;font-size:.9rem;color:#EAF6F8}
+.byline b{color:#fff;font-weight:700}
+.byline .pen{color:var(--teal-400)}
+#watermark{position:fixed;inset:0;z-index:80;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='330'%20height='190'%3E%3Ctext%20x='24'%20y='110'%20font-family='Inter,sans-serif'%20font-size='21'%20font-weight='700'%20fill='%230E4D5C'%20fill-opacity='0.07'%20transform='rotate(-27%20165%2095)'%3EAditya%20Chauhan%3C/text%3E%3C/svg%3E");background-repeat:repeat}
+.credit-foot{margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.15)}
+.credit-foot .maker{font-size:1.15rem;font-weight:700;color:#fff}
+.credit-foot .maker span{color:var(--teal-400)}
+.credit-foot .mail{margin-top:6px;font-family:var(--font-en);font-size:.95rem;color:var(--teal-400);font-weight:600}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+
+@media print{
+  nav.chips,#progress,.scroll-hint,.btnprint{display:none!important}
+  body{background:#fff}
+  section{border-color:#bbb;break-inside:avoid;padding:20px 0}
+  .card,.tile,.tier,.mcq{box-shadow:none!important;transform:none!important}
+  .mcq details{}
+  .reveal{opacity:1!important;transform:none!important}
+  header.hero{background:#0B1F2A!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .tile,.tier,.chipm,.mcq::before,.tape{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  h2{break-after:avoid}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">मुख्य सामग्री पर जाएँ</a>
+<div id="progress"></div>
+<div id="watermark" aria-hidden="true"></div>
+
+<nav class="chips" aria-label="अनुभाग सूची">
+  <div class="chips-inner" id="chips">
+    <a class="chip" href="#c1">🧭 परिभाषा</a>
+    <a class="chip" href="#c2">🌊 आपदा के प्रकार</a>
+    <a class="chip" href="#c3">🔁 प्रबंधन चक्र</a>
+    <a class="chip" href="#c4">📜 अधिनियम 2005</a>
+    <a class="chip" href="#c5">🏛️ संस्थागत ढाँचा</a>
+    <a class="chip" href="#c6">💰 वित्तीय व्यवस्था</a>
+    <a class="chip" href="#c7">🌍 अंतरराष्ट्रीय ढाँचे</a>
+    <a class="chip" href="#c8">🗺️ भूकंपीय ज़ोन</a>
+    <a class="chip" href="#c9">🛰️ पहल व तकनीक</a>
+    <a class="chip" href="#c10">🎯 परीक्षा-संभावित</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-in">
+    <span class="eyebrow">🇮🇳 भारत • प्रीलिम्स रिवीजन</span>
+    <h1>आपदा प्रबंधन</h1>
+    <div class="hero-sub eng">Disaster Management</div>
+    <div class="byline"><svg class="pen" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg> निर्माता: <b>Aditya&nbsp;Chauhan</b></div>
+    <p class="hero-lead">UPSSSC / Lower&nbsp;PCS प्रीलिम्स के लिए सम्पूर्ण, सत्यापित तथ्य — परिभाषा से लेकर DM&nbsp;Act&nbsp;2005, संस्थागत ढाँचा, Sendai Framework और परीक्षा-संभावित प्रश्नों तक, एक ही इन्फोग्राफिक में।</p>
+    <div class="hero-pills">
+      <div class="hpill"><b class="num">79</b><span>धाराएँ (DM Act)</span></div>
+      <div class="hpill"><b class="num">16</b><span>NDRF बटालियन</span></div>
+      <div class="hpill"><b class="num">4</b><span>Sendai प्राथमिकताएँ</span></div>
+      <div class="hpill"><b class="num">V</b><span>सर्वाधिक भूकंप ज़ोन</span></div>
+    </div>
+    <div class="scroll-hint">नीचे स्क्रॉल करें
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- 1 DEFINITION -->
+<section id="c1">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow">🧭 ब्लॉक 1</div>
+      <h2>आपदा की परिभाषा व मूल संकल्पनाएँ</h2>
+      <p class="sec-note">आपदा (Disaster), संकट (Hazard), भेद्यता (Vulnerability) और जोखिम (Risk) के बीच का अंतर हर परीक्षा की रीढ़ है।</p>
+      <div class="tape"></div>
+    </div>
+
+    <div class="callout reveal" style="margin-bottom:20px">
+      <div class="lbl">📖 परिभाषा — DM Act 2005, धारा 2(d)</div>
+      <p><b class="term">आपदा</b> = किसी क्षेत्र में <b class="term">विपत्ति, दुर्घटना, आपत्ति या गंभीर घटना</b> <span class="eng">(catastrophe, mishap, calamity or grave occurrence)</span> — प्राकृतिक या मानव-जनित कारणों से — जिससे जीवन/संपत्ति/पर्यावरण की पर्याप्त हानि हो, और जो <b class="term">प्रभावित समुदाय की सामना करने की क्षमता (coping capacity) से परे</b> हो।</p>
+    </div>
+
+    <div class="grid g-auto">
+      <div class="card fact reveal">
+        <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+        <h4>संकट / खतरा (Hazard)</h4>
+        <p>संभावित हानिकारक घटना — जैसे भूकंप, बाढ़। अभी आपदा नहीं, केवल संभावना।</p>
+      </div>
+      <div class="card fact reveal">
+        <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+        <h4>भेद्यता (Vulnerability)</h4>
+        <p>समुदाय/संपत्ति की वह विशेषता जो उन्हें हानि के प्रति संवेदनशील बनाती है।</p>
+      </div>
+      <div class="card fact reveal">
+        <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+        <h4>जोखिम (Risk)</h4>
+        <p>हानि की संभावना × अपेक्षित परिमाण। Hazard जब भेद्य समुदाय से टकराए, तभी आपदा।</p>
+      </div>
+      <div class="card fact reveal">
+        <div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/></svg></div>
+        <h4>क्षमता (Capacity)</h4>
+        <p>संसाधन व शक्ति जिससे आपदा का प्रभाव कम किया जाए (coping capacity)।</p>
+      </div>
+    </div>
+
+    <div class="formula reveal">
+      <div class="box"><b class="eng">Risk</b><span>जोखिम</span></div>
+      <div class="op">=</div>
+      <div class="frac">
+        <div class="box"><b class="eng">Hazard × Vulnerability</b><span>संकट × भेद्यता</span></div>
+        <div class="bar"></div>
+        <div class="box"><b class="eng">Capacity</b><span>क्षमता</span></div>
+      </div>
+      <div class="op">|</div>
+      <div class="box"><b class="eng">H × E × V</b><span>वैकल्पिक रूप<br>(Exposure सहित)</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 TYPES -->
+<section id="c2">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow">🌊 ब्लॉक 2</div>
+      <h2>आपदाओं का वर्गीकरण</h2>
+      <p class="sec-note">प्राकृतिक (भूगर्भीय • जल-मौसमी • जैविक) तथा मानव-जनित — रंग गंभीरता/प्रकार दर्शाते हैं।</p>
+    </div>
+    <div class="tiles reveal">
+      <div class="tile" style="background:linear-gradient(160deg,#116B7C,#0E4D5C)">
+        <div class="ti"><span class="rn eng">🌍</span><span class="sev-dot" style="background:#fff"></span></div>
+        <div><h4>भूकंप</h4><small>भूगर्भीय • Geological</small></div>
+      </div>
+      <div class="tile" style="background:linear-gradient(160deg,#1591A3,#116B7C)">
+        <div class="ti"><span class="rn eng">🏔️</span></div>
+        <div><h4>भूस्खलन</h4><small>Landslide • हिमालय/प. घाट</small></div>
+      </div>
+      <div class="tile" style="background:linear-gradient(160deg,#2FA36B,#1E7A4D)">
+        <div class="ti"><span class="rn eng">🌊</span></div>
+        <div><h4>बाढ़</h4><small>जल-मौसमी • Flood</small></div>
+      </div>
+      <div class="tile" style="background:linear-gradient(160deg,#F2731C,#D45A0C)">
+        <div class="ti"><span class="rn eng">🌀</span></div>
+        <div><h4>चक्रवात</h4><small>Cyclone • पूर्वी तट</small></div>
+      </div>
+      <div class="tile" style="background:linear-gradient(160deg,#F2B01E,#D4960A)">
+        <div class="ti"><span class="rn eng">☀️</span></div>
+        <div><h4>सूखा</h4><small>Drought • जल-मौसमी</small></div>
+      </div>
+      <div class="tile" style="background:linear-gradient(160deg,#0E4D5C,#0B1F2A)">
+        <div class="ti"><span class="rn eng">🌊</span></div>
+        <div><h4>सुनामी</h4><small>Tsunami • भूगर्भीय</small></div>
+      </div>
+      <div class="tile" style="background:linear-gradient(160deg,#E23A2E,#B31E17)">
+        <div class="ti"><span class="rn eng">☣️</span></div>
+        <div><h4>रासायनिक/औद्योगिक</h4><small>मानव-जनित • भोपाल 1984</small></div>
+      </div>
+      <div class="tile" style="background:linear-gradient(160deg,#5C7079,#3A464C)">
+        <div class="ti"><span class="rn eng">🦠</span></div>
+        <div><h4>जैविक</h4><small>महामारी • टिड्डी प्रकोप</small></div>
+      </div>
+    </div>
+    <div class="grid g-2" style="margin-top:22px">
+      <div class="callout note reveal">
+        <div class="lbl">🟡 याद रखें — प्राकृतिक</div>
+        <p>भूगर्भीय (भूकंप, भूस्खलन, ज्वालामुखी, सुनामी), जल-मौसमी (बाढ़, चक्रवात, सूखा, बादल फटना, लू) व जैविक (महामारी, टिड्डी)।</p>
+      </div>
+      <div class="callout crit reveal">
+        <div class="lbl">🔴 मानव-जनित</div>
+        <p>रासायनिक/औद्योगिक (गैस रिसाव — भोपाल 1984), नाभिकीय/रेडियोलॉजिकल, आग, आतंकवाद, बाँध टूटना। कई आपदाएँ "मिश्रित" — जैसे शहरी बाढ़।</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 CYCLE -->
+<section id="c3">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow">🔁 ब्लॉक 3</div>
+      <h2>आपदा प्रबंधन चक्र</h2>
+      <p class="sec-note">आपदा-पूर्व (जोखिम घटाना) व आपदा-पश्चात (पुनर्प्राप्ति) — बीच में "प्रतिक्रिया" सेतु का काम करती है।</p>
+    </div>
+    <div class="cycle">
+      <div class="phase pre reveal">
+        <h3><span class="tag">आपदा-पूर्व / Pre</span></h3>
+        <div class="step"><div class="n">1</div><div><b>निवारण (Prevention)</b><p>आपदा/हानि को पूर्णतः रोकने का प्रयास।</p></div></div>
+        <div class="step"><div class="n">2</div><div><b>शमन (Mitigation)</b><p>Structural (बाँध, भवन कोड) व Non-structural (कानून, जागरूकता) से तीव्रता घटाना।</p></div></div>
+        <div class="step"><div class="n">3</div><div><b>तैयारी (Preparedness)</b><p>पूर्व-चेतावनी, mock drill, योजना, संसाधन-भंडारण।</p></div></div>
+      </div>
+      <div class="phase post reveal">
+        <h3><span class="tag">आपदा के दौरान व पश्चात</span></h3>
+        <div class="step"><div class="n">4</div><div><b>प्रतिक्रिया (Response)</b><p>बचाव, राहत, निकासी (evacuation), आपातकालीन सहायता।</p></div></div>
+        <div class="step"><div class="n">5</div><div><b>पुनर्प्राप्ति व पुनर्वास</b><p>Recovery — सेवाओं की बहाली; Rehabilitation — प्रभावितों का पुनर्स्थापन।</p></div></div>
+        <div class="step"><div class="n">6</div><div><b>पुनर्निर्माण (Reconstruction)</b><p>"Build Back Better / बेहतर पुनर्निर्माण" — Sendai से जुड़ा सिद्धांत।</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 ACT -->
+<section id="c4">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow">📜 ब्लॉक 4</div>
+      <h2>आपदा प्रबंधन अधिनियम, 2005</h2>
+      <p class="sec-note">2004 की सुनामी के बाद, समवर्ती सूची (Concurrent List) के अंतर्गत पारित — सम्पूर्ण भारत पर लागू।</p>
+    </div>
+    <div class="grid g-auto reveal" style="margin-bottom:6px">
+      <div class="card fact"><div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div class="stat num" data-count="2005">2005</div><h4>राष्ट्रपति स्वीकृति</h4><p>23 दिसम्बर 2005</p></div>
+      <div class="card fact"><div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><div class="stat num" data-count="11">0</div><h4>अध्याय (Chapters)</h4><p>कुल 11 अध्याय</p></div>
+      <div class="card fact"><div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></div><div class="stat num" data-count="79">0</div><h4>धाराएँ (Sections)</h4><p>कुल 79 धाराएँ</p></div>
+    </div>
+    <div class="rows reveal">
+      <div class="row"><div class="k">धारा</div><div class="v"><b>प्रमुख प्रावधान</b></div></div>
+      <div class="row"><div class="k">2(d)</div><div class="v">आपदा की परिभाषा</div></div>
+      <div class="row hl"><div class="k">3</div><div class="v"><b>NDMA</b> का गठन (राष्ट्रीय प्राधिकरण)</div></div>
+      <div class="row"><div class="k">8</div><div class="v"><b>NEC</b> — राष्ट्रीय कार्यकारी समिति (अध्यक्ष: गृह सचिव)</div></div>
+      <div class="row hl"><div class="k">14</div><div class="v"><b>SDMA</b> का गठन (राज्य प्राधिकरण)</div></div>
+      <div class="row hl"><div class="k">25</div><div class="v"><b>DDMA</b> का गठन (जिला प्राधिकरण)</div></div>
+      <div class="row"><div class="k">42</div><div class="v"><b>NIDM</b> — राष्ट्रीय आपदा प्रबंधन संस्थान (नई दिल्ली)</div></div>
+      <div class="row"><div class="k">44–45</div><div class="v"><b>NDRF</b> — राष्ट्रीय आपदा प्रतिक्रिया <b>बल (Force)</b></div></div>
+      <div class="row"><div class="k">46</div><div class="v"><b>NDRF</b> — राष्ट्रीय आपदा प्रतिक्रिया <b>कोष (Fund)</b></div></div>
+      <div class="row"><div class="k">47</div><div class="v"><b>NDMF</b> — राष्ट्रीय आपदा शमन कोष</div></div>
+      <div class="row"><div class="k">48</div><div class="v">राज्य-स्तरीय कोष (SDRF आदि)</div></div>
+      <div class="row hl"><div class="k">51–60</div><div class="v"><b>दंडात्मक प्रावधान</b> — धारा 51: बाधा डालने पर 1 वर्ष कारावास (जान-हानि पर 2 वर्ष)</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 INSTITUTIONS -->
+<section id="c5">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow">🏛️ ब्लॉक 5</div>
+      <h2>संस्थागत ढाँचा</h2>
+      <p class="sec-note">त्रि-स्तरीय ढाँचा — राष्ट्रीय (NDMA) → राज्य (SDMA) → जिला (DDMA)। नोडल मंत्रालय: गृह मंत्रालय (MHA)।</p>
+    </div>
+    <div class="pyr reveal">
+      <div class="tier t1"><b class="nm">NDMA</b><span class="en">राष्ट्रीय आपदा प्रबंधन प्राधिकरण</span><div class="head">अध्यक्ष: प्रधानमंत्री • धारा 3 • अधिकतम 10 सदस्य</div></div>
+      <div class="connector"></div>
+      <div class="tier t2"><b class="nm">SDMA</b><span class="en">राज्य आपदा प्रबंधन प्राधिकरण</span><div class="head">अध्यक्ष: मुख्यमंत्री • धारा 14</div></div>
+      <div class="connector"></div>
+      <div class="tier t3"><b class="nm">DDMA</b><span class="en">जिला आपदा प्रबंधन प्राधिकरण</span><div class="head">अध्यक्ष: जिलाधिकारी/DM • सह-अध्यक्ष: जिला पंचायत अध्यक्ष • धारा 25</div></div>
+    </div>
+    <div class="satellites reveal">
+      <div class="sat"><b>NEC</b><p>अध्यक्ष: गृह सचिव। NDMA की समन्वयक/सहायक (धारा 8)।</p></div>
+      <div class="sat"><b>NIDM</b><p>प्रशिक्षण, क्षमता-निर्माण व अनुसंधान की शीर्ष संस्था — नई दिल्ली (धारा 42)।</p></div>
+      <div class="sat"><b>NDRF (बल)</b><p>गठन 19 जनवरी 2006; अब 16 बटालियन (आरम्भ में 8)।</p></div>
+      <div class="sat"><b>SDRF (बल)</b><p>राज्यों द्वारा NDRF की तर्ज पर गठित प्रशिक्षित बल।</p></div>
+    </div>
+    <div class="grid g-auto reveal" style="margin-top:22px">
+      <div class="card fact"><div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="stat num" data-count="16">0</div><span class="unit">बटालियन</span><h4>NDRF बल</h4><p>विश्व का सबसे बड़ा समर्पित आपदा बल</p></div>
+      <div class="card fact"><div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="stat num" data-count="6">0</div><span class="unit">बल</span><h4>मूल संरचना</h4><p>BSF, CRPF, CISF, ITBP, SSB, असम राइफल्स</p></div>
+      <div class="card fact"><div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div class="stat num" data-count="10">0</div><span class="unit">सदस्य</span><h4>NDMA (अधिकतम)</h4><p>अध्यक्ष + 9 सदस्य; एक उपाध्यक्ष</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 FINANCE -->
+<section id="c6">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow">💰 ब्लॉक 6</div>
+      <h2>वित्तीय व्यवस्था</h2>
+      <p class="sec-note">कोष बनाम बल का भ्रम न हो — यहाँ बात "कोष (Fund)" की है। वित्त आयोग अंशदान अनुपात तय करता है।</p>
+    </div>
+    <div class="grid g-2">
+      <div class="card reveal">
+        <div class="callout"><div class="lbl">SDRF — राज्य आपदा प्रतिक्रिया कोष (धारा 48)</div><p><b class="term">प्राथमिक कोष</b> — पहली प्रतिक्रिया राज्य स्तर पर। अंशदान: सामान्य राज्य <b>75:25</b>, पूर्वोत्तर/हिमालयी राज्य <b>90:10</b> (केंद्र:राज्य)।</p></div>
+      </div>
+      <div class="card reveal">
+        <div class="callout note"><div class="lbl">NDRF — राष्ट्रीय आपदा प्रतिक्रिया कोष (धारा 46)</div><p>केंद्र-प्रबंधित; SDRF अपर्याप्त होने पर गंभीर (L3) आपदाओं में पूरक सहायता।</p></div>
+      </div>
+      <div class="card reveal">
+        <div class="callout crit"><div class="lbl">NDMF — राष्ट्रीय आपदा शमन कोष (धारा 47)</div><p>केवल शमन (mitigation) परियोजनाओं हेतु। 15वें वित्त आयोग ने NDMF/SDMF को मज़बूती दी।</p></div>
+      </div>
+      <div class="card reveal">
+        <div class="callout"><div class="lbl">वित्त आयोग की भूमिका</div><p>13वें वित्त आयोग ने वर्तमान NDRF/SDRF संरचना दी; 15वें ने प्रतिक्रिया + शमन दोनों कोषों को सुदृढ़ किया।</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 INTERNATIONAL -->
+<section id="c7">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow">🌍 ब्लॉक 7</div>
+      <h2>अंतरराष्ट्रीय ढाँचे</h2>
+      <p class="sec-note">IDNDR (1990–99) → Yokohama (1994) → Hyogo (2005–15) → Sendai (2015–30) — तीनों सम्मेलन जापान में।</p>
+    </div>
+    <div class="tl reveal">
+      <div class="tnode">
+        <div class="dot"></div>
+        <span class="yr num">1994</span>
+        <h4>Yokohama Strategy (योकोहामा रणनीति)</h4>
+        <p>प्रथम विश्व सम्मेलन (First World Conference), योकोहामा — जापान।</p>
+        <span class="kw">पहला अंतरराष्ट्रीय ढाँचा</span>
+      </div>
+      <div class="tnode">
+        <div class="dot"></div>
+        <span class="yr num">2005–2015</span>
+        <h4>Hyogo Framework for Action (HFA)</h4>
+        <p>कोबे/ह्योगो (जापान), द्वितीय विश्व सम्मेलन में अंगीकृत — <b>5 प्राथमिकताएँ</b>।</p>
+      </div>
+      <div class="tnode">
+        <div class="dot" style="border-color:var(--sev-sev);box-shadow:0 0 0 5px rgba(226,58,46,.18)"></div>
+        <span class="yr num">2015–2030</span>
+        <h4>Sendai Framework <span class="ribbon">वर्तमान ढाँचा</span></h4>
+        <p>अंगीकरण <b>18 मार्च 2015</b>, सेंडाई (जापान), तृतीय विश्व सम्मेलन (3rd WCDRR)।</p>
+        <span class="kw">4 प्राथमिकताएँ • 7 वैश्विक लक्ष्य • 13 सिद्धांत • 38 संकेतक</span>
+      </div>
+    </div>
+    <div class="grid g-2" style="margin-top:14px">
+      <div class="callout reveal"><div class="lbl">🎯 Sendai — 4 प्राथमिकताएँ</div><p>1. जोखिम को समझना, 2. जोखिम शासन को सशक्त करना, 3. जोखिम-न्यूनीकरण में निवेश (resilience), 4. तैयारी बढ़ाना व "Build Back Better"।</p></div>
+      <div class="callout note reveal"><div class="lbl">🌐 UNDRR व SDG</div><p>UNISDR का नया नाम <b>UNDRR (2019)</b>, मुख्यालय जिनेवा। <b>SDG-11</b> (लक्ष्य 11.5 व 11.b) सीधे Sendai से जुड़े।</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 ZONES -->
+<section id="c8">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow">🗺️ ब्लॉक 8</div>
+      <h2>भूकंपीय ज़ोन व भारत की आपदाएँ</h2>
+      <p class="sec-note">BIS कोड IS 1893 के अनुसार 4 ज़ोन (II–V)। रंग जोखिम-स्तर दर्शाते हैं — केवल रंग पर निर्भर न रहें, लेबल भी पढ़ें।</p>
+    </div>
+    <div class="tiles reveal">
+      <div class="tile" style="background:var(--sev-low)"><div class="ti"><span class="rn eng">II</span><span class="sev-dot" style="background:#fff"></span></div><div><h4>निम्न जोखिम</h4><small>Low — स्थिर क्षेत्र</small></div></div>
+      <div class="tile" style="background:var(--sev-mod)"><div class="ti"><span class="rn eng" style="color:#3A2A00">III</span></div><div style="color:#3A2A00"><h4 style="color:#3A2A00">मध्यम</h4><small>Moderate</small></div></div>
+      <div class="tile" style="background:var(--sev-high)"><div class="ti"><span class="rn eng">IV</span></div><div><h4>उच्च जोखिम</h4><small>High — दिल्ली-NCR</small></div></div>
+      <div class="tile" style="background:var(--sev-sev)"><div class="ti"><span class="rn eng">V</span><span class="sev-dot" style="background:#fff"></span></div><div><h4>अति गंभीर</h4><small>Very High — पूर्वोत्तर, कच्छ, कश्मीर</small></div></div>
+    </div>
+    <div class="legend">
+      <span><span class="sev-dot" style="background:var(--sev-low)"></span> निम्न (II)</span>
+      <span><span class="sev-dot" style="background:var(--sev-mod)"></span> मध्यम (III)</span>
+      <span><span class="sev-dot" style="background:var(--sev-high)"></span> उच्च (IV)</span>
+      <span><span class="sev-dot" style="background:var(--sev-sev)"></span> अति गंभीर (V)</span>
+    </div>
+    <div class="grid g-2" style="margin-top:22px">
+      <div class="callout reveal"><div class="lbl">🗺️ प्रवण क्षेत्र</div><p><b>बाढ़:</b> गंगा-ब्रह्मपुत्र बेसिन (बिहार, UP, असम, प. बंगाल)। <b>चक्रवात:</b> पूर्वी तट (बंगाल की खाड़ी) पश्चिमी से अधिक प्रवण। <b>सूखा:</b> राजस्थान, मराठवाड़ा, रायलसीमा। देश का ~59% भू-भाग भूकंप-प्रवण।</p></div>
+      <div class="callout crit reveal"><div class="lbl">📅 प्रमुख ऐतिहासिक आपदाएँ</div><p>1999 ओडिशा सुपर साइक्लोन • 2001 भुज भूकंप (26 जनवरी) • 2004 हिन्द महासागर सुनामी (26 दिसम्बर) • 2013 केदारनाथ (जून) • 2015 चेन्नई बाढ़ • 1984 भोपाल गैस त्रासदी।</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 INITIATIVES -->
+<section id="c9">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow">🛰️ ब्लॉक 9</div>
+      <h2>प्रमुख पहल व तकनीक</h2>
+    </div>
+    <div class="grid g-auto">
+      <div class="card fact reveal"><div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4.9 4.9C2 7.8 2 12.2 4.9 15.1M19.1 4.9c2.9 2.9 2.9 7.3 0 10.2M7.8 7.8a5 5 0 0 0 0 4.4M16.2 7.8a5 5 0 0 1 0 4.4"/><circle cx="12" cy="10" r="1"/></svg></div><h4>INCOIS, हैदराबाद</h4><p>सुनामी चेतावनी केंद्र (ITEWC), 2007 में स्थापित।</p></div>
+      <div class="card fact reveal"><div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.2" y1="4.2" x2="5.6" y2="5.6"/></svg></div><h4>IMD</h4><p>चक्रवात व मौसम पूर्व-चेतावनी की नोडल एजेंसी।</p></div>
+      <div class="card fact reveal"><div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M6 21V9l6-4 6 4v12M10 21v-6h4v6"/></svg></div><h4>CDRI</h4><p>भारत-नेतृत्व, 23 सितम्बर 2019 (UN Climate Summit), मुख्यालय नई दिल्ली।</p></div>
+      <div class="card fact reveal"><div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg></div><h4>आपदा मित्र</h4><p>NDMA की सामुदायिक स्वयंसेवक योजना (2016)।</p></div>
+      <div class="card fact reveal"><div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><h4>NDMP</h4><p>पहली राष्ट्रीय आपदा प्रबंधन योजना 2016 (Sendai-अनुरूप); 2019 में संशोधित।</p></div>
+      <div class="card fact reveal"><div class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3 8 4-16 3 8h4"/></svg></div><h4>SACHET / CAP</h4><p>NDMA का Common Alerting Protocol — साझा चेतावनी प्रणाली।</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 MCQ -->
+<section id="c10" style="border-bottom:none">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-eyebrow">🎯 ब्लॉक 10</div>
+      <h2>परीक्षा-संभावित प्रश्न व वन-लाइनर्स</h2>
+      <p class="sec-note">सीधे परीक्षा में पूछे जाने वाले तथ्य — पहले MCQ हल करें, फिर वन-लाइनर्स से त्वरित रिवीजन।</p>
+    </div>
+
+    <div class="grid g-2">
+      <div class="mcq reveal">
+        <span class="badge">परीक्षा-संभावित</span>
+        <p class="q">आपदा प्रबंधन अधिनियम, 2005 के अंतर्गत NDMA का पदेन अध्यक्ष कौन होता है?</p>
+        <ol>
+          <li>गृह मंत्री</li>
+          <li>प्रधानमंत्री</li>
+          <li>राष्ट्रपति</li>
+          <li>गृह सचिव</li>
+        </ol>
+        <details><summary>उत्तर देखें <span class="chev">▸</span></summary>
+          <div class="ans"><span class="ok">सही</span> (B) प्रधानमंत्री — धारा 3 के अंतर्गत NDMA के पदेन अध्यक्ष।</div>
+        </details>
+      </div>
+
+      <div class="mcq reveal">
+        <span class="badge">परीक्षा-संभावित</span>
+        <p class="q">Sendai Framework for Disaster Risk Reduction की अवधि क्या है?</p>
+        <ol>
+          <li>2005–2015</li>
+          <li>2010–2020</li>
+          <li>2015–2030</li>
+          <li>1994–2004</li>
+        </ol>
+        <details><summary>उत्तर देखें <span class="chev">▸</span></summary>
+          <div class="ans"><span class="ok">सही</span> (C) 2015–2030 — अंगीकरण 18 मार्च 2015, सेंडाई (जापान)।</div>
+        </details>
+      </div>
+
+      <div class="mcq reveal">
+        <span class="badge">परीक्षा-संभावित</span>
+        <p class="q">DM Act 2005 की किस धारा में DDMA के गठन का प्रावधान है?</p>
+        <ol>
+          <li>धारा 3</li>
+          <li>धारा 14</li>
+          <li>धारा 25</li>
+          <li>धारा 42</li>
+        </ol>
+        <details><summary>उत्तर देखें <span class="chev">▸</span></summary>
+          <div class="ans"><span class="ok">सही</span> (C) धारा 25 — DDMA; अध्यक्ष जिलाधिकारी/DM।</div>
+        </details>
+      </div>
+
+      <div class="mcq reveal">
+        <span class="badge">परीक्षा-संभावित</span>
+        <p class="q">भारत में सर्वाधिक भूकंप-जोखिम वाला भूकंपीय ज़ोन कौन-सा है?</p>
+        <ol>
+          <li>ज़ोन II</li>
+          <li>ज़ोन III</li>
+          <li>ज़ोन IV</li>
+          <li>ज़ोन V</li>
+        </ol>
+        <details><summary>उत्तर देखें <span class="chev">▸</span></summary>
+          <div class="ans"><span class="ok">सही</span> (D) ज़ोन V — अति गंभीर; पूर्वोत्तर, कच्छ, कश्मीर घाटी।</div>
+        </details>
+      </div>
+    </div>
+
+    <h3 style="margin:32px 0 12px" class="reveal">⚡ त्वरित वन-लाइनर्स (Rapid Revision)</h3>
+    <ul class="oneliners reveal">
+      <li><b>आपदा की परिभाषा</b> — DM Act 2005 की धारा 2(d) में।</li>
+      <li><b>DM Act 2005</b> — 11 अध्याय व 79 धाराएँ; राष्ट्रपति स्वीकृति 23 दिसम्बर 2005।</li>
+      <li><b>NDMA</b> — पदेन अध्यक्ष प्रधानमंत्री; अधिकतम 10 सदस्य (धारा 3)।</li>
+      <li><b>SDMA</b> — अध्यक्ष मुख्यमंत्री (धारा 14)।</li>
+      <li><b>DDMA</b> — अध्यक्ष जिलाधिकारी; सह-अध्यक्ष जिला पंचायत अध्यक्ष (धारा 25)।</li>
+      <li><b>NEC</b> — अध्यक्ष गृह सचिव (धारा 8)।</li>
+      <li><b>NIDM</b> — धारा 42; नई दिल्ली।</li>
+      <li><b>NDRF (बल)</b> — गठन 19 जनवरी 2006; अब 16 बटालियन (आरम्भ में 8)।</li>
+      <li><b>NDRF संरचना</b> — BSF, CRPF, CISF, ITBP, SSB, असम राइफल्स।</li>
+      <li><b>कोष</b> — NDRF धारा 46; NDMF धारा 47; SDRF धारा 48।</li>
+      <li><b>SDRF अंशदान</b> — सामान्य राज्य 75:25; पूर्वोत्तर/हिमालयी 90:10 (केंद्र:राज्य)।</li>
+      <li><b>धारा 51</b> — बाधा डालने पर 1 वर्ष; जान-हानि पर 2 वर्ष कारावास।</li>
+      <li><b>Sendai Framework</b> — 2015–2030; 4 प्राथमिकताएँ, 7 वैश्विक लक्ष्य।</li>
+      <li><b>Hyogo</b> — 2005–2015; <b>Yokohama</b> — 1994; <b>IDNDR</b> — 1990–99।</li>
+      <li><b>UNISDR</b> का नया नाम UNDRR (2019); मुख्यालय जिनेवा।</li>
+      <li><b>भूकंपीय ज़ोन</b> — II से V (BIS: IS 1893); सर्वाधिक जोखिम Zone V।</li>
+      <li><b>सुनामी चेतावनी</b> — INCOIS हैदराबाद (2007); चक्रवात — IMD।</li>
+      <li><b>CDRI</b> — भारत-नेतृत्व, 23 सितम्बर 2019; मुख्यालय नई दिल्ली।</li>
+      <li><b>आपदा मित्र</b> — NDMA की सामुदायिक स्वयंसेवक योजना (2016)।</li>
+      <li><b>भुज भूकंप</b> 26 जनवरी 2001; <b>सुनामी</b> 26 दिसम्बर 2004; <b>केदारनाथ</b> जून 2013।</li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <h3>आपदा प्रबंधन — प्रीलिम्स रिवीजन नोट्स</h3>
+    <p>UPSSSC / Lower&nbsp;PCS लक्ष्य • सभी तथ्य आधिकारिक स्रोतों (DM Act 2005, NDMA, NDRF, UNDRR) से सत्यापित।</p>
+    <button class="btnprint" onclick="window.print()">🖨️ प्रिंट / PDF सेव करें</button>
+    <p class="src">स्रोत: DM Act 2005 (आधिकारिक), NDMA, NDRF, UNDRR — Sendai Framework, PIB (CDRI 2019), 15वाँ वित्त आयोग। सतर्कता: "NDRF" कोष (धारा 46) व बल (धारा 44–45) को भ्रमित न करें।</p>
+    <div class="credit-foot">
+      <div class="maker">✍️ यह रिवीजन नोट्स <span>Aditya&nbsp;Chauhan</span> द्वारा तैयार किया गया है।</div>
+      <div class="mail">aditya31chauhan@gmail.com</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// progress bar
+var prog=document.getElementById('progress');
+function onScroll(){
+  var h=document.documentElement;
+  var pct=(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100;
+  prog.style.width=pct+'%';
+}
+document.addEventListener('scroll',function(){requestAnimationFrame(onScroll);},{passive:true});
+
+// reveal
+var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var io=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+  });
+},{threshold:0.14});
+document.querySelectorAll('.reveal').forEach(function(el){
+  if(reduce){el.classList.add('in');}else{io.observe(el);}
+});
+
+// counters
+function animateCount(el){
+  var target=parseFloat(el.getAttribute('data-count'));
+  if(reduce){el.textContent=target;return;}
+  var start=null,dur=1100;
+  function step(ts){
+    if(!start)start=ts;
+    var p=Math.min((ts-start)/dur,1);
+    var eased=1-Math.pow(1-p,3);
+    el.textContent=Math.round(target*eased);
+    if(p<1)requestAnimationFrame(step);else el.textContent=target;
+  }
+  requestAnimationFrame(step);
+}
+var cio=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){animateCount(e.target);cio.unobserve(e.target);}
+  });
+},{threshold:0.5});
+document.querySelectorAll('[data-count]').forEach(function(el){cio.observe(el);});
+
+// scroll-spy chips
+var chips=Array.prototype.slice.call(document.querySelectorAll('.chip'));
+var secs=chips.map(function(c){return document.querySelector(c.getAttribute('href'));});
+var spy=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      var id='#'+e.target.id;
+      chips.forEach(function(c){
+        var on=c.getAttribute('href')===id;
+        c.classList.toggle('is-active',on);
+        if(on)c.scrollIntoView({inline:'center',block:'nearest',behavior:reduce?'auto':'smooth'});
+      });
+    }
+  });
+},{rootMargin:'-45% 0px -50% 0px'});
+secs.forEach(function(s){if(s)spy.observe(s);});
+</script>
+<script defer src="/assets/bodhi-watermark.js"></script>
+</body>
+</html>
