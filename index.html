@@ -704,9 +704,9 @@ var BODHI_LOGO_URI = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYA
 var REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 var FINE = window.matchMedia("(pointer: fine)").matches;
 
-/* चाहें तो यहाँ अपना GitHub खाता व repo का नाम भर सकते हैं —
-   खाली छोड़ने पर साइट स्वयं पहचान लेगी (यही सामान्य स्थिति है)। */
-var CONFIG = { user: "", repo: "" };
+/* GitHub खाता व repo — यहाँ भरा होने से कस्टम डोमेन (bodhiclasses.org) पर भी
+   repo सही पहचाना जाता है; खाली रहने पर सिर्फ़ *.github.io पर पहचान होती थी। */
+var CONFIG = { user: "bodhiclasses", repo: "bodhiclasses.github.io" };
 
 var SEC_NAME = { ca: "करेंट अफेयर्स", gs: "सामान्य अध्ययन", csat: "CSAT", ncert: "NCERT", upsssc: "UPSSSC" };
 var SEC_HEAD = { ca: "करेंट अफेयर्स", gs: "सामान्य अध्ययन", csat: "CSAT", ncert: "NCERT", upsssc: "UPSSSC SPECIAL CONTENT" };
@@ -817,8 +817,10 @@ function fetchTree(rc){
 
 function buildData(tree){
   tree.forEach(function(it){
-    if (it.type !== "blob") return;
-    var p = it.path;
+    var p;
+    if (typeof it === "string") { p = it; }               // files.json से सीधा path
+    else { if (it && it.type && it.type !== "blob") return; p = it && it.path; }  // GitHub tree ऑब्जेक्ट
+    if (!p) return;
     var low = p.toLowerCase();
     if (low.indexOf("tests/ca/") === 0 && /\.html?$/.test(low)) DATA.ca.push(p);
     else if (low.indexOf("tests/gs/") === 0 && /\.html?$/.test(low)) DATA.gs.push(p);
@@ -1000,18 +1002,61 @@ tabs.forEach(function(tab){
   });
 });
 
+/* सूची का स्रोत: पहले files.json (स्थैतिक फ़ाइल — बिना rate-limit, हर डोमेन पर
+   तुरंत)। GitHub API अब सिर्फ़ पीछे से ताज़ा करने या files.json न मिलने पर
+   फ़ॉलबैक के लिए। इससे भीड़/साझा-IP में भी सूची कभी गायब नहीं होती। */
+function renderAll(){ renderTests(); renderCounts(); renderNotes(); }
+
+function rebuild(paths){
+  DATA = { ca: [], gs: [], csat: [], ncert: [], upsssc: [], notes: [] };
+  var seen = {}, uniq = [];
+  paths.forEach(function(it){
+    var key = (typeof it === "string") ? it : (it && it.path);
+    if (!key || seen[key]) return;
+    seen[key] = 1; uniq.push(it);
+  });
+  buildData(uniq);
+}
+
+function loadManifest(){
+  return fetch("files.json", { cache: "no-cache" }).then(function(r){
+    if (!r.ok) throw new Error("http " + r.status);
+    return r.json();
+  }).then(function(j){
+    var list = Array.isArray(j) ? j : (j && j.files) || [];
+    if (!list.length) throw new Error("empty-manifest");
+    return list;
+  });
+}
+
 var rc = detectRepo();
-if (!rc) {
-  STATE = "offline"; renderTests(); renderCounts();
-} else {
+
+loadManifest().then(function(list){
+  rebuild(list);
+  STATE = "ready";
+  renderAll();
+  /* पीछे से: कोई बिल्कुल नई फ़ाइल जो files.json में अभी न आई हो, उसे भी जोड़ लो।
+     rate-limit से यह विफल हो तो कुछ नहीं बिगड़ता — सूची तो पहले ही दिख चुकी है। */
+  if (rc) {
+    fetchTree(rc).then(function(tree){
+      var merged = list.slice();
+      tree.forEach(function(it){ if (it && it.type === "blob" && it.path) merged.push(it.path); });
+      rebuild(merged);
+      STATE = "ready";
+      renderAll();
+    }).catch(function(){});
+  }
+}).catch(function(){
+  /* files.json न मिले तो पुरानी विधि — सीधे GitHub API से। */
+  if (!rc) { STATE = "offline"; renderTests(); renderCounts(); return; }
   fetchTree(rc).then(function(tree){
-    buildData(tree);
+    rebuild(tree);
     STATE = "ready";
-    renderTests(); renderCounts(); renderNotes();
+    renderAll();
   }).catch(function(){
     STATE = "error"; renderTests(); renderCounts();
   });
-}
+});
 
 /* ---------- ज्ञान के जुगनू (canvas) ---------- */
 (function(){
