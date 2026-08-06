@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bodhi Classes — परीक्षा</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Mukta:wght@300;400;500;600;700&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink0:#060B16; --ink1:#0A1426; --ink2:#0E1B33;
+    --glass:rgba(255,255,255,.035);
+    --line:rgba(217,174,95,.16); --line-2:rgba(217,174,95,.34);
+    --gold:#D9AE5F; --gold-hi:#F2CD88; --gold-deep:#8F6B26;
+    --cream:#F2EBDA; --mist:#98A6BE;
+    --blue:#7FB4FF; --green:#7FD6A4; --rose:#FF8FA0;
+    --shadow:0 18px 48px rgba(0,0,0,.45);
+    --radius:20px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; padding:18px;
+    font-family:'Mukta',"Noto Sans Devanagari","Segoe UI",Arial,sans-serif;
+    font-size:16px; color:var(--mist); background:var(--ink0);
+    min-height:100vh; -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(900px 500px at 12% -8%, rgba(217,174,95,.07), transparent 60%),
+      radial-gradient(760px 460px at 100% 0%, rgba(127,180,255,.05), transparent 60%);
+    background-attachment:fixed;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:8px}
+  /* ---------- टॉपबार ---------- */
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:8px 0 20px;color:var(--cream)}
+  .brand{display:flex;align-items:center;gap:13px}
+  .logo{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;
+    background:linear-gradient(160deg,var(--gold-hi),var(--gold-deep));color:#10192b;
+    font-family:'Rozha One',serif;font-size:28px;line-height:1;border:1px solid var(--line-2);
+    box-shadow:0 10px 26px rgba(217,174,95,.18)}
+  .brand h1{margin:0;font-family:'Rozha One',serif;font-weight:400;letter-spacing:.6px;
+    font-size:clamp(22px,3.4vw,34px);line-height:1.1;color:var(--cream)}
+  .brand p{margin:3px 0 0;color:var(--gold);font-weight:600;font-size:12.5px;letter-spacing:2px;text-transform:uppercase}
+  .pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);color:var(--gold);
+    background:var(--glass);padding:9px 14px;border-radius:999px;font-weight:600;font-size:13px;white-space:nowrap}
+  @media(max-width:900px){.topbar{align-items:flex-start;flex-direction:column;gap:10px}}
+  /* ---------- कार्ड ---------- */
+  .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:18px;align-items:stretch}
+  @media(max-width:900px){.hero{grid-template-columns:1fr}}
+  .card{background:linear-gradient(180deg,var(--ink1),rgba(14,27,51,.72));
+    border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .intro{padding:clamp(20px,3.4vw,34px);position:relative}
+  .tag{display:inline-block;background:rgba(217,174,95,.12);color:var(--gold-hi);
+    border:1px solid var(--line-2);padding:6px 13px;border-radius:999px;font-weight:600;font-size:12px;letter-spacing:1px}
+  .intro h2{margin:15px 0 10px;font-family:'Rozha One',serif;font-weight:400;color:var(--cream);
+    font-size:clamp(26px,4.4vw,44px);line-height:1.15;letter-spacing:.2px}
+  .intro h2 span{color:var(--gold);display:inline-block}
+  .intro .sub{font-size:15.5px;line-height:1.75;color:var(--mist);margin:12px 0 20px}
+  .info-grid{display:grid;grid-template-columns:repeat(4,minmax(108px,1fr));gap:10px;margin:22px 0}
+  @media(max-width:700px){.info-grid{grid-template-columns:repeat(2,1fr)}}
+  .info{border-radius:14px;padding:13px;background:var(--glass);border:1px solid var(--line)}
+  .info b{display:block;color:var(--gold-hi);font-size:19px;margin-bottom:3px;font-weight:700}
+  .info span{color:var(--mist);font-size:11px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase}
+  /* ---------- बटन ---------- */
+  .btns{display:flex;flex-wrap:wrap;gap:10px}
+  button{border:0;cursor:pointer;font-family:inherit}
+  .btn{padding:12px 18px;border-radius:13px;font-weight:600;font-size:14.5px;transition:.2s ease;
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none}
+  .btn.primary{background:linear-gradient(160deg,var(--gold-hi),var(--gold));color:#0d1626;
+    box-shadow:0 10px 24px rgba(217,174,95,.22)}
+  .btn.secondary{background:var(--glass);color:var(--gold);border:1px solid var(--line-2)}
+  .btn.light{background:rgba(255,255,255,.05);color:var(--cream);border:1px solid var(--line)}
+  .btn.green{background:linear-gradient(160deg,#8fe3b6,var(--green));color:#062617}
+  .btn:hover{transform:translateY(-2px);filter:brightness(1.06)}
+  .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+  /* ---------- निर्देश ---------- */
+  .rules{padding:22px;background:linear-gradient(160deg,rgba(14,27,51,.95),rgba(10,20,38,.9));color:var(--cream);min-height:100%}
+  .rules h3{margin:0 0 12px;font-family:'Rozha One',serif;font-weight:400;font-size:24px;color:var(--gold)}
+  .rule{display:grid;grid-template-columns:32px 1fr;gap:11px;padding:11px 0;border-bottom:1px dashed var(--line)}
+  .rule:last-child{border-bottom:0}
+  .rule .num{width:32px;height:32px;border-radius:10px;background:rgba(217,174,95,.14);color:var(--gold);
+    display:grid;place-items:center;font-weight:700;font-size:14px}
+  .rule p{margin:0;line-height:1.6;color:var(--mist);font-size:14.5px}
+  /* ---------- नाम बॉक्स ---------- */
+  .name-box{margin-top:18px;padding:18px;background:var(--glass);border:1px solid var(--line);border-radius:16px}
+  .name-box h3{margin:0 0 7px;color:var(--gold-hi);font-size:18px;font-weight:700}
+  .name-box p{margin:0 0 12px;color:var(--mist);font-weight:400;line-height:1.6;font-size:14px}
+  .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:620px){.field-grid{grid-template-columns:1fr}}
+  input{width:100%;font-family:inherit;font-weight:500;font-size:15px;border:1px solid var(--line-2);
+    border-radius:12px;padding:13px 14px;outline:none;background:rgba(6,11,22,.6);color:var(--cream)}
+  input::placeholder{color:#5d6b83}
+  input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(217,174,95,.14)}
+  .error-line{color:var(--rose);min-height:18px;margin-top:8px;font-size:13px;font-weight:600}
+  /* ---------- परीक्षा ---------- */
+  .test-screen,.result-screen{display:none}
+  .exam-shell{display:grid;grid-template-columns:minmax(0,1fr) 292px;gap:16px;align-items:start}
+  @media(max-width:950px){.exam-shell{grid-template-columns:1fr}}
+  .exam-header{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:15px 18px;
+    background:linear-gradient(135deg,rgba(14,27,51,.96),rgba(10,20,38,.9));border-bottom:1px solid var(--line);color:var(--cream)}
+  .exam-header h2{margin:0;font-family:'Rozha One',serif;font-weight:400;font-size:19px;letter-spacing:.3px}
+  .timer{background:rgba(217,174,95,.12);border:1px solid var(--line-2);border-radius:12px;padding:8px 13px;
+    font-weight:700;letter-spacing:.4px;color:var(--gold-hi)}
+  .progress{height:6px;background:rgba(255,255,255,.05);overflow:hidden}
+  .progress>div{height:100%;background:linear-gradient(90deg,var(--gold-deep),var(--gold),var(--gold-hi));width:0%;transition:.25s ease}
+  .question-card{padding:clamp(18px,3vw,26px)}
+  .qmeta{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+  .qno{font-weight:700;color:var(--gold);font-size:16px;letter-spacing:.4px}
+  .topic{background:var(--glass);color:var(--mist);border:1px solid var(--line);padding:6px 11px;
+    border-radius:999px;font-weight:600;font-size:12px}
+  /* ---------- प्रश्न ---------- */
+  .qtext{white-space:pre-line;line-height:1.75;font-size:18.5px;color:#EEF2FA;font-weight:600}
+  .qtext-en{white-space:pre-line;line-height:1.62;font-size:14.5px;color:var(--mist);
+    margin-top:12px;padding-top:12px;border-top:1px dashed var(--line);font-weight:400}
+  .match-tbl{width:100%;border-collapse:collapse;margin:10px 0 4px}
+  .match-tbl th,.match-tbl td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top;font-size:.93em}
+  .match-tbl th{color:var(--gold);font-weight:700;font-size:.8em;letter-spacing:.6px;background:rgba(217,174,95,.06)}
+  .qtext-en .match-tbl th{color:var(--mist)}
+  /* ---------- भाषा टॉगल ---------- */
+  .lang-seg{display:inline-flex;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:10px;padding:3px;gap:2px}
+  .lang-b{font-family:inherit;font-size:12.5px;font-weight:600;color:var(--mist);background:transparent;
+    border:0;border-radius:8px;padding:5px 13px;cursor:pointer;transition:.15s}
+  .lang-b.on{background:linear-gradient(160deg,var(--gold-hi),var(--gold));color:#0d1626}
+  .lang-choose{display:flex;align-items:center;gap:10px;margin:14px 0 0;flex-wrap:wrap}
+  .lc-label{font-size:13px;color:var(--mist)}
+  /* ---------- विकल्प ---------- */
+  .options{display:grid;gap:10px;margin-top:20px}
+  .option{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:start;border:1px solid var(--line);
+    background:var(--glass);border-radius:14px;padding:13px;text-align:left;transition:.18s ease;width:100%}
+  .option:hover{border-color:var(--line-2);background:rgba(217,174,95,.05);transform:translateX(2px)}
+  .option.selected{border-color:var(--gold);background:linear-gradient(180deg,rgba(217,174,95,.15),rgba(217,174,95,.06))}
+  .option .letter{width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.05);display:grid;
+    place-items:center;font-weight:700;color:var(--gold);border:1px solid var(--line)}
+  .option.selected .letter{background:linear-gradient(160deg,var(--gold-hi),var(--gold));color:#0d1626;border-color:transparent}
+  .op-hi{font-weight:600;color:#E9EEF8;line-height:1.5;font-size:15.5px}
+  .op-en{color:var(--mist);line-height:1.4;font-size:13px;margin-top:4px;font-weight:400}
+  .nav-row{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:20px}
+  /* ---------- साइड पैनल ---------- */
+  .side{position:sticky;top:14px}
+  @media(max-width:950px){.side{position:static}}
+  .side-card{padding:18px}
+  .side-title{margin:0 0 12px;color:var(--gold);font-size:17px;font-weight:700}
+  .stats-mini{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:13px}
+  .mini{background:var(--glass);border:1px solid var(--line);border-radius:12px;padding:10px}
+  .mini b{display:block;color:var(--gold-hi);font-size:19px}
+  .mini span{color:var(--mist);font-size:11.5px;font-weight:600}
+  .palette{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+  .dot{height:38px;border-radius:10px;font-weight:700;background:rgba(255,255,255,.045);color:var(--mist);
+    border:1px solid var(--line);transition:.15s}
+  .dot.current{border-color:var(--gold);color:var(--gold-hi);box-shadow:0 0 0 3px rgba(217,174,95,.12)}
+  .dot.answered{background:rgba(127,214,164,.16);color:#9DE9C0;border-color:transparent}
+  .dot.review{background:rgba(217,174,95,.2);color:var(--gold-hi);border-color:transparent}
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin:13px 0 0;color:var(--mist);font-size:11.5px;font-weight:600}
+  .legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:4px;margin-right:5px;
+    vertical-align:-1px;background:rgba(255,255,255,.08)}
+  .legend .l-ans::before{background:rgba(127,214,164,.5)}
+  .legend .l-rev::before{background:rgba(217,174,95,.55)}
+  .legend .l-cur::before{background:var(--gold)}
+  /* ---------- परिणाम ---------- */
+  .result-hero{padding:30px 22px;text-align:center;color:var(--cream);
+    background:radial-gradient(700px 320px at 50% -10%,rgba(217,174,95,.14),transparent 62%),
+      linear-gradient(160deg,rgba(14,27,51,.96),rgba(10,20,38,.92));border-bottom:1px solid var(--line)}
+  .result-hero h2{margin:0;font-family:'Rozha One',serif;font-weight:400;font-size:clamp(26px,4.6vw,42px);color:var(--gold)}
+  .result-hero p{margin:10px auto 0;max-width:760px;line-height:1.7;color:var(--mist);font-size:15px}
+  .student-strip{margin:16px auto 0;max-width:760px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+  .student-strip span{background:var(--glass);border:1px solid var(--line);padding:7px 12px;border-radius:999px;
+    font-weight:600;color:var(--mist);font-size:13px}
+  .score-circle{width:168px;height:168px;border-radius:50%;margin:22px auto 6px;display:grid;place-items:center;
+    background:conic-gradient(var(--gold) 0deg,var(--gold) var(--scoreDeg),rgba(255,255,255,.07) var(--scoreDeg),rgba(255,255,255,.07) 360deg);
+    box-shadow:inset 0 0 0 9px rgba(217,174,95,.08),0 15px 38px rgba(0,0,0,.45)}
+  .score-circle .inner{width:128px;height:128px;border-radius:50%;background:var(--ink1);color:var(--gold-hi);
+    display:grid;place-items:center;font-weight:700;font-size:32px;line-height:1;border:1px solid var(--line)}
+  .score-circle small{display:block;font-size:12px;color:var(--mist);margin-top:5px;font-weight:400}
+  .result-body{padding:22px}
+  .result-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+  @media(max-width:950px){.result-grid{grid-template-columns:repeat(2,1fr)}}
+  .rbox{border-radius:14px;padding:14px;background:var(--glass);border:1px solid var(--line);text-align:center}
+  .rbox b{display:block;color:var(--gold-hi);font-size:23px}
+  .rbox span{color:var(--mist);font-size:12px;font-weight:600}
+  /* ---------- रैंक ---------- */
+  .rank-board{margin-top:18px;display:grid;grid-template-columns:.8fr 1.2fr;gap:12px}
+  @media(max-width:850px){.rank-board{grid-template-columns:1fr}}
+  .rank-card{background:var(--glass);border:1px solid var(--line);border-radius:16px;padding:16px}
+  .rank-card h3{margin:0 0 6px;color:var(--gold);font-size:18px;font-weight:700}
+  .rank-card p{margin:0;color:var(--mist);font-weight:400;line-height:1.6;font-size:14px}
+  .rank-big{font-size:38px;color:var(--gold-hi);font-weight:700;margin:8px 0}
+  .leader-list{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:8px;max-height:340px;overflow:auto}
+  .leader-list li{display:grid;grid-template-columns:42px 1fr auto;align-items:center;gap:9px;
+    background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:12px;padding:10px;font-weight:600;color:var(--cream)}
+  .leader-list .lr{width:32px;height:32px;border-radius:50%;background:rgba(217,174,95,.16);display:grid;
+    place-items:center;color:var(--gold);font-weight:700}
+  .leader-list .score{color:var(--green);font-weight:700}
+  /* ---------- समीक्षा ---------- */
+  .review-list{margin-top:20px;display:grid;gap:12px}
+  .review-item{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--glass)}
+  .review-head{padding:13px 15px;display:flex;justify-content:space-between;gap:10px;align-items:center;
+    background:rgba(255,255,255,.03);border-bottom:1px solid var(--line);color:var(--gold);font-weight:700;font-size:14px}
+  .badge{padding:5px 11px;border-radius:999px;font-weight:600;font-size:12px;white-space:nowrap}
+  .badge.ok{background:rgba(127,214,164,.16);color:#9DE9C0}
+  .badge.bad{background:rgba(255,143,160,.14);color:var(--rose)}
+  .badge.skip{background:rgba(255,255,255,.06);color:var(--mist)}
+  .review-content{padding:15px;line-height:1.7;color:#E4EAF5;font-size:15px}
+  .answer-line{margin-top:10px;padding:11px 13px;background:rgba(217,174,95,.07);border-left:3px solid var(--gold);
+    border-radius:10px;color:var(--cream);font-size:14.5px}
+  .explain{margin-top:10px;color:var(--mist);font-size:14.5px;line-height:1.7}
+  /* ---------- फुटर ---------- */
+  .footer-note{color:var(--mist);text-align:center;margin:20px auto 10px;max-width:920px;padding:11px 16px;
+    font-weight:500;font-size:12.5px;line-height:1.5;background:var(--glass);border:1px solid var(--line);border-radius:999px}
+  @media(max-width:620px){.footer-note{margin:16px 6px 18px;border-radius:16px}}
+  .hidden{display:none!important}
+  /* ---------- प्रिंट ---------- */
+  @media print{
+    body{background:#fff!important;padding:0;color:#111}
+    #bodhi-wm,.topbar,.btns,.side,.exam-header,.progress,.rank-board,.lang-choose,.footer-note{display:none!important}
+    .card{box-shadow:none;border:1px solid #ccc;background:#fff!important}
+    .result-screen{display:block!important}
+    .result-hero{background:#fff!important;color:#111!important;border-bottom:1px solid #ccc}
+    .result-hero h2,.rank-card h3,.review-head{color:#111!important}
+    .result-hero p,.explain,.rbox span,.student-strip span{color:#444!important}
+    .rbox,.review-item,.review-content{background:#fff!important;border-color:#ccc!important;color:#111!important}
+    .rbox b{color:#111!important}
+    .review-item{break-inside:avoid}
+    .answer-line{background:#f4f0e4!important;color:#111!important;border-left-color:#8a6400!important}
+    .badge.ok{background:#d9f7e6!important;color:#065f37!important}
+    .badge.bad{background:#fde2e5!important;color:#8a1020!important}
+    .badge.skip{background:#eee!important;color:#444!important}
+    .match-tbl th{color:#333!important;background:#eee!important}
+    .match-tbl th,.match-tbl td{border-color:#bbb!important;color:#111!important}
+    @page{margin:12mm}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">बो</div>
+        <div><h1>Bodhi Classes</h1><p id="topSub">UPSC · UPPCS</p></div>
+      </div>
+      <div class="pill" id="pillText">🏆 Daily Rank Ready</div>
+    </header>
+    <main id="homeScreen" class="home-screen">
+      <section class="hero">
+        <div class="card intro">
+          <span class="tag" id="tagText">UPPCS Prelims 2026 / RO-ARO</span>
+          <h2 id="homeTitle">Bodhi Classes <span>परीक्षा</span></h2>
+          <p class="sub" id="homeSub">नाम डालकर टेस्ट शुरू करें। Submit के बाद score, analysis और rank section दिखेगा।</p>
+          <div class="info-grid">
+            <div class="info"><b id="qCountBox">0</b><span>प्रश्न</span></div>
+            <div class="info"><b id="timeBox">25 Min</b><span>समय</span></div>
+            <div class="info"><b id="marksBox">+2</b><span>सही पर</span></div>
+            <div class="info"><b id="negBox">-0.66</b><span>गलत पर</span></div>
+          </div>
+          <div class="name-box">
+            <h3>शुरू करने से पहले अपना नाम लिखें</h3>
+            <p>यही नाम आपके परिणाम में दिखेगा।</p>
+            <div class="field-grid" style="grid-template-columns:1fr">
+              <input id="studentName" maxlength="60" placeholder="अपना पूरा नाम लिखें" autocomplete="name" />
+            </div>
+            <div class="lang-choose"><span class="lc-label">पढ़ने की भाषा:</span><div class="lang-seg" id="coverLang"></div></div><div class="error-line" id="nameErr"></div>
+            <div class="btns"><button class="btn primary" onclick="startTest()">परीक्षा शुरू करें →</button></div>
+          </div>
+        </div>
+        <div class="card rules">
+          <h3>परीक्षा निर्देश</h3>
+          <div class="rule"><div class="num">1</div><p>प्रत्येक प्रश्न में चार विकल्प हैं। केवल एक विकल्प सही है।</p></div>
+          <div class="rule"><div class="num">2</div><p>सही उत्तर पर निर्धारित अंक और गलत उत्तर पर निर्धारित ऋणात्मक अंक मिलेंगे। बिना उत्तर वाले प्रश्न पर 0 अंक।</p></div>
+          <div class="rule"><div class="num">3</div><p>किसी प्रश्न को "समीक्षा हेतु चिह्नित" कर सकते हैं और प्रश्न-सूची से किसी भी प्रश्न पर सीधे जा सकते हैं।</p></div>
+          <div class="rule"><div class="num">4</div><p>परीक्षा समाप्त करने पर अंक, शुद्धता, सही/गलत और हर प्रश्न की विस्तृत व्याख्या दिखेगी।</p></div>
+          <div class="rule"><div class="num">5</div><p>ऊपर "पढ़ने की भाषा" से हिंदी, English या दोनों चुन सकते हैं — यह किसी भी समय बदला जा सकता है।</p></div>
+        </div>
+      </section>
+    </main>
+    <main id="testScreen" class="test-screen">
+      <section class="exam-shell">
+        <div class="card">
+          <div class="exam-header"><h2 id="examTitle">Bodhi Classes</h2><div class="timer" id="timer">25:00</div></div>
+          <div class="progress"><div id="progressBar"></div></div>
+          <div class="question-card" id="questionCard">
+            <div class="qmeta"><div class="qno" id="qno">प्रश्न 1 / 0</div><div style="display:flex;gap:9px;align-items:center;flex-wrap:wrap"><div class="topic" id="topic">Topic</div><div class="lang-seg" id="qLang"></div></div></div>
+            <div class="qtext" id="qtext"></div><div class="qtext-en" id="qtextEn"></div><div class="options" id="options"></div>
+            <div class="nav-row"><button class="btn light" onclick="prevQ()">← पिछला</button><button class="btn secondary" onclick="toggleReview()" id="reviewBtn">☆ समीक्षा हेतु चिह्नित करें</button><button class="btn light" onclick="clearAnswer()">उत्तर हटाएँ</button><button class="btn primary" onclick="nextQ()">सहेजें और अगला →</button></div>
+          </div>
+        </div>
+        <aside class="side"><div class="card side-card"><h3 class="side-title">प्रश्न सूची</h3><div class="stats-mini"><div class="mini"><b id="attemptedCount">0</b><span>उत्तरित</span></div><div class="mini"><b id="reviewCount">0</b><span>चिह्नित</span></div></div><div class="palette" id="palette"></div><div class="legend"><span class="l-cur">वर्तमान</span><span class="l-ans">उत्तरित</span><span class="l-rev">चिह्नित</span></div><div style="height:12px"></div><button class="btn primary" style="width:100%" onclick="submitTest()">परीक्षा समाप्त करें</button></div></aside>
+      </section>
+    </main>
+    <main id="resultScreen" class="result-screen">
+      <section class="card">
+        <div class="result-hero"><h2>परिणाम विश्लेषण</h2><p id="resultMessage">आपकी परिणाम-रिपोर्ट तैयार है।</p><div class="student-strip" id="studentStrip"></div><div class="score-circle" id="scoreCircle" style="--scoreDeg: 0deg"><div class="inner"><div><span id="scorePercent">0%</span><small>शुद्धता</small></div></div></div><div class="btns" style="justify-content:center; margin-top:18px"><button class="btn primary" onclick="restartTest()">↻ पुनः प्रयास करें</button><button class="btn light" onclick="window.print()">🖨 प्रिंट / PDF सेव करें</button><a class="btn secondary" href="/">🏠 मुखपृष्ठ पर जाएँ</a></div></div>
+        <div class="result-body">
+          <div class="result-grid"><div class="rbox"><b id="finalMarks">0</b><span>अंक</span></div><div class="rbox"><b id="finalAttempted">0</b><span>उत्तरित</span></div><div class="rbox"><b id="finalCorrect">0</b><span>सही पर</span></div><div class="rbox"><b id="finalWrong">0</b><span>गलत पर</span></div><div class="rbox"><b id="finalAccuracy">0%</b><span>शुद्धता</span></div><div class="rbox"><b id="finalTime">0:00</b><span>लगा समय</span></div></div>
+          <div class="rank-board" id="rankBoard"><div class="rank-card"><h3>आपकी Daily Rank</h3><div class="rank-big" id="ownRank">—</div><p id="rankStatus">आपकी rank यहाँ दिखेगी।</p></div><div class="rank-card"><h3>Top 20 Leaderboard</h3><p id="leaderHint">हर test की leaderboard अलग रहेगी।</p><ol class="leader-list" id="leaderList"></ol></div></div>
+          <div class="review-list" id="reviewList"></div>
+        </div>
+      </section>
+    </main>
+    <div class="footer-note" id="footerNote">© Bodhi Classes · Designed by Aditya Chauhan · @BodhiClasses</div>
+  </div>
+<script>
+const TEST = {"title": "Lower PCS विज्ञान एवं कंप्यूटर — Set 8", "highlight": "", "shortTitle": "Lower PCS विज्ञान एवं कंप्यूटर — Set 8", "subtitle": "UPSC / UPPCS · सामान्य अध्ययन", "tag": "UPSC / UPPCS · सामान्य अध्ययन", "pill": "Bodhi Classes · अभ्यास परीक्षा", "description": "कुल 50 प्रश्न · 25 मिनट · सही +2, गलत −0.66। नाम लिखकर परीक्षा शुरू करें; समाप्त करने पर अंक, विश्लेषण और हर प्रश्न की व्याख्या दिखेगी।", "durationMinutes": 25, "marksPerQuestion": 2, "negativeMarks": 0.66, "testId": "bodhi-lower-pcs-set-8-1ec00", "footerCredit": "© Bodhi Classes · Designed by Aditya Chauhan · @BodhiClasses", "rankingEnabled": false, "firebaseConfig": {}, "publishDateStr": "", "questions": [{"id": 1, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "सीपीयू के किस रजिस्टर में ए.एल.यू. (ALU) में होने वाली किसी भी गणितीय गणना का पहला इनपुट और अंतिम परिणाम संग्रहीत होता है?", "question_en": "In which CPU register is the first input and final result of any mathematical calculation in the ALU stored?", "options": [{"hi": "इंस्ट्रक्शन रजिस्टर (IR)", "en": "Instruction Register (IR)"}, {"hi": "मेमोरी एड्रेस रजिस्टर (MAR)", "en": "Memory Address Register (MAR)"}, {"hi": "प्रोग्राम काउंटर (PC)", "en": "Program Counter (PC)"}, {"hi": "एक्युमुलेटर (AC/AX)", "en": "Accumulator (AC/AX)"}], "answer": 3, "explanation_hi": "Accumulator (AC/AX): यह सबसे प्रमुख रजिस्टर है। ए.एल.यू. में होने वाली किसी भी गणितीय गणना का पहला इनपुट और अंतिम परिणाम हमेशा एक्युमुलेटर में ही आता है।", "explanation_en": "Accumulator (AC/AX) is the most prominent register. The first input and the final result of any mathematical calculation in the ALU always come to the accumulator. ---"}, {"id": 2, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "डी.डी.आर.5 (DDR5) रैम तकनीक के संदर्भ में निम्नलिखित कथनों में से कौन सा सत्य है?", "question_en": "Which of the following statements is true regarding DDR5 RAM technology?", "options": [{"hi": "यह 1.5 वोल्ट पर संचालित होती है और इसमें ऑन-डाई ईसीसी की कमी है", "en": "It operates at 1.5 Volts and lacks On-die ECC"}, {"hi": "इसमें चिप के भीतर ही एरर को स्वतः ठीक करने के लिए 'ऑन-डाई ईसीसी' (On-die ECC) दी गई है और यह 1.1 वोल्ट पर काम करती है", "en": "It has 'On-die ECC' built inside the chip to automatically correct errors and works at 1.1 Volts"}, {"hi": "यह क्लॉक साइकिल में केवल एक बार डेटा भेजती है", "en": "It sends data only once per clock cycle"}, {"hi": "यह केवल 2400 मेगाहर्ट्ज पर शुरू होती है", "en": "It starts only at 2400 MHz"}], "answer": 1, "explanation_hi": "DDR5 रैम 1.1 वोल्ट बिजली पर चलती है और इसके ऑन-डाई ईसीसी (ECC) फीचर से एरर खुद ठीक हो जाते हैं जिससे सिस्टम क्रैश कम होते हैं।", "explanation_en": "DDR5 RAM runs on 1.1 Volts power and has an On-die ECC feature that self-corrects errors, reducing system crashes. ---"}, {"id": 3, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "राष्ट्रीय विज्ञान, प्रौद्योगिकी और नवाचार नीति 2020 (STIP 2020) के तहत संस्थाओं में महिलाओं की भागीदारी मापने के लिए किस रैंकिंग प्रणाली की घोषणा की गई है?", "question_en": "Under the Science, Technology and Innovation Policy 2020 (STIP 2020), which ranking system has been announced to measure the participation of women in institutions?", "options": [{"hi": "जेंडर-इंडेक्स", "en": "Gender-Index"}, {"hi": "शी-इंडेक्स (She-Index)", "en": "She-Index"}, {"hi": "नारी शक्ति इंडेक्स", "en": "Nari Shakti Index"}, {"hi": "वीमेन-इन-साइंस इंडेक्स", "en": "Women-in-Science Index"}], "answer": 1, "explanation_hi": "STIP 2020 के तहत 'शी-इंडेक्स' (She-Index) संस्थानों में महिलाओं की भागीदारी मापने के लिए एक रैंकिंग प्रणाली है।", "explanation_en": "Under STIP 2020, 'She-Index' is a ranking system to measure the participation of women in institutions. ---"}, {"id": 4, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "रिलेशनल डेटाबेस मैनेजमेंट सिस्टम (RDBMS) के तहत एक तालिका (Table) में कुल पंक्तियों (Rows) की संख्या को क्या कहा जाता है?", "question_en": "Under Relational Database Management System (RDBMS), what is the total number of rows (tuples) in a table called?", "options": [{"hi": "टपल", "en": "Tuple"}, {"hi": "एट्रिब्यूट", "en": "Attribute"}, {"hi": "कार्डिनलिटी (Cardinality)", "en": "Cardinality"}, {"hi": "डिग्री (Degree)", "en": "Degree"}], "answer": 2, "explanation_hi": "RDBMS में, टेबल के कुल कॉलम की संख्या को 'डिग्री' (Degree) तथा कुल पंक्तियों (Rows) की संख्या को 'कार्डिनलिटी' (Cardinality) कहा जाता है।", "explanation_en": "In RDBMS, the total number of columns in a table is called 'Degree' and the total number of rows is called 'Cardinality'. ---"}, {"id": 5, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "भारत के 'समुद्रयान' मिशन के तहत भेजे जाने वाले गहरे समुद्री वाहन 'मत्स्य 6000' का गोलाकार ढांचा (2.1 मीटर व्यास) किस धातु/मिश्र धातु से निर्मित किया गया है?", "question_en": "Of which metal/alloy is the spherical hull (2.1 meters diameter) of the deep sea vehicle 'Matsya 6000', sent under India's 'Samudrayaan' mission, constructed?", "options": [{"hi": "स्टेनलेस स्टील", "en": "Stainless Steel"}, {"hi": "टाइटेनियम मिश्र धातु (Titanium Alloy)", "en": "Titanium Alloy"}, {"hi": "टंगस्टन", "en": "Tungsten"}, {"hi": "कार्बन कम्पोजिट", "en": "Carbon Composite"}], "answer": 1, "explanation_hi": "मत्स्य 6000 पनडुब्बी के मुख्य कक्ष को 2.1 मीटर व्यास के एक 'टाइटेनियम मिश्र धातु' के गोले के रूप में बनाया गया है जो गहरे समुद्र के प्रचंड दबाव को सह सकता है।", "explanation_en": "The main cabin of Matsya 6000 submersible is constructed as a 2.1 meters diameter sphere made of titanium alloy to withstand the extreme pressures of the deep sea. ---"}, {"id": 6, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "इंटरनेट कंट्रोल मैसेज प्रोटोकॉल (ICMP) के संदर्भ में यदि कोई राउटर पैकेट को फ्रैगमेंट नहीं कर पाता क्योंकि DF (Don't Fragment) फ्लैग सेट है, तो वह किस 'Type' और 'Code' का एरर संदेश भेजता है?", "question_en": "In the context of Internet Control Message Protocol (ICMP), if a router cannot fragment a packet because the DF (Don't Fragment) flag is set, which 'Type' and 'Code' error message does it send?", "options": [{"hi": "टाइप 12, कोड 2", "en": "Type 12, Code 2"}, {"hi": "टाइप 11, कोड 1", "en": "Type 11, Code 1"}, {"hi": "टाइप 5, कोड 0", "en": "Type 5, Code 0"}, {"hi": "टाइप 3, कोड 4 (Type 3, Code 4)", "en": "Type 3, Code 4"}], "answer": 3, "explanation_hi": "जब कोई पैकेट किसी छोटे MTU वाले राउटर पर पहुँचता है और DF फ्लैग सेट होता है, तो वह राउटर पैकेट को ड्रॉप कर टाइप 3 (Destination Unreachable) और कोड 4 (Fragmentation Needed) का ICMP संदेश भेजता है।", "explanation_en": "When a packet reaches a router with a smaller MTU and the DF flag is set, the router drops the packet and sends an ICMP message of Type 3 (Destination Unreachable) and Code 4 (Fragmentation Needed). ---"}, {"id": 7, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "वर्ष 2023 में स्थापित 'अनुसंधान नेशनल रिसर्च फाउंडेशन' (ANRF) के ₹50,000 करोड़ के कुल बजट में गैर-सरकारी हिस्से (निजी निवेश) का योगदान कितना प्रतिशत निर्धारित किया गया है?", "question_en": "In the total ₹50,000 crore budget of 'Anusandhan National Research Foundation' (ANRF) established in 2023, what percentage is set to be contributed by the non-governmental sector (private investment)?", "options": [{"hi": "28%", "en": ""}, {"hi": "90%", "en": ""}, {"hi": "72%", "en": ""}, {"hi": "50%", "en": ""}], "answer": 2, "explanation_hi": "ANRF के ₹50,000 करोड़ के बजट में सरकारी हिस्सा ₹14,000 करोड़ (28%) तथा गैर-सरकारी हिस्सा (निजी निवेश) ₹36,000 करोड़ (72%) निर्धारित है।", "explanation_en": "In the ₹50,000 crore budget of ANRF, the government share is ₹14,000 crore (28%) and the non-governmental share (private investment) is ₹36,000 crore (72%). ---"}, {"id": 8, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "मेट्रोपोलिटन Area नेटवर्क (MAN) के लिए प्रयुक्त होने वाले किस आई.ई.ई.ई. (IEEE) मानक में डी.क्यू.डी.बी. (DQDB - Distributed Queue Dual Bus) तकनीक का उपयोग किया जाता है?", "question_en": "Which IEEE standard used for Metropolitan Area Networks (MAN) utilizes the DQDB (Distributed Queue Dual Bus) technology?", "options": [{"hi": "IEEE 802.11", "en": ""}, {"hi": "IEEE 802.6", "en": ""}, {"hi": "IEEE 802.15", "en": ""}, {"hi": "IEEE 802.3", "en": ""}], "answer": 1, "explanation_hi": "IEEE 802.6 मानक विशेष रूप से पूरे शहर में फैले नेटवर्क (MAN) के लिए है, जिसमें DQDB (Distributed Queue Dual Bus) तकनीक का उपयोग किया जाता है।", "explanation_en": "The IEEE 802.6 standard is specifically for city-wide networks (MAN) and utilizes the DQDB (Distributed Queue Dual Bus) technology. ---"}, {"id": 9, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "भारत में नैनो-तकनीक पर आधारित 'तरल नैनो यूरिया' का विकास किस वैज्ञानिक के योगदान से हुआ तथा इसे इफ्को (IFFCO) के किस केंद्र में विकसित किया गया?", "question_en": "Liquid Nano Urea based on nanotechnology in India was developed with the contribution of which scientist, and at which center of IFFCO was it developed?", "options": [{"hi": "डॉ. रमेश रेलिया, कलोल (गुजरात)", "en": "Dr. Ramesh Raliya, Kalol (Gujarat)"}, {"hi": "डॉ. गुरुदेव सिंह खुश, कलोल (गुजरात)", "en": "Dr. Gurdev Singh Khush, Kalol (Gujarat)"}, {"hi": "डॉ. संजय राजाराम, आंवला (उत्तर प्रदेश)", "en": "Dr. Sanjay Rajaram, Aonla (Uttar Pradesh)"}, {"hi": "डॉ. त्रिलोचन महापात्र, कलोल (गुजरात)", "en": "Dr. Trilochan Mohapatra, Kalol (Gujarat)"}], "answer": 0, "explanation_hi": "डॉ. रमेश रेलिया ने नैनो-तकनीक से नैनो यूरिया विकसित किया, जिसका उत्पादन इफ्को के नैनो बायोटेक्नोलॉजी रिसर्च सेंटर, कलोल (गुजरात) में किया गया।", "explanation_en": "Dr. Ramesh Raliya developed nano urea using nanotechnology, which was produced at IFFCO's Nano Biotechnology Research Centre in Kalol, Gujarat. ---"}, {"id": 10, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "सी.पी.यू. (CPU) का वह कौन सा विशिष्ट रजिस्टर है जो  मेमोरी से लाए जाने वाले 'अगले निर्देश' का पता (Address) सहेजकर रखता है?", "question_en": "Which specific register of the CPU holds the address of the 'next instruction' to be fetched from memory?", "options": [{"hi": "प्रोग्राम काउंटर (PC)", "en": "Program Counter (PC)"}, {"hi": "मेमोरी डेटा रजिस्टर (MDR)", "en": "Memory Data Register (MDR)"}, {"hi": "इंस्ट्रक्शन रजिस्टर (IR)", "en": "Instruction Register (IR)"}, {"hi": "एक्युमुलेटर (AC)", "en": "Accumulator (AC)"}], "answer": 0, "explanation_hi": "प्रोग्राम काउंटर (PC) सी.पी.यू. का 'नेविगेटर' है। यह उस अगले निर्देश का पता (Address) रखता है जिसे मेमोरी से लाया जाना है।", "explanation_en": "The Program Counter (PC) is the 'navigator' of the CPU. It holds the address of the next instruction to be fetched from memory. ---"}, {"id": 11, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "उस मैलवेयर को क्या कहा जाता है जिसका एकमात्र उद्देश्य सिस्टम के डेटा को पूरी तरह नष्ट (Overwrite) करना है ताकि रिकवर न किया जा सके, जैसा कि सऊदी अरामको पर 'Shamoon' हमले में देखा गया था?", "question_en": "What is that malware called whose sole purpose is to completely destroy (overwrite) system data so that it cannot be recovered, as seen in the 'Shamoon' attack on Saudi Aramco?", "options": [{"hi": "स्पाइवेयर (Spyware)", "en": "Spyware"}, {"hi": "ट्रोजन हॉर्स (Trojan Horse)", "en": "Trojan Horse"}, {"hi": "रैनसमवेयर (Ransomware)", "en": "Ransomware"}, {"hi": "वाइपर मैलवेयर (Wiper Malware)", "en": "Wiper Malware"}], "answer": 3, "explanation_hi": "वाइपर मैलवेयर का मुख्य उद्देश्य डेटा को पूरी तरह नष्ट करना होता है (डिक्रिप्शन संभव नहीं होता)। शमून (Shamoon) इसका प्रमुख उदाहरण है।", "explanation_en": "The main purpose of Wiper malware is to completely destroy data (decryption is not possible). Shamoon is a prime example of this. ---"}, {"id": 12, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "राष्ट्रीय क्वांटम मिशन (NQM) के तहत अगले 8 वर्षों के भीतर कितने 'फिजिकल क्यूबिट्स' (Physical Qubits) की क्षमता वाले क्वांटम कंप्यूटर विकसित करने का लक्ष्य रखा गया है?", "question_en": "Under the National Quantum Mission (NQM), what target capacity of 'Physical Qubits' is set to be developed in quantum computers within the next 8 years?", "options": [{"hi": "50 से 1000 क्यूबिट (50 to 1000 Qubits)", "en": "50 to 1000 Qubits"}, {"hi": "9 से 10 क्यूबिट", "en": "9 to 10 Qubits"}, {"hi": "20 से 50 क्यूबिट", "en": "20 to 50 Qubits"}, {"hi": "10000 से अधिक क्यूबिट", "en": "More than 10000 Qubits"}], "answer": 0, "explanation_hi": "NQM के तहत 3 वर्षों में 20 से 50 क्यूबिट और 8 वर्षों में 50 से 1000 फिजिकल क्यूबिट्स वाले मध्यम स्तर के क्वांटम कंप्यूटर विकसित करने का लक्ष्य है।", "explanation_en": "Under NQM, the target is to develop intermediate-scale quantum computers with 20 to 50 qubits in 3 years and 50 to 1000 physical qubits in 8 years. ---"}, {"id": 13, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "ऑपरेटिंग सिस्टम में 'fork()' सिस्टम कॉल यदि सफलतापूर्वक नई 'शिशु प्रोसेस' (Child Process) बनाता है, तो मूल 'जनक प्रोसेस' (Parent Process) को क्या रिटर्न वैल्यू प्राप्त होती है?", "question_en": "In an operating system, if the 'fork()' system call successfully creates a new 'Child Process', what return value does the original 'Parent Process' receive?", "options": [{"hi": "शून्य (0)", "en": "Zero (0)"}, {"hi": "शिशु प्रोसेस की पी.आई.डी. (PID of Child Process)", "en": "PID of the Child Process"}, {"hi": "जनक प्रोसेस की पी.आई.डी.", "en": "PID of the Parent Process"}, {"hi": "ऋणात्मक मान (-1)", "en": "A negative value (-1)"}], "answer": 1, "explanation_hi": "fork() सिस्टम कॉल चाइल्ड प्रोसेस को '0' रिटर्न करता है, जबकि पेरेंट प्रोसेस को नव-निर्मित चाइल्ड प्रोसेस की पी.आई.डी. (PID > 0) रिटर्न करता है।", "explanation_en": "The fork() system call returns '0' to the child process, while returning the PID of the newly created child process (PID > 0) to the parent process. ---"}, {"id": 14, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "भारतीय अंतरिक्ष अनुसंधान संगठन (ISRO) के किस प्रक्षेपण यान (रॉकेट) ने एक ही उड़ान में रिकॉर्ड 104 उपग्रहों को अंतरिक्ष में स्थापित करने का ऐतिहासिक कीर्तिमान बनाया था?", "question_en": "Which launch vehicle (rocket) of the Indian Space Research Organisation (ISRO) created a historic milestone by placing a record 104 satellites into space in a single flight?", "options": [{"hi": "SSLV-D2", "en": ""}, {"hi": "GSLV Mk-II", "en": ""}, {"hi": "PSLV-C37 (PSLV-C37)", "en": "PSLV-C37"}, {"hi": "PSLV-C25", "en": ""}], "answer": 2, "explanation_hi": "इसरो के PSLV-C37 रॉकेट ने एक ही उड़ान में 104 उपग्रहों को सफलतापूर्वक अंतरिक्ष में स्थापित कर तत्कालीन विश्व रिकॉर्ड बनाया था।", "explanation_en": "ISRO's PSLV-C37 rocket successfully placed 104 satellites into space in a single flight, setting a world record at that time. ---"}, {"id": 15, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "डेटाबेस मैनेजमेंट सिस्टम (DBMS) में एक तालिका के वे सभी कॉलम जो प्राथमिक कुंजी (Primary Key) बनने की योग्यता रखते हैं, क्या कहलाते हैं?", "question_en": "In a Database Management System (DBMS), what are all the columns in a table that qualify to become a Primary Key called?", "options": [{"hi": "कंपोजिट की", "en": "Composite Key"}, {"hi": "फॉरेन की (Foreign Key)", "en": "Foreign Key"}, {"hi": "कैंडिडेट की (Candidate Key)", "en": "Candidate Key"}, {"hi": "सुपर की", "en": "Super Key"}], "answer": 2, "explanation_hi": "एक टेबल में प्राथमिक कुंजी (Primary Key) बनने के योग्य सभी संभावित कॉलमों को कैंडिडेट की (Candidate Key) कहा जाता है।", "explanation_en": "All potential columns qualified to become a Primary Key in a table are called Candidate Keys. ---"}, {"id": 16, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "भू-स्थिर कक्षा (Geostationary Orbit) के संदर्भ में यदि किसी उपग्रह की कक्षा का झुकाव पृथ्वी की भूमध्य रेखा के सापेक्ष शून्य डिग्री (0°) न होकर थोड़ा झुका हुआ हो, तो उसे किस प्रकार की कक्षा कहा जाएगा?", "question_en": "In the context of Geostationary Orbit, if a satellite's orbit is slightly inclined instead of having a zero-degree (0°) inclination relative to Earth's equator, what type of orbit will it be called?", "options": [{"hi": "निम्न भू-कक्षा (LEO)", "en": "Low Earth Orbit (LEO)"}, {"hi": "भू-तुल्यकालिक कक्षा (Geosynchronous Orbit)", "en": "Geosynchronous Orbit"}, {"hi": "मध्यम भू-कक्षा (MEO)", "en": "Medium Earth Orbit (MEO)"}, {"hi": "ध्रुवीय कक्षा (Polar Orbit)", "en": "Polar Orbit"}], "answer": 1, "explanation_hi": "भू-स्थिर कक्षा का झुकाव ठीक 0° होता है। यदि कक्षा में थोड़ा भी झुकाव हो, तो उपग्रह '8' की आकृति बनाता हुआ दिखेगा, जिसे भू-तुल्यकालिक कक्षा (Geosynchronous Orbit) कहते हैं।", "explanation_en": "A Geostationary Orbit has exactly 0° inclination. If there is even a slight inclination, the satellite appears to trace a figure-8, which is called a Geosynchronous Orbit. ---"}, {"id": 17, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "वर्चुअल मेमोरी प्रबंधन की उस तकनीक को क्या कहा जाता है जिसमें प्रोग्राम को छोटे-छोटे समान आकार के टुकड़ों (Blocks) में विभाजित कर दिया जाता है जिन्हें रैम में आवश्यकतानुसार लोड किया जाता है?", "question_en": "What is that technique of virtual memory management called in which a program is divided into small, equal-sized blocks that are loaded into RAM as needed?", "options": [{"hi": "सेगमेंटेशन", "en": "Segmentation"}, {"hi": "डीफ्रेग्मेंटेशन", "en": "Defragmentation"}, {"hi": "स्पूलिंग", "en": "Spooling"}, {"hi": "पेजिंग (Paging)", "en": "Paging"}], "answer": 3, "explanation_hi": "पेजिंग (Paging) एक मेमोरी प्रबंधन तकनीक है जिसमें प्रोग्राम को समान आकार के टुकड़ों में विभाजित किया जाता है जिन्हें 'पेज' (Pages) कहते हैं।", "explanation_en": "Paging is a memory management technique in which a program is split into equal-sized blocks called 'Pages'. ---"}, {"id": 18, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "भारत के आगामी चंद्रयान-4 (Chandrayaan-4) मिशन का प्राथमिक लक्ष्य क्या है, जो तकनीकी रूप से 'सॉफ्ट लैंडिंग' से भी अधिक कठिन माना जाता है?", "question_en": "What is the primary objective of India's upcoming Chandrayaan-4 mission, which is technically considered even more difficult than a 'soft landing'?", "options": [{"hi": "चंद्रमा की सतह से नमूने वापस पृथ्वी पर लाना (Lunar Sample Return)", "en": "Bringing samples back to Earth from the lunar surface (Lunar Sample Return)"}, {"hi": "चंद्रमा की सतह पर एक रोबोटिक बेस बनाना", "en": "Building a robotic base on the lunar surface"}, {"hi": "चंद्रमा की कक्षा में एक भारतीय स्पेस स्टेशन स्थापित करना", "en": "Establishing an Indian space station in lunar orbit"}, {"hi": "चंद्रमा के दक्षिणी ध्रुव पर जल की ड्रिलिंग", "en": "Water drilling at the lunar south pole"}], "answer": 0, "explanation_hi": "चंद्रयान-4 का लक्ष्य चंद्रमा की सतह से मिट्टी/नमूने एकत्र कर वापस पृथ्वी पर लाना (Sample Return) है। अब तक केवल अमेरिका, रूस और चीन ने ही यह सफलता पाई है।", "explanation_en": "The goal of Chandrayaan-4 is to collect soil/samples from the lunar surface and return them to Earth (Sample Return). So far, only the US, Russia, and China have achieved this. ---"}, {"id": 19, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "माइक्रोसॉफ्ट एक्सेल के 'What-If' विश्लेषण के तहत कौन सा उपकरण विशिष्ट परिणाम प्राप्त करने हेतु इनपुट की खोज के लिए 'उल्टी गणना' (Reverse Calculation) करता है?", "question_en": "Which tool under MS Excel's 'What-If' Analysis performs a 'Reverse Calculation' to find the required input for achieving a specific target result?", "options": [{"hi": "सिनेरियो मैनेजर (Scenario Manager)", "en": "Scenario Manager"}, {"hi": "डेटा सत्यापन (Data Validation)", "en": "Data Validation"}, {"hi": "गोल सीक (Goal Seek)", "en": "Goal Seek"}, {"hi": "सॉल्वर (Solver)", "en": "Solver"}], "answer": 2, "explanation_hi": "गोल सीक (Goal Seek) एक्सेल में व्हाट-इफ एनालिसिस का एक हिस्सा है जो किसी लक्ष्य तक पहुँचने के लिए 'उल्टी गणना' (Reverse Calculation) करता है।", "explanation_en": "Goal Seek is a part of What-If Analysis in Excel that performs reverse calculations to find the input needed to achieve a target result. ---"}, {"id": 20, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "भारत सरकार द्वारा वर्ष 1983 में जारी की गई 'प्रौद्योगिकी नीति वक्तव्य' (TPS 1983) का मुख्य उद्देश्य और नारा क्या था?", "question_en": "What was the primary objective and slogan of the 'Technology Policy Statement' (TPS 1983) issued by the Government of India in 1983?", "options": [{"hi": "प्रौद्योगिकी का विकास - स्थानीय संसाधनों और रोजगार के अनुकूल", "en": "Technology development - suited to local resources and employment"}, {"hi": "अंतरिक्ष अन्वेषण में 100% विदेशी निवेश", "en": "100% foreign investment in space exploration"}, {"hi": "सूचना तकनीकी का राष्ट्रीयकरण", "en": "Nationalization of Information Technology"}, {"hi": "केवल बुनियादी विज्ञान का प्रसार", "en": "Promotion of basic science only"}], "answer": 0, "explanation_hi": "1983 की प्रौद्योगिकी नीति का नारा था 'प्रौद्योगिकी का विकास - स्थानीय संसाधनों और रोजगार के अनुकूल' ताकि विज्ञान को कारखानों और दैनिक जीवन से जोड़ा जा सके।", "explanation_en": "The slogan of the 1983 Technology Policy was 'Technology development - suited to local resources and employment' to connect science with factories and daily life. ---"}, {"id": 21, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "डेटा सुरक्षा तथा तीव्र रीड/राइट क्षमता के संतुलित उपयोग हेतु 'RAID 5' (स्ट्रिपिंग विथ पैरिटी) प्रणाली स्थापित करने के लिए न्यूनतम कितनी हार्ड डिस्क की आवश्यकता होती है?", "question_en": "What is the minimum number of hard disks required to set up a 'RAID 5' (striping with parity) system for balanced data security and fast read/write performance?", "options": [{"hi": "3 डिस्क", "en": "3 disks"}, {"hi": "4 डिस्क", "en": "4 disks"}, {"hi": "5 डिस्क", "en": "5 disks"}, {"hi": "2 डिस्क", "en": "2 disks"}], "answer": 0, "explanation_hi": "RAID 5 (Striping with Parity) को स्थापित करने के लिए कम से कम 3 हार्ड डिस्क होना अनिवार्य है।", "explanation_en": "To set up a RAID 5 (Striping with Parity) system, a minimum of 3 hard disks is mandatory. ---"}, {"id": 22, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "डॉ. होमी जहांगीर भाभा द्वारा कल्पित भारत के 'तीन चरणों वाले परमाणु ऊर्जा कार्यक्रम' के अंतिम (तीसरे) चरण में किस प्रचुर मात्रा में उपलब्ध ईंधन के उपयोग पर सर्वाधिक जोर दिया गया है?", "question_en": "On the utilization of which abundantly available fuel is the maximum emphasis placed in the final (third) stage of India's 'Three-Stage Nuclear Power Programme' envisioned by Dr. Homi Jehangir Bhabha?", "options": [{"hi": "प्लूटोनियम", "en": "Plutonium"}, {"hi": "संवर्धित यूरेनियम", "en": "Enriched Uranium"}, {"hi": "प्राकृतिक यूरेनियम", "en": "Natural Uranium"}, {"hi": "थोरियम (Thorium)", "en": "Thorium"}], "answer": 3, "explanation_hi": "भारतीय परमाणु कार्यक्रम के तीसरे चरण में भारत के विशाल थोरियम भंडार का उपयोग कर 'थोरियम-232' आधारित ऊर्जा उत्पादन का लक्ष्य रखा गया है।", "explanation_en": "The third stage of the Indian nuclear program aims at 'Thorium-232' based energy production utilizing India's vast thorium reserves. ---"}, {"id": 23, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "नेटवर्क सुरक्षा के संदर्भ में, कंप्यूटर को रिमोटली (दूर से) नियंत्रित करने हेतु प्रयुक्त होने वाले सुरक्षित 'SSH' और असुरक्षित 'Telnet' का डिफ़ॉल्ट पोर्ट नंबर क्रमशः क्या होता है?", "question_en": "In network security, what are the default port numbers for secure 'SSH' and unsecured 'Telnet' used for remote computer control, respectively?", "options": [{"hi": "SSH: पोर्ट 23, Telnet: पोर्ट 22", "en": "SSH: Port 23, Telnet: Port 22"}, {"hi": "SSH: पोर्ट 80, Telnet: पोर्ट 443", "en": "SSH: Port 80, Telnet: Port 443"}, {"hi": "SSH: पोर्ट 21, Telnet: पोर्ट 23", "en": "SSH: Port 21, Telnet: Port 23"}, {"hi": "SSH: पोर्ट 22, Telnet: पोर्ट 23 (SSH: Port 22, Telnet: Port 23)", "en": "SSH: Port 22, Telnet: Port 23"}], "answer": 3, "explanation_hi": "सुरक्षित रिमोट एक्सेस प्रोटोकॉल (SSH) डिफ़ॉल्ट पोर्ट 22 का उपयोग करता है, जबकि असुरक्षित Telnet पोर्ट 23 का उपयोग करता है।", "explanation_en": "The secure remote access protocol (SSH) uses default Port 22, whereas the unsecured Telnet uses Port 23. ---"}, {"id": 24, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "भारत के पहले कृत्रिम उपग्रह 'आर्यभट्ट' (Aryabhata) को 19 अप्रैल, 1975 को किस विदेशी रॉकेट की मदद से अंतरिक्ष में भेजा गया था?", "question_en": "With the help of which foreign rocket was India's first artificial satellite 'Aryabhata' launched into space on April 19, 1975?", "options": [{"hi": "कॉस्मोस-3एम (Kosmos-3M)", "en": "Kosmos-3M"}, {"hi": "अपोलो-11", "en": "Apollo-11"}, {"hi": "एरियन-1", "en": "Ariane-1"}, {"hi": "स्पुतनिक-2", "en": "Sputnik-2"}], "answer": 0, "explanation_hi": "भारत के पहले उपग्रह आर्यभट्ट को सोवियत संघ के 'कॉस्मोस-3एम' (Kosmos-3M) रॉकेट से सफलतापूर्वक अंतरिक्ष में भेजा गया था।", "explanation_en": "India's first satellite Aryabhata was successfully launched into space by the Soviet Union's 'Kosmos-3M' rocket. ---"}, {"id": 25, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "माइक्रोसॉफ्ट एक्सेल के संदर्भ में यदि किसी फॉर्मूले में 'A$1' लिखा है, तो यह किस प्रकार के 'सेल रेफरेंस' (Cell Referencing) को प्रदर्शित करता है?", "question_en": "In the context of MS Excel, if 'A$1' is written in a formula, which type of 'Cell Referencing' does it represent?", "options": [{"hi": "एब्सोल्यूट रेफरेंस (Absolute Reference)", "en": "Absolute Reference"}, {"hi": "मिश्रित रेफरेंस (Mixed Reference)", "en": "Mixed Reference"}, {"hi": "डायरेक्ट रेफरेंस (Direct Reference)", "en": "Direct Reference"}, {"hi": "रिलेटिव रेफरेंस (Relative Reference)", "en": "Relative Reference"}], "answer": 1, "explanation_hi": "मिश्रित रेफरेंस (Mixed Reference) में एक भाग लॉक होता है और दूसरा खुला। 'A$1' में रो 1 लॉक है, लेकिन कॉलम A खुला है।", "explanation_en": "In a Mixed Reference, one part is locked and the other is free. In 'A$1', Row 1 is locked while Column A is free. ---"}, {"id": 26, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "वर्ष 1998 में आयोजित पोखरण-द्वितीय परमाणु परीक्षण का आधिकारिक कोड नेम क्या था, जिसके तहत विखंडन, थर्मोन्यूक्लियर तथा उप-किलोटन सहित कुल 5 परीक्षण किए गए थे?", "question_en": "What was the official code name of the Pokhran-II nuclear tests conducted in 1998, under which a total of 5 tests including fission, thermonuclear, and sub-kiloton devices were executed?", "options": [{"hi": "स्माइलिंग बुद्धा (Smiling Buddha)", "en": "Smiling Buddha"}, {"hi": "ऑपरेशन शक्ति (Operation Shakti)", "en": "Operation Shakti"}, {"hi": "ऑपरेशन विजय (Operation Vijay)", "en": "Operation Vijay"}, {"hi": "मिशन दिव्यास्त्र", "en": "Mission Divyastra"}], "answer": 1, "explanation_hi": "1998 के पोखरण-द्वितीय परीक्षण का कोड नेम 'ऑपरेशन शक्ति' था। पूर्व के 1974 परीक्षण का कोड नेम 'स्माइलिंग बुद्धा' था।", "explanation_en": "The code name of the 1998 Pokhran-II tests was 'Operation Shakti'. The earlier 1974 test was code-named 'Smiling Buddha'. ---"}, {"id": 27, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "ई.पी.रॉम (EPROM) चिप के संदर्भ में कौन सा कथन इसकी डेटा मिटाने (Erasing) की सीमा को सटीक रूप से दर्शाता है?", "question_en": "With respect to EPROM chips, which statement accurately describes the limitation of its data erasing process?", "options": [{"hi": "इसे सामान्य सूर्य की रोशनी में 5 मिनट रखकर मिटाया जाता है", "en": "It can be erased by placing it in normal sunlight for 5 minutes"}, {"hi": "इसे सर्किट से बाहर निकाले बिना आंशिक रूप से मिटाया जा सकता है", "en": "It can be partially erased without removing it from the circuit"}, {"hi": "पराबैंगनी किरणों से डेटा मिटाने पर पूरी चिप का डेटा एक साथ साफ हो जाता है और सेलेक्टिव इरेज़िंग संभव नहीं होती", "en": "Erasing with UV rays wipes the entire chip's data at once, making selective erasing impossible"}, {"hi": "इसके किसी विशिष्ट हिस्से (Selective erasing) को विद्युत सिग्नल से मिटाया जा सकता है", "en": "Its specific sections can be selectively erased using electrical signals"}], "answer": 2, "explanation_hi": "EPROM का बड़ा दोष यह है कि इसके डेटा को मिटाने के लिए पराबैंगनी किरणों के बॉक्स में रखना पड़ता है, जिससे पूरा डेटा एक साथ मिटता है और चयनात्मक सुधार (Selective erasing) नहीं हो पाता।", "explanation_en": "A major drawback of EPROM is that to erase its data, it must be placed in a UV eraser box, which wipes the entire chip's data at once and prevents selective erasing. ---"}, {"id": 28, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "वर्ष 2015 में प्रक्षेपित 'एस्ट्रोसैट' (ASTROSAT) का खगोलीय अनुसंधान क्षेत्र में क्या महत्व है?", "question_en": "What is the significance of 'ASTROSAT', launched in 2015, in the field of astronomical research?", "options": [{"hi": "यह भारत की पहली 'बहु-तरंगदैर्ध्य अंतरिक्ष वेधशाला' (Space Observatory) है", "en": "It is India's first 'multi-wavelength space observatory'"}, {"hi": "यह मौसम और चक्रवात की पूर्व चेतावनी देने वाला समर्पित उपग्रह है", "en": "It is a dedicated weather and cyclone early-warning satellite"}, {"hi": "यह अमेरिकी जीपीएस का सहायक उपग्रह है", "en": "It is an augmentation satellite for US GPS"}, {"hi": "यह भारत का पहला सुदूर संवेदी उपग्रह है", "en": "It is India's first remote sensing satellite"}], "answer": 0, "explanation_hi": "एस्ट्रोसैट (ASTROSAT) वर्ष 2015 में छोड़ा गया भारत का पहला बहु-तरंगदैर्ध्य अंतरिक्ष टेलिस्कोप है जो दूर के ब्लैक होल, तारों और आकाशगंगाओं का अध्ययन करता है।", "explanation_en": "ASTROSAT, launched in 2015, is India's first multi-wavelength space telescope that studies distant black holes, stars, and galaxies. ---"}, {"id": 29, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "डायनामिक रैम (DRAM) की तुलना में स्टैटिक रैम (SRAM) को तीव्र और रिफ्रेश-मुक्त बनाने के लिए किस मूल इलेक्ट्रॉनिक घटक का उपयोग किया जाता है?", "question_en": "Which basic electronic component is used to make Static RAM (SRAM) faster and refresh-free compared to Dynamic RAM (DRAM)?", "options": [{"hi": "चुंबकीय कोर (Magnetic Core)", "en": "Magnetic Core"}, {"hi": "कैपेसिटर (Capacitor)", "en": "Capacitor"}, {"hi": "ऑप्टिकल शेल", "en": "Optical Shell"}, {"hi": "फ्लिप-फ्लॉप (फ्लिप-फ्लॉप या ट्रांजिस्टर)", "en": "Flip-Flop or Transistor"}], "answer": 3, "explanation_hi": "SRAM में डेटा फ्लिप-फ्लॉप सर्किट (ट्रांजिस्टर) के रूप में स्टोर होता है, जिसमें कैपेसिटर की तरह चार्ज लीक नहीं होता।  इसलिए इसे रिफ्रेश करने की जरूरत नहीं पड़ती और यह अत्यंत तीव्र होती है।", "explanation_en": "In SRAM, data is stored in flip-flop circuits (transistors), which do not leak charge like capacitors do. Therefore, it requires no refresh cycles and is extremely fast. ---"}, {"id": 30, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "भारत के स्वदेशी हल्के लड़ाकू विमान 'तेजस मार्क-2' (Tejas Mk-2) के लिए अमेरिकी कंपनी जी.ई. (GE) द्वारा 100% तकनीकी हस्तांतरण के तहत किस जेट इंजन का निर्माण भारत में किया जाएगा?", "question_en": "Under a 100% technology transfer for India's indigenous light combat aircraft 'Tejas Mark-2' (Tejas Mk-2), which jet engine will be manufactured in India by the US company GE?", "options": [{"hi": "कावेरी टर्बोप्रॉप (Kaveri Turboprop)", "en": "Kaveri Turboprop"}, {"hi": "जी.ई. एफ414 (GE F414)", "en": "GE F414"}, {"hi": "सु-30 एम.के.आई.", "en": "Su-30 MKI"}, {"hi": "जी.ई. एफ404 (GE F404)", "en": "GE F404"}], "answer": 1, "explanation_hi": "तेजस मार्क-2 के लिए अमेरिकी कंपनी जनरल इलेक्ट्रिक (GE) और भारत की एचएएल (HAL) के बीच 'GE F414' जेट इंजन के 100% तकनीकी हस्तांतरण (ToT) का समझौता हुआ है।", "explanation_en": "For Tejas Mark-2, an agreement for 100% technology transfer (ToT) of the 'GE F414' jet engine has been signed between the US company General Electric (GE) and India's HAL. ---"}, {"id": 31, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "डेटाबेस ट्रांजेक्शन के 'ACID' सुरक्षा नियमों के तहत किस नियम के अनुसार यह सुनिश्चित किया जाता है कि कोई ट्रांजेक्शन या तो पूरी तरह सफल हो या बिल्कुल न हो (All or Nothing)?", "question_en": "Under the 'ACID' properties of database transactions, which rule ensures that a transaction is either completely executed or not executed at all (All or Nothing)?", "options": [{"hi": "एटॉमिकिटी (Atomicity)", "en": "Atomicity"}, {"hi": "ड्यूरेबिलिटी (Durability)", "en": "Durability"}, {"hi": "कंसिस्टेंसी (Consistency)", "en": "Consistency"}, {"hi": "आइसोलेशन (Isolation)", "en": "Isolation"}], "answer": 0, "explanation_hi": "ACID प्रॉपर्टीज में एटॉमिकिटी (Atomicity) का अर्थ है कि ट्रांजेक्शन 'पूरा हो या बिल्कुल न हो' (All or Nothing)।", "explanation_en": "In ACID properties, Atomicity means that the transaction is either executed completely or not at all (All or Nothing). ---"}, {"id": 32, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "भारतीय अंतरिक्ष अनुसंधान संगठन (ISRO) द्वारा जटिल एयरोनॉटिकल तथा रॉकेट संरचना की समस्याओं को हल करने हेतु किस विशिष्ट सुपरकंप्यूटर का उपयोग किया जाता है?", "question_en": "Which specific supercomputer is utilized by the Indian Space Research Organisation (ISRO) for solving complex aeronautical and rocket design problems?", "options": [{"hi": "मिहिर (Mihir)", "en": "Mihir"}, {"hi": "प्रत्युष (Pratyush)", "en": "Pratyush"}, {"hi": "परम शिवाय (PARAM Shivay)", "en": "PARAM Shivay"}, {"hi": "सागा-220 (SAGA-220)", "en": "SAGA-220"}], "answer": 3, "explanation_hi": "इसरो (ISRO) अपने अंतरिक्ष वैज्ञानिकों हेतु 'सागा-220' (SAGA-220) सुपरकंप्यूटर का उपयोग करता है, जो जटिल एयरोनॉटिकल गणनाओं के लिए समर्पित है।", "explanation_en": "ISRO utilizes the 'SAGA-220' supercomputer for its space scientists, dedicated to complex aeronautical computations. ---"}, {"id": 33, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "पुराना फाइल एलोकेशन टेबल (FAT32) फाइल सिस्टम एकल (Single) फाइल के आकार के संदर्भ में अधिकतम कितनी सीमा का समर्थन कर सकता है?", "question_en": "What is the maximum file size limit supported for a single file under the older File Allocation Table (FAT32) file system?", "options": [{"hi": "4 GB", "en": ""}, {"hi": "1.44 MB", "en": ""}, {"hi": "2 GB", "en": ""}, {"hi": "16 Exabytes", "en": ""}], "answer": 0, "explanation_hi": "FAT32 फाइल सिस्टम में आप अधिकतम 4GB आकार की ही एकल फाइल रख सकते हैं।  इससे बड़ी फाइलों को सहेजने के लिए NTFS फाइल सिस्टम का उपयोग किया जाता है।", "explanation_en": "Under the FAT32 file system, you can store a single file of up to 4GB in size. For larger files, the NTFS file system is used. ---"}, {"id": 34, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "भारत की राष्ट्रीय विज्ञान एवं प्रौद्योगिकी यात्रा के संदर्भ में 1958 की 'विज्ञान नीति वक्तव्य' और 1983 की 'प्रौद्योगिकी नीति वक्तव्य' के मूल दृष्टिकोण में क्या मुख्य अंतर था?", "question_en": "In the context of India's national science and technology path, what was the primary difference in the core approach of the 1958 'Science Policy Resolution' and the 1983 'Technology Policy Statement'?", "options": [{"hi": "1958 की नीति केवल कृषि पर थी, जबकि 1983 की नीति परमाणु ऊर्जा पर थी", "en": "The 1958 policy was on agriculture, while the 1983 policy was on nuclear energy"}, {"hi": "1958 की नीति निजीकरण पर थी, जबकि 1983 की नीति सरकारी नियंत्रण पर थी", "en": "The 1958 policy was on privatization, while the 1983 policy was on government control"}, {"hi": "1958 की नीति सिद्धांतों और वैज्ञानिक खोज पर केंद्रित थी, जबकि 1983 की नीति तकनीक के व्यावहारिक 'उपयोग' (Application) को कारखानों तक पहुँचाने पर केंद्रित थी", "en": "The 1958 policy was focused on principles and scientific discovery, while the 1983 policy focused on the practical 'application' of technology to factories"}, {"hi": "दोनों नीतियां बिल्कुल समान थीं", "en": "Both policies were completely identical"}], "answer": 2, "explanation_hi": "1958 की नीति वैज्ञानिक सिद्धांतों और अनुसंधान की नींव पर आधारित थी, जबकि 1983 की नीति व्यावहारिक उपयोग और देश के उद्योगों में स्वदेशी तकनीक के कार्यान्वयन पर केंद्रित थी।", "explanation_en": "The 1958 policy was based on scientific principles and the foundation of research, while the 1983 policy focused on practical application and the implementation of indigenous tech in the nation's industries. ---"}, {"id": 35, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "वेब एप्लीकेशन प्रोग्रामिंग इंटरफेस (API) में यदि कोई अनुरोध (Request) सफलतापूर्वक पूरा हो जाता है और सर्वर से डेटा प्राप्त हो जाता है, तो कौन सा HTTP स्टेटस कोड 'OK' को दर्शाता है?", "question_en": "In a Web Application Programming Interface (API), if a request is successfully executed and data is retrieved from the server, which HTTP status code represents 'OK'?", "options": [{"hi": "401", "en": ""}, {"hi": "500", "en": ""}, {"hi": "200", "en": ""}, {"hi": "404", "en": ""}], "answer": 2, "explanation_hi": "API स्टेटस कोड्स में, 200 'OK' (सब ठीक है, डेटा मिल गया) को दर्शाता है।  404 'Not Found' को तथा 500 'Server Error' को दर्शाता है।", "explanation_en": "In API status codes, 200 represents 'OK' (all fine, data retrieved). 404 represents 'Not Found' and 500 represents 'Server Error'. ---"}, {"id": 36, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "वर्ष 1974 में भारत द्वारा किए गए पहले शांतिपूर्ण भूमिगत परमाणु परीक्षण 'स्माइलिंग बुद्धा' (Smiling Buddha) के पीछे मुख्य रणनीतिकार एवं निदेशक कौन से प्रसिद्ध भारतीय वैज्ञानिक थे?", "question_en": "Which famous Indian scientist was the main architect and director behind India's first peaceful underground nuclear test 'Smiling Buddha' conducted in 1974?", "options": [{"hi": "डॉ. राजा रमन्ना (Dr. Raja Ramanna)", "en": "Dr. Raja Ramanna"}, {"hi": "डॉ. होमी जहांगीर भाभा", "en": "Dr. Homi Jehangir Bhabha"}, {"hi": "डॉ. अनिल काकोदकर", "en": "Dr. Anil Kakodkar"}, {"hi": "डॉ. ए.पी.जे. अब्दुल कलाम", "en": "Dr. A.P.J. Abdul Kalam"}], "answer": 0, "explanation_hi": "1974 के प्रथम परमाणु परीक्षण 'स्माइलिंग बुद्धा' (पोखरण-1) के मुख्य रणनीतिकार और निर्देशक डॉ. राजा रमन्ना थे।", "explanation_en": "The main architect and director of the first nuclear test 'Smiling Buddha' (Pokhran-I) in 1974 was Dr. Raja Ramanna. ---"}, {"id": 37, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "जॉन मैकार्थी द्वारा वर्ष 1958 में कृत्रिम बुद्धिमत्ता (AI) हेतु बनाई गई पहली प्रोग्रामिंग भाषा कौन सी थी जिसमें डेटा को लिस्ट के रूप में प्रोसेस किया जाता था?", "question_en": "Which first programming language was developed by John McCarthy in 1958 for Artificial Intelligence (AI) where data was processed in the form of lists?", "options": [{"hi": "फोर्ट्रान (FORTRAN)", "en": "FORTRAN"}, {"hi": "प्रोलॉग (PROLOG)", "en": "PROLOG"}, {"hi": "कोबोल (COBOL)", "en": "COBOL"}, {"hi": "लिस्प (LISP)", "en": "LISP"}], "answer": 3, "explanation_hi": "कृत्रिम बुद्धिमत्ता (AI) के लिए बनाई गई सबसे पहली भाषा लिस्प (LISP - List Processing) थी, जिसे 1958 में जॉन मैकार्थी ने बनाया था।", "explanation_en": "The first language created for Artificial Intelligence (AI) was LISP (List Processing), developed by John McCarthy in 1958. ---"}, {"id": 38, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "भारतीय राष्ट्रीय उपग्रह (INSAT) श्रृंखला के दूसरी पीढ़ी के किस अत्यंत उन्नत उपग्रह के कुछ ट्रांसपोंडरों को वैश्विक उपग्रह संगठन 'इंटेलसैट' (Intelsat) को किराए पर दिया गया था?", "question_en": "Some transponders of which highly advanced second-generation satellite of the Indian National Satellite (INSAT) series were leased to the global satellite organization 'Intelsat'?", "options": [{"hi": "इन्सैट-4ए (INSAT-4A)", "en": "INSAT-4A"}, {"hi": "जीसैट-30", "en": "GSAT-30"}, {"hi": "इन्सैट-1ए (INSAT-1A)", "en": "INSAT-1A"}, {"hi": "इन्सैट-2ई (INSAT-2E)", "en": "INSAT-2E"}], "answer": 3, "explanation_hi": "इन्सैट-2ई (INSAT-2E) द्वितीय पीढ़ी का सबसे उन्नत उपग्रह था, जिसके कुछ ट्रांसपोंडर अंतरराष्ट्रीय संगठन इंटेलसैट (Intelsat) को पट्टे/किराए पर दिए गए थे।", "explanation_en": "INSAT-2E was the most advanced second-generation satellite, some of whose transponders were leased to the international organization Intelsat. ---"}, {"id": 39, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "भारत में साइबर अपराधों से निपटने वाले मुख्य कानून 'सूचना प्रौद्योगिकी अधिनियम' (IT Act) को किस वर्ष और किस तिथि को लागू किया गया था तथा इसमें बड़ा संशोधन किस वर्ष हुआ था?", "question_en": "On which date and year was the 'Information Technology Act' (IT Act), the primary law dealing with cybercrimes in India, implemented, and in which year was a major amendment done?", "options": [{"hi": "26 जनवरी 2001; संशोधन 2011", "en": "26 January 2001; Amendment 2011"}, {"hi": "17 अक्टूबर 2000; संशोधन 2008 (17 October 2000; Amendment 2008)", "en": "17 October 2000; Amendment 2008"}, {"hi": "9 जून 2000; संशोधन 2005", "en": "9 June 2000; Amendment 2005"}, {"hi": "15 अगस्त 2000; संशोधन 2015", "en": "15 August 2000; Amendment 2015"}], "answer": 1, "explanation_hi": "भारत में आईटी एक्ट 2000 को 17 अक्टूबर 2000 को लागू किया गया था और इसमें सबसे महत्वपूर्ण संशोधन वर्ष 2008 में किया गया।", "explanation_en": "The IT Act 2000 was implemented in India on October 17, 2000, and a major amendment was made in the year 2008. ---"}, {"id": 40, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "श्रीहरिकोटा से ध्रुवीय प्रक्षेपण के दौरान श्रीलंका के भू-भाग के ऊपर से जाने से बचने के लिए रॉकेट को हवा में मोड़ने की प्रक्रिया को क्या कहते हैं, जिससे बचने के लिए नया स्पेसपोर्ट कुलशेखरपट्टिनम (तमिलनाडु) में स्थापित किया जा रहा है?", "question_en": "What is the process of turning a rocket in mid-air to avoid flying over the landmass of Sri Lanka during polar launches from Sriharikota called, to bypass which a new spaceport is being set up in Kulasekharapatnam (Tamil Nadu)?", "options": [{"hi": "पेलोड फेयरिंग", "en": "Payload Fairing"}, {"hi": "प्रक्षेपवक्र सुधार", "en": "Trajectory Correction"}, {"hi": "डॉग-लेग मैन्युवर (Dog-leg Maneuver)", "en": "Dog-leg Maneuver"}, {"hi": "ग्रेविटी असिस्ट (Gravity Assist)", "en": "Gravity Assist"}], "answer": 2, "explanation_hi": "श्रीहरिकोटा से ध्रुवीय प्रक्षेपण करते समय श्रीलंका के ऊपर से जाने से बचने के लिए रॉकेट को 'डॉग-लेग मैन्युवर' (Dog-leg Maneuver) द्वारा घुमाना पड़ता है, जिससे ईंधन व्यर्थ होता है।  नए स्पेसपोर्ट कुलशेखरपट्टिनम से दक्षिण की ओर सीधी राह मिलती है।", "explanation_en": "During polar launches from Sriharikota, rockets must perform a 'Dog-leg Maneuver' to avoid flying over Sri Lanka, wasting fuel. The new spaceport at Kulasekharapatnam offers a straight path southward. ---"}, {"id": 41, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "हार्ड डिस्क प्रौद्योगिकी के अंतर्गत वह कौन सी डिस्क है जिसमें चुंबकीय डिस्क (Platters) और हेड धूल से बचाव हेतु एक पूर्णतः सीलबंद डिब्बे के अंदर बंद होते हैं?", "question_en": "Under hard disk technology, which disk is it where the magnetic platters and read/write heads are completely sealed inside a box to protect them from dust?", "options": [{"hi": "विंचेस्टर डिस्क (Winchester Disk)", "en": "Winchester Disk"}, {"hi": "जिप डिस्क (Zip Disk)", "en": "Zip Disk"}, {"hi": "डिस्क पैक", "en": "Disk Pack"}, {"hi": "फ्लॉपी डिस्क (Floppy Disk)", "en": "Floppy Disk"}], "answer": 0, "explanation_hi": "विंचेस्टर डिस्क (Winchester Disk) तकनीकी भाषा में उसी आधुनिक हार्ड डिस्क को कहते हैं जिसमें डस्ट-प्रूफिंग के लिए डिस्क और हेड सीलबंद डिब्बे में बंद होते हैं।", "explanation_en": "Winchester Disk is the technical term for modern hard disks where the platters and heads are sealed together to prevent dust. ---"}, {"id": 42, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "भारत के स्वदेशी नौवहन उपग्रह समूह 'NavIC' (नाविक) में कुल कितने सक्रिय उपग्रह हैं तथा यह जी.पी.एस. की तुलना में अधिक सटीकता हेतु किन विशिष्ट फ्रीक्वेंसी बैंड्स का उपयोग करता है?", "question_en": "How many active satellites are there in India's indigenous navigation constellation 'NavIC', and which specific frequency bands does it use for greater accuracy compared to GPS?", "options": [{"hi": "9 उपग्रह; केवल S बैंड", "en": "9 Satellites; S band only"}, {"hi": "12 उपग्रह; C और Ku बैंड", "en": "12 Satellites; C and Ku bands"}, {"hi": "5 उपग्रह; केवल L1 बैंड", "en": "5 Satellites; L1 band only"}, {"hi": "7 उपग्रह; L5 और S बैंड (7 Satellites; L5 and S bands)", "en": "7 Satellites; L5 and S bands"}], "answer": 3, "explanation_hi": "NavIC उपग्रह समूह में 7 सक्रिय उपग्रह हैं (3 GEO और 4 GSO)।  यह L5 और S बैंड (दोहरी फ्रीक्वेंसी) का उपयोग करता है, जो इसे भारत में अमेरिकी GPS (L1 बैंड) से अधिक सटीक बनाता है।", "explanation_en": "NavIC has 7 active satellites (3 GEO and 4 GSO). It uses L5 and S bands (dual frequency), making it more accurate in India than the US GPS (L1 band). ---"}, {"id": 43, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "साइबर वित्तीय अपराधों में उस धोखाधड़ी की तकनीक को क्या कहा जाता है जिसमें हैकर लाखों खातों से बहुत छोटी-छोटी अदृश्य रकमें (जैसे 10 या 50 पैसे) काटकर अपने खाते में स्थानांतरित कर लेता है?", "question_en": "In cyber financial crimes, what is that fraud technique called where a hacker steals very small, unnoticeable amounts of money (like 10 or 50 paise) from millions of accounts and transfers them to his own account?", "options": [{"hi": "विशिंग (Vishing)", "en": "Vishing"}, {"hi": "फ़िशिंग (Phishing)", "en": "Phishing"}, {"hi": "सलामी अटैक (Salami Attack)", "en": "Salami Attack"}, {"hi": "रैंसमवेयर (Ransomware)", "en": "Ransomware"}], "answer": 2, "explanation_hi": "सलामी अटैक (Salami Slicing) में लाखों खातों से बहुत छोटी-छोटी रकमें चोरी की जाती हैं ताकि किसी को शक न हो और कुल मिलाकर बड़ी रकम एकत्र हो सके।", "explanation_en": "In a Salami Attack (Salami Slicing), very small amounts are stolen from millions of accounts so that it remains unnoticed while accumulating a huge sum in total. ---"}, {"id": 44, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "भारतीय अंतरिक्ष अनुसंधान संगठन (ISRO) का वह सबसे शक्तिशाली रॉकेट कौन सा है जिसे 'बाहुबली' (Bahubali) कहा जाता है और यह भू-स्थिर अंतरण कक्षा (GTO) में कितने किलोग्राम तक का भार ले जा सकता है?", "question_en": "Which is the most powerful rocket of the Indian Space Research Organisation (ISRO), known as 'Bahubali', and how many kilograms of payload can it carry into the Geostationary Transfer Orbit (GTO)?", "options": [{"hi": "GSLV Mk-II; 2500 किलोग्राम", "en": "GSLV Mk-II; 2500 kg"}, {"hi": "PSLV-XL; 1500 किलोग्राम", "en": "PSLV-XL; 1500 kg"}, {"hi": "SSLV; 500 किलोग्राम", "en": "SSLV; 500 kg"}, {"hi": "LVM3; 4000 किलोग्राम (LVM3; 4000 kg)", "en": "LVM3; 4000 kg"}], "answer": 3, "explanation_hi": "LVM3 (पूर्व नाम GSLV Mk-III) इसरो का सबसे शक्तिशाली रॉकेट है जिसे 'बाहुबली' कहते हैं।  यह भू-स्थिर कक्षा में 4,000 किलोग्राम तक का भार ले जा सकता है।", "explanation_en": "LVM3 (formerly GSLV Mk-III) is ISRO's most powerful rocket, nicknamed 'Bahubali'. It can carry up to 4,000 kg into Geostationary Transfer Orbit (GTO). ---"}, {"id": 45, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "स्टोरेज डिवाइसेज (जैसे SD कार्ड या फ्लॉपी डिस्क) में डेटा को गलती से मिटने, ओवरराइट होने या वायरस संक्रमण से बचाने हेतु किस भौतिक सुरक्षा तंत्र का उपयोग किया जाता है?", "question_en": "Which physical security mechanism is used in storage devices (like SD cards or floppy disks) to prevent data from accidental deletion, overwriting, or virus infection?", "options": [{"hi": "फाइल कंप्रेशन", "en": "File Compression"}, {"hi": "बफर मेमोरी", "en": "Buffer Memory"}, {"hi": "राइट प्रोटेक्ट नॉच (Write Protect Notch)", "en": "Write Protect Notch"}, {"hi": "डिस्क फॉर्मेटिंग", "en": "Disk Formatting"}], "answer": 2, "explanation_hi": "राइट प्रोटेक्ट नॉच (Write Protect Notch) एक भौतिक लॉक बटन होता है, जिसे सक्रिय करने पर कंप्यूटर डिवाइस के डेटा को केवल पढ़ (Read) सकता है, उसमें बदलाव नहीं कर सकता।", "explanation_en": "The Write Protect Notch is a physical lock switch which, when enabled, allows the computer to only read data from the device and prevents any modifications. ---"}, {"id": 46, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "सूर्य का अध्ययन करने वाले भारत के पहले अंतरिक्ष मिशन 'आदित्य-L1' (Aditya-L1) को 2 सितंबर, 2023 को किस प्रक्षेपण यान (रॉकेट) द्वारा छोड़ा गया था?", "question_en": "By which launch vehicle (rocket) was India's first solar exploration mission 'Aditya-L1' launched on September 2, 2023?", "options": [{"hi": "LVM3-M4", "en": ""}, {"hi": "PSLV-C25", "en": ""}, {"hi": "PSLV-C57 (PSLV-C57)", "en": "PSLV-C57"}, {"hi": "GSLV-F10", "en": ""}], "answer": 2, "explanation_hi": "आदित्य-L1 सूर्य मिशन को इसरो के पी.एस.एल.वी.-सी57 (PSLV-C57) रॉकेट द्वारा सफलतापूर्वक लॉन्च किया गया था।", "explanation_en": "The Aditya-L1 solar mission was successfully launched by ISRO's PSLV-C57 rocket. ---"}, {"id": 47, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "वेब डेवलपमेंट में 'REST API' के अंतर्गत 'CRUD' (Create, Read, Update, Delete) क्रियाओं में से डेटा को अपडेट (संसोधित) करने हेतु किस एच.टी.टी.पी. (HTTP) विधि का उपयोग किया जाता है?", "question_en": "In web development, under 'REST API' operations of 'CRUD' (Create, Read, Update, Delete), which HTTP method is utilized to update (modify) data?", "options": [{"hi": "POST", "en": ""}, {"hi": "PUT", "en": ""}, {"hi": "DELETE", "en": ""}, {"hi": "GET", "en": ""}], "answer": 1, "explanation_hi": "REST API में डेटा सहेजने/अपडेट करने के लिए 'PUT' का, नया डेटा जोड़ने के लिए 'POST' का और डेटा मंगाने के लिए 'GET' विधि का उपयोग किया जाता है।", "explanation_en": "In REST API, 'PUT' is used to update data, 'POST' is used to create new data, and 'GET' is used to retrieve data. ---"}, {"id": 48, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "भारतीय अंतरिक्ष अनुसंधान संगठन (ISRO) की आधिकारिक स्थापना किस तिथि को की गई थी तथा इसे किस वर्ष भारत सरकार के नव-गठित 'अंतरिक्ष विभाग' के दायरे में लाया गया?", "question_en": "On which date was the Indian Space Research Organisation (ISRO) officially established, and in which year was it brought under the newly formed 'Department of Space' by the Government of India?", "options": [{"hi": "15 अगस्त 1969; वर्ष 1972 (15 August 1969; Year 1972)", "en": "15 August 1969; Year 1972"}, {"hi": "15 अगस्त 1947; वर्ष 1969", "en": "15 August 1947; Year 1969"}, {"hi": "10 मई 1974; वर्ष 1980", "en": "10 May 1974; Year 1980"}, {"hi": "26 जनवरी 1950; वर्ष 1962", "en": "26 January 1950; Year 1962"}], "answer": 0, "explanation_hi": "इसरो की स्थापना 15 अगस्त 1969 को की गई थी और सितंबर 1972 में इसे अंतरिक्ष विभाग (DoS) के अंतर्गत लाया गया।", "explanation_en": "ISRO was established on August 15, 1969, and in September 1972 it was brought under the administrative control of the Department of Space. ---"}, {"id": 49, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "विभिन्न ऑप्टिकल डिस्क प्रौद्योगिकियों में प्रयुक्त होने वाली लेज़र तरंगदैर्ध्य (Wavelength) के संदर्भ में कौन सा मिलान पूरी तरह सत्य है?", "question_en": "With respect to laser wavelengths used in different optical disc technologies, which of the following matchings is completely true?", "options": [{"hi": "सीडी - 405nm, डीवीडी - 780nm, ब्लू-रे - 650nm", "en": "CD - 405nm, DVD - 780nm, Blu-ray - 650nm"}, {"hi": "सीडी - 650nm, डीवीडी - 405nm, ब्लू-रे - 780nm", "en": "CD - 650nm, DVD - 405nm, Blu-ray - 780nm"}, {"hi": "सीडी (CD) - 780nm (लाल), डीवीडी (DVD) - 650nm (लाल), ब्लू-रे (BRD) - 405nm (नीला-बैंगनी)", "en": "CD - 780nm (Red), DVD - 650nm (Red), Blu-ray (BRD) - 405nm (Blue-Violet)"}, {"hi": "तीनों में केवल 780nm की लाल लेज़र प्रयुक्त होती है", "en": "Red laser of 780nm only is used in all three"}], "answer": 2, "explanation_hi": "सीडी में 780nm लाल लेज़र, डीवीडी में 650nm लाल लेज़र तथा ब्लू-रे में अत्यधिक पतली 405nm की नीली-बैंगनी लेज़र प्रयुक्त होती है जिससे डेटा अधिक सघनता से लिखा जा सकता है।", "explanation_en": "CD uses a 780nm red laser, DVD uses a 650nm red laser, and Blu-ray uses a very thin 405nm blue-violet laser, allowing data to be written with greater density. ---"}, {"id": 50, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "भारतीय अंतरिक्ष अनुसंधान के क्षेत्र में किन प्रसिद्ध वैज्ञानिकों को क्रमशः 'मून मैन ऑफ इंडिया' (Moon Man of India) और 'रॉकेट वुमन ऑफ इंडिया' (Rocket Woman of India) के नाम से जाना जाता है?", "question_en": "In the field of Indian space exploration, which famous scientists are known as the 'Moon Man of India' and 'Rocket Woman of India', respectively?", "options": [{"hi": "डॉ. के. सिवन और कल्पना कालाहस्ती", "en": "Dr. Sivan and Kalpana Kalahasti"}, {"hi": "एम. अन्नादुरई और ऋतु करिधाल श्रीवास्तव (M. Annadurai and Ritu Karidhal Srivastava)", "en": "M. Annadurai and Ritu Karidhal Srivastava"}, {"hi": "डॉ. राजा रमन्ना और ऋतु करिधाल श्रीवास्तव", "en": "Dr. Raja Ramanna and Ritu Karidhal Srivastava"}, {"hi": "डॉ. के. राधाकृष्णन और नंदिनी हरिनाथ", "en": "Dr. K. Radhakrishnan and Nandini Harinath"}], "answer": 1, "explanation_hi": "एम. अन्नादुरई (चंद्रयान-1 के प्रोजेक्ट डायरेक्टर) को 'मून मैन ऑफ इंडिया' तथा ऋतु करिधाल श्रीवास्तव को मंगलयान और चंद्रयान-2 में महत्वपूर्ण भूमिका हेतु 'रॉकेट वुमन ऑफ इंडिया' कहा जाता है।", "explanation_en": "M. Annadurai (Project Director of Chandrayaan-1) is known as 'Moon Man of India' and Ritu Karidhal Srivastava is called 'Rocket Woman of India' for her significant roles in Mangalyaan and Chandrayaan-2. ---"}]};
+
+/* ===== Bodhi — भाषा टॉगल + प्रश्न-प्रकार फ़ॉर्मैटर ===== */
+var BODHI_LANG = (function(){ try{ return localStorage.getItem("bodhi_lang")||"hi"; }catch(e){ return "hi"; } })();
+function langSegHTML(){
+  var L=BODHI_LANG, o=function(v,t){ return '<button type="button" class="lang-b'+(L===v?" on":"")+'" data-lang="'+v+'">'+t+'</button>'; };
+  return o("hi","हिंदी")+o("en","English")+o("bi","दोनों");
+}
+function paintLang(){
+  ["qLang","coverLang"].forEach(function(id){
+    var box=document.getElementById(id); if(!box) return;
+    box.innerHTML=langSegHTML();
+    box.querySelectorAll(".lang-b").forEach(function(b){
+      b.addEventListener("click",function(){ setBodhiLang(b.getAttribute("data-lang")); });
+    });
+  });
+}
+function setBodhiLang(l){
+  BODHI_LANG=l;
+  try{ localStorage.setItem("bodhi_lang",l); }catch(e){}
+  paintLang();
+  try{ if(typeof renderQuestion==="function" && document.getElementById("testScreen")
+        && document.getElementById("testScreen").style.display==="block"){ renderQuestion(); } }catch(e){}
+  try{ if(typeof renderReview==="function" && document.getElementById("resultScreen")
+        && document.getElementById("resultScreen").style.display==="block"){ renderReview(); } }catch(e){}
+}
+function bodhiEsc(t){ return String(t==null?"":t)
+  .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function _bodhiPoints(t){
+  /* कथन 1/2, Statement 1/2, तथा "1. … 2. …" बिंदुओं को नई पंक्ति में तोड़ो */
+  t = t.replace(/\s*(कथन\s*\d+\s*[:：])/g,"\n$1")
+       .replace(/\s*(Statement\s*\d+\s*[:：])/gi,"\n$1")
+       .replace(/([।;?])\s*(\d+\.\s)/g,"$1\n$2")
+       .replace(/(\?|\:)\s*(\d+\.\s)/g,"$1\n$2")
+       .replace(/([।;,])\s*(\d+\.\s)/g,"$1\n$2");
+  return t.replace(/^\n+/,"").replace(/\n[ \t]+/g,"\n");
+}
+function _bodhiMatchTable(raw){
+  var t=String(raw);
+  var reI=/(सूची|List)[\s\-–—]*I(?!I)\s*(?:\([^)]*\))?\s*[:：]/i;
+  var reII=/(सूची|List)[\s\-–—]*II\s*(?:\([^)]*\))?\s*[:：]/i;
+  var mI=t.match(reI), mII=t.match(reII);
+  if(!mI||!mII||mII.index<=mI.index) return null;
+  var intro=t.slice(0,mI.index).trim();
+  var segI=t.slice(mI.index+mI[0].length,mII.index).trim().replace(/[;।,]\s*$/,"");
+  var rest=t.slice(mII.index+mII[0].length);
+  var mo=rest.match(/(सही\s*मिलान|नीचे\s*दिए|सुमेलित|Choose|Select|Match|कूट)/i);
+  var segII, outro="";
+  if(mo){ segII=rest.slice(0,mo.index).trim(); outro=rest.slice(mo.index).trim(); }
+  else segII=rest.trim();
+  segII=segII.replace(/[;।,]\s*$/,"");
+  var sp=function(seg,re){ return seg.split(re).map(function(x){return x.trim();}).filter(Boolean); };
+  var A=sp(segI,/\s*,\s*(?=[A-Z]\.)/), B=sp(segII,/\s*,\s*(?=\d+\.)/);
+  if(A.length<2||B.length<2) return null;
+  var n=Math.max(A.length,B.length), rows="";
+  for(var k=0;k<n;k++) rows+="<tr><td>"+bodhiEsc(A[k]||"")+"</td><td>"+bodhiEsc(B[k]||"")+"</td></tr>";
+  return (intro?bodhiEsc(intro)+"\n":"")
+       + '<table class="match-tbl"><tr><th>'+bodhiEsc(mI[1])+'-I</th><th>'+bodhiEsc(mII[1])+'-II</th></tr>'+rows+'</table>'
+       + (outro?bodhiEsc(outro):"");
+}
+function bodhiFmt(raw){
+  if(!raw) return "";
+  var mt=_bodhiMatchTable(raw);
+  if(mt) return mt;
+  return bodhiEsc(_bodhiPoints(String(raw)));
+}
+
+const QUESTIONS = Array.isArray(TEST.questions) ? TEST.questions : [];
+const letters = ["A", "B", "C", "D"];
+const TOTAL_TIME_SECONDS = Math.max(0, Number(TEST.durationMinutes || 0) * 60);
+const MARKS = Number(TEST.marksPerQuestion || 2);
+const NEG = Number(TEST.negativeMarks || 0);
+const RANKING_ENABLED = Boolean(TEST.rankingEnabled && TEST.firebaseConfig && TEST.firebaseConfig.projectId);
+const FIREBASE_CONFIG = TEST.firebaseConfig || null;
+let current = 0, answers = [], review = [], remaining = TOTAL_TIME_SECONDS, timerId = null, startedAt = 0;
+let studentName = "", lastResult = null, testActive = false;
+const LEADER_TOP = 20;
+const TEST_KEY = String(TEST.testId || "bodhi-test");
+const PROG_KEY = "jaiho_prog_" + TEST_KEY;
+function storeGet(k){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : null; }catch(e){ return null; } }
+function storeSet(k, obj){ try{ localStorage.setItem(k, JSON.stringify(obj)); }catch(e){} }
+function storeDel(k){ try{ localStorage.removeItem(k); }catch(e){} }
+function saveProgress(){ if(!testActive) return; storeSet(PROG_KEY, {v:1, name:studentName, answers:answers, review:review, current:current, remaining:remaining, startedAt:startedAt, savedAt:Date.now()}); }
+async function tryResume(){
+  const p = storeGet(PROG_KEY);
+  if(!p || !p.name || !Array.isArray(p.answers) || p.answers.length !== QUESTIONS.length) return;
+  const ok = await askConfirm(p.name + " — इसी test का आपका अधूरा प्रयास मिला। क्या वहीं से जारी करें?\n(रद्द करने पर अधूरा प्रयास हटेगा और नया शुरू होगा।)", "वहीं से जारी करें", "नया शुरू करें");
+  if(!ok){ storeDel(PROG_KEY); return; }
+  studentName = String(p.name);
+  answers = p.answers.map(a => (a === null || a === undefined) ? null : Number(a));
+  review = (Array.isArray(p.review) && p.review.length === QUESTIONS.length) ? p.review.map(Boolean) : Array(QUESTIONS.length).fill(false);
+  current = Math.min(Math.max(0, Number(p.current) || 0), QUESTIONS.length - 1);
+  remaining = TOTAL_TIME_SECONDS ? Math.max(5, Math.min(TOTAL_TIME_SECONDS, Number(p.remaining) || TOTAL_TIME_SECONDS)) : 0;
+  startedAt = Number(p.startedAt) || Date.now();
+  testActive = true;
+  el("homeScreen").style.display = "none"; el("resultScreen").style.display = "none"; el("testScreen").style.display = "block";
+  renderQuestion(); startTimer(); requestAnimationFrame(()=>scrollToQuestion("auto"));
+}
+function el(id){ return document.getElementById(id); }
+function askConfirm(message, okText, cancelText){
+  return new Promise(resolve=>{
+    var old = document.getElementById("jhConfirmOverlay");
+    if(old) old.remove();
+    var ov = document.createElement("div");
+    ov.id = "jhConfirmOverlay";
+    ov.style.cssText = "position:fixed;inset:0;z-index:99999;background:rgba(3,7,16,.72);display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px);";
+    var box = document.createElement("div");
+    box.style.cssText = "background:linear-gradient(180deg,#0A1426,#0E1B33);border:1px solid rgba(217,174,95,.34);max-width:420px;width:100%;border-radius:18px;padding:22px;box-shadow:0 22px 60px rgba(0,0,0,.55);font-family:'Mukta',Arial,sans-serif;";
+    var msg = document.createElement("p");
+    msg.style.cssText = "margin:0 0 18px;color:#F2EBDA;font-weight:500;line-height:1.7;font-size:15.5px;white-space:pre-line;";
+    msg.textContent = message;
+    var row = document.createElement("div");
+    row.style.cssText = "display:flex;gap:10px;flex-wrap:wrap;";
+    var okBtn = document.createElement("button");
+    okBtn.textContent = okText || "ठीक है";
+    okBtn.style.cssText = "flex:1;min-width:120px;border:0;cursor:pointer;padding:13px 16px;border-radius:13px;font-weight:900;font-size:15px;font-family:inherit;background:linear-gradient(160deg,#F2CD88,#D9AE5F);color:#0d1626;";
+    var cancelBtn = document.createElement("button");
+    cancelBtn.textContent = cancelText || "रद्द करें";
+    cancelBtn.style.cssText = "flex:1;min-width:120px;border:0;cursor:pointer;padding:13px 16px;border-radius:13px;font-weight:900;font-size:15px;font-family:inherit;background:rgba(255,255,255,.06);color:#98A6BE;";
+    function done(val){ ov.remove(); resolve(val); }
+    okBtn.addEventListener("click", function(){ done(true); });
+    cancelBtn.addEventListener("click", function(){ done(false); });
+    row.appendChild(cancelBtn); row.appendChild(okBtn);
+    box.appendChild(msg); box.appendChild(row);
+    ov.appendChild(box); document.body.appendChild(ov);
+  });
+}
+function escapeHTML(s){ return String(s ?? "").replace(/[&<>"']/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m])); }
+function numClean(n){ return Number.isInteger(Number(n)) ? String(Number(n)) : String(Number(n).toFixed(2)).replace(/\.00$/,""); }
+function formatTime(sec){ sec=Math.max(0, Math.floor(sec||0)); const m=Math.floor(sec/60), s=sec%60; return `${m}:${String(s).padStart(2,"0")}`; }
+function splitTitle(title, hi){ if(!String(hi||"").trim()) return escapeHTML(String(title||"परीक्षा")); const t=String(title||"Bodhi Classes परीक्षा"); const h=String(hi||"").trim(); if(h && t.toLowerCase().includes(h.toLowerCase())){ const i=t.toLowerCase().indexOf(h.toLowerCase()); return `${escapeHTML(t.slice(0,i))}<span>${escapeHTML(t.slice(i,i+h.length))}</span>${escapeHTML(t.slice(i+h.length))}`; } return `${escapeHTML(t)} <span>Test</span>`; }
+function initHome(){
+  document.title = `Bodhi Classes — ${TEST.title || "परीक्षा"}`;
+  el("topSub").textContent = TEST.subtitle || "UPPCS Prelims 2026 / RO-ARO Practice";
+  el("pillText").textContent = TEST.pill || "🏆 Daily Rank Ready";
+  el("tagText").textContent = TEST.tag || "UPPCS Prelims 2026 / RO-ARO";
+  el("homeTitle").innerHTML = splitTitle(TEST.title, TEST.highlight);
+  el("homeSub").textContent = TEST.description || "नाम डालकर टेस्ट शुरू करें। Submit के बाद score, analysis और rank section दिखेगा।";
+  el("qCountBox").textContent = QUESTIONS.length;
+  el("timeBox").textContent = TOTAL_TIME_SECONDS ? `${TEST.durationMinutes} मिनट` : "असीमित";
+  el("marksBox").textContent = `+${numClean(MARKS)}`;
+  el("negBox").textContent = NEG ? `-${numClean(NEG)}` : "0";
+  el("examTitle").textContent = `Bodhi Classes · ${TEST.shortTitle || TEST.title || "परीक्षा"}`;
+  if(!TEST.rankingEnabled){ var _rb=el("rankBoard"); if(_rb) _rb.style.display="none"; }
+    paintLang();
+    el("footerNote").textContent = TEST.footerCredit || "© Bodhi Classes · Designed by Aditya Chauhan · @BodhiClasses";
+  answers = Array(QUESTIONS.length).fill(null); review = Array(QUESTIONS.length).fill(false);
+  if(!QUESTIONS.length){ el("nameErr").textContent = "इस परीक्षा में प्रश्न नहीं मिले।"; }
+}
+function scrollToQuestion(behavior="smooth"){
+  const target = el("questionCard") || document.querySelector(".question-card");
+  if(target) target.scrollIntoView({behavior, block:"start"});
+}
+function renderWithoutJump(changeFn){
+  const y = window.scrollY;
+  changeFn();
+  requestAnimationFrame(()=>window.scrollTo({top:y, left:0, behavior:"auto"}));
+}
+function startTest(){
+  const n = el("studentName").value.trim().replace(/\s+/g," ");
+  if(!n){ el("nameErr").textContent = "कृपया अपना नाम लिखें।"; el("studentName").focus(); return; }
+  if(!QUESTIONS.length){ el("nameErr").textContent = "प्रश्न नहीं मिले।"; return; }
+  studentName = n; current = 0; answers = Array(QUESTIONS.length).fill(null); review = Array(QUESTIONS.length).fill(false); remaining = TOTAL_TIME_SECONDS; startedAt = Date.now(); testActive = true;
+  el("homeScreen").style.display = "none"; el("resultScreen").style.display = "none"; el("testScreen").style.display = "block";
+  renderQuestion(); startTimer(); saveProgress(); requestAnimationFrame(()=>scrollToQuestion("smooth"));
+}
+function startTimer(){ if(timerId) clearInterval(timerId); el("timer").textContent = TOTAL_TIME_SECONDS ? formatTime(remaining) : "असीमित"; if(!TOTAL_TIME_SECONDS) return; timerId = setInterval(()=>{ remaining--; el("timer").textContent = formatTime(remaining); if(remaining % 5 === 0) saveProgress(); if(remaining <= 60) el("timer").style.background = "rgba(232,24,24,.75)"; if(remaining <= 0){ clearInterval(timerId); calculateResult(true); } },1000); }
+function renderQuestion(){
+  const q = QUESTIONS[current]; if(!q) return;
+  el("qno").textContent = `प्रश्न ${current+1} / ${QUESTIONS.length}`;
+  el("topic").textContent = [q.topic_hi, q.topic_en].filter(Boolean).join(" / ") || "General Studies";
+  var _hi=q.question_hi||"", _en=q.question_en||"";
+    if(BODHI_LANG==="en" && _en){ el("qtext").innerHTML = bodhiFmt(_en); el("qtextEn").classList.add("hidden"); }
+    else { el("qtext").innerHTML = bodhiFmt(_hi||_en);
+           if(BODHI_LANG==="bi" && _en && _hi){ el("qtextEn").innerHTML = bodhiFmt(_en); el("qtextEn").classList.remove("hidden"); }
+           else { el("qtextEn").innerHTML=""; el("qtextEn").classList.add("hidden"); } }
+    paintLang();
+  el("options").innerHTML = (q.options||[]).map((op,i)=>{var oh=(op&&op.hi)||"", oe=(op&&op.en)||"";var body = (BODHI_LANG==="en"&&oe) ? `<div class="op-hi">${bodhiEsc(oe)}</div>` : (BODHI_LANG==="bi"&&oe&&oe!==oh) ? `<div class="op-hi">${bodhiEsc(oh)}</div><div class="op-en">${bodhiEsc(oe)}</div>` : `<div class="op-hi">${bodhiEsc(oh||oe)}</div>`;return `<button class="option ${answers[current]===i?"selected":""}" onclick="selectAnswer(${i})"><div class="letter">${letters[i]}</div><div>${body}</div></button>`;}).join("");
+  el("reviewBtn").textContent = review[current] ? "★ समीक्षा हेतु चिह्नित" : "☆ समीक्षा हेतु चिह्नित करें";
+  const done = answers.filter(a=>a!==null).length; el("progressBar").style.width = `${(done/QUESTIONS.length)*100}%`;
+  renderPalette(); updateMiniStats();
+}
+function renderPalette(){ el("palette").innerHTML = QUESTIONS.map((_,i)=>`<button class="dot ${i===current?"current":""} ${answers[i]!==null?"answered":""} ${review[i]?"review":""}" onclick="goQ(${i})">${i+1}</button>`).join(""); }
+function updateMiniStats(){ el("attemptedCount").textContent = answers.filter(a=>a!==null).length; el("reviewCount").textContent = review.filter(Boolean).length; }
+function selectAnswer(i){ answers[current]=i; renderQuestion(); saveProgress(); }
+function clearAnswer(){ answers[current]=null; renderQuestion(); saveProgress(); }
+function toggleReview(){ review[current]=!review[current]; renderQuestion(); saveProgress(); }
+function nextQ(){ if(current < QUESTIONS.length-1){ renderWithoutJump(()=>{ current++; renderQuestion(); saveProgress(); }); } }
+function prevQ(){ if(current > 0){ renderWithoutJump(()=>{ current--; renderQuestion(); saveProgress(); }); } }
+function goQ(i){ renderWithoutJump(()=>{ current=i; renderQuestion(); saveProgress(); }); }
+async function submitTest(){ const left = answers.filter(a=>a===null).length; const msg = left ? `${left} प्रश्न अभी अनुत्तरित हैं। फिर भी परीक्षा समाप्त करनी है?` : "परीक्षा समाप्त करनी है?"; if(await askConfirm(msg, "हाँ, समाप्त करें", "अभी नहीं")) calculateResult(false); }
+function calculateResult(auto){
+  if(timerId) clearInterval(timerId);
+  testActive = false; storeDel(PROG_KEY);
+  const timeTaken = startedAt ? Math.floor((Date.now()-startedAt)/1000) : (TOTAL_TIME_SECONDS - remaining);
+  let correct=0, wrong=0, attempted=0;
+  QUESTIONS.forEach((q,i)=>{ if(answers[i]!==null){ attempted++; if(answers[i]===q.answer) correct++; else wrong++; } });
+  const skipped = QUESTIONS.length - attempted; const marks = correct*MARKS - wrong*NEG; const maxMarks = QUESTIONS.length*MARKS; const percent = maxMarks ? Math.max(0, Math.round((marks/maxMarks)*100)) : 0; const accuracy = attempted ? Math.round((correct/attempted)*100) : 0;
+  let band = "अभ्यास जारी रखें — व्याख्या पढ़कर कमज़ोर हिस्से मज़बूत करें।";
+  if(percent >= 80) band = "बहुत अच्छा प्रदर्शन! अब गति और पेचीदा कथनों पर पकड़ और मज़बूत करें।"; else if(percent >= 60) band = "अच्छा प्रयास। गलत प्रश्नों की व्याख्या से दोहराव कीजिए।"; else if(percent >= 40) band = "औसत प्रदर्शन। अवधारणाएँ और तथ्य क्रमबद्ध ढंग से पढ़ें।"; else band = "मूल दोहराव आवश्यक है। व्याख्या वाला भाग ध्यान से पढ़ें।";
+  lastResult = { testId: TEST.testId || "bodhi-test", testTitle: TEST.title || "Jai Ho Study Test", name: studentName, score: Number(marks.toFixed(2)), maxMarks: Number(maxMarks.toFixed(2)), percent, attempted, correct, wrong, skipped, accuracy, timeTaken, totalQuestions: QUESTIONS.length, submittedAt: new Date().toISOString() };
+  el("resultMessage").textContent = auto ? `समय समाप्त! ${band}` : band;
+  el("studentStrip").innerHTML = `<span>नाम: ${escapeHTML(studentName)}</span><span>लगा समय: ${formatTime(timeTaken)}</span><span>प्रश्न: ${QUESTIONS.length}</span>`;
+  el("finalMarks").textContent = `${marks.toFixed(2)} / ${numClean(maxMarks)}`; el("finalAttempted").textContent = attempted; el("finalCorrect").textContent = correct; el("finalWrong").textContent = wrong; el("finalAccuracy").textContent = `${accuracy}%`; el("finalTime").textContent = formatTime(timeTaken); el("scorePercent").textContent = `${percent}%`; el("scoreCircle").style.setProperty("--scoreDeg", `${percent*3.6}deg`);
+  renderReview(); saveAttemptAndLoadRank(lastResult);
+  el("testScreen").style.display = "none"; el("resultScreen").style.display = "block"; window.scrollTo({top:0, behavior:"smooth"});
+}
+function renderReview(){ el("reviewList").innerHTML = QUESTIONS.map((q,i)=>{
+  const user = answers[i];
+  const status = user===null ? "skip" : (user===q.answer ? "ok" : "bad");
+  const statusText = user===null ? "अनुत्तरित" : (user===q.answer ? "सही" : "गलत");
+  const optTxt = function(o){ if(!o) return "";
+    var oh=o.hi||"", oe=o.en||"";
+    if(BODHI_LANG==="en" && oe) return oe;
+    if(BODHI_LANG==="bi" && oe && oe!==oh) return oh+" / "+oe;
+    return oh||oe; };
+  const utext = user===null ? "—" : `${letters[user]}. ${optTxt(q.options[user])}`;
+  const correctText = `${letters[q.answer]}. ${optTxt(q.options[q.answer])}`;
+  var qMain = (BODHI_LANG==="en" && q.question_en) ? q.question_en : (q.question_hi||q.question_en||"");
+  var qSub  = (BODHI_LANG==="bi" && q.question_en && q.question_hi) ? q.question_en : "";
+  var eMain = (BODHI_LANG==="en" && q.explanation_en) ? q.explanation_en : (q.explanation_hi||q.explanation_en||"");
+  var eSub  = (BODHI_LANG==="bi" && q.explanation_en && q.explanation_hi) ? q.explanation_en : "";
+  return `<div class="review-item"><div class="review-head"><strong>प्रश्न ${i+1}</strong>`
+    + `<span class="badge ${status}">${statusText}</span></div>`
+    + `<div class="review-content"><div style="white-space:pre-line"><b>${bodhiFmt(qMain)}</b></div>`
+    + (qSub?`<div class="qtext-en" style="white-space:pre-line">${bodhiFmt(qSub)}</div>`:"")
+    + `<div class="answer-line"><b>आपका उत्तर:</b> ${escapeHTML(utext)}<br><b>सही उत्तर:</b> ${escapeHTML(correctText)}</div>`
+    + (eMain?`<div class="explain"><b>व्याख्या:</b> ${escapeHTML(eMain)}`
+        + (eSub?`<br><span style="opacity:.75">${escapeHTML(eSub)}</span>`:"") + `</div>`:"")
+    + `</div></div>`;
+}).join(""); }
+function restartTest(){ current=0; answers=Array(QUESTIONS.length).fill(null); review=Array(QUESTIONS.length).fill(false); remaining=TOTAL_TIME_SECONDS; studentName=""; startedAt=0; testActive=false; storeDel(PROG_KEY); if(timerId) clearInterval(timerId); el("studentName").value=""; el("nameErr").textContent=""; el("timer").style.background="rgba(255,255,255,.15)"; el("resultScreen").style.display="none"; el("homeScreen").style.display="block"; setTimeout(()=>el("studentName").focus(),50); window.scrollTo({top:0, behavior:"smooth"}); }
+let fbBundle = null;
+function normalizeKey(s){
+  return String(s||"").trim().toLowerCase().replace(/[^a-z0-9\u0900-\u097f]+/g,"-").replace(/^-+|-+$/g,"").slice(0,90) || "student";
+}
+function getLocalUid(){
+  const key = "jaiho_rank_local_uid";
+  try{
+    let uid = localStorage.getItem(key);
+    if(!uid){
+      uid = "local-" + Math.random().toString(36).slice(2) + "-" + Date.now().toString(36);
+      localStorage.setItem(key, uid);
+    }
+    return uid;
+  }catch(e){
+    return "local-" + Math.random().toString(36).slice(2) + "-" + Date.now().toString(36);
+  }
+}
+function makeRankSort(score,timeTaken,submittedMs){
+  const scorePart = String(100000000000 - Math.round(Number(score||0)*100)).padStart(12,"0");
+  const timePart = String(Math.max(0, Math.floor(Number(timeTaken||0)))).padStart(7,"0");
+  const datePart = String(Number(submittedMs||Date.now())).padStart(13,"0");
+  return `${scorePart}_${timePart}_${datePart}`;
+}
+function withTimeout(promise, ms, message){
+  let timer;
+  const timeout = new Promise((_, reject)=>{ timer = setTimeout(()=>reject(new Error(message || "Firebase timeout")), ms); });
+  return Promise.race([promise, timeout]).finally(()=>clearTimeout(timer));
+}
+function loadScript(src){
+  return new Promise((resolve, reject)=>{
+    var existing = document.querySelector('script[data-fb="1"][src="'+src+'"]');
+    if(existing){ resolve(); return; }
+    var s = document.createElement("script");
+    s.src = src; s.async = true; s.setAttribute("data-fb","1");
+    s.onload = ()=>resolve();
+    s.onerror = ()=>reject(new Error("Firebase SDK load नहीं हुआ। Internet ON रखें।"));
+    document.head.appendChild(s);
+  });
+}
+async function ensureFirebaseSdk(){
+  if(window.firebase && firebase.initializeApp && firebase.firestore) return;
+  await loadScript("https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js");
+  await loadScript("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js");
+}
+async function getFirebase(){
+  if(fbBundle) return fbBundle;
+  if(!FIREBASE_CONFIG || !FIREBASE_CONFIG.projectId) throw new Error("Firebase config missing");
+  await ensureFirebaseSdk();
+  if(!window.firebase || !firebase.initializeApp || !firebase.firestore){
+    throw new Error("Firebase SDK load नहीं हुआ। Internet ON रखें। अगर local file में दिक्कत हो तो HTML को hosting/link से खोलें।");
+  }
+  const app = firebase.apps && firebase.apps.length ? firebase.app() : firebase.initializeApp(FIREBASE_CONFIG);
+  const db = firebase.firestore(app);
+  const user = { uid: getLocalUid() };
+  const fs = {
+    doc: (dbRef, ...path)=>dbRef.doc(path.join("/")),
+    collection: (dbRef, ...path)=>dbRef.collection(path.join("/")),
+    setDoc: (ref, data, opts)=>withTimeout(ref.set(data, opts), 20000, "Firestore write timeout. Rules और Internet check करें."),
+    getDoc: (ref)=>withTimeout(ref.get(), 20000, "Firestore read timeout. Rules और Internet check करें."),
+    serverTimestamp: ()=>firebase.firestore.FieldValue.serverTimestamp(),
+    query: (base, ...ops)=>ops.reduce((q,op)=>op(q), base),
+    orderBy: (field, dir)=>q=>q.orderBy(field, dir),
+    limit: (n)=>q=>q.limit(n),
+    getDocs: (q)=>withTimeout(q.get(), 20000, "Firestore read timeout. Rules और Internet check करें.")
+  };
+  fbBundle = {db, user, fs};
+  return fbBundle;
+}
+function renderRankList(items){
+  const top = items.slice(0, LEADER_TOP);
+  if(!top.length){ el("leaderList").innerHTML = ""; el("leaderHint").textContent = "अभी इस test में कोई rank data नहीं है।"; return; }
+  el("leaderHint").textContent = `इसी test की live Top ${LEADER_TOP} list — पूरी rank list सर के dashboard से आएगी।`;
+  el("leaderList").innerHTML = top.map((x,i)=>`<li><span class="lr">${i+1}</span><div><b>${escapeHTML(x.name||"Student")}</b><br><small>${x.accuracy!=null?`Accuracy ${x.accuracy}%`:""} ${x.timeTaken!=null?`• Time ${formatTime(x.timeTaken)}`:""}</small></div><span class="score">${escapeHTML(x.score ?? 0)}</span></li>`).join("");
+}
+function todayDateStr(){ const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+async function saveAttemptAndLoadRank(result){
+  el("ownRank").textContent = "—"; el("leaderList").innerHTML = "";
+  if(TEST.publishDateStr && TEST.publishDateStr !== todayDateStr()){
+    el("rankStatus").textContent = "यह टेस्ट अपनी launch वाली तारीख़ (" + TEST.publishDateStr + ") को ही live rank के लिए active था। अब यह सिर्फ़ practice के तौर पर काम करेगा — आपके marks और result पूरी तरह सुरक्षित हैं।";
+    el("leaderHint").textContent = "पुराने दिन के टेस्ट में अब live rank नहीं दिखेगी — नए दिन के टेस्ट में rank ज़रूर दिखेगी।";
+    return;
+  }
+  if(!RANKING_ENABLED || !FIREBASE_CONFIG){
+    el("rankStatus").textContent = "इस टेस्ट में live rank चालू नहीं है — यह सिर्फ़ practice के लिए है। आपके marks और result पूरी तरह दिखेंगे।";
+    el("leaderHint").textContent = "live rank चालू होने पर Top " + LEADER_TOP + " यहाँ अपने-आप दिखेगा।";
+    return;
+  }
+  el("rankStatus").textContent = "Rank निकाली जा रही है…";
+  el("leaderHint").textContent = "Leaderboard load हो रही है…";
+  try{
+    const testId = normalizeKey(result.testId || TEST.testId || "bodhi-test");
+    const nameKey = normalizeKey(result.name || "student");
+
+    const localDoneKey = "jaiho_done_" + testId + "_" + nameKey;
+    const localDone = storeGet(localDoneKey);
+    if(localDone && localDone.rankSort){
+      el("ownRank").textContent = "#" + (localDone.rank != null ? localDone.rank : "—");
+      el("rankStatus").textContent = "यह Retake practice था — rank में नहीं गिना गया। आपकी असली rank पहले प्रयास (" + numClean(localDone.score || 0) + " marks) से है: " + localDone.rank + " / " + localDone.total + ". (यह आपके phone में save है, extra internet/reads खर्च नहीं हुए।) Retake जितनी बार चाहें करें।";
+      renderRankList(Array.isArray(localDone.topList) ? localDone.topList : []);
+      return;
+    }
+
+    const {db,user,fs} = await withTimeout(getFirebase(), 20000, "Firebase connect timeout. Internet check करें.");
+    const submittedMs = Date.now();
+    const attemptId = "n-" + nameKey + "-" + user.uid;
+    const col = fs.collection(db,"tests",testId,"attempts");
+    const attemptRef = fs.doc(db,"tests",testId,"attempts",attemptId);
+
+    let firstData = null; let isRetake = false;
+    const snap = await fs.getDoc(attemptRef);
+    if(snap && snap.exists){ firstData = snap.data(); isRetake = true; }
+
+    if(!isRetake){
+      const rankSort = makeRankSort(result.score, result.timeTaken, submittedMs);
+      const payload = { ...result, testId, attemptId, uid: user.uid, studentKey: nameKey,
+        name: result.name || "Student", score: Number(result.score || 0),
+        timeTaken: Number(result.timeTaken || 0), accuracy: Number(result.accuracy || 0),
+        rankSort, submittedMs, submittedServerAt: fs.serverTimestamp() };
+      try{
+        await fs.setDoc(attemptRef, payload);
+        firstData = payload;
+      }catch(werr){
+        const again = await fs.getDoc(attemptRef);
+        if(again && again.exists){ firstData = again.data(); isRetake = true; }
+        else throw werr;
+      }
+      if(!isRetake){
+        await fs.setDoc(fs.doc(db,"tests",testId), {
+          testId,
+          title: result.testTitle || TEST.title || "Jai Ho Study Test",
+          shortTitle: TEST.shortTitle || "",
+          subtitle: TEST.subtitle || "UPPCS Prelims 2026 / RO-ARO",
+          totalQuestions: result.totalQuestions || QUESTIONS.length,
+          maxMarks: result.maxMarks || QUESTIONS.length*MARKS,
+          updatedAtMs: submittedMs,
+          updatedAt: fs.serverTimestamp(),
+          footerCredit: TEST.footerCredit || "© Bodhi Classes · Designed by Aditya Chauhan · @BodhiClasses"
+        }, {merge:true});
+      }
+    }
+
+    const myRankSort = String(firstData.rankSort || "");
+    let rank = null, total = null;
+    if(typeof col.count === "function"){
+      const belowSnap = await withTimeout(col.where("rankSort","<",myRankSort).count().get(), 20000, "Rank count timeout");
+      const totalSnap = await withTimeout(col.count().get(), 20000, "Total count timeout");
+      rank = Number(belowSnap.data().count) + 1;
+      total = Number(totalSnap.data().count);
+    } else {
+      const listSnap = await fs.getDocs(fs.query(col, fs.orderBy("rankSort","asc"), fs.limit(1000)));
+      const ids = listSnap.docs.map(d=>d.id);
+      const pos = ids.indexOf(attemptId);
+      rank = pos >= 0 ? pos + 1 : null;
+      total = listSnap.size >= 1000 ? "1000+" : listSnap.size;
+    }
+
+    const topSnap = await fs.getDocs(fs.query(col, fs.orderBy("rankSort","asc"), fs.limit(LEADER_TOP)));
+    const topListData = topSnap.docs.map(d=>d.data());
+    renderRankList(topListData);
+    try{ storeSet(localDoneKey, { rankSort: myRankSort, rank: rank, total: total, score: (firstData && firstData.score != null ? firstData.score : 0), topList: topListData, ts: Date.now() }); }catch(e){}
+
+    if(rank != null){
+      el("ownRank").textContent = "#" + rank;
+      if(isRetake){
+        el("rankStatus").textContent = `यह Retake practice था — rank में नहीं गिना गया। आपकी असली rank पहले प्रयास (${numClean(firstData.score || 0)} marks) से है: ${rank} / ${total}. Retake जितनी बार चाहें करें।`;
+      } else {
+        el("rankStatus").textContent = `आपकी rank इस test में ${rank} / ${total} है (पहला प्रयास)। Tie में ज़्यादा marks, कम time, फिर पहले submit ऊपर रहता है।`;
+      }
+    } else {
+      el("ownRank").textContent = "—";
+      el("rankStatus").textContent = "Rank data sync में थोड़ी देर लग रही है — कुछ देर बाद Retake के submit पर फिर दिखेगी।";
+    }
+  }catch(err){
+    console.error(err);
+    const errText = String(err && err.message ? err.message : err || "");
+    const errCode = String(err && err.code ? err.code : "");
+    const isQuotaIssue = errCode.indexOf("resource-exhausted") !== -1 || /quota|resource.exhausted|exceeded|429/i.test(errText);
+    el("ownRank").textContent = "—";
+    if(isQuotaIssue){
+      el("rankStatus").textContent = "आज रैंक लिस्ट अभी बहुत व्यस्त चल रही है — आपके marks और result पूरी तरह सुरक्षित हैं। Rank कुछ देर बाद या कल अपने आप दिखने लगेगी।";
+      el("leaderHint").textContent = "थोड़ी देर बाद Retake करके submit करने पर Top 20 list फिर दिख जाएगी।";
+    } else {
+      el("rankStatus").textContent = "अभी rank list नहीं आ पाई — कोई चिंता की बात नहीं, आपके marks और result पूरी तरह सुरक्षित हैं।";
+      el("leaderHint").textContent = "थोड़ी देर बाद Retake करके submit करने पर rank दिख जाएगी।";
+    }
+  }
+}
+window.addEventListener("beforeunload", (e)=>{ if(testActive){ e.preventDefault(); e.returnValue = ""; } });
+window.addEventListener("DOMContentLoaded", ()=>{ try{ initHome(); }catch(e){ console.error(e); } try{ tryResume(); }catch(e){ console.error(e); } });
+</script>
+<script defer src="/assets/bodhi-watermark.js"></script>
+</body>
+</html>
