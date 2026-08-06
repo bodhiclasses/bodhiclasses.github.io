@@ -777,6 +777,13 @@ function caGroupOf(path){
       path.indexOf("घटनासार") !== -1) return "ghatnasar";
   return "anya";
 }
+var MONTH_MAP={"जनवरी":1,"फरवरी":2,"मार्च":3,"अप्रैल":4,"अप्रेल":4,"april":4,"मई":5,"जून":6,"जुलाई":7,"अगस्त":8,"सितंबर":9,"सितम्बर":9,"अक्टूबर":10,"अक्तूबर":10,"नवंबर":11,"नवम्बर":11,"दिसंबर":12,"दिसम्बर":12,"january":1,"february":2,"march":3,"may":5,"june":6,"july":7,"august":8,"september":9,"october":10,"november":11,"december":12};
+function monthNum(path){
+  var t=titleOf(path).toLowerCase();
+  var keys=Object.keys(MONTH_MAP);
+  for(var i=0;i<keys.length;i++){if(t.indexOf(keys[i])!==-1)return MONTH_MAP[keys[i]];}
+  return 99;
+}
 
 function groupTitle(label, count, unit){
   var d = document.createElement("div");
@@ -904,6 +911,7 @@ function addCaItems(){
   var shown = 0;
   CA_GROUPS.forEach(function(g){
     var arr = DATA.ca.filter(function(p){ return caGroupOf(p) === g.key; });
+    if(g.key==="anya") arr.sort(function(a,b){return monthNum(a)-monthNum(b);});
     if (!arr.length) return;
     var gt = groupTitle(g.label, arr.length);
     gt.classList.add("tacc-item"); gt.setAttribute("data-secitem", "ca");
