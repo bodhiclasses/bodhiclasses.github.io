@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bodhi Classes — परीक्षा</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Mukta:wght@300;400;500;600;700&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink0:#060B16; --ink1:#0A1426; --ink2:#0E1B33;
+    --glass:rgba(255,255,255,.035);
+    --line:rgba(217,174,95,.16); --line-2:rgba(217,174,95,.34);
+    --gold:#D9AE5F; --gold-hi:#F2CD88; --gold-deep:#8F6B26;
+    --cream:#F2EBDA; --mist:#98A6BE;
+    --blue:#7FB4FF; --green:#7FD6A4; --rose:#FF8FA0;
+    --shadow:0 18px 48px rgba(0,0,0,.45);
+    --radius:20px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; padding:18px;
+    font-family:'Mukta',"Noto Sans Devanagari","Segoe UI",Arial,sans-serif;
+    font-size:16px; color:var(--mist); background:var(--ink0);
+    min-height:100vh; -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(900px 500px at 12% -8%, rgba(217,174,95,.07), transparent 60%),
+      radial-gradient(760px 460px at 100% 0%, rgba(127,180,255,.05), transparent 60%);
+    background-attachment:fixed;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:8px}
+  /* ---------- टॉपबार ---------- */
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:8px 0 20px;color:var(--cream)}
+  .brand{display:flex;align-items:center;gap:13px}
+  .logo{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;
+    background:linear-gradient(160deg,var(--gold-hi),var(--gold-deep));color:#10192b;
+    font-family:'Rozha One',serif;font-size:28px;line-height:1;border:1px solid var(--line-2);
+    box-shadow:0 10px 26px rgba(217,174,95,.18)}
+  .brand h1{margin:0;font-family:'Rozha One',serif;font-weight:400;letter-spacing:.6px;
+    font-size:clamp(22px,3.4vw,34px);line-height:1.1;color:var(--cream)}
+  .brand p{margin:3px 0 0;color:var(--gold);font-weight:600;font-size:12.5px;letter-spacing:2px;text-transform:uppercase}
+  .pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);color:var(--gold);
+    background:var(--glass);padding:9px 14px;border-radius:999px;font-weight:600;font-size:13px;white-space:nowrap}
+  @media(max-width:900px){.topbar{align-items:flex-start;flex-direction:column;gap:10px}}
+  /* ---------- कार्ड ---------- */
+  .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:18px;align-items:stretch}
+  @media(max-width:900px){.hero{grid-template-columns:1fr}}
+  .card{background:linear-gradient(180deg,var(--ink1),rgba(14,27,51,.72));
+    border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .intro{padding:clamp(20px,3.4vw,34px);position:relative}
+  .tag{display:inline-block;background:rgba(217,174,95,.12);color:var(--gold-hi);
+    border:1px solid var(--line-2);padding:6px 13px;border-radius:999px;font-weight:600;font-size:12px;letter-spacing:1px}
+  .intro h2{margin:15px 0 10px;font-family:'Rozha One',serif;font-weight:400;color:var(--cream);
+    font-size:clamp(26px,4.4vw,44px);line-height:1.15;letter-spacing:.2px}
+  .intro h2 span{color:var(--gold);display:inline-block}
+  .intro .sub{font-size:15.5px;line-height:1.75;color:var(--mist);margin:12px 0 20px}
+  .info-grid{display:grid;grid-template-columns:repeat(4,minmax(108px,1fr));gap:10px;margin:22px 0}
+  @media(max-width:700px){.info-grid{grid-template-columns:repeat(2,1fr)}}
+  .info{border-radius:14px;padding:13px;background:var(--glass);border:1px solid var(--line)}
+  .info b{display:block;color:var(--gold-hi);font-size:19px;margin-bottom:3px;font-weight:700}
+  .info span{color:var(--mist);font-size:11px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase}
+  /* ---------- बटन ---------- */
+  .btns{display:flex;flex-wrap:wrap;gap:10px}
+  button{border:0;cursor:pointer;font-family:inherit}
+  .btn{padding:12px 18px;border-radius:13px;font-weight:600;font-size:14.5px;transition:.2s ease;
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none}
+  .btn.primary{background:linear-gradient(160deg,var(--gold-hi),var(--gold));color:#0d1626;
+    box-shadow:0 10px 24px rgba(217,174,95,.22)}
+  .btn.secondary{background:var(--glass);color:var(--gold);border:1px solid var(--line-2)}
+  .btn.light{background:rgba(255,255,255,.05);color:var(--cream);border:1px solid var(--line)}
+  .btn.green{background:linear-gradient(160deg,#8fe3b6,var(--green));color:#062617}
+  .btn:hover{transform:translateY(-2px);filter:brightness(1.06)}
+  .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+  /* ---------- निर्देश ---------- */
+  .rules{padding:22px;background:linear-gradient(160deg,rgba(14,27,51,.95),rgba(10,20,38,.9));color:var(--cream);min-height:100%}
+  .rules h3{margin:0 0 12px;font-family:'Rozha One',serif;font-weight:400;font-size:24px;color:var(--gold)}
+  .rule{display:grid;grid-template-columns:32px 1fr;gap:11px;padding:11px 0;border-bottom:1px dashed var(--line)}
+  .rule:last-child{border-bottom:0}
+  .rule .num{width:32px;height:32px;border-radius:10px;background:rgba(217,174,95,.14);color:var(--gold);
+    display:grid;place-items:center;font-weight:700;font-size:14px}
+  .rule p{margin:0;line-height:1.6;color:var(--mist);font-size:14.5px}
+  /* ---------- नाम बॉक्स ---------- */
+  .name-box{margin-top:18px;padding:18px;background:var(--glass);border:1px solid var(--line);border-radius:16px}
+  .name-box h3{margin:0 0 7px;color:var(--gold-hi);font-size:18px;font-weight:700}
+  .name-box p{margin:0 0 12px;color:var(--mist);font-weight:400;line-height:1.6;font-size:14px}
+  .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:620px){.field-grid{grid-template-columns:1fr}}
+  input{width:100%;font-family:inherit;font-weight:500;font-size:15px;border:1px solid var(--line-2);
+    border-radius:12px;padding:13px 14px;outline:none;background:rgba(6,11,22,.6);color:var(--cream)}
+  input::placeholder{color:#5d6b83}
+  input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(217,174,95,.14)}
+  .error-line{color:var(--rose);min-height:18px;margin-top:8px;font-size:13px;font-weight:600}
+  /* ---------- परीक्षा ---------- */
+  .test-screen,.result-screen{display:none}
+  .exam-shell{display:grid;grid-template-columns:minmax(0,1fr) 292px;gap:16px;align-items:start}
+  @media(max-width:950px){.exam-shell{grid-template-columns:1fr}}
+  .exam-header{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:15px 18px;
+    background:linear-gradient(135deg,rgba(14,27,51,.96),rgba(10,20,38,.9));border-bottom:1px solid var(--line);color:var(--cream)}
+  .exam-header h2{margin:0;font-family:'Rozha One',serif;font-weight:400;font-size:19px;letter-spacing:.3px}
+  .timer{background:rgba(217,174,95,.12);border:1px solid var(--line-2);border-radius:12px;padding:8px 13px;
+    font-weight:700;letter-spacing:.4px;color:var(--gold-hi)}
+  .progress{height:6px;background:rgba(255,255,255,.05);overflow:hidden}
+  .progress>div{height:100%;background:linear-gradient(90deg,var(--gold-deep),var(--gold),var(--gold-hi));width:0%;transition:.25s ease}
+  .question-card{padding:clamp(18px,3vw,26px)}
+  .qmeta{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+  .qno{font-weight:700;color:var(--gold);font-size:16px;letter-spacing:.4px}
+  .topic{background:var(--glass);color:var(--mist);border:1px solid var(--line);padding:6px 11px;
+    border-radius:999px;font-weight:600;font-size:12px}
+  /* ---------- प्रश्न ---------- */
+  .qtext{white-space:pre-line;line-height:1.75;font-size:18.5px;color:#EEF2FA;font-weight:600}
+  .qtext-en{white-space:pre-line;line-height:1.62;font-size:14.5px;color:var(--mist);
+    margin-top:12px;padding-top:12px;border-top:1px dashed var(--line);font-weight:400}
+  .match-tbl{width:100%;border-collapse:collapse;margin:10px 0 4px}
+  .match-tbl th,.match-tbl td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top;font-size:.93em}
+  .match-tbl th{color:var(--gold);font-weight:700;font-size:.8em;letter-spacing:.6px;background:rgba(217,174,95,.06)}
+  .qtext-en .match-tbl th{color:var(--mist)}
+  /* ---------- भाषा टॉगल ---------- */
+  .lang-seg{display:inline-flex;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:10px;padding:3px;gap:2px}
+  .lang-b{font-family:inherit;font-size:12.5px;font-weight:600;color:var(--mist);background:transparent;
+    border:0;border-radius:8px;padding:5px 13px;cursor:pointer;transition:.15s}
+  .lang-b.on{background:linear-gradient(160deg,var(--gold-hi),var(--gold));color:#0d1626}
+  .lang-choose{display:flex;align-items:center;gap:10px;margin:14px 0 0;flex-wrap:wrap}
+  .lc-label{font-size:13px;color:var(--mist)}
+  /* ---------- विकल्प ---------- */
+  .options{display:grid;gap:10px;margin-top:20px}
+  .option{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:start;border:1px solid var(--line);
+    background:var(--glass);border-radius:14px;padding:13px;text-align:left;transition:.18s ease;width:100%}
+  .option:hover{border-color:var(--line-2);background:rgba(217,174,95,.05);transform:translateX(2px)}
+  .option.selected{border-color:var(--gold);background:linear-gradient(180deg,rgba(217,174,95,.15),rgba(217,174,95,.06))}
+  .option .letter{width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.05);display:grid;
+    place-items:center;font-weight:700;color:var(--gold);border:1px solid var(--line)}
+  .option.selected .letter{background:linear-gradient(160deg,var(--gold-hi),var(--gold));color:#0d1626;border-color:transparent}
+  .op-hi{font-weight:600;color:#E9EEF8;line-height:1.5;font-size:15.5px}
+  .op-en{color:var(--mist);line-height:1.4;font-size:13px;margin-top:4px;font-weight:400}
+  .nav-row{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:20px}
+  /* ---------- साइड पैनल ---------- */
+  .side{position:sticky;top:14px}
+  @media(max-width:950px){.side{position:static}}
+  .side-card{padding:18px}
+  .side-title{margin:0 0 12px;color:var(--gold);font-size:17px;font-weight:700}
+  .stats-mini{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:13px}
+  .mini{background:var(--glass);border:1px solid var(--line);border-radius:12px;padding:10px}
+  .mini b{display:block;color:var(--gold-hi);font-size:19px}
+  .mini span{color:var(--mist);font-size:11.5px;font-weight:600}
+  .palette{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+  .dot{height:38px;border-radius:10px;font-weight:700;background:rgba(255,255,255,.045);color:var(--mist);
+    border:1px solid var(--line);transition:.15s}
+  .dot.current{border-color:var(--gold);color:var(--gold-hi);box-shadow:0 0 0 3px rgba(217,174,95,.12)}
+  .dot.answered{background:rgba(127,214,164,.16);color:#9DE9C0;border-color:transparent}
+  .dot.review{background:rgba(217,174,95,.2);color:var(--gold-hi);border-color:transparent}
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin:13px 0 0;color:var(--mist);font-size:11.5px;font-weight:600}
+  .legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:4px;margin-right:5px;
+    vertical-align:-1px;background:rgba(255,255,255,.08)}
+  .legend .l-ans::before{background:rgba(127,214,164,.5)}
+  .legend .l-rev::before{background:rgba(217,174,95,.55)}
+  .legend .l-cur::before{background:var(--gold)}
+  /* ---------- परिणाम ---------- */
+  .result-hero{padding:30px 22px;text-align:center;color:var(--cream);
+    background:radial-gradient(700px 320px at 50% -10%,rgba(217,174,95,.14),transparent 62%),
+      linear-gradient(160deg,rgba(14,27,51,.96),rgba(10,20,38,.92));border-bottom:1px solid var(--line)}
+  .result-hero h2{margin:0;font-family:'Rozha One',serif;font-weight:400;font-size:clamp(26px,4.6vw,42px);color:var(--gold)}
+  .result-hero p{margin:10px auto 0;max-width:760px;line-height:1.7;color:var(--mist);font-size:15px}
+  .student-strip{margin:16px auto 0;max-width:760px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+  .student-strip span{background:var(--glass);border:1px solid var(--line);padding:7px 12px;border-radius:999px;
+    font-weight:600;color:var(--mist);font-size:13px}
+  .score-circle{width:168px;height:168px;border-radius:50%;margin:22px auto 6px;display:grid;place-items:center;
+    background:conic-gradient(var(--gold) 0deg,var(--gold) var(--scoreDeg),rgba(255,255,255,.07) var(--scoreDeg),rgba(255,255,255,.07) 360deg);
+    box-shadow:inset 0 0 0 9px rgba(217,174,95,.08),0 15px 38px rgba(0,0,0,.45)}
+  .score-circle .inner{width:128px;height:128px;border-radius:50%;background:var(--ink1);color:var(--gold-hi);
+    display:grid;place-items:center;font-weight:700;font-size:32px;line-height:1;border:1px solid var(--line)}
+  .score-circle small{display:block;font-size:12px;color:var(--mist);margin-top:5px;font-weight:400}
+  .result-body{padding:22px}
+  .result-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+  @media(max-width:950px){.result-grid{grid-template-columns:repeat(2,1fr)}}
+  .rbox{border-radius:14px;padding:14px;background:var(--glass);border:1px solid var(--line);text-align:center}
+  .rbox b{display:block;color:var(--gold-hi);font-size:23px}
+  .rbox span{color:var(--mist);font-size:12px;font-weight:600}
+  /* ---------- रैंक ---------- */
+  .rank-board{margin-top:18px;display:grid;grid-template-columns:.8fr 1.2fr;gap:12px}
+  @media(max-width:850px){.rank-board{grid-template-columns:1fr}}
+  .rank-card{background:var(--glass);border:1px solid var(--line);border-radius:16px;padding:16px}
+  .rank-card h3{margin:0 0 6px;color:var(--gold);font-size:18px;font-weight:700}
+  .rank-card p{margin:0;color:var(--mist);font-weight:400;line-height:1.6;font-size:14px}
+  .rank-big{font-size:38px;color:var(--gold-hi);font-weight:700;margin:8px 0}
+  .leader-list{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:8px;max-height:340px;overflow:auto}
+  .leader-list li{display:grid;grid-template-columns:42px 1fr auto;align-items:center;gap:9px;
+    background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:12px;padding:10px;font-weight:600;color:var(--cream)}
+  .leader-list .lr{width:32px;height:32px;border-radius:50%;background:rgba(217,174,95,.16);display:grid;
+    place-items:center;color:var(--gold);font-weight:700}
+  .leader-list .score{color:var(--green);font-weight:700}
+  /* ---------- समीक्षा ---------- */
+  .review-list{margin-top:20px;display:grid;gap:12px}
+  .review-item{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--glass)}
+  .review-head{padding:13px 15px;display:flex;justify-content:space-between;gap:10px;align-items:center;
+    background:rgba(255,255,255,.03);border-bottom:1px solid var(--line);color:var(--gold);font-weight:700;font-size:14px}
+  .badge{padding:5px 11px;border-radius:999px;font-weight:600;font-size:12px;white-space:nowrap}
+  .badge.ok{background:rgba(127,214,164,.16);color:#9DE9C0}
+  .badge.bad{background:rgba(255,143,160,.14);color:var(--rose)}
+  .badge.skip{background:rgba(255,255,255,.06);color:var(--mist)}
+  .review-content{padding:15px;line-height:1.7;color:#E4EAF5;font-size:15px}
+  .answer-line{margin-top:10px;padding:11px 13px;background:rgba(217,174,95,.07);border-left:3px solid var(--gold);
+    border-radius:10px;color:var(--cream);font-size:14.5px}
+  .explain{margin-top:10px;color:var(--mist);font-size:14.5px;line-height:1.7}
+  /* ---------- फुटर ---------- */
+  .footer-note{color:var(--mist);text-align:center;margin:20px auto 10px;max-width:920px;padding:11px 16px;
+    font-weight:500;font-size:12.5px;line-height:1.5;background:var(--glass);border:1px solid var(--line);border-radius:999px}
+  @media(max-width:620px){.footer-note{margin:16px 6px 18px;border-radius:16px}}
+  .hidden{display:none!important}
+  /* ---------- प्रिंट ---------- */
+  @media print{
+    body{background:#fff!important;padding:0;color:#111}
+    #bodhi-wm,.topbar,.btns,.side,.exam-header,.progress,.rank-board,.lang-choose,.footer-note{display:none!important}
+    .card{box-shadow:none;border:1px solid #ccc;background:#fff!important}
+    .result-screen{display:block!important}
+    .result-hero{background:#fff!important;color:#111!important;border-bottom:1px solid #ccc}
+    .result-hero h2,.rank-card h3,.review-head{color:#111!important}
+    .result-hero p,.explain,.rbox span,.student-strip span{color:#444!important}
+    .rbox,.review-item,.review-content{background:#fff!important;border-color:#ccc!important;color:#111!important}
+    .rbox b{color:#111!important}
+    .review-item{break-inside:avoid}
+    .answer-line{background:#f4f0e4!important;color:#111!important;border-left-color:#8a6400!important}
+    .badge.ok{background:#d9f7e6!important;color:#065f37!important}
+    .badge.bad{background:#fde2e5!important;color:#8a1020!important}
+    .badge.skip{background:#eee!important;color:#444!important}
+    .match-tbl th{color:#333!important;background:#eee!important}
+    .match-tbl th,.match-tbl td{border-color:#bbb!important;color:#111!important}
+    @page{margin:12mm}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo">बो</div>
+        <div><h1>Bodhi Classes</h1><p id="topSub">UPSC · UPPCS</p></div>
+      </div>
+      <div class="pill" id="pillText">🏆 Daily Rank Ready</div>
+    </header>
+    <main id="homeScreen" class="home-screen">
+      <section class="hero">
+        <div class="card intro">
+          <span class="tag" id="tagText">UPPCS Prelims 2026 / RO-ARO</span>
+          <h2 id="homeTitle">Bodhi Classes <span>परीक्षा</span></h2>
+          <p class="sub" id="homeSub">नाम डालकर टेस्ट शुरू करें। Submit के बाद score, analysis और rank section दिखेगा।</p>
+          <div class="info-grid">
+            <div class="info"><b id="qCountBox">0</b><span>प्रश्न</span></div>
+            <div class="info"><b id="timeBox">25 Min</b><span>समय</span></div>
+            <div class="info"><b id="marksBox">+2</b><span>सही पर</span></div>
+            <div class="info"><b id="negBox">-0.66</b><span>गलत पर</span></div>
+          </div>
+          <div class="name-box">
+            <h3>शुरू करने से पहले अपना नाम लिखें</h3>
+            <p>यही नाम आपके परिणाम में दिखेगा।</p>
+            <div class="field-grid" style="grid-template-columns:1fr">
+              <input id="studentName" maxlength="60" placeholder="अपना पूरा नाम लिखें" autocomplete="name" />
+            </div>
+            <div class="lang-choose"><span class="lc-label">पढ़ने की भाषा:</span><div class="lang-seg" id="coverLang"></div></div><div class="error-line" id="nameErr"></div>
+            <div class="btns"><button class="btn primary" onclick="startTest()">परीक्षा शुरू करें →</button></div>
+          </div>
+        </div>
+        <div class="card rules">
+          <h3>परीक्षा निर्देश</h3>
+          <div class="rule"><div class="num">1</div><p>प्रत्येक प्रश्न में चार विकल्प हैं। केवल एक विकल्प सही है।</p></div>
+          <div class="rule"><div class="num">2</div><p>सही उत्तर पर निर्धारित अंक और गलत उत्तर पर निर्धारित ऋणात्मक अंक मिलेंगे। बिना उत्तर वाले प्रश्न पर 0 अंक।</p></div>
+          <div class="rule"><div class="num">3</div><p>किसी प्रश्न को "समीक्षा हेतु चिह्नित" कर सकते हैं और प्रश्न-सूची से किसी भी प्रश्न पर सीधे जा सकते हैं।</p></div>
+          <div class="rule"><div class="num">4</div><p>परीक्षा समाप्त करने पर अंक, शुद्धता, सही/गलत और हर प्रश्न की विस्तृत व्याख्या दिखेगी।</p></div>
+          <div class="rule"><div class="num">5</div><p>ऊपर "पढ़ने की भाषा" से हिंदी, English या दोनों चुन सकते हैं — यह किसी भी समय बदला जा सकता है।</p></div>
+        </div>
+      </section>
+    </main>
+    <main id="testScreen" class="test-screen">
+      <section class="exam-shell">
+        <div class="card">
+          <div class="exam-header"><h2 id="examTitle">Bodhi Classes</h2><div class="timer" id="timer">25:00</div></div>
+          <div class="progress"><div id="progressBar"></div></div>
+          <div class="question-card" id="questionCard">
+            <div class="qmeta"><div class="qno" id="qno">प्रश्न 1 / 0</div><div style="display:flex;gap:9px;align-items:center;flex-wrap:wrap"><div class="topic" id="topic">Topic</div><div class="lang-seg" id="qLang"></div></div></div>
+            <div class="qtext" id="qtext"></div><div class="qtext-en" id="qtextEn"></div><div class="options" id="options"></div>
+            <div class="nav-row"><button class="btn light" onclick="prevQ()">← पिछला</button><button class="btn secondary" onclick="toggleReview()" id="reviewBtn">☆ समीक्षा हेतु चिह्नित करें</button><button class="btn light" onclick="clearAnswer()">उत्तर हटाएँ</button><button class="btn primary" onclick="nextQ()">सहेजें और अगला →</button></div>
+          </div>
+        </div>
+        <aside class="side"><div class="card side-card"><h3 class="side-title">प्रश्न सूची</h3><div class="stats-mini"><div class="mini"><b id="attemptedCount">0</b><span>उत्तरित</span></div><div class="mini"><b id="reviewCount">0</b><span>चिह्नित</span></div></div><div class="palette" id="palette"></div><div class="legend"><span class="l-cur">वर्तमान</span><span class="l-ans">उत्तरित</span><span class="l-rev">चिह्नित</span></div><div style="height:12px"></div><button class="btn primary" style="width:100%" onclick="submitTest()">परीक्षा समाप्त करें</button></div></aside>
+      </section>
+    </main>
+    <main id="resultScreen" class="result-screen">
+      <section class="card">
+        <div class="result-hero"><h2>परिणाम विश्लेषण</h2><p id="resultMessage">आपकी परिणाम-रिपोर्ट तैयार है।</p><div class="student-strip" id="studentStrip"></div><div class="score-circle" id="scoreCircle" style="--scoreDeg: 0deg"><div class="inner"><div><span id="scorePercent">0%</span><small>शुद्धता</small></div></div></div><div class="btns" style="justify-content:center; margin-top:18px"><button class="btn primary" onclick="restartTest()">↻ पुनः प्रयास करें</button><button class="btn light" onclick="window.print()">🖨 प्रिंट / PDF सेव करें</button><a class="btn secondary" href="/">🏠 मुखपृष्ठ पर जाएँ</a></div></div>
+        <div class="result-body">
+          <div class="result-grid"><div class="rbox"><b id="finalMarks">0</b><span>अंक</span></div><div class="rbox"><b id="finalAttempted">0</b><span>उत्तरित</span></div><div class="rbox"><b id="finalCorrect">0</b><span>सही पर</span></div><div class="rbox"><b id="finalWrong">0</b><span>गलत पर</span></div><div class="rbox"><b id="finalAccuracy">0%</b><span>शुद्धता</span></div><div class="rbox"><b id="finalTime">0:00</b><span>लगा समय</span></div></div>
+          <div class="rank-board" id="rankBoard"><div class="rank-card"><h3>आपकी Daily Rank</h3><div class="rank-big" id="ownRank">—</div><p id="rankStatus">आपकी rank यहाँ दिखेगी।</p></div><div class="rank-card"><h3>Top 20 Leaderboard</h3><p id="leaderHint">हर test की leaderboard अलग रहेगी।</p><ol class="leader-list" id="leaderList"></ol></div></div>
+          <div class="review-list" id="reviewList"></div>
+        </div>
+      </section>
+    </main>
+    <div class="footer-note" id="footerNote">© Bodhi Classes · Designed by Aditya Chauhan · @BodhiClasses</div>
+  </div>
+<script>
+const TEST = {"title": "कक्षा 11 भूगोल अध्याय 8-10 — Set 4", "highlight": "", "shortTitle": "कक्षा 11 भूगोल अध्याय 8-10 — Set 4", "subtitle": "UPSC / UPPCS · NCERT", "tag": "UPSC / UPPCS · NCERT", "pill": "Bodhi Classes · अभ्यास परीक्षा", "description": "कुल 50 प्रश्न · 25 मिनट · सही +2, गलत −0.66। नाम लिखकर परीक्षा शुरू करें; समाप्त करने पर अंक, विश्लेषण और हर प्रश्न की व्याख्या दिखेगी।", "durationMinutes": 25, "marksPerQuestion": 2, "negativeMarks": 0.66, "testId": "bodhi-11-8-10-set-4-ea5c5", "footerCredit": "© Bodhi Classes · Designed by Aditya Chauhan · @BodhiClasses", "rankingEnabled": false, "firebaseConfig": {}, "publishDateStr": "", "questions": [{"id": 1, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "पृथ्वी के वायुमंडल के ऊपरी भाग पर औसतन प्रति वर्ग सेंटीमीटर प्रति मिनट प्राप्त होने वाले सौर ऊर्जा का औसत मान कितना है?", "question_en": "What is the average solar energy received per square centimetre per minute at the top of the earth's atmosphere?", "options": [{"hi": "3.00 कैलोरी", "en": "3.00 calories"}, {"hi": "2.50 कैलोरी", "en": "2.50 calories"}, {"hi": "1.42 कैलोरी", "en": "1.42 calories"}, {"hi": "1.94 कैलोरी", "en": "1.94 calories"}], "answer": 3, "explanation_hi": "पृथ्वी वायुमंडल के शीर्ष पर औसतन 1.94 कैलोरी प्रति वर्ग सेंटीमीटर प्रति मिनट ऊर्जा प्राप्त करती है जिसे सौर स्थिरांक भी कहते हैं।", "explanation_en": "The earth receives solar energy at the rate of 1.94 calories per square centimetre per minute at the top of its atmosphere."}, {"id": 2, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "अपसौर की स्थिति के दौरान 4 जुलाई को पृथ्वी और सूर्य के बीच की दूरी लगभग कितनी होती है?", "question_en": "What is the approximate distance between the earth and the sun on 4th July during the position of aphelion?", "options": [{"hi": "152 मिलियन किमी", "en": "152 million km"}, {"hi": "156 मिलियन किमी", "en": "156 million km"}, {"hi": "150 मिलियन किमी", "en": "150 million km"}, {"hi": "147 मिलियन किमी", "en": "147 million km"}], "answer": 0, "explanation_hi": "4 जुलाई को पृथ्वी सूर्य से सबसे दूर (152 मिलियन किमी) होती है, जिसे अपसौर कहा जाता है।", "explanation_en": "On 4th July, the earth is farthest from the sun at a distance of 152 million km, which is called aphelion."}, {"id": 3, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "उपसौर की स्थिति के दौरान 3 जनवरी को पृथ्वी और सूर्य के बीच की दूरी लगभग कितनी होती है?", "question_en": "What is the approximate distance between the earth and the sun on 3rd January during the position of perihelion?", "options": [{"hi": "150 मिलियन किमी", "en": "150 million km"}, {"hi": "152 मिलियन किमी", "en": "152 million km"}, {"hi": "142 मिलियन किमी", "en": "142 million km"}, {"hi": "147 मिलियन किमी", "en": "147 million km"}], "answer": 3, "explanation_hi": "3 जनवरी को पृथ्वी सूर्य के सबसे निकट (147 मिलियन किमी) होती है, जिसे उपसौर कहा जाता है।", "explanation_en": "On 3rd January, the earth is nearest to the sun at a distance of 147 million km, which is called perihelion."}, {"id": 4, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "पृथ्वी का अक्ष सूर्य के चारों ओर अपनी कक्षा के समतल से कितने डिग्री का कोण बनाता है?", "question_en": "What angle does the earth's axis of rotation make with the plane of its orbit around the sun?", "options": [{"hi": "66.5 डिग्री", "en": "66.5 degrees"}, {"hi": "45.0 डिग्री", "en": "45.0 degrees"}, {"hi": "23.5 डिग्री", "en": "23.5 degrees"}, {"hi": "90.0 डिग्री", "en": "90.0 degrees"}], "answer": 0, "explanation_hi": "पृथ्वी का अक्ष अपनी कक्षा के समतल से 66.5 (66½) डिग्री का कोण बनाता है जो सौर विकिरण के अक्षांशीय वितरण को प्रभावित करता है।", "explanation_en": "The earth's axis makes an angle of 66.5 degrees with the plane of its orbit round the sun."}, {"id": 5, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "क्षोभमंडल के भीतर सौर विकिरण की निकट-अवरक्त (near-infrared) किरणों का अवशोषण मुख्य रूप से किसके द्वारा किया जाता है?", "question_en": "The near-infrared radiation of incoming solar radiation is absorbed within the troposphere mainly by which of the following?", "options": [{"hi": "जलवाष्प, ओजोन और अन्य गैसें", "en": "Water vapour, ozone and other gases"}, {"hi": "सक्रिय कार्बन कण", "en": "Active carbon particles"}, {"hi": "धूल के निलंबित कण", "en": "Suspended dust particles"}, {"hi": "केवल नाइट्रोजन गैस", "en": "Only nitrogen gas"}], "answer": 0, "explanation_hi": "क्षोभमंडल के भीतर जलवाष्प, ओजोन and अन्य गैसें सौर विकिरण की निकट-अवरक्त किरणों का अवशोषण करती हैं।", "explanation_en": "Within the troposphere, water vapour, ozone and other gases absorb much of the near infrared radiation."}, {"id": 6, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "उष्णकटिबंधीय रेगिस्तानों के ऊपर धरातल पर प्राप्त होने वाले सौर विकिरण का औसत मान लगभग कितना होता है?", "question_en": "What is the average solar radiation received over the subtropical deserts at the earth's surface?", "options": [{"hi": "150 वाट प्रति वर्ग मीटर", "en": "150 Watt per square metre"}, {"hi": "500 वाट प्रति वर्ग मीटर", "en": "500 Watt per square metre"}, {"hi": "70 वाट प्रति वर्ग मीटर", "en": "70 Watt per square metre"}, {"hi": "320 वाट प्रति वर्ग मीटर", "en": "320 Watt per square metre"}], "answer": 3, "explanation_hi": "धरातल पर प्राप्त सौर विकिरण उष्णकटिबंधीय रेगिस्तानों में लगभग 320 वाट प्रति वर्ग मीटर से लेकर ध्रुवों पर 70 वाट प्रति वर्ग मीटर तक होता है।", "explanation_en": "The insolation received at the surface varies from about 320 Watt per square metre in the tropics to about 70 Watt per square metre in the poles."}, {"id": 7, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "पृथ्वी के कुल एलबीडो के रूप में अंतरिक्ष में परावर्तित होने वाली कुल 35 इकाइयों में से कितनी इकाइयाँ बादलों के शीर्ष से परावर्तित होती हैं?", "question_en": "Out of the 35 units of solar radiation reflected back to space as the earth's albedo, how many units are reflected from the top of the clouds?", "options": [{"hi": "14 इकाइयाँ", "en": "14 units"}, {"hi": "6 इकाइयाँ", "en": "6 units"}, {"hi": "2 इकाइयाँ", "en": "2 units"}, {"hi": "27 इकाइयाँ", "en": "27 units"}], "answer": 3, "explanation_hi": "एलबीडो की 35 इकाइयों में से 27 इकाइयाँ बादलों के शीर्ष से और 2 इकाइयाँ बर्फ की चादरों से परावर्तित होती हैं।", "explanation_en": "Of the 35 units reflected as albedo, 27 units are reflected from the top of the clouds and 2 units from snow and ice."}, {"id": 8, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "पृथ्वी द्वारा उत्सर्जित दीर्घतरंगीय पार्थिव विकिरण के रूप में सीधे अंतरिक्ष में कितनी इकाइयाँ निष्कासित होती हैं?", "question_en": "How many units of energy are radiated directly to space from the earth's surface as longwave terrestrial radiation?", "options": [{"hi": "48 इकाइयाँ", "en": "48 units"}, {"hi": "51 इकाइयाँ", "en": "51 units"}, {"hi": "17 इकाइयाँ", "en": "17 units"}, {"hi": "34 इकाइयाँ", "en": "34 units"}], "answer": 2, "explanation_hi": "पृथ्वी की सतह द्वारा छोड़ी गई 51 इकाइयों में से 17 इकाइयाँ सीधे अंतरिक्ष में जाती हैं और शेष 34 इकाइयाँ वायुमंडल द्वारा अवशोषित की जाती हैं।", "explanation_en": "Of the 51 units radiated back, 17 units are radiated to space directly and the remaining 34 units are absorbed by the atmosphere."}, {"id": 9, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "पार्थिव विकिरण से प्राप्त कुल 34 इकाइयों में से संघनन की गुप्त ऊष्मा के रूप में वायुमंडल को कितनी इकाइयाँ प्राप्त होती हैं?", "question_en": "Of the 34 units of terrestrial radiation absorbed by the atmosphere, how many units are received through the latent heat of condensation?", "options": [{"hi": "6 इकाइयाँ", "en": "6 units"}, {"hi": "19 इकाइयाँ", "en": "19 units"}, {"hi": "9 इकाइयाँ", "en": "9 units"}, {"hi": "14 इकाइयाँ", "en": "14 units"}], "answer": 1, "explanation_hi": "वायुमंडल द्वारा अवशोषित 34 इकाइयों में से 19 इकाइयाँ संघनन की गुप्त ऊष्मा, 9 संवहन/विक्षोभ और 6 सीधे पार्थिव अवशोषण द्वारा आती हैं।", "explanation_en": "Of the 34 units absorbed, 19 units are through latent heat of condensation, 9 through convection, and 6 through direct absorption."}, {"id": 10, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "भौतिकी के किस नियम के अनुसार कोई पिंड जितना गर्म होगा, वह उतनी ही अधिक ऊर्जा का विकिरण करेगा और उसकी तरंगदैर्घ्य उतनी ही छोटी होगी?", "question_en": "According to which law of physics does a hotter body radiate more energy and have shorter wavelengths of radiation?", "options": [{"hi": "वीन का विस्थापन नियम", "en": "Wien's displacement law"}, {"hi": "किरचॉफ का नियम", "en": "Kirchhoff's law"}, {"hi": "स्टीफन-बोल्ट्जमैन नियम", "en": "Stefan-Boltzmann law"}, {"hi": "प्लांक का नियम", "en": "Planck's law"}], "answer": 3, "explanation_hi": "प्लांक का नियम बताता है कि कोई पिंड जितना अधिक गर्म होगा, वह उतनी ही अधिक लघु तरंगदैर्घ्य वाली ऊर्जा का उत्सर्जन करेगा।", "explanation_en": "Planck's law states that the hotter a body, the more energy it will radiate and the shorter the wavelength of that radiation."}, {"id": 11, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "पहाड़ियों और घाटियों में रात के समय ठंडी हवा का गुरुत्वाकर्षण के प्रभाव में नीचे की ओर बहना निम्नलिखित में से किसका उदाहरण है?", "question_en": "The downslope movement of heavy cold air into valleys during the night under the influence of gravity is an example of which of the following?", "options": [{"hi": "पवन अपसरण", "en": "Wind divergence"}, {"hi": "तापीय व्युत्क्रमण", "en": "Thermal inversion"}, {"hi": "रुद्धोष्म तापन", "en": "Adiabatic heating"}, {"hi": "वायु निकास अथवा अपवाह", "en": "Air drainage"}], "answer": 3, "explanation_hi": "रात में पहाड़ियों पर ठंडी घनी हवा गुरुत्व के प्रभाव में नीचे बहकर घाटी के तलों में जमा हो जाती है, जिसे वायु अपवाह कहा जाता है।", "explanation_en": "Cold air produced during night flows down the slope under gravity and piles up in valley bottoms, a process called air drainage."}, {"id": 12, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "मानक वायुमंडल के अनुसार समुद्र तल पर औसत वायुमंडलीय दबाव कितना मापा जाता है?", "question_en": "What is the average atmospheric pressure recorded at sea level under standard atmospheric conditions?", "options": [{"hi": "1024.00 मिलीबार", "en": "1024.00 millibar"}, {"hi": "1000.00 मिलीबार", "en": "1000.00 millibar"}, {"hi": "1013.25 मिलीबार", "en": "1013.25 millibar"}, {"hi": "980.50 मिलीबार", "en": "980.50 millibar"}], "answer": 2, "explanation_hi": "समुद्र तल पर औसत वायुमंडलीय दबाव 1,013.25 मिलीबार होता है, जो ऊंचाई के साथ तेजी से घटता है।", "explanation_en": "At sea level, the average atmospheric pressure is 1,013.25 millibar under standard conditions."}, {"id": 13, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "निचले वायुमंडल में ऊंचाई के साथ दबाव घटने की सामान्य दर लगभग कितनी होती है?", "question_en": "What is the general rate of decrease of pressure with height in the lower atmosphere?", "options": [{"hi": "प्रत्येक 1000 मीटर की ऊंचाई पर 6.5 मिलीबार", "en": "6.5 mb for each 1000 m increase"}, {"hi": "प्रत्येक 10 मीटर की ऊंचाई पर 1 मिलीबार", "en": "1 mb for each 10 m increase"}, {"hi": "प्रत्येक 100 मीटर की ऊंचाई पर 1 मिलीबार", "en": "1 mb for each 100 m increase"}, {"hi": "प्रत्येक 5 मीटर की ऊंचाई पर 10 मिलीबार", "en": "10 mb for each 5 m increase"}], "answer": 1, "explanation_hi": "निचले वायुमंडल में ऊंचाई बढ़ने के साथ दबाव तेजी से घटता है। यह कमी लगभग प्रति 10 मीटर पर 1 मिलीबार होती है।", "explanation_en": "In the lower atmosphere, the decrease in pressure amounts to about 1 mb for each 10 m increase in elevation."}, {"id": 14, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "फ्रांसीसी भौतिकशास्त्री गैस्पर-गुस्ताव डी कोरिओलिस ने किस वर्ष पृथ्वी के घूर्णन द्वारा हवा की दिशा में होने वाले विक्षेपण बल का वर्णन किया था?", "question_en": "In which year did the French physicist Gaspard-Gustave de Coriolis describe the deflecting force on winds due to the earth's rotation?", "options": [{"hi": "1844", "en": ""}, {"hi": "1856", "en": ""}, {"hi": "1912", "en": ""}, {"hi": "1796", "en": ""}], "answer": 0, "explanation_hi": "कोरिओलिस बल का नाम फ्रांसीसी भौतिकविद् के नाम पर पड़ा जिन्होंने वर्ष 1844 में इस बल के प्रभाव का वर्णन किया था।", "explanation_en": "The Coriolis force is named after the French physicist who described it in 1844."}, {"id": 15, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "पवन की गति को धीमा करने वाला घर्षण बल धरातल से कितनी ऊंचाई तक प्रभावी होता है?", "question_en": "Up to what height above the surface is the influence of frictional force, which affects wind speed, generally extended?", "options": [{"hi": "5 से 10 किमी तक", "en": "5 to 10 km"}, {"hi": "केवल 500 मीटर तक", "en": "Only up to 500 m"}, {"hi": "1 से 3 किमी तक", "en": "1 to 3 km"}, {"hi": "14 किमी तक", "en": "Up to 14 km"}], "answer": 2, "explanation_hi": "घर्षण बल पवन की गति को प्रभावित करता है। इसका प्रभाव धरातल से 1 से 3 किमी की ऊंचाई तक विस्तृत होता है।", "explanation_en": "Frictional force affects the speed of wind, and its influence generally extends up to an elevation of 1 - 3 km."}, {"id": 16, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "ऊपरी वायुमंडल में घर्षण रहित प्रवाह के समय जब समदाब रेखाएं सीधी हों, तो संतुलित पवन क्या कहलाती है?", "question_en": "What is the resultant wind called in the upper atmosphere when straight isobars exist and pressure gradient balances the Coriolis force without friction?", "options": [{"hi": "कैटाबेटिक पवन", "en": "Katabatic wind"}, {"hi": "अनाबेटिक पवन", "en": "Anabatic wind"}, {"hi": "भूविक्षेपी पवन", "en": "Geostrophic wind"}, {"hi": "स्थानीय पवन", "en": "Local wind"}], "answer": 2, "explanation_hi": "जब समदाब रेखाएं सीधी हों और घर्षण न हो, तो कोरिओलिस बल दाब प्रवणता बल को संतुलित करता है जिससे हवाएं समदाब रेखाओं के समानांतर चलती हैं, जिन्हें भूविक्षेपी पवन कहते हैं।", "explanation_en": "When isobars are straight and friction is absent, the balanced wind blowing parallel to the isobars is known as the geostrophic wind."}, {"id": 17, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "दक्षिणी गोलार्द्ध में चक्रवातीय परिसंचरण के दौरान केंद्र में निम्न दाब होने पर हवाओं की दिशा कैसी होती है?", "question_en": "What is the pattern of wind direction around a low-pressure system in the Southern Hemisphere?", "options": [{"hi": "घड़ी की सुई के विपरीत अथवा वामावर्त", "en": "Anticlockwise"}, {"hi": "केंद्र से बाहर की ओर अपसारी", "en": "Diverging outwards from the centre"}, {"hi": "समदाब रेखाओं के लंबवत", "en": "Perpendicular to isobars"}, {"hi": "घड़ी की सुई के अनुकूल अथवा दक्षिणावर्त", "en": "Clockwise"}], "answer": 3, "explanation_hi": "दक्षिणी गोलार्द्ध में चक्रवात के चारों ओर हवाओं की दिशा दक्षिणावर्त होती है, जबकि उत्तरी गोलार्द्ध में यह वामावर्त होती है।", "explanation_en": "In the Southern Hemisphere, the pattern of wind direction around a cyclone is clockwise."}, {"id": 18, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "इंटर ट्रॉपिकल कन्वर्जेंस जोन में संवहन द्वारा ऊपर उठने वाली वायु क्षोभमंडल के शीर्ष पर कितनी ऊंचाई तक पहुँचती है?", "question_en": "At the Inter Tropical Convergence Zone, how high up to the top of the troposphere does the convective rising air reach?", "options": [{"hi": "20 किमी", "en": "20 km"}, {"hi": "14 किमी", "en": "14 km"}, {"hi": "8 किमी", "en": "8 km"}, {"hi": "10 किमी", "en": "10 km"}], "answer": 1, "explanation_hi": "ITCZ पर संवहन द्वारा ऊपर उठने वाली हवा क्षोभमंडल के शीर्ष पर लगभग 14 किमी की ऊंचाई तक पहुँचकर ध्रुवों की ओर विचलित होती है।", "explanation_en": "The converged rising air at the ITCZ reaches the top of the troposphere up to an altitude of 14 km before moving poleward."}, {"id": 19, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "प्रशांत महासागर के गर्म जल का दक्षिण अमेरिकी तट की ओर बहना और ठंडी पेरूवियन धारा को प्रतिस्थापित करना क्या कहलाता है?", "question_en": "The drift of warm water towards the South American coast replacing the cool Peruvian current is known as what?", "options": [{"hi": "ला नीना", "en": "La Nina"}, {"hi": "अल नीनो", "en": "El Nino"}, {"hi": "दक्षिणी दोलन", "en": "Southern Oscillation"}, {"hi": "कुरोशियो धारा", "en": "Kuroshio Current"}], "answer": 1, "explanation_hi": "पेरू के तट के पास ठंडी पेरू धारा के स्थान पर अस्थायी रूप से गर्म जलधारा का प्रकट होना अल नीनो कहलाता है।", "explanation_en": "The appearance of warm water off the coast of Peru, replacing the cool Peruvian current, is known as El Nino."}, {"id": 20, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "हवा के गर्म होने पर फैलने और ठंडा होने पर संकुचित होने से वायुमंडलीय दबाव में भिन्नता आने के कारण हवा में जो गति उत्पन्न होती है, उसे क्या कहते हैं?", "question_en": "What is the movement of air set in motion by atmospheric pressure differences due to air expansion upon heating and compression upon cooling called?", "options": [{"hi": "पवन", "en": "Wind"}, {"hi": "अभिवाहन", "en": "Advection"}, {"hi": "अधोप्रवाह", "en": "Downdraft"}, {"hi": "संवहन", "en": "Convection"}], "answer": 0, "explanation_hi": "क्षैतिज रूप से गतिशील हवा को पवन कहते हैं, जो दाब प्रवणता में अंतर की वजह से उच्च से निम्न दाब की ओर चलती है।", "explanation_en": "Air in horizontal motion is called wind, which is set in motion due to differences in atmospheric pressure."}, {"id": 21, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "रात के समय पर्वतीय ढालों के ठंडा होने पर सघन और भारी हवा का घाटी में नीचे उतरना किस नाम से जाना जाता है?", "question_en": "What is the downward movement of cold dense air from mountain slopes into valleys during the night called?", "options": [{"hi": "घाटी समीर", "en": "Valley breeze"}, {"hi": "अवरोही पवन अथवा कैटैबेटिक पवन", "en": "Katabatic wind"}, {"hi": "संवहनी पवन", "en": "Convectional wind"}, {"hi": "आरोही पवन अथवा एनाबेटिक पवन", "en": "Anabatic wind"}], "answer": 1, "explanation_hi": "रात में ढालों के ठंडा होने पर घनी हवा नीचे उतरती है जिसे कैटैबेटिक पवन कहा जाता है।", "explanation_en": "The cool air of high plateaus and ice fields draining into valleys during the night is called katabatic wind."}, {"id": 22, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "वायुमंडलीय हवा में उपस्थित जलवाष्प की वास्तविक मात्रा को प्रति इकाई आयतन में भार के रूप में किस नाम से मापा जाता है?", "question_en": "What is the actual mass of water vapour per unit volume of air known as?", "options": [{"hi": "संतृप्ति स्तर", "en": "Saturation level"}, {"hi": "निरपेक्ष आर्द्रता", "en": "Absolute humidity"}, {"hi": "सापेक्ष आर्द्रता", "en": "Relative humidity"}, {"hi": "विशिष्ट आर्द्रता", "en": "Specific humidity"}], "answer": 1, "explanation_hi": "हवा के प्रति इकाई आयतन में जलवाष्प के वास्तविक भार को निरपेक्ष आर्द्रता कहा जाता है।", "explanation_en": "The actual amount of water vapour present in the atmosphere is weight per unit volume, known as absolute humidity."}, {"id": 23, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "ओस के निर्माण के लिए निम्नलिखित में से कौन सी एक आवश्यक भौगोलिक दशा नहीं है?", "question_en": "Which of the following is NOT an essential geographical condition required for the formation of dew?", "options": [{"hi": "शांत हवा", "en": "Calm air"}, {"hi": "उच्च सापेक्ष आर्द्रता", "en": "High relative humidity"}, {"hi": "ओसांक का हिमांक बिंदु से नीचे होना", "en": "Dew point below the freezing point"}, {"hi": "साफ आकाश", "en": "Clear sky"}], "answer": 2, "explanation_hi": "ओस बनने के लिए ओसांक का हिमांक बिंदु से ऊपर होना आवश्यक है; हिमांक से नीचे होने पर पाला बनता है।", "explanation_en": "For the formation of dew, it is necessary that the dew point is above the freezing point, otherwise white frost forms."}, {"id": 24, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "कोहरे और कुहासे के संदर्भ में क्षैतिज दृश्यता के स्तरों में क्या अंतर पाया जाता है?", "question_en": "What is the difference in horizontal visibility limits between fog and mist?", "options": [{"hi": "कोहरे में दृश्यता 2 से 5 किमी और कुहासे में 1 किमी से कम होती है", "en": "Visibility is 2 to 5 km in fog and less than 1 km in mist"}, {"hi": "दोनों में दृश्यता हमेशा 1 किमी से कम होती है", "en": "Visibility is always less than 1 km in both"}, {"hi": "दोनों में दृश्यता न्यूनतम 5 किमी होती है", "en": "Visibility is at least 5 km in both"}, {"hi": "कोहरे में दृश्यता 1 किमी से कम और कुहासे में 1 से 2 किमी होती है", "en": "Visibility is less than 1 km in fog and between 1 km to 2 km in mist"}], "answer": 3, "explanation_hi": "कोहरा धरातल के पास दृश्यता को घटाकर 1 किमी से कम कर देता है, जबकि कुहासा दृश्यता को 1 किमी से 2 किमी के बीच रखता है।", "explanation_en": "Fog reduces horizontal visibility to less than 1 km, while mist limits it to between 1 km and 2 km."}, {"id": 25, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "आकाश में सबसे ऊँचाई पर बनने वाले पतले और बिखरे हुए पंखदार बादलों को क्या कहा जाता है?", "question_en": "What are the thin, detached, feathery-looking clouds formed at high altitudes called?", "options": [{"hi": "कपासी मेघ", "en": "Cumulus clouds"}, {"hi": "स्तरी मेघ", "en": "Stratus clouds"}, {"hi": "वर्षा मेघ", "en": "Nimbus clouds"}, {"hi": "पक्षाम मेघ", "en": "Cirrus clouds"}], "answer": 3, "explanation_hi": "पक्षाम मेघ आसमान में सर्वाधिक ऊँचाई पर बनते हैं जो श्वेत और रेशमी आभा वाले होते हैं।", "explanation_en": "Cirrus clouds are formed at high altitudes (8,000 - 12,000m) and are thin, white, with a feathery appearance."}, {"id": 26, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "कपासी मेघ सामान्यतः धरातल से कितनी ऊँचाई पर बनते हैं और इनका आधार कैसा होता है?", "question_en": "At what height are cumulus clouds generally formed and what is the nature of their base?", "options": [{"hi": "4,000-7,000 मीटर, चपटा आधार", "en": "4,000-7,000 m, flat base"}, {"hi": "3,000-5,000 मीटर, नुकीला आधार", "en": "3,000-5,000 m, sharp base"}, {"hi": "8,000-12,000 मीटर, शंक्वाकार आधार", "en": "8,000-12,000 m, conical base"}, {"hi": "1,000-2,000 मीटर, असमान आधार", "en": "1,000-2,000 m, uneven base"}], "answer": 0, "explanation_hi": "कपासी मेघ रुई के ढेर जैसे दिखते हैं जो 4,000 से 7,000 मीटर की ऊँचाई पर बनते हैं और इनका आधार हमेशा चपटा होता है।", "explanation_en": "Cumulus clouds look like cotton wool, are formed at 4,000 - 7,000 m height, and have a flat base."}, {"id": 27, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "संवहनीय वर्षा के संदर्भ में निम्नलिखित में से कौन सी विशेषता सही है?", "question_en": "Which of the following characteristics is correct regarding convectional rainfall?", "options": [{"hi": "यह केवल ध्रुवीय क्षेत्रों में पाई जाती है", "en": "It is common only in the polar regions"}, {"hi": "इसमें बादलों का निर्माण नहीं होता है", "en": "No clouds are formed in this process"}, {"hi": "यह वर्षा बहुत लंबे समय तक लगातार चलती है", "en": "This rain lasts for a very long duration"}, {"hi": "यह बिजली कड़कने और बादलों के गरजने के साथ मूसलाधार होती है परंतु अल्पकालिक होती है", "en": "It is heavy, accompanied by thunder and lightning, but does not last long"}], "answer": 3, "explanation_hi": "संवहनीय वर्षा गर्म दिनों में तेज हवा ऊपर उठने से कपासी-वर्षी मेघों से होती है जो कड़क-चमक के साथ तेज वर्षा करती है पर जल्दी समाप्त हो जाती है।", "explanation_en": "Convectional rain occurs with thunder and lightning, is heavy, but does not last long, and is common in equatorial regions."}, {"id": 28, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "पर्वतों के पवनविमुख ढाल शुष्क और वर्षा रहित क्यों रह जाते हैं?", "question_en": "Why do the leeward slopes of mountains remain dry and rainless during orographic rainfall?", "options": [{"hi": "वहाँ हवा का दबाव अचानक बहुत कम हो जाता है", "en": "The air pressure there drops suddenly"}, {"hi": "हवा ऊपर उठती है और बहुत ठंडी हो जाती है", "en": "Air ascends and becomes very cold"}, {"hi": "हवा नीचे उतरती है जिससे उसका तापमान बढ़ता है और आर्द्रता ग्रहण क्षमता बढ़ जाती है", "en": "Air descends, its temperature rises and its moisture capacity increases"}, {"hi": "वहाँ कोरिओलिस बल शून्य हो जाता है", "en": "The Coriolis force becomes zero on that side"}], "answer": 2, "explanation_hi": "पवनविमुख ढाल पर हवा नीचे उतरती है जिससे रुद्धोष्म प्रक्रिया से उसका तापमान बढ़ता है। तापमान बढ़ने से उसकी सापेक्ष आर्द्रता कम हो जाती है और वर्षा नहीं हो पाती।", "explanation_en": "As winds descend on the leeward slope, their temperature rises, increasing their moisture retention capacity and leaving the slope dry."}, {"id": 29, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "विश्व में भूमध्य रेखा से ध्रुवों की ओर जाने पर सामान्यतः वार्षिक वर्षा की मात्रा में क्या प्रवृत्ति देखी जाती है?", "question_en": "What general trend is observed in the annual precipitation amount as one proceeds from the equator towards the poles?", "options": [{"hi": "वर्षा की मात्रा में कोई परिवर्तन नहीं होता", "en": "Precipitation remains unchanged"}, {"hi": "वर्षा की मात्रा में क्रमिक कमी आती जाती है", "en": "Precipitation goes on decreasing steadily"}, {"hi": "वर्षा की मात्रा में लगातार वृद्धि होती है", "en": "Precipitation increases steadily"}, {"hi": "वर्षा केवल ध्रुवों पर ही अधिकतम होती है", "en": "Precipitation is maximum only at the poles"}], "answer": 1, "explanation_hi": "भूमध्य रेखा पर वाष्पीकरण और संवहन सर्वाधिक होने से वर्षा अधिक होती है, जो ध्रुवों की ओर बढ़ने पर लगातार घटती जाती है।", "explanation_en": "In general, as we proceed from the equator towards the poles, the rainfall goes on decreasing steadily."}, {"id": 30, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "उष्णकटिबंधीय चक्रवातों के विकास के लिए समुद्री सतह का तापमान न्यूनतम कितने डिग्री सेल्सियस से अधिक होना चाहिए?", "question_en": "For the formation and intensification of tropical cyclones, the sea surface temperature must be higher than what minimum threshold?", "options": [{"hi": "27 डिग्री सेल्सियस", "en": "27 degrees Celsius"}, {"hi": "30 डिग्री सेल्सियस", "en": "30 degrees Celsius"}, {"hi": "20 डिग्री सेल्सियस", "en": "20 degrees Celsius"}, {"hi": "25 डिग्री सेल्सियस", "en": "25 degrees Celsius"}], "answer": 0, "explanation_hi": "उष्णकटिबंधीय चक्रवात केवल तभी बनते हैं जब समुद्री सतह का तापमान 27°C से अधिक हो ताकि पर्याप्त गुप्त ऊष्मा और आर्द्रता मिल सके।", "explanation_en": "A large sea surface with a temperature higher than 27 degrees Celsius is a favourable condition for tropical cyclone formation."}, {"id": 31, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "निम्नलिखित कथनों पर विचार करें: कथन 1: ध्रुवों के ऊपर स्थित वायुमंडलीय दबाव प्रणाली को उपध्रुवीय निम्न कहा जाता है। कथन 2: भूमध्य रेखा के निकट वायुमंडलीय दबाव बहुत कम होता है जिसे भूमध्यरेखीय निम्न कहते हैं।", "question_en": "Consider the following statements: Statement 1: The pressure system located near the poles is known as the sub-polar low. Statement 2: Near the equator, the sea level pressure is low and is known as the equatorial low.", "options": [{"hi": "कोई नहीं", "en": "None"}, {"hi": "केवल 2", "en": "Only 2"}, {"hi": "केवल 1", "en": "Only 1"}, {"hi": "दोनों", "en": "Both"}], "answer": 1, "explanation_hi": "कथन 1 गलत है क्योंकि ध्रुवों के पास उच्च दाब होता है जिसे ध्रुवीय उच्च कहते हैं। कथन 2 सही है।", "explanation_en": "Statement 1 is incorrect because near the poles the pressure is high. Statement 2 is correct."}, {"id": 32, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "निम्नलिखित कथनों पर विचार करें: कथन 1: वर्ष के दौरान सूर्य से प्राप्त होने वाली सौर ऊर्जा का मान हमेशा एक समान रहता है। कथन 2: पृथ्वी 4 जुलाई को सूर्य से सबसे दूर होती है जिसे अपसौर कहा जाता है।", "question_en": "Consider the following statements: Statement 1: The solar output received at the top of the atmosphere is constant and never varies in a year. Statement 2: The earth is farthest from the sun on 4th July, which is called aphelion.", "options": [{"hi": "दोनों", "en": "Both"}, {"hi": "कोई नहीं", "en": "None"}, {"hi": "केवल 2", "en": "Only 2"}, {"hi": "केवल 1", "en": "Only 1"}], "answer": 2, "explanation_hi": "कथन 1 गलत है क्योंकि सूर्य और पृथ्वी के बीच बदलती दूरी के कारण प्राप्त सौर ऊर्जा के मान में थोड़ा अंतर आता है। कथन 2 सही है।", "explanation_en": "Statement 1 is incorrect because the solar output varies slightly due to distance variations. Statement 2 is correct."}, {"id": 33, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "निम्नलिखित कथनों पर विचार करें: कथन 1: क्षैतिज वायु संचलन के माध्यम से होने वाले ऊष्मा के स्थानांतरण को चालन कहा जाता है। कथन 2: वायुमंडल की निचली परतों को गर्म करने में चालन प्रक्रिया अत्यंत महत्वपूर्ण होती है।", "question_en": "Consider the following statements: Statement 1: The transfer of heat through the horizontal movement of air is called conduction. Statement 2: Conduction is highly important in heating the lower layers of the atmosphere.", "options": [{"hi": "केवल 2", "en": "Only 2"}, {"hi": "केवल 1", "en": "Only 1"}, {"hi": "कोई नहीं", "en": "None"}, {"hi": "दोनों", "en": "Both"}], "answer": 0, "explanation_hi": "कथन 1 गलत है क्योंकि हवा के क्षैतिज संचलन द्वारा ऊष्मा स्थानांतरण को अभिवाहन कहते हैं। कथन 2 सही है।", "explanation_en": "Statement 1 is incorrect because the horizontal heat transfer is advection. Statement 2 is correct."}, {"id": 34, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "निम्नलिखित कथनों पर विचार करें: कथन 1: ऊँचाई बढ़ने के साथ तापमान घटने की सामान्य दर 6.5°C प्रति 1,000 मीटर होती है। कथन 2: पार्थिव विकिरण सीधे वायुमंडल की ऊपरी परतों को पहले गर्म करता है।", "question_en": "Consider the following statements: Statement 1: The normal lapse rate of decrease in temperature with height is 6.5 degrees Celsius per 1,000 m. Statement 2: Terrestrial radiation heats up the atmosphere directly from the upper layers down.", "options": [{"hi": "केवल 2", "en": "Only 2"}, {"hi": "कोई नहीं", "en": "None"}, {"hi": "केवल 1", "en": "Only 1"}, {"hi": "दोनों", "en": "Both"}], "answer": 2, "explanation_hi": "कथन 1 सही है। कथन 2 गलत है क्योंकि वायुमंडल नीचे से पार्थिव विकिरण द्वारा अप्रत्यक्ष रूप से गर्म होता है, न कि ऊपर से सीधे।", "explanation_en": "Statement 1 is correct. Statement 2 is incorrect because the atmosphere is heated by terrestrial radiation from below."}, {"id": 35, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "निम्नलिखित कथनों पर विचार करें: कथन 1: उत्तरी गोलार्द्ध के मध्य और उच्च अक्षांशों में गर्मियों की तुलना में सर्दियों में सौर विकिरण अधिक प्राप्त होता है। कथन 2: जनवरी में समताप रेखाएं उत्तरी अटलांटिक महासागर पर उत्तर की ओर विचलित होती हैं।", "question_en": "Consider the following statements: Statement 1: Middle and higher latitudes in the Northern Hemisphere receive more radiation in winter than in summer. Statement 2: In January, the isotherms deviate to the north over the North Atlantic Ocean.", "options": [{"hi": "केवल 2", "en": "Only 2"}, {"hi": "कोई नहीं", "en": "None"}, {"hi": "दोनों", "en": "Both"}, {"hi": "केवल 1", "en": "Only 1"}], "answer": 0, "explanation_hi": "कथन 1 गलत है क्योंकि सर्दियों में सौर विकिरण गर्मियों से कम प्राप्त होता है। कथन 2 सही है क्योंकि गल्फ स्ट्रीम के कारण समताप रेखाएं उत्तर की ओर झुकती हैं।", "explanation_en": "Statement 1 is incorrect because higher latitudes receive less radiation in winter. Statement 2 is correct."}, {"id": 36, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "निम्नलिखित कथनों पर विचार करें: कथन 1: कोरिओलिस बल का मान भूमध्य रेखा पर सर्वाधिक होता है और ध्रुवों पर यह अनुपस्थित होता है। कथन 2: कोरिओलिस बल दाब प्रवणता बल के समानांतर कार्य करता है।", "question_en": "Consider the following statements: Statement 1: The Coriolis force is maximum at the equator and is absent at the poles. Statement 2: The Coriolis force acts parallel to the pressure gradient force.", "options": [{"hi": "केवल 2", "en": "Only 2"}, {"hi": "दोनों", "en": "Both"}, {"hi": "कोई नहीं", "en": "None"}, {"hi": "केवल 1", "en": "Only 1"}], "answer": 2, "explanation_hi": "दोनों कथन गलत हैं। कोरिओलिस बल ध्रुवों पर अधिकतम और भूमध्य रेखा पर शून्य होता है, तथा यह दाब प्रवणता बल के लंबवत कार्य करता है।", "explanation_en": "Both statements are incorrect. Coriolis force is zero at the equator, maximum at poles, and acts perpendicular to pressure gradient."}, {"id": 37, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "निम्नलिखित कथनों पर विचार करें: कथन 1: वायुमंडल में जलवाष्प की मात्रा आयतन के अनुसार शून्य से चार प्रतिशत के बीच भिन्न होती है। कथन 2: महाद्वीपों के ऊपर सापेक्ष आर्द्रता महासागरों की तुलना में बहुत अधिक पाई जाती है।", "question_en": "Consider the following statements: Statement 1: The water vapour content varies from zero to four per cent by volume of the atmosphere. Statement 2: Relative humidity is greater over the continents and least over the oceans.", "options": [{"hi": "दोनों", "en": "Both"}, {"hi": "केवल 1", "en": "Only 1"}, {"hi": "केवल 2", "en": "Only 2"}, {"hi": "कोई नहीं", "en": "None"}], "answer": 1, "explanation_hi": "कथन 1 सही है। कथन 2 गलत है क्योंकि सापेक्ष आर्द्रता महासागरों के ऊपर अधिक और महाद्वीपों के ऊपर सबसे कम होती है।", "explanation_en": "Statement 1 is correct. Statement 2 is incorrect because relative humidity is greater over oceans and least over continents."}, {"id": 38, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "निम्नलिखित कथनों पर विचार करें: कथन 1: हवा के तापमान में वृद्धि होने पर उसकी जलवाष्प अवशोषण और धारण करने की क्षमता बढ़ जाती है। कथन 2: संतृप्त वायु की सापेक्ष आर्द्रता 100 प्रतिशत होती है।", "question_en": "Consider the following statements: Statement 1: An increase in air temperature increases the water absorption and retention capacity of the air. Statement 2: Saturated air has a relative humidity of 100 per cent.", "options": [{"hi": "केवल 2", "en": "Only 2"}, {"hi": "केवल 1", "en": "Only 1"}, {"hi": "कोई नहीं", "en": "None"}, {"hi": "दोनों", "en": "Both"}], "answer": 3, "explanation_hi": "दोनों कथन सही हैं। तापमान बढ़ने से वायु की नमी धारण करने की क्षमता बढ़ती है और पूर्ण संतृप्त वायु की सापेक्ष आर्द्रता 100 प्रतिशत होती है।", "explanation_en": "Both statements are correct. Warmer air holds more moisture, and fully saturated air has 100% relative humidity."}, {"id": 39, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "निम्नलिखित कथनों पर विचार करें: कथन 1: मध्य अक्षांशों के चक्रवातों में कोई स्पष्ट वाताग्र प्रणाली नहीं पाई जाती है। कथन 2: उष्णकटिबंधीय चक्रवात केवल महासागरों पर ही उत्पन्न होते हैं और धरातल पर पहुँचकर समाप्त हो जाते हैं।", "question_en": "Consider the following statements: Statement 1: Extra-tropical cyclones do not possess any clear frontal system. Statement 2: Tropical cyclones originate only over the seas and dissipate on reaching the land.", "options": [{"hi": "कोई नहीं", "en": "None"}, {"hi": "दोनों", "en": "Both"}, {"hi": "केवल 1", "en": "Only 1"}, {"hi": "केवल 2", "en": "Only 2"}], "answer": 3, "explanation_hi": "कथन 1 गलत है क्योंकि मध्य अक्षांशीय चक्रवातों में स्पष्ट वाताग्र प्रणाली होती है। कथन 2 सही है क्योंकि धरातल पर पहुँचते ही चक्रवात की नमी कट जाती है और वह समाप्त हो जाता है।", "explanation_en": "Statement 1 is incorrect because extra-tropical cyclones have clear fronts. Statement 2 is correct as they dissipate over land."}, {"id": 40, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "निम्नलिखित कथनों पर विचार करें: कथन 1: स्लीट वास्तव में जमे हुए वर्षा के बिंदु होते हैं जो ठंडी हवा के संपर्क में आने से ठोस बनते हैं। कथन 2: ओलों में बर्फ की कई संकेंद्रीय परतें पाई जाती हैं।", "question_en": "Consider the following statements: Statement 1: Sleet is frozen raindrops that solidify while passing through subfreezing air layers. Statement 2: Hailstones have several concentric layers of ice one over the other.", "options": [{"hi": "केवल 2", "en": "Only 2"}, {"hi": "केवल 1", "en": "Only 1"}, {"hi": "दोनों", "en": "Both"}, {"hi": "कोई नहीं", "en": "None"}], "answer": 2, "explanation_hi": "दोनों कथन सही हैं। स्लीट जमी हुई वर्षा की बूंदें हैं तथा ओलों में पानी के संघनित होकर बार-बार ऊपर-नीचे होने से संकेंद्री बर्फ परतें बन जाती हैं।", "explanation_en": "Both statements are correct. Sleet is frozen rain, and hailstones are structured with concentric layers of ice."}, {"id": 41, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "सूची-I को सूची-II से सुमेलित कीजिए: सूची-I: A. उपसौर, B. अपसौर, C. ग्रीष्म संक्रांति; सूची-II: 1. 4 जुलाई, 2. 21 जून, 3. 3 जनवरी", "question_en": "Match List-I with List-II: List-I: A. Perihelion, B. Aphelion, C. Summer Solstice; List-II: 1. 4th July, 2. 21st June, 3. 3rd January", "options": [{"hi": "A-2, B-1, C-3", "en": ""}, {"hi": "A-3, B-1, C-2", "en": ""}, {"hi": "A-3, B-2, C-1", "en": ""}, {"hi": "A-1, B-3, C-2", "en": ""}], "answer": 1, "explanation_hi": "उपसौर 3 जनवरी को (पृथ्वी सूर्य के निकटतम), अपसौर 4 जुलाई को (पृथ्वी सूर्य से दूरतम), और ग्रीष्म संक्रांति 21 जून को होती है।", "explanation_en": "Perihelion is on 3rd January, Aphelion on 4th July, and Summer Solstice occurs on 21st June."}, {"id": 42, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "सूची-I को सूची-II से सुमेलित कीजिए: सूची-I: A. हैडली सेल, B. फेरेल सेल, C. ध्रुवीय सेल; सूची-II: 1. मध्य अक्षांश, 2. उष्णकटिबंध, 3. ध्रुवीय अक्षांश", "question_en": "Match List-I with List-II: List-I: A. Hadley Cell, B. Ferrel Cell, C. Polar Cell; List-II: 1. Middle latitudes, 2. Tropics, 3. Polar latitudes", "options": [{"hi": "A-3, B-2, C-1", "en": ""}, {"hi": "A-2, B-3, C-1", "en": ""}, {"hi": "A-2, B-1, C-3", "en": ""}, {"hi": "A-1, B-2, C-3", "en": ""}], "answer": 2, "explanation_hi": "उष्णकटिबंधीय परिसंचरण को हैडली सेल, मध्य अक्षांशीय को फेरेल सेल और उच्च अक्षांशीय परिसंचरण को ध्रुवीय सेल कहते हैं।", "explanation_en": "Hadley Cell operates in the tropics, Ferrel Cell in the middle latitudes, and Polar Cell at high polar latitudes."}, {"id": 43, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "सूची-I को सूची-II से सुमेलित कीजिए: सूची-I: A. चक्रवात, B. प्रतिचक्रवात, C. भूविक्षेपी पवन; सूची-II: 1. समदाब रेखाओं के समांतर प्रवाह, 2. उत्तरी गोलार्द्ध में वामावर्त पवन दिशा, 3. उत्तरी गोलार्द्ध में दक्षिणावर्त पवन दिशा", "question_en": "Match List-I with List-II: List-I: A. Cyclone, B. Anticyclone, C. Geostrophic wind; List-II: 1. Wind parallel to isobars, 2. Anticlockwise wind in Northern Hemisphere, 3. Clockwise wind in Northern Hemisphere", "options": [{"hi": "A-3, B-2, C-1", "en": ""}, {"hi": "A-1, B-3, C-2", "en": ""}, {"hi": "A-2, B-1, C-3", "en": ""}, {"hi": "A-2, B-3, C-1", "en": ""}], "answer": 3, "explanation_hi": "उत्तरी गोलार्द्ध में चक्रवात वामावर्त, प्रतिचक्रवात दक्षिणावर्त होता है तथा भूविक्षेपी पवन समदाब रेखाओं के समांतर बहती है।", "explanation_en": "In Northern Hemisphere, cyclones are anticlockwise, anticyclones clockwise, and geostrophic winds flow parallel to isobars."}, {"id": 44, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "सूची-I को सूची-II से सुमेलित कीजिए: सूची-I: A. हरीकेन, B. टाइफून, C. विली-विलीज़; सूची-II: 1. पश्चिमी ऑस्ट्रेलिया, 2. अटलांटिक महासागर, 3. पश्चिमी प्रशांत व दक्षिण चीन सागर", "question_en": "Match List-I with List-II: List-I: A. Hurricanes, B. Typhoons, C. Willy-willies; List-II: 1. Western Australia, 2. Atlantic Ocean, 3. Western Pacific and South China Sea", "options": [{"hi": "A-3, B-2, C-1", "en": ""}, {"hi": "A-2, B-3, C-1", "en": ""}, {"hi": "A-2, B-1, C-3", "en": ""}, {"hi": "A-1, B-3, C-2", "en": ""}], "answer": 1, "explanation_hi": "अटलांटिक महासागर के उष्णकटिबंधीय चक्रवातों को हरीकेन, पश्चिमी प्रशांत क्षेत्र में टाइफून और पश्चिमी ऑस्ट्रेलिया में विली-विलीज़ कहा जाता है।", "explanation_en": "Hurricanes occur in the Atlantic, Typhoons in the Western Pacific/South China Sea, and Willy-willies in Western Australia."}, {"id": 45, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "सूची-I को सूची-II से सुमेलित कीजिए: सूची-I: A. पक्षाम मेघ, B. कपासी मेघ, C. स्तरी मेघ; सूची-II: 1. परतदार चादर जैसे मेघ, 2. रुई के ढेर जैसे मेघ, 3. अत्यधिक ऊँचाई वाले पतले रेशमी मेघ", "question_en": "Match List-I with List-II: List-I: A. Cirrus, B. Cumulus, C. Stratus; List-II: 1. Layered sheet-like clouds, 2. Cotton wool-like clouds, 3. High altitude thin feathery clouds", "options": [{"hi": "A-3, B-1, C-2", "en": ""}, {"hi": "A-3, B-2, C-1", "en": ""}, {"hi": "A-2, B-3, C-1", "en": ""}, {"hi": "A-1, B-2, C-3", "en": ""}], "answer": 1, "explanation_hi": "पक्षाम मेघ आसमान में सर्वोच्च ऊँचाई पर रेशमी दिखते हैं, कपासी रुई के समान चपटे आधार वाले होते हैं और स्तरी मेघ चादर की तरह विस्तृत होते हैं।", "explanation_en": "Cirrus are high-altitude feathery clouds, Cumulus resemble cotton wool, and Stratus are extensive layered clouds."}, {"id": 46, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "सूची-I को सूची-II से सुमेलित कीजिए: सूची-I: A. ओस, B. पाला, C. ओला; सूची-II: 1. हिमांक से नीचे तापमान होने पर महीन बर्फ के क्रिस्टल, 2. हिमांक से ऊपर तापमान पर ठंडी सतहों पर जमा जल बूंदें, 3. पानी की परतों के जमने से बनी संकेंद्रीय गोलियाँ", "question_en": "Match List-I with List-II: List-I: A. Dew, B. Frost, C. Hailstones; List-II: 1. Minute ice crystals when dew point is below freezing, 2. Water droplets on cold surfaces when dew point is above freezing, 3. Concentric layers of ice formed as pellets", "options": [{"hi": "A-2, B-1, C-3", "en": ""}, {"hi": "A-3, B-1, C-2", "en": ""}, {"hi": "A-1, B-2, C-3", "en": ""}, {"hi": "A-2, B-3, C-1", "en": ""}], "answer": 0, "explanation_hi": "ओस का जमाव ओसांक हिमांक से ऊपर होने पर होता है, पाला ओसांक हिमांक से नीचे होने पर बनता है और ओला संकेंद्रीय बर्फ परतों वाला गोल पिंड होता है।", "explanation_en": "Dew requires dew point above freezing, Frost requires dew point below freezing, and Hailstones consist of concentric layers of ice."}, {"id": 47, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "वायुमंडलीय बादलों के प्रकार और उनकी ऊँचाई के संदर्भ में निम्नलिखित युग्मों में से कितने सही सुमेलित हैं? 1. पक्षाम मेघ: 8,000 - 12,000 मीटर, 2. कपासी मेघ: 4,000 - 7,000 मीटर, 3. मध्यम मेघ: केवल 500 मीटर", "question_en": "With reference to the types of atmospheric clouds and their altitudes, how many of the following pairs are correctly matched? 1. Cirrus: 8,000 - 12,000 m, 2. Cumulus: 4,000 - 7,000 m, 3. Altostratus: Only 500 m", "options": [{"hi": "केवल दो युग्म", "en": "Only two pairs"}, {"hi": "सभी तीन युग्म", "en": "All three pairs"}, {"hi": "कोई भी युग्म सुमेलित नहीं है", "en": "None of the pairs is correctly matched"}, {"hi": "केवल एक युग्म", "en": "Only one pair"}], "answer": 0, "explanation_hi": "पहला और दूसरा युग्म सही सुमेलित हैं। तीसरा युग्म गलत है क्योंकि कपासी-स्तरी मध्यम स्तरीय मेघ हैं, जो 500 मीटर पर नहीं होते।", "explanation_en": "Pairs 1 and 2 are correctly matched. Pair 3 is incorrect because altostratus is a middle-level cloud, not at 500 m altitude."}, {"id": 48, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "विश्वव्यापी वार्षिक वर्षा वितरण के संदर्भ में निम्नलिखित जलवायु क्षेत्रों और वर्षा की मात्रा के युग्मों में से कौन सा एक सही सुमेलित नहीं है?", "question_en": "Regarding the global annual distribution of precipitation, which of the following pairs of climate zones and rainfall ranges is NOT correctly matched?", "options": [{"hi": "महाद्वीपों के आंतरिक भाग: 100 से 200 सेमी", "en": "Interior continental areas: 100 to 200 cm"}, {"hi": "उच्च अक्षांश ध्रुवीय क्षेत्र: 100 से 150 सेमी", "en": "High latitudes polar regions: 100 to 150 cm"}, {"hi": "शीतोष्ण प्रदेशों के आंतरिक भाग: 50 से 100 सेमी", "en": "Interior parts of temperate lands: 50 to 100 cm"}, {"hi": "भूमध्यरेखीय पेटी: 200 सेमी से अधिक", "en": "Equatorial belt: over 200 cm"}], "answer": 1, "explanation_hi": "उच्च अक्षांशों और महाद्वीपों के वृष्टि छाया क्षेत्रों में वार्षिक वर्षा अत्यंत कम (50 सेमी से कम) होती है, न कि 100-150 सेमी।", "explanation_en": "High latitudes and rain shadow regions of continental interiors receive very low rainfall of less than 50 cm per annum."}, {"id": 49, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "वायुमंडलीय हवा के संघनन के रूपों और उनकी अनुकूल परिस्थितियों के संदर्भ में कौन सा युग्म सही सुमेलित है?", "question_en": "Which of the following pairs is correctly matched regarding forms of atmospheric condensation and their favourable conditions?", "options": [{"hi": "कोहरा: केवल गर्म पर्वतीय ढालों पर उत्पन्न होना", "en": "Prevalent only over warm mountain slopes"}, {"hi": "ओस: ओसांक तापमान हिमांक से नीचे होना", "en": "Dew point below freezing point"}, {"hi": "सफेद पाला: ओसांक तापमान हिमांक बिंदु या उससे नीचे होना", "en": "Dew point at or below freezing point"}, {"hi": "कुहासा: बहुत शुष्क हवा और धूल रहित आकाश", "en": "Very dry air and dust-free sky"}], "answer": 2, "explanation_hi": "सफेद पाला तब बनता है जब ओसांक शून्य डिग्री सेल्सियस या उससे नीचे होता है, जिससे नमी बर्फ क्रिस्टल में बदल जाती है। ओस हिमांक से ऊपर बनती है।", "explanation_en": "Frost forms when condensation takes place below the freezing point (0°C), with the dew point at or below freezing."}, {"id": 50, "topic_hi": "सामान्य अध्ययन", "topic_en": "General Studies", "question_hi": "मानक वायुमंडल के अनुसार धरातल से ऊपर की ओर बढ़ने पर विभिन्न स्तरों पर मिलने वाले वायुमंडलीय दाब के मान को बढ़ते क्रम में व्यवस्थित कीजिए: 1. 10 किमी की ऊँचाई पर, 2. 5 किमी की ऊँचाई पर, 3. 1 किमी की ऊँचाई पर, 4. औसत समुद्र तल पर", "question_en": "Arrange the following levels in increasing order of their standard atmospheric pressure value as we move upwards from the surface: 1. At 10 km altitude, 2. At 5 km altitude, 3. At 1 km altitude, 4. At mean sea level", "options": [{"hi": "1-2-3-4", "en": ""}, {"hi": "1-3-2-4", "en": ""}, {"hi": "2-1-3-4", "en": ""}, {"hi": "4-3-2-1", "en": ""}], "answer": 0, "explanation_hi": "ऊंचाई बढ़ने के साथ दबाव घटता है। बढ़ते क्रम में दाब मान हैं: 10 किमी पर (265 mb), 5 किमी पर (540.48 mb), 1 किमी पर (898.76 mb) और समुद्र तल पर (1013.25 mb)।", "explanation_en": "Standard pressure values in increasing order are: 10 km (265 mb) < 5 km (540.48 mb) < 1 km (898.76 mb) < Sea level (1013.25 mb)."}]};
+
+/* ===== Bodhi — भाषा टॉगल + प्रश्न-प्रकार फ़ॉर्मैटर ===== */
+var BODHI_LANG = (function(){ try{ return localStorage.getItem("bodhi_lang")||"hi"; }catch(e){ return "hi"; } })();
+function langSegHTML(){
+  var L=BODHI_LANG, o=function(v,t){ return '<button type="button" class="lang-b'+(L===v?" on":"")+'" data-lang="'+v+'">'+t+'</button>'; };
+  return o("hi","हिंदी")+o("en","English")+o("bi","दोनों");
+}
+function paintLang(){
+  ["qLang","coverLang"].forEach(function(id){
+    var box=document.getElementById(id); if(!box) return;
+    box.innerHTML=langSegHTML();
+    box.querySelectorAll(".lang-b").forEach(function(b){
+      b.addEventListener("click",function(){ setBodhiLang(b.getAttribute("data-lang")); });
+    });
+  });
+}
+function setBodhiLang(l){
+  BODHI_LANG=l;
+  try{ localStorage.setItem("bodhi_lang",l); }catch(e){}
+  paintLang();
+  try{ if(typeof renderQuestion==="function" && document.getElementById("testScreen")
+        && document.getElementById("testScreen").style.display==="block"){ renderQuestion(); } }catch(e){}
+  try{ if(typeof renderReview==="function" && document.getElementById("resultScreen")
+        && document.getElementById("resultScreen").style.display==="block"){ renderReview(); } }catch(e){}
+}
+function bodhiEsc(t){ return String(t==null?"":t)
+  .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+function _bodhiPoints(t){
+  /* कथन 1/2, Statement 1/2, तथा "1. … 2. …" बिंदुओं को नई पंक्ति में तोड़ो */
+  t = t.replace(/\s*(कथन\s*\d+\s*[:：])/g,"\n$1")
+       .replace(/\s*(Statement\s*\d+\s*[:：])/gi,"\n$1")
+       .replace(/([।;?])\s*(\d+\.\s)/g,"$1\n$2")
+       .replace(/(\?|\:)\s*(\d+\.\s)/g,"$1\n$2")
+       .replace(/([।;,])\s*(\d+\.\s)/g,"$1\n$2");
+  return t.replace(/^\n+/,"").replace(/\n[ \t]+/g,"\n");
+}
+function _bodhiMatchTable(raw){
+  var t=String(raw);
+  var reI=/(सूची|List)[\s\-–—]*I(?!I)\s*(?:\([^)]*\))?\s*[:：]/i;
+  var reII=/(सूची|List)[\s\-–—]*II\s*(?:\([^)]*\))?\s*[:：]/i;
+  var mI=t.match(reI), mII=t.match(reII);
+  if(!mI||!mII||mII.index<=mI.index) return null;
+  var intro=t.slice(0,mI.index).trim();
+  var segI=t.slice(mI.index+mI[0].length,mII.index).trim().replace(/[;।,]\s*$/,"");
+  var rest=t.slice(mII.index+mII[0].length);
+  var mo=rest.match(/(सही\s*मिलान|नीचे\s*दिए|सुमेलित|Choose|Select|Match|कूट)/i);
+  var segII, outro="";
+  if(mo){ segII=rest.slice(0,mo.index).trim(); outro=rest.slice(mo.index).trim(); }
+  else segII=rest.trim();
+  segII=segII.replace(/[;।,]\s*$/,"");
+  var sp=function(seg,re){ return seg.split(re).map(function(x){return x.trim();}).filter(Boolean); };
+  var A=sp(segI,/\s*,\s*(?=[A-Z]\.)/), B=sp(segII,/\s*,\s*(?=\d+\.)/);
+  if(A.length<2||B.length<2) return null;
+  var n=Math.max(A.length,B.length), rows="";
+  for(var k=0;k<n;k++) rows+="<tr><td>"+bodhiEsc(A[k]||"")+"</td><td>"+bodhiEsc(B[k]||"")+"</td></tr>";
+  return (intro?bodhiEsc(intro)+"\n":"")
+       + '<table class="match-tbl"><tr><th>'+bodhiEsc(mI[1])+'-I</th><th>'+bodhiEsc(mII[1])+'-II</th></tr>'+rows+'</table>'
+       + (outro?bodhiEsc(outro):"");
+}
+function bodhiFmt(raw){
+  if(!raw) return "";
+  var mt=_bodhiMatchTable(raw);
+  if(mt) return mt;
+  return bodhiEsc(_bodhiPoints(String(raw)));
+}
+
+const QUESTIONS = Array.isArray(TEST.questions) ? TEST.questions : [];
+const letters = ["A", "B", "C", "D"];
+const TOTAL_TIME_SECONDS = Math.max(0, Number(TEST.durationMinutes || 0) * 60);
+const MARKS = Number(TEST.marksPerQuestion || 2);
+const NEG = Number(TEST.negativeMarks || 0);
+const RANKING_ENABLED = Boolean(TEST.rankingEnabled && TEST.firebaseConfig && TEST.firebaseConfig.projectId);
+const FIREBASE_CONFIG = TEST.firebaseConfig || null;
+let current = 0, answers = [], review = [], remaining = TOTAL_TIME_SECONDS, timerId = null, startedAt = 0;
+let studentName = "", lastResult = null, testActive = false;
+const LEADER_TOP = 20;
+const TEST_KEY = String(TEST.testId || "bodhi-test");
+const PROG_KEY = "jaiho_prog_" + TEST_KEY;
+function storeGet(k){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : null; }catch(e){ return null; } }
+function storeSet(k, obj){ try{ localStorage.setItem(k, JSON.stringify(obj)); }catch(e){} }
+function storeDel(k){ try{ localStorage.removeItem(k); }catch(e){} }
+function saveProgress(){ if(!testActive) return; storeSet(PROG_KEY, {v:1, name:studentName, answers:answers, review:review, current:current, remaining:remaining, startedAt:startedAt, savedAt:Date.now()}); }
+async function tryResume(){
+  const p = storeGet(PROG_KEY);
+  if(!p || !p.name || !Array.isArray(p.answers) || p.answers.length !== QUESTIONS.length) return;
+  const ok = await askConfirm(p.name + " — इसी test का आपका अधूरा प्रयास मिला। क्या वहीं से जारी करें?\n(रद्द करने पर अधूरा प्रयास हटेगा और नया शुरू होगा।)", "वहीं से जारी करें", "नया शुरू करें");
+  if(!ok){ storeDel(PROG_KEY); return; }
+  studentName = String(p.name);
+  answers = p.answers.map(a => (a === null || a === undefined) ? null : Number(a));
+  review = (Array.isArray(p.review) && p.review.length === QUESTIONS.length) ? p.review.map(Boolean) : Array(QUESTIONS.length).fill(false);
+  current = Math.min(Math.max(0, Number(p.current) || 0), QUESTIONS.length - 1);
+  remaining = TOTAL_TIME_SECONDS ? Math.max(5, Math.min(TOTAL_TIME_SECONDS, Number(p.remaining) || TOTAL_TIME_SECONDS)) : 0;
+  startedAt = Number(p.startedAt) || Date.now();
+  testActive = true;
+  el("homeScreen").style.display = "none"; el("resultScreen").style.display = "none"; el("testScreen").style.display = "block";
+  renderQuestion(); startTimer(); requestAnimationFrame(()=>scrollToQuestion("auto"));
+}
+function el(id){ return document.getElementById(id); }
+function askConfirm(message, okText, cancelText){
+  return new Promise(resolve=>{
+    var old = document.getElementById("jhConfirmOverlay");
+    if(old) old.remove();
+    var ov = document.createElement("div");
+    ov.id = "jhConfirmOverlay";
+    ov.style.cssText = "position:fixed;inset:0;z-index:99999;background:rgba(3,7,16,.72);display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px);";
+    var box = document.createElement("div");
+    box.style.cssText = "background:linear-gradient(180deg,#0A1426,#0E1B33);border:1px solid rgba(217,174,95,.34);max-width:420px;width:100%;border-radius:18px;padding:22px;box-shadow:0 22px 60px rgba(0,0,0,.55);font-family:'Mukta',Arial,sans-serif;";
+    var msg = document.createElement("p");
+    msg.style.cssText = "margin:0 0 18px;color:#F2EBDA;font-weight:500;line-height:1.7;font-size:15.5px;white-space:pre-line;";
+    msg.textContent = message;
+    var row = document.createElement("div");
+    row.style.cssText = "display:flex;gap:10px;flex-wrap:wrap;";
+    var okBtn = document.createElement("button");
+    okBtn.textContent = okText || "ठीक है";
+    okBtn.style.cssText = "flex:1;min-width:120px;border:0;cursor:pointer;padding:13px 16px;border-radius:13px;font-weight:900;font-size:15px;font-family:inherit;background:linear-gradient(160deg,#F2CD88,#D9AE5F);color:#0d1626;";
+    var cancelBtn = document.createElement("button");
+    cancelBtn.textContent = cancelText || "रद्द करें";
+    cancelBtn.style.cssText = "flex:1;min-width:120px;border:0;cursor:pointer;padding:13px 16px;border-radius:13px;font-weight:900;font-size:15px;font-family:inherit;background:rgba(255,255,255,.06);color:#98A6BE;";
+    function done(val){ ov.remove(); resolve(val); }
+    okBtn.addEventListener("click", function(){ done(true); });
+    cancelBtn.addEventListener("click", function(){ done(false); });
+    row.appendChild(cancelBtn); row.appendChild(okBtn);
+    box.appendChild(msg); box.appendChild(row);
+    ov.appendChild(box); document.body.appendChild(ov);
+  });
+}
+function escapeHTML(s){ return String(s ?? "").replace(/[&<>"']/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m])); }
+function numClean(n){ return Number.isInteger(Number(n)) ? String(Number(n)) : String(Number(n).toFixed(2)).replace(/\.00$/,""); }
+function formatTime(sec){ sec=Math.max(0, Math.floor(sec||0)); const m=Math.floor(sec/60), s=sec%60; return `${m}:${String(s).padStart(2,"0")}`; }
+function splitTitle(title, hi){ if(!String(hi||"").trim()) return escapeHTML(String(title||"परीक्षा")); const t=String(title||"Bodhi Classes परीक्षा"); const h=String(hi||"").trim(); if(h && t.toLowerCase().includes(h.toLowerCase())){ const i=t.toLowerCase().indexOf(h.toLowerCase()); return `${escapeHTML(t.slice(0,i))}<span>${escapeHTML(t.slice(i,i+h.length))}</span>${escapeHTML(t.slice(i+h.length))}`; } return `${escapeHTML(t)} <span>Test</span>`; }
+function initHome(){
+  document.title = `Bodhi Classes — ${TEST.title || "परीक्षा"}`;
+  el("topSub").textContent = TEST.subtitle || "UPPCS Prelims 2026 / RO-ARO Practice";
+  el("pillText").textContent = TEST.pill || "🏆 Daily Rank Ready";
+  el("tagText").textContent = TEST.tag || "UPPCS Prelims 2026 / RO-ARO";
+  el("homeTitle").innerHTML = splitTitle(TEST.title, TEST.highlight);
+  el("homeSub").textContent = TEST.description || "नाम डालकर टेस्ट शुरू करें। Submit के बाद score, analysis और rank section दिखेगा।";
+  el("qCountBox").textContent = QUESTIONS.length;
+  el("timeBox").textContent = TOTAL_TIME_SECONDS ? `${TEST.durationMinutes} मिनट` : "असीमित";
+  el("marksBox").textContent = `+${numClean(MARKS)}`;
+  el("negBox").textContent = NEG ? `-${numClean(NEG)}` : "0";
+  el("examTitle").textContent = `Bodhi Classes · ${TEST.shortTitle || TEST.title || "परीक्षा"}`;
+  if(!TEST.rankingEnabled){ var _rb=el("rankBoard"); if(_rb) _rb.style.display="none"; }
+    paintLang();
+    el("footerNote").textContent = TEST.footerCredit || "© Bodhi Classes · Designed by Aditya Chauhan · @BodhiClasses";
+  answers = Array(QUESTIONS.length).fill(null); review = Array(QUESTIONS.length).fill(false);
+  if(!QUESTIONS.length){ el("nameErr").textContent = "इस परीक्षा में प्रश्न नहीं मिले।"; }
+}
+function scrollToQuestion(behavior="smooth"){
+  const target = el("questionCard") || document.querySelector(".question-card");
+  if(target) target.scrollIntoView({behavior, block:"start"});
+}
+function renderWithoutJump(changeFn){
+  const y = window.scrollY;
+  changeFn();
+  requestAnimationFrame(()=>window.scrollTo({top:y, left:0, behavior:"auto"}));
+}
+function startTest(){
+  const n = el("studentName").value.trim().replace(/\s+/g," ");
+  if(!n){ el("nameErr").textContent = "कृपया अपना नाम लिखें।"; el("studentName").focus(); return; }
+  if(!QUESTIONS.length){ el("nameErr").textContent = "प्रश्न नहीं मिले।"; return; }
+  studentName = n; current = 0; answers = Array(QUESTIONS.length).fill(null); review = Array(QUESTIONS.length).fill(false); remaining = TOTAL_TIME_SECONDS; startedAt = Date.now(); testActive = true;
+  el("homeScreen").style.display = "none"; el("resultScreen").style.display = "none"; el("testScreen").style.display = "block";
+  renderQuestion(); startTimer(); saveProgress(); requestAnimationFrame(()=>scrollToQuestion("smooth"));
+}
+function startTimer(){ if(timerId) clearInterval(timerId); el("timer").textContent = TOTAL_TIME_SECONDS ? formatTime(remaining) : "असीमित"; if(!TOTAL_TIME_SECONDS) return; timerId = setInterval(()=>{ remaining--; el("timer").textContent = formatTime(remaining); if(remaining % 5 === 0) saveProgress(); if(remaining <= 60) el("timer").style.background = "rgba(232,24,24,.75)"; if(remaining <= 0){ clearInterval(timerId); calculateResult(true); } },1000); }
+function renderQuestion(){
+  const q = QUESTIONS[current]; if(!q) return;
+  el("qno").textContent = `प्रश्न ${current+1} / ${QUESTIONS.length}`;
+  el("topic").textContent = [q.topic_hi, q.topic_en].filter(Boolean).join(" / ") || "General Studies";
+  var _hi=q.question_hi||"", _en=q.question_en||"";
+    if(BODHI_LANG==="en" && _en){ el("qtext").innerHTML = bodhiFmt(_en); el("qtextEn").classList.add("hidden"); }
+    else { el("qtext").innerHTML = bodhiFmt(_hi||_en);
+           if(BODHI_LANG==="bi" && _en && _hi){ el("qtextEn").innerHTML = bodhiFmt(_en); el("qtextEn").classList.remove("hidden"); }
+           else { el("qtextEn").innerHTML=""; el("qtextEn").classList.add("hidden"); } }
+    paintLang();
+  el("options").innerHTML = (q.options||[]).map((op,i)=>{var oh=(op&&op.hi)||"", oe=(op&&op.en)||"";var body = (BODHI_LANG==="en"&&oe) ? `<div class="op-hi">${bodhiEsc(oe)}</div>` : (BODHI_LANG==="bi"&&oe&&oe!==oh) ? `<div class="op-hi">${bodhiEsc(oh)}</div><div class="op-en">${bodhiEsc(oe)}</div>` : `<div class="op-hi">${bodhiEsc(oh||oe)}</div>`;return `<button class="option ${answers[current]===i?"selected":""}" onclick="selectAnswer(${i})"><div class="letter">${letters[i]}</div><div>${body}</div></button>`;}).join("");
+  el("reviewBtn").textContent = review[current] ? "★ समीक्षा हेतु चिह्नित" : "☆ समीक्षा हेतु चिह्नित करें";
+  const done = answers.filter(a=>a!==null).length; el("progressBar").style.width = `${(done/QUESTIONS.length)*100}%`;
+  renderPalette(); updateMiniStats();
+}
+function renderPalette(){ el("palette").innerHTML = QUESTIONS.map((_,i)=>`<button class="dot ${i===current?"current":""} ${answers[i]!==null?"answered":""} ${review[i]?"review":""}" onclick="goQ(${i})">${i+1}</button>`).join(""); }
+function updateMiniStats(){ el("attemptedCount").textContent = answers.filter(a=>a!==null).length; el("reviewCount").textContent = review.filter(Boolean).length; }
+function selectAnswer(i){ answers[current]=i; renderQuestion(); saveProgress(); }
+function clearAnswer(){ answers[current]=null; renderQuestion(); saveProgress(); }
+function toggleReview(){ review[current]=!review[current]; renderQuestion(); saveProgress(); }
+function nextQ(){ if(current < QUESTIONS.length-1){ renderWithoutJump(()=>{ current++; renderQuestion(); saveProgress(); }); } }
+function prevQ(){ if(current > 0){ renderWithoutJump(()=>{ current--; renderQuestion(); saveProgress(); }); } }
+function goQ(i){ renderWithoutJump(()=>{ current=i; renderQuestion(); saveProgress(); }); }
+async function submitTest(){ const left = answers.filter(a=>a===null).length; const msg = left ? `${left} प्रश्न अभी अनुत्तरित हैं। फिर भी परीक्षा समाप्त करनी है?` : "परीक्षा समाप्त करनी है?"; if(await askConfirm(msg, "हाँ, समाप्त करें", "अभी नहीं")) calculateResult(false); }
+function calculateResult(auto){
+  if(timerId) clearInterval(timerId);
+  testActive = false; storeDel(PROG_KEY);
+  const timeTaken = startedAt ? Math.floor((Date.now()-startedAt)/1000) : (TOTAL_TIME_SECONDS - remaining);
+  let correct=0, wrong=0, attempted=0;
+  QUESTIONS.forEach((q,i)=>{ if(answers[i]!==null){ attempted++; if(answers[i]===q.answer) correct++; else wrong++; } });
+  const skipped = QUESTIONS.length - attempted; const marks = correct*MARKS - wrong*NEG; const maxMarks = QUESTIONS.length*MARKS; const percent = maxMarks ? Math.max(0, Math.round((marks/maxMarks)*100)) : 0; const accuracy = attempted ? Math.round((correct/attempted)*100) : 0;
+  let band = "अभ्यास जारी रखें — व्याख्या पढ़कर कमज़ोर हिस्से मज़बूत करें।";
+  if(percent >= 80) band = "बहुत अच्छा प्रदर्शन! अब गति और पेचीदा कथनों पर पकड़ और मज़बूत करें।"; else if(percent >= 60) band = "अच्छा प्रयास। गलत प्रश्नों की व्याख्या से दोहराव कीजिए।"; else if(percent >= 40) band = "औसत प्रदर्शन। अवधारणाएँ और तथ्य क्रमबद्ध ढंग से पढ़ें।"; else band = "मूल दोहराव आवश्यक है। व्याख्या वाला भाग ध्यान से पढ़ें।";
+  lastResult = { testId: TEST.testId || "bodhi-test", testTitle: TEST.title || "Jai Ho Study Test", name: studentName, score: Number(marks.toFixed(2)), maxMarks: Number(maxMarks.toFixed(2)), percent, attempted, correct, wrong, skipped, accuracy, timeTaken, totalQuestions: QUESTIONS.length, submittedAt: new Date().toISOString() };
+  el("resultMessage").textContent = auto ? `समय समाप्त! ${band}` : band;
+  el("studentStrip").innerHTML = `<span>नाम: ${escapeHTML(studentName)}</span><span>लगा समय: ${formatTime(timeTaken)}</span><span>प्रश्न: ${QUESTIONS.length}</span>`;
+  el("finalMarks").textContent = `${marks.toFixed(2)} / ${numClean(maxMarks)}`; el("finalAttempted").textContent = attempted; el("finalCorrect").textContent = correct; el("finalWrong").textContent = wrong; el("finalAccuracy").textContent = `${accuracy}%`; el("finalTime").textContent = formatTime(timeTaken); el("scorePercent").textContent = `${percent}%`; el("scoreCircle").style.setProperty("--scoreDeg", `${percent*3.6}deg`);
+  renderReview(); saveAttemptAndLoadRank(lastResult);
+  el("testScreen").style.display = "none"; el("resultScreen").style.display = "block"; window.scrollTo({top:0, behavior:"smooth"});
+}
+function renderReview(){ el("reviewList").innerHTML = QUESTIONS.map((q,i)=>{
+  const user = answers[i];
+  const status = user===null ? "skip" : (user===q.answer ? "ok" : "bad");
+  const statusText = user===null ? "अनुत्तरित" : (user===q.answer ? "सही" : "गलत");
+  const optTxt = function(o){ if(!o) return "";
+    var oh=o.hi||"", oe=o.en||"";
+    if(BODHI_LANG==="en" && oe) return oe;
+    if(BODHI_LANG==="bi" && oe && oe!==oh) return oh+" / "+oe;
+    return oh||oe; };
+  const utext = user===null ? "—" : `${letters[user]}. ${optTxt(q.options[user])}`;
+  const correctText = `${letters[q.answer]}. ${optTxt(q.options[q.answer])}`;
+  var qMain = (BODHI_LANG==="en" && q.question_en) ? q.question_en : (q.question_hi||q.question_en||"");
+  var qSub  = (BODHI_LANG==="bi" && q.question_en && q.question_hi) ? q.question_en : "";
+  var eMain = (BODHI_LANG==="en" && q.explanation_en) ? q.explanation_en : (q.explanation_hi||q.explanation_en||"");
+  var eSub  = (BODHI_LANG==="bi" && q.explanation_en && q.explanation_hi) ? q.explanation_en : "";
+  return `<div class="review-item"><div class="review-head"><strong>प्रश्न ${i+1}</strong>`
+    + `<span class="badge ${status}">${statusText}</span></div>`
+    + `<div class="review-content"><div style="white-space:pre-line"><b>${bodhiFmt(qMain)}</b></div>`
+    + (qSub?`<div class="qtext-en" style="white-space:pre-line">${bodhiFmt(qSub)}</div>`:"")
+    + `<div class="answer-line"><b>आपका उत्तर:</b> ${escapeHTML(utext)}<br><b>सही उत्तर:</b> ${escapeHTML(correctText)}</div>`
+    + (eMain?`<div class="explain"><b>व्याख्या:</b> ${escapeHTML(eMain)}`
+        + (eSub?`<br><span style="opacity:.75">${escapeHTML(eSub)}</span>`:"") + `</div>`:"")
+    + `</div></div>`;
+}).join(""); }
+function restartTest(){ current=0; answers=Array(QUESTIONS.length).fill(null); review=Array(QUESTIONS.length).fill(false); remaining=TOTAL_TIME_SECONDS; studentName=""; startedAt=0; testActive=false; storeDel(PROG_KEY); if(timerId) clearInterval(timerId); el("studentName").value=""; el("nameErr").textContent=""; el("timer").style.background="rgba(255,255,255,.15)"; el("resultScreen").style.display="none"; el("homeScreen").style.display="block"; setTimeout(()=>el("studentName").focus(),50); window.scrollTo({top:0, behavior:"smooth"}); }
+let fbBundle = null;
+function normalizeKey(s){
+  return String(s||"").trim().toLowerCase().replace(/[^a-z0-9\u0900-\u097f]+/g,"-").replace(/^-+|-+$/g,"").slice(0,90) || "student";
+}
+function getLocalUid(){
+  const key = "jaiho_rank_local_uid";
+  try{
+    let uid = localStorage.getItem(key);
+    if(!uid){
+      uid = "local-" + Math.random().toString(36).slice(2) + "-" + Date.now().toString(36);
+      localStorage.setItem(key, uid);
+    }
+    return uid;
+  }catch(e){
+    return "local-" + Math.random().toString(36).slice(2) + "-" + Date.now().toString(36);
+  }
+}
+function makeRankSort(score,timeTaken,submittedMs){
+  const scorePart = String(100000000000 - Math.round(Number(score||0)*100)).padStart(12,"0");
+  const timePart = String(Math.max(0, Math.floor(Number(timeTaken||0)))).padStart(7,"0");
+  const datePart = String(Number(submittedMs||Date.now())).padStart(13,"0");
+  return `${scorePart}_${timePart}_${datePart}`;
+}
+function withTimeout(promise, ms, message){
+  let timer;
+  const timeout = new Promise((_, reject)=>{ timer = setTimeout(()=>reject(new Error(message || "Firebase timeout")), ms); });
+  return Promise.race([promise, timeout]).finally(()=>clearTimeout(timer));
+}
+function loadScript(src){
+  return new Promise((resolve, reject)=>{
+    var existing = document.querySelector('script[data-fb="1"][src="'+src+'"]');
+    if(existing){ resolve(); return; }
+    var s = document.createElement("script");
+    s.src = src; s.async = true; s.setAttribute("data-fb","1");
+    s.onload = ()=>resolve();
+    s.onerror = ()=>reject(new Error("Firebase SDK load नहीं हुआ। Internet ON रखें।"));
+    document.head.appendChild(s);
+  });
+}
+async function ensureFirebaseSdk(){
+  if(window.firebase && firebase.initializeApp && firebase.firestore) return;
+  await loadScript("https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js");
+  await loadScript("https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js");
+}
+async function getFirebase(){
+  if(fbBundle) return fbBundle;
+  if(!FIREBASE_CONFIG || !FIREBASE_CONFIG.projectId) throw new Error("Firebase config missing");
+  await ensureFirebaseSdk();
+  if(!window.firebase || !firebase.initializeApp || !firebase.firestore){
+    throw new Error("Firebase SDK load नहीं हुआ। Internet ON रखें। अगर local file में दिक्कत हो तो HTML को hosting/link से खोलें।");
+  }
+  const app = firebase.apps && firebase.apps.length ? firebase.app() : firebase.initializeApp(FIREBASE_CONFIG);
+  const db = firebase.firestore(app);
+  const user = { uid: getLocalUid() };
+  const fs = {
+    doc: (dbRef, ...path)=>dbRef.doc(path.join("/")),
+    collection: (dbRef, ...path)=>dbRef.collection(path.join("/")),
+    setDoc: (ref, data, opts)=>withTimeout(ref.set(data, opts), 20000, "Firestore write timeout. Rules और Internet check करें."),
+    getDoc: (ref)=>withTimeout(ref.get(), 20000, "Firestore read timeout. Rules और Internet check करें."),
+    serverTimestamp: ()=>firebase.firestore.FieldValue.serverTimestamp(),
+    query: (base, ...ops)=>ops.reduce((q,op)=>op(q), base),
+    orderBy: (field, dir)=>q=>q.orderBy(field, dir),
+    limit: (n)=>q=>q.limit(n),
+    getDocs: (q)=>withTimeout(q.get(), 20000, "Firestore read timeout. Rules और Internet check करें.")
+  };
+  fbBundle = {db, user, fs};
+  return fbBundle;
+}
+function renderRankList(items){
+  const top = items.slice(0, LEADER_TOP);
+  if(!top.length){ el("leaderList").innerHTML = ""; el("leaderHint").textContent = "अभी इस test में कोई rank data नहीं है।"; return; }
+  el("leaderHint").textContent = `इसी test की live Top ${LEADER_TOP} list — पूरी rank list सर के dashboard से आएगी।`;
+  el("leaderList").innerHTML = top.map((x,i)=>`<li><span class="lr">${i+1}</span><div><b>${escapeHTML(x.name||"Student")}</b><br><small>${x.accuracy!=null?`Accuracy ${x.accuracy}%`:""} ${x.timeTaken!=null?`• Time ${formatTime(x.timeTaken)}`:""}</small></div><span class="score">${escapeHTML(x.score ?? 0)}</span></li>`).join("");
+}
+function todayDateStr(){ const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+async function saveAttemptAndLoadRank(result){
+  el("ownRank").textContent = "—"; el("leaderList").innerHTML = "";
+  if(TEST.publishDateStr && TEST.publishDateStr !== todayDateStr()){
+    el("rankStatus").textContent = "यह टेस्ट अपनी launch वाली तारीख़ (" + TEST.publishDateStr + ") को ही live rank के लिए active था। अब यह सिर्फ़ practice के तौर पर काम करेगा — आपके marks और result पूरी तरह सुरक्षित हैं।";
+    el("leaderHint").textContent = "पुराने दिन के टेस्ट में अब live rank नहीं दिखेगी — नए दिन के टेस्ट में rank ज़रूर दिखेगी।";
+    return;
+  }
+  if(!RANKING_ENABLED || !FIREBASE_CONFIG){
+    el("rankStatus").textContent = "इस टेस्ट में live rank चालू नहीं है — यह सिर्फ़ practice के लिए है। आपके marks और result पूरी तरह दिखेंगे।";
+    el("leaderHint").textContent = "live rank चालू होने पर Top " + LEADER_TOP + " यहाँ अपने-आप दिखेगा।";
+    return;
+  }
+  el("rankStatus").textContent = "Rank निकाली जा रही है…";
+  el("leaderHint").textContent = "Leaderboard load हो रही है…";
+  try{
+    const testId = normalizeKey(result.testId || TEST.testId || "bodhi-test");
+    const nameKey = normalizeKey(result.name || "student");
+
+    const localDoneKey = "jaiho_done_" + testId + "_" + nameKey;
+    const localDone = storeGet(localDoneKey);
+    if(localDone && localDone.rankSort){
+      el("ownRank").textContent = "#" + (localDone.rank != null ? localDone.rank : "—");
+      el("rankStatus").textContent = "यह Retake practice था — rank में नहीं गिना गया। आपकी असली rank पहले प्रयास (" + numClean(localDone.score || 0) + " marks) से है: " + localDone.rank + " / " + localDone.total + ". (यह आपके phone में save है, extra internet/reads खर्च नहीं हुए।) Retake जितनी बार चाहें करें।";
+      renderRankList(Array.isArray(localDone.topList) ? localDone.topList : []);
+      return;
+    }
+
+    const {db,user,fs} = await withTimeout(getFirebase(), 20000, "Firebase connect timeout. Internet check करें.");
+    const submittedMs = Date.now();
+    const attemptId = "n-" + nameKey + "-" + user.uid;
+    const col = fs.collection(db,"tests",testId,"attempts");
+    const attemptRef = fs.doc(db,"tests",testId,"attempts",attemptId);
+
+    let firstData = null; let isRetake = false;
+    const snap = await fs.getDoc(attemptRef);
+    if(snap && snap.exists){ firstData = snap.data(); isRetake = true; }
+
+    if(!isRetake){
+      const rankSort = makeRankSort(result.score, result.timeTaken, submittedMs);
+      const payload = { ...result, testId, attemptId, uid: user.uid, studentKey: nameKey,
+        name: result.name || "Student", score: Number(result.score || 0),
+        timeTaken: Number(result.timeTaken || 0), accuracy: Number(result.accuracy || 0),
+        rankSort, submittedMs, submittedServerAt: fs.serverTimestamp() };
+      try{
+        await fs.setDoc(attemptRef, payload);
+        firstData = payload;
+      }catch(werr){
+        const again = await fs.getDoc(attemptRef);
+        if(again && again.exists){ firstData = again.data(); isRetake = true; }
+        else throw werr;
+      }
+      if(!isRetake){
+        await fs.setDoc(fs.doc(db,"tests",testId), {
+          testId,
+          title: result.testTitle || TEST.title || "Jai Ho Study Test",
+          shortTitle: TEST.shortTitle || "",
+          subtitle: TEST.subtitle || "UPPCS Prelims 2026 / RO-ARO",
+          totalQuestions: result.totalQuestions || QUESTIONS.length,
+          maxMarks: result.maxMarks || QUESTIONS.length*MARKS,
+          updatedAtMs: submittedMs,
+          updatedAt: fs.serverTimestamp(),
+          footerCredit: TEST.footerCredit || "© Bodhi Classes · Designed by Aditya Chauhan · @BodhiClasses"
+        }, {merge:true});
+      }
+    }
+
+    const myRankSort = String(firstData.rankSort || "");
+    let rank = null, total = null;
+    if(typeof col.count === "function"){
+      const belowSnap = await withTimeout(col.where("rankSort","<",myRankSort).count().get(), 20000, "Rank count timeout");
+      const totalSnap = await withTimeout(col.count().get(), 20000, "Total count timeout");
+      rank = Number(belowSnap.data().count) + 1;
+      total = Number(totalSnap.data().count);
+    } else {
+      const listSnap = await fs.getDocs(fs.query(col, fs.orderBy("rankSort","asc"), fs.limit(1000)));
+      const ids = listSnap.docs.map(d=>d.id);
+      const pos = ids.indexOf(attemptId);
+      rank = pos >= 0 ? pos + 1 : null;
+      total = listSnap.size >= 1000 ? "1000+" : listSnap.size;
+    }
+
+    const topSnap = await fs.getDocs(fs.query(col, fs.orderBy("rankSort","asc"), fs.limit(LEADER_TOP)));
+    const topListData = topSnap.docs.map(d=>d.data());
+    renderRankList(topListData);
+    try{ storeSet(localDoneKey, { rankSort: myRankSort, rank: rank, total: total, score: (firstData && firstData.score != null ? firstData.score : 0), topList: topListData, ts: Date.now() }); }catch(e){}
+
+    if(rank != null){
+      el("ownRank").textContent = "#" + rank;
+      if(isRetake){
+        el("rankStatus").textContent = `यह Retake practice था — rank में नहीं गिना गया। आपकी असली rank पहले प्रयास (${numClean(firstData.score || 0)} marks) से है: ${rank} / ${total}. Retake जितनी बार चाहें करें।`;
+      } else {
+        el("rankStatus").textContent = `आपकी rank इस test में ${rank} / ${total} है (पहला प्रयास)। Tie में ज़्यादा marks, कम time, फिर पहले submit ऊपर रहता है।`;
+      }
+    } else {
+      el("ownRank").textContent = "—";
+      el("rankStatus").textContent = "Rank data sync में थोड़ी देर लग रही है — कुछ देर बाद Retake के submit पर फिर दिखेगी।";
+    }
+  }catch(err){
+    console.error(err);
+    const errText = String(err && err.message ? err.message : err || "");
+    const errCode = String(err && err.code ? err.code : "");
+    const isQuotaIssue = errCode.indexOf("resource-exhausted") !== -1 || /quota|resource.exhausted|exceeded|429/i.test(errText);
+    el("ownRank").textContent = "—";
+    if(isQuotaIssue){
+      el("rankStatus").textContent = "आज रैंक लिस्ट अभी बहुत व्यस्त चल रही है — आपके marks और result पूरी तरह सुरक्षित हैं। Rank कुछ देर बाद या कल अपने आप दिखने लगेगी।";
+      el("leaderHint").textContent = "थोड़ी देर बाद Retake करके submit करने पर Top 20 list फिर दिख जाएगी।";
+    } else {
+      el("rankStatus").textContent = "अभी rank list नहीं आ पाई — कोई चिंता की बात नहीं, आपके marks और result पूरी तरह सुरक्षित हैं।";
+      el("leaderHint").textContent = "थोड़ी देर बाद Retake करके submit करने पर rank दिख जाएगी।";
+    }
+  }
+}
+window.addEventListener("beforeunload", (e)=>{ if(testActive){ e.preventDefault(); e.returnValue = ""; } });
+window.addEventListener("DOMContentLoaded", ()=>{ try{ initHome(); }catch(e){ console.error(e); } try{ tryResume(); }catch(e){ console.error(e); } });
+</script>
+<script defer src="/assets/bodhi-watermark.js"></script>
+</body>
+</html>
