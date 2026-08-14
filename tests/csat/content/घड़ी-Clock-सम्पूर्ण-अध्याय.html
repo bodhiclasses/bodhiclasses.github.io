@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>घड़ी (Clock) — शून्य से महारत | बोधि क्लासेस</title>
+<meta name="description" content="CSAT / SSC / UPSSSC के लिए घड़ी अध्याय — उंगली से घुमाओ, आँखों से समझो। सूत्र रटना नहीं, बनाना सीखो।">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink0:#060B16; --ink1:#0B1322; --ink2:#111C2F; --ink3:#18263D;
+  --line:#22334f; --line2:#2d4266;
+  --tx:#e9f0fb; --tx2:#9db0cf; --tx3:#6f83a3;
+  --gold:#d9ae5f; --gold-hi:#f0cf8a;
+  --min:#4ea8ff;  --minb:#8ecbff;
+  --hour:#ff7d55; --hourb:#ffb59a;
+  --arc:#5fe3a1;
+  --violet:#a78bfa;
+  --red:#ff6b6b;
+  --ok:#4ade80;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;padding:0 0 96px;
+  font-family:'Mukta','Noto Sans Devanagari',system-ui,sans-serif;
+  background:
+    radial-gradient(900px 500px at 50% -8%,#152341 0%,transparent 60%),
+    radial-gradient(700px 400px at 100% 30%,#12203a 0%,transparent 55%),
+    var(--ink0);
+  background-attachment:fixed;
+  color:var(--tx);font-size:16.5px;line-height:1.75;
+  overflow-x:hidden;
+}
+.wrap{max-width:800px;margin:0 auto;padding:0 14px;}
+
+/* ============ HERO ============ */
+.hero{text-align:center;padding:34px 12px 8px;}
+.brand{
+  display:inline-flex;align-items:center;gap:9px;font-size:12px;letter-spacing:2.4px;
+  color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:16px;
+}
+.brand i{width:26px;height:1px;background:linear-gradient(90deg,transparent,var(--gold));display:block;}
+.brand i:last-child{background:linear-gradient(90deg,var(--gold),transparent);}
+h1{font-size:31px;line-height:1.3;margin:0 0 10px;font-weight:800;letter-spacing:-.3px;}
+h1 span{background:linear-gradient(100deg,var(--gold-hi),var(--gold));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.hsub{color:var(--tx2);font-size:15.5px;max-width:540px;margin:0 auto;}
+.pill{
+  display:inline-block;margin-top:14px;font-size:13px;color:var(--gold-hi);
+  border:1px solid rgba(217,174,95,.35);background:rgba(217,174,95,.08);
+  padding:7px 16px;border-radius:999px;font-weight:600;
+}
+
+/* ============ LAB (main clock) ============ */
+.lab{
+  background:linear-gradient(170deg,var(--ink2),var(--ink1));
+  border:1px solid var(--line2);border-radius:24px;
+  padding:16px 14px 18px;margin:20px 0 10px;
+  box-shadow:0 26px 60px -30px rgba(0,0,0,.95),0 0 0 1px rgba(217,174,95,.07) inset;
+  position:relative;
+}
+.lab::before{
+  content:"";position:absolute;top:0;left:12%;right:12%;height:1.5px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.labtag{
+  text-align:center;font-size:12px;letter-spacing:2px;color:var(--gold);
+  font-weight:700;text-transform:uppercase;margin-bottom:2px;
+}
+.labtip{text-align:center;font-size:13.5px;color:var(--tx3);margin-bottom:8px;}
+
+.clockwrap{display:flex;justify-content:center;}
+.cbox{position:relative;width:302px;max-width:92vw;touch-action:none;}
+svg.clk{width:100%;height:auto;display:block;overflow:visible;}
+.cbox.drag{cursor:grabbing;}
+
+/* readout chips */
+.chips{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin-top:10px;}
+.chip{
+  font-size:13px;font-weight:600;padding:6px 11px;border-radius:10px;
+  border:1px solid var(--line);background:var(--ink3);color:var(--tx2);
+  display:inline-flex;align-items:center;gap:6px;
+}
+.chip b{font-weight:800;font-variant-numeric:tabular-nums;}
+.chip.t{color:var(--gold-hi);border-color:rgba(217,174,95,.4);background:rgba(217,174,95,.1);font-size:15px;}
+.chip.m{color:var(--minb);border-color:#2b5480;}
+.chip.h{color:var(--hourb);border-color:#7d4433;}
+.chip.a{color:#a9f2cd;border-color:#2c6b4c;background:rgba(95,227,161,.09);}
+
+/* controls */
+.ctrl{margin-top:14px;display:flex;flex-direction:column;gap:9px;}
+.crow{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;}
+.stepper{
+  display:inline-flex;align-items:center;gap:0;border:1px solid var(--line2);
+  border-radius:12px;overflow:hidden;background:var(--ink3);
+}
+.stepper button{
+  font-family:inherit;width:38px;height:38px;border:none;background:transparent;
+  color:var(--gold-hi);font-size:20px;font-weight:700;cursor:pointer;line-height:1;
+}
+.stepper button:active{background:rgba(217,174,95,.2);}
+.stepper .val{
+  min-width:62px;text-align:center;font-size:15px;font-weight:800;color:var(--tx);
+  border-left:1px solid var(--line);border-right:1px solid var(--line);height:38px;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;line-height:1.05;
+}
+.stepper .val small{font-size:9.5px;color:var(--tx3);font-weight:600;letter-spacing:.5px;}
+.btn{
+  font-family:inherit;font-size:13.5px;font-weight:700;color:var(--tx);
+  background:var(--ink3);border:1px solid var(--line2);border-radius:11px;
+  padding:9px 14px;cursor:pointer;transition:.16s;
+}
+.btn:active{transform:scale(.95);}
+.btn.gold{background:linear-gradient(135deg,var(--gold-hi),var(--gold));color:#1a1204;border-color:var(--gold);}
+.btn.on{background:rgba(95,227,161,.16);border-color:#2c6b4c;color:#a9f2cd;}
+.btn.sm{padding:7px 11px;font-size:12.5px;}
+.seg{display:inline-flex;border:1px solid var(--line2);border-radius:11px;overflow:hidden;}
+.seg button{
+  font-family:inherit;font-size:12.5px;font-weight:700;padding:8px 12px;border:none;
+  background:var(--ink3);color:var(--tx3);cursor:pointer;border-left:1px solid var(--line);
+}
+.seg button:first-child{border-left:none;}
+.seg button.act{background:rgba(217,174,95,.18);color:var(--gold-hi);}
+
+.speedrow{display:flex;align-items:center;gap:10px;justify-content:center;font-size:12.5px;color:var(--tx3);}
+input[type=range]{
+  -webkit-appearance:none;appearance:none;flex:1;max-width:190px;height:6px;border-radius:6px;
+  background:linear-gradient(90deg,#2b3d5c,var(--gold));outline:none;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;
+  border:4px solid var(--gold);box-shadow:0 2px 8px rgba(0,0,0,.6);cursor:pointer;
+}
+input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:#fff;border:4px solid var(--gold);cursor:pointer;}
+
+/* live formula */
+.live{
+  margin-top:12px;background:#070d19;border:1px dashed var(--line2);border-radius:14px;
+  padding:12px 12px;text-align:center;font-size:14.5px;color:var(--tx2);
+  font-variant-numeric:tabular-nums;
+}
+.live .l{display:block;margin:3px 0;}
+.live .fin{color:var(--ok);font-weight:800;font-size:17px;}
+.live .mm{color:var(--minb);font-weight:700;}
+.live .hh{color:var(--hourb);font-weight:700;}
+.toast{
+  margin-top:10px;background:rgba(217,174,95,.09);border:1px solid rgba(217,174,95,.3);
+  border-radius:12px;padding:10px 13px;font-size:14px;color:var(--gold-hi);text-align:center;
+  display:none;
+}
+.toast.show{display:block;animation:pop .35s ease;}
+@keyframes pop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+/* ============ LESSONS ============ */
+.lesson{
+  background:linear-gradient(175deg,var(--ink2),var(--ink1));
+  border:1px solid var(--line);border-radius:20px;
+  padding:20px 17px 20px;margin:16px 0;
+  box-shadow:0 20px 46px -32px rgba(0,0,0,.9);
+}
+.lhead{display:flex;align-items:flex-start;gap:12px;margin-bottom:4px;}
+.lno{
+  flex:none;width:40px;height:40px;border-radius:13px;display:flex;align-items:center;justify-content:center;
+  font-size:17px;font-weight:800;color:#1a1204;
+  background:linear-gradient(135deg,var(--gold-hi),var(--gold));
+  box-shadow:0 6px 16px -6px rgba(217,174,95,.7);
+}
+.ltitle{font-size:20.5px;font-weight:800;line-height:1.35;margin:2px 0 0;}
+.lkicker{font-size:12px;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:3px;}
+.lbody{margin-top:12px;}
+
+ol.pts{list-style:none;counter-reset:p;margin:8px 0 0;padding:0;}
+ol.pts>li{
+  position:relative;padding:10px 2px 10px 38px;border-top:1px solid rgba(34,51,79,.7);
+}
+ol.pts>li:first-child{border-top:none;padding-top:4px;}
+ol.pts>li::before{
+  counter-increment:p;content:counter(p);
+  position:absolute;left:0;top:11px;width:25px;height:25px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;
+  background:rgba(78,168,255,.13);color:#8cc6ff;border:1px solid #2b5480;
+}
+ol.pts>li:first-child::before{top:5px;}
+.pts b{color:#fff;font-weight:700;}
+.hl{color:var(--gold-hi);font-weight:700;}
+.fx{
+  display:inline-block;font-weight:800;white-space:nowrap;
+  background:rgba(167,139,250,.14);border:1px solid #4a3d7a;color:#cfc2ff;
+  padding:2px 9px;border-radius:8px;font-variant-numeric:tabular-nums;
+}
+.warn{
+  margin-top:12px;background:rgba(255,107,107,.08);border:1px solid rgba(255,107,107,.32);
+  border-left:4px solid var(--red);border-radius:12px;padding:11px 13px;font-size:14.5px;color:#ffc9c9;
+}
+.warn b{color:#fff;}
+.aha{
+  margin-top:12px;background:rgba(95,227,161,.08);border:1px solid rgba(95,227,161,.3);
+  border-left:4px solid var(--arc);border-radius:12px;padding:11px 13px;font-size:14.5px;color:#b6f2d5;
+}
+.aha b{color:#fff;}
+
+/* action buttons inside lessons */
+.acts{display:flex;gap:7px;flex-wrap:wrap;margin-top:14px;}
+.acts .btn{background:rgba(217,174,95,.1);border-color:rgba(217,174,95,.35);color:var(--gold-hi);}
+
+/* mini visual boxes */
+.mini{
+  margin-top:14px;background:#070d19;border:1px solid var(--line);border-radius:16px;padding:14px 12px;
+}
+.mini .mt{font-size:12.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--tx3);font-weight:700;text-align:center;margin-bottom:10px;}
+.minirow{display:flex;gap:14px;justify-content:center;align-items:flex-start;flex-wrap:wrap;}
+.minicol{text-align:center;}
+.minicol .cap{font-size:12.5px;color:var(--tx3);margin-top:6px;font-weight:600;}
+.mc{width:160px;max-width:42vw;}
+.mc.big{width:210px;max-width:60vw;}
+
+/* race track */
+.track{position:relative;height:96px;margin:6px 0 2px;}
+.track .lane{
+  position:absolute;left:0;right:0;height:34px;border-radius:17px;
+  background:linear-gradient(90deg,#0d1626,#12203a);border:1px solid var(--line);
+}
+.track .lane.a{top:2px;}
+.track .lane.b{top:52px;}
+.track .runner{
+  position:absolute;top:50%;transform:translate(-50%,-50%);
+  width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:800;color:#08101d;transition:left .12s linear;
+}
+.track .runner.m{background:var(--min);}
+.track .runner.h{background:var(--hour);}
+.track .lbl{position:absolute;left:8px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--tx3);font-weight:700;}
+.gapbar{
+  height:7px;border-radius:5px;background:linear-gradient(90deg,var(--min),var(--arc));
+  margin-top:4px;transition:width .12s linear;
+}
+
+/* stat grid */
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:12px;}
+.grid.g3{grid-template-columns:repeat(3,1fr);}
+.stat{
+  background:var(--ink3);border:1px solid var(--line);border-radius:14px;padding:12px 8px;text-align:center;
+}
+.stat .n{display:block;font-size:21px;font-weight:800;color:var(--gold-hi);font-variant-numeric:tabular-nums;line-height:1.2;}
+.stat .c{font-size:12px;color:var(--tx3);margin-top:2px;font-weight:600;}
+
+/* practice */
+.q{
+  background:#070d19;border:1px solid var(--line);border-radius:15px;padding:14px 14px;margin:11px 0;
+}
+.q .qt{font-weight:700;color:#fff;font-size:15.5px;}
+.q .qt em{color:var(--violet);font-style:normal;font-weight:800;margin-left:6px;}
+.q .sol{display:none;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line2);font-size:14.8px;color:var(--tx2);}
+.q .sol.show{display:block;}
+.q .sol .s{display:block;margin:4px 0;}
+.q .sol .ans{color:var(--ok);font-weight:800;font-size:16px;}
+.q .qb{display:flex;gap:7px;margin-top:11px;flex-wrap:wrap;}
+
+/* challenge */
+.chal .cq{font-size:15.5px;font-weight:700;color:#fff;}
+.chal .fb{margin-top:10px;font-size:14.5px;font-weight:700;min-height:22px;}
+.chal .fb.good{color:var(--ok);}
+.chal .fb.bad{color:#ffb0b0;}
+
+/* formula sheet */
+.sheet{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
+.sf{
+  display:flex;align-items:center;gap:11px;background:var(--ink3);border:1px solid var(--line);
+  border-radius:13px;padding:11px 13px;
+}
+.sf .sfi{
+  flex:none;width:34px;height:34px;border-radius:10px;background:rgba(217,174,95,.13);
+  display:flex;align-items:center;justify-content:center;font-size:15px;
+}
+.sf .sfx{font-weight:800;color:var(--gold-hi);font-size:15px;font-variant-numeric:tabular-nums;}
+.sf .sfd{font-size:13px;color:var(--tx3);}
+
+/* floating jump */
+.fab{
+  position:fixed;right:14px;bottom:18px;width:54px;height:54px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gold-hi),var(--gold));color:#1a1204;
+  border:none;font-size:24px;cursor:pointer;z-index:80;
+  box-shadow:0 12px 28px -8px rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;
+  font-family:inherit;
+}
+.fab:active{transform:scale(.92);}
+
+/* nav strip */
+.nav{
+  display:flex;gap:7px;overflow-x:auto;padding:6px 2px 12px;margin:2px 0 0;
+  scrollbar-width:none;
+}
+.nav::-webkit-scrollbar{display:none;}
+.nav a{
+  flex:none;font-size:12.5px;font-weight:700;color:var(--tx2);text-decoration:none;
+  background:var(--ink2);border:1px solid var(--line);border-radius:999px;padding:7px 13px;white-space:nowrap;
+}
+footer{
+  text-align:center;color:var(--tx3);font-size:13px;margin-top:30px;padding:18px 12px 0;
+  border-top:1px solid var(--line);
+}
+footer b{color:var(--gold);}
+@media(max-width:420px){
+  h1{font-size:26px;} body{font-size:16px;}
+  .ltitle{font-size:18.5px;} .grid{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div class="brand"><i></i>बोधि क्लासेस<i></i></div>
+  <h1>घड़ी <span>(Clock)</span><br>शून्य से महारत तक</h1>
+  <p class="hsub">सूत्र रटो मत — <b>अपनी उंगली से घड़ी घुमाकर</b> उसे बनते हुए देखो। जो आँख देख लेती है, दिमाग़ उसे कभी नहीं भूलता।</p>
+  <div class="pill">👆 नीचे घड़ी की सुई को पकड़कर घुमाओ</div>
+</header>
+
+<!-- =========== LAB =========== -->
+<section class="lab" id="lab">
+  <div class="labtag">प्रयोगशाला · आपकी अपनी घड़ी</div>
+  <div class="labtip">सुई को पकड़कर खींचो · या नीचे के बटनों से समय बदलो</div>
+
+  <div class="clockwrap"><div class="cbox" id="mainClock"></div></div>
+
+  <div class="chips">
+    <span class="chip t">🕐 <b id="rTime">3:00</b></span>
+    <span class="chip m">मिनट सुई <b id="rMin">0°</b></span>
+    <span class="chip h">घंटा सुई <b id="rHr">90°</b></span>
+    <span class="chip a">बीच का कोण <b id="rAng">90°</b></span>
+  </div>
+
+  <div class="ctrl">
+    <div class="crow">
+      <div class="stepper">
+        <button type="button" data-adj="-60">−</button>
+        <div class="val"><span id="vH">3</span><small>घंटा</small></div>
+        <button type="button" data-adj="60">+</button>
+      </div>
+      <div class="stepper">
+        <button type="button" data-adj="-1">−</button>
+        <div class="val"><span id="vM">00</span><small>मिनट</small></div>
+        <button type="button" data-adj="1">+</button>
+      </div>
+    </div>
+
+    <div class="crow">
+      <button class="btn sm" type="button" data-adj="-5">−5 मि</button>
+      <button class="btn gold" type="button" id="playBtn">▶ चलाओ</button>
+      <button class="btn sm" type="button" data-adj="5">+5 मि</button>
+      <button class="btn sm" type="button" id="resetBtn">⟲ रीसेट</button>
+    </div>
+
+    <div class="speedrow">
+      <span>🐢 धीमी</span>
+      <input type="range" id="spd" min="1" max="60" step="1" value="8">
+      <span>तेज़ 🐇</span>
+    </div>
+
+    <div class="crow">
+      <div class="seg" id="arcSeg">
+        <button type="button" data-arc="between" class="act">बीच का कोण</button>
+        <button type="button" data-arc="split">दोनों अलग-अलग</button>
+        <button type="button" data-arc="none">कुछ नहीं</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="live" id="liveBox"></div>
+  <div class="toast" id="toast"></div>
+</section>
+
+<nav class="nav">
+  <a href="#p1">1 · गोल सड़क</a>
+  <a href="#p2">2 · मिनट सुई</a>
+  <a href="#p3">3 · घंटा सुई</a>
+  <a href="#p4">4 · 5.5 की दौड़</a>
+  <a href="#p5">5 · सूत्र बनाओ</a>
+  <a href="#p6">6 · मिलन 0°</a>
+  <a href="#p7">7 · समकोण 90°</a>
+  <a href="#p8">8 · विपरीत 180°</a>
+  <a href="#p9">9 · खराब घड़ी</a>
+  <a href="#p10">10 · दर्पण</a>
+  <a href="#p11">11 · अभ्यास</a>
+  <a href="#p12">12 · सूत्र-पत्र</a>
+</nav>
+
+<!-- =========== पाठ 1 =========== -->
+<section class="lesson" id="p1">
+  <div class="lhead"><div class="lno">1</div><div>
+    <div class="lkicker">नींव</div>
+    <div class="ltitle">घड़ी असल में एक गोल सड़क है</div>
+  </div></div>
+  <div class="lbody">
+    <ol class="pts">
+      <li>घड़ी को घड़ी मत समझो — इसे <b>एक गोल रेस-ट्रैक</b> समझो जिसका पूरा चक्कर <span class="hl">360°</span> का है। दोनों सुइयाँ इसी ट्रैक पर दौड़ने वाले दो धावक हैं।</li>
+      <li>इस ट्रैक पर <b>12 बड़े पत्थर</b> (अंक) लगे हैं। इसलिए दो अंकों के बीच की दूरी = <span class="fx">360 ÷ 12 = 30°</span></li>
+      <li>और <b>60 छोटे निशान</b> (मिनट) लगे हैं। इसलिए एक छोटे निशान की दूरी = <span class="fx">360 ÷ 60 = 6°</span></li>
+      <li>ध्यान दो — एक बड़े अंक से अगले बड़े अंक तक <b>5 छोटे निशान</b> होते हैं। और 5 × 6° = 30°। दोनों बातें आपस में मेल खाती हैं।</li>
+      <li>बस इतना समझ लो कि <b>पूरा अध्याय सिर्फ़ दूरी और चाल का है</b> — घड़ी तो बहाना है।</li>
+    </ol>
+    <div class="acts">
+      <button class="btn" data-set="12:00" data-msg="12:00 — दोनों सुइयाँ शून्य से शुरू। यही हमारा प्रारंभ-बिंदु है।">12:00 दिखाओ</button>
+      <button class="btn" data-set="3:00" data-msg="3:00 — मिनट सुई 12 पर, घंटा सुई 3 पर। बीच में तीन अंक = 3 × 30° = 90°।">3:00 दिखाओ (3 अंक = 90°)</button>
+      <button class="btn" data-set="6:00" data-msg="6:00 — बीच में छह अंक = 6 × 30° = 180°। सुइयाँ एक सीधी रेखा में हैं।">6:00 दिखाओ (6 अंक = 180°)</button>
+    </div>
+    <div class="aha"><b>पकड़ लो:</b> कोई भी कोण पूछा जाए, दिमाग़ में पहले यही आना चाहिए — “कितने अंक का फ़ासला है?” हर अंक = 30°, हर छोटा निशान = 6°।</div>
+  </div>
+</section>
+
+<!-- =========== पाठ 2 =========== -->
+<section class="lesson" id="p2">
+  <div class="lhead"><div class="lno">2</div><div>
+    <div class="lkicker">पहला धावक</div>
+    <div class="ltitle">मिनट सुई — तेज़ धावक (6° प्रति मिनट)</div>
+  </div></div>
+  <div class="lbody">
+    <ol class="pts">
+      <li>मिनट सुई पूरा चक्कर <b>60 मिनट</b> में लगाती है। एक चक्कर = 360°।</li>
+      <li>इसलिए इसकी चाल = <span class="fx">360 ÷ 60 = 6° प्रति मिनट</span></li>
+      <li>यानी हर बीतते मिनट में यह <b>ठीक एक छोटा निशान</b> आगे बढ़ती है। एक मिनट = एक निशान = 6°।</li>
+      <li>इससे एक बहुत काम की बात निकलती है — <b>12 से मिनट सुई तक का कोण = 6 × M</b> (जहाँ M = मिनट)।</li>
+      <li>जाँच लो: 15 मिनट पर 6 × 15 = 90°, 30 मिनट पर 6 × 30 = 180°, 45 मिनट पर 6 × 45 = 270°। नीचे बटन दबाकर आँखों से मिला लो।</li>
+    </ol>
+    <div class="acts">
+      <button class="btn" data-set="12:15" data-msg="15 मिनट → 6 × 15 = 90°। मिनट सुई ठीक चौथाई चक्कर घूम गई।">15 मिनट = 90°</button>
+      <button class="btn" data-set="12:30" data-msg="30 मिनट → 6 × 30 = 180°। आधा चक्कर।">30 मिनट = 180°</button>
+      <button class="btn" data-set="12:45" data-msg="45 मिनट → 6 × 45 = 270°। तीन-चौथाई चक्कर।">45 मिनट = 270°</button>
+    </div>
+    <div class="aha"><b>याद रखने का सूत्र:</b> <span class="fx">मिनट सुई का कोण = 6M</span> — यह हमेशा 12 से नापा जाता है, दक्षिणावर्त (clockwise)।</div>
+  </div>
+</section>
+
+<!-- =========== पाठ 3 =========== -->
+<section class="lesson" id="p3">
+  <div class="lhead"><div class="lno">3</div><div>
+    <div class="lkicker">यहीं 90% छात्र मरते हैं</div>
+    <div class="ltitle">घंटा सुई — चुपचाप खिसकने वाला धावक</div>
+  </div></div>
+  <div class="lbody">
+    <ol class="pts">
+      <li>घंटा सुई पूरा चक्कर <b>12 घंटे</b> में लगाती है। 12 घंटे = <b>720 मिनट</b>।</li>
+      <li>इसलिए इसकी चाल = <span class="fx">360 ÷ 720 = 0.5° प्रति मिनट</span> — मिनट सुई से ठीक <b>12 गुना धीमी</b>।</li>
+      <li>अब सबसे बड़ी बात, जिसे ज़्यादातर लोग भूल जाते हैं — <b>घंटा सुई कूदती नहीं, रेंगती है।</b> वह 3 बजे से 4 बजे तक अटकी नहीं रहती; हर मिनट के साथ थोड़ा-थोड़ा आगे सरकती रहती है।</li>
+      <li>इसीलिए <b>3:30</b> पर घंटा सुई 3 पर नहीं होती — वह <b>3 और 4 के ठीक बीच</b> होती है। नीचे बटन दबाकर अपनी आँखों से देखो, फिर कभी नहीं भूलोगे।</li>
+      <li>तो 12 से घंटा सुई तक का कोण दो हिस्सों से बनता है — <b>पूरे घंटों वाला हिस्सा (30H)</b> और <b>मिनटों से खिसका हुआ हिस्सा (0.5M)</b>। यानी <span class="fx">घंटा सुई का कोण = 30H + 0.5M</span></li>
+      <li>जाँच: 3:30 पर = 30×3 + 0.5×30 = 90 + 15 = <b>105°</b>, सादा 90° नहीं। यही 15° का फ़र्क़ पूरे अध्याय का असली इम्तिहान है।</li>
+    </ol>
+    <div class="acts">
+      <button class="btn" data-set="3:00" data-arc="split" data-msg="3:00 — घंटा सुई ठीक 3 पर, कोण 30×3 = 90°।">3:00 — घंटा सुई ठीक 3 पर</button>
+      <button class="btn" data-set="3:30" data-arc="split" data-msg="3:30 — देखो! घंटा सुई 3 से आगे खिसककर 3 और 4 के बीच आ गई। कोण = 90 + 15 = 105°, 90° नहीं।">3:30 — अब देखो वह खिसक गई!</button>
+      <button class="btn" data-set="3:59" data-arc="split" data-msg="3:59 — घंटा सुई लगभग 4 पर पहुँच चुकी है। कोण = 90 + 29.5 = 119.5°।">3:59 — लगभग 4 पर पहुँच गई</button>
+    </div>
+    <div class="warn"><b>सबसे बड़ा जाल:</b> प्रश्न में “4 बजकर 20 मिनट” देखकर घंटा सुई को 4 पर मान लेना — यही सबसे आम ग़लती है। वहाँ घंटा सुई 4 से <b>10° आगे</b> (0.5 × 20) खिसक चुकी होती है।</div>
+  </div>
+</section>
+
+<!-- =========== पाठ 4 =========== -->
+<section class="lesson" id="p4">
+  <div class="lhead"><div class="lno">4</div><div>
+    <div class="lkicker">पूरे अध्याय की जान</div>
+    <div class="ltitle">दोनों की दौड़ — 5.5° प्रति मिनट</div>
+  </div></div>
+  <div class="lbody">
+    <ol class="pts">
+      <li>दोनों सुइयाँ <b>एक ही दिशा</b> में दौड़ती हैं — इसलिए हमें उनकी चालों का <b>अंतर</b> देखना है, जोड़ नहीं।</li>
+      <li>मिनट सुई की चाल 6°/मिनट, घंटा सुई की 0.5°/मिनट। अंतर = <span class="fx">6 − 0.5 = 5.5° प्रति मिनट</span></li>
+      <li>इसका सीधा मतलब — <b>हर बीतते मिनट में मिनट सुई, घंटा सुई से 5.5° आगे निकल जाती है।</b> यही इस अध्याय की एकमात्र असली ताक़त है।</li>
+      <li>नीचे की पट्टी में दोनों धावक चलाकर देखो — नीला (मिनट) कैसे नारंगी (घंटा) से लगातार फ़ासला बनाता जाता है।</li>
+      <li>एक बार यह बैठ गया तो आगे के सारे सवाल एक ही सवाल बन जाते हैं: <b>“कितना फ़ासला पाटना है? उसे 5.5 से भाग दे दो।”</b></li>
+    </ol>
+
+    <div class="mini">
+      <div class="mt">दो धावकों की दौड़ — खुद चलाओ</div>
+      <div class="track">
+        <div class="lane a"><span class="lbl">मिनट</span><div class="runner m" id="rn1" style="left:6%">M</div></div>
+        <div class="lane b"><span class="lbl">घंटा</span><div class="runner h" id="rn2" style="left:6%">H</div></div>
+      </div>
+      <div style="text-align:center;font-size:13.5px;color:var(--tx2);">बीता समय: <b id="raceT" style="color:var(--gold-hi)">0</b> मिनट &nbsp;·&nbsp; बना फ़ासला: <b id="raceG" style="color:#a9f2cd">0°</b></div>
+      <div class="gapbar" id="gapBar" style="width:0%"></div>
+      <div style="display:flex;gap:9px;justify-content:center;margin-top:12px;">
+        <input type="range" id="raceR" min="0" max="60" step="1" value="0" style="max-width:250px;flex:1">
+      </div>
+      <div style="text-align:center;font-size:13px;color:var(--tx3);margin-top:6px;">फ़ासला = 5.5 × बीता समय</div>
+    </div>
+
+    <div class="aha"><b>एक वाक्य में पूरा अध्याय:</b> मिनट सुई हर मिनट घंटा सुई से <b>5.5° की बढ़त</b> लेती है। बाक़ी सब इसी का हिसाब-किताब है।</div>
+  </div>
+</section>
+
+<!-- =========== पाठ 5 =========== -->
+<section class="lesson" id="p5">
+  <div class="lhead"><div class="lno">5</div><div>
+    <div class="lkicker">रटो मत, बनाओ</div>
+    <div class="ltitle">कोण का सूत्र — अपने हाथ से बनाओ</div>
+  </div></div>
+  <div class="lbody">
+    <ol class="pts">
+      <li>दोनों सुइयों का कोण अलग-अलग हम पहले ही निकाल चुके हैं — दोनों 12 से नापे गए हैं।</li>
+      <li><span class="mm" style="color:var(--minb);font-weight:700">मिनट सुई का कोण</span> = <span class="fx">6M</span></li>
+      <li><span style="color:var(--hourb);font-weight:700">घंटा सुई का कोण</span> = <span class="fx">30H + 0.5M</span></li>
+      <li>बीच का कोण तो बस <b>दोनों का अंतर</b> है — बड़े में से छोटा घटा दो। कौन बड़ा है यह सोचने की झंझट न हो, इसलिए <b>निरपेक्ष मान</b> (| |) लगा देते हैं:</li>
+      <li>θ = | (30H + 0.5M) − 6M | = | 30H + 0.5M − 6M | = <span class="fx">| 30H − 5.5M |</span></li>
+      <li>देखा? <b>वही 5.5 यहाँ खुद-ब-खुद आ गया</b> — क्योंकि 6 − 0.5 = 5.5। सूत्र आसमान से नहीं गिरा, दो चालों के अंतर से बना है।</li>
+      <li>आख़िरी नियम — अगर उत्तर <b>180° से बड़ा</b> आए तो असली (छोटा) कोण = <span class="fx">360 − θ</span>। क्योंकि घड़ी पर हम हमेशा छोटा वाला कोण गिनते हैं।</li>
+    </ol>
+    <div class="acts">
+      <button class="btn" data-set="3:40" data-arc="split" data-msg="3:40 — नीला चाप 6×40 = 240°, नारंगी चाप 30×3 + 0.5×40 = 110°। अंतर = 130°।">3:40 पर दोनों चाप देखो</button>
+      <button class="btn" data-set="9:20" data-arc="split" data-msg="9:20 — नीला 6×20 = 120°, नारंगी 270 + 10 = 280°। अंतर = 160°।">9:20 पर दोनों चाप देखो</button>
+      <button class="btn" data-set="1:50" data-arc="between" data-msg="1:50 — सूत्र देता है |30 − 275| = 245°, जो 180° से बड़ा है। इसलिए असली कोण = 360 − 245 = 115°।">1:50 — 180° से बड़ा वाला मामला</button>
+    </div>
+    <div class="aha"><b>सुनहरा वाक्य:</b> ऊपर “दोनों अलग-अलग” बटन दबाकर नीला और नारंगी चाप एक साथ देखो — सूत्र आँखों के सामने खड़ा हो जाएगा। <span class="fx">θ = |30H − 5.5M|</span></div>
+  </div>
+</section>
+
+<!-- =========== पाठ 6 =========== -->
+<section class="lesson" id="p6">
+  <div class="lhead"><div class="lno">6</div><div>
+    <div class="lkicker">स्थिति · 0°</div>
+    <div class="ltitle">मिलन — 12 घंटे में 11 बार, 12 बार नहीं</div>
+  </div></div>
+  <div class="lbody">
+    <ol class="pts">
+      <li>जब दोनों सुइयाँ <b>एक-दूसरे के ऊपर</b> चढ़ जाएँ, कोण 0° हो जाता है। इसे <b>मिलन (coincide)</b> कहते हैं।</li>
+      <li>अब सोचो — मिलने के लिए मिनट सुई को घंटा सुई से <b>पूरा 360° की बढ़त</b> लेनी पड़ती है (एक पूरा चक्कर आगे निकलना पड़ता है)।</li>
+      <li>बढ़त की दर 5.5°/मिनट है, इसलिए दो मिलनों के बीच का समय = <span class="fx">360 ÷ 5.5 = 720/11 = 65 5/11 मिनट</span></li>
+      <li>यानी लगभग <b>65 मिनट 27 सेकंड</b> — न कि 60 मिनट। इसीलिए 12:00 के बाद अगला मिलन 1:00 पर नहीं, <b>लगभग 1:05:27</b> पर होता है।</li>
+      <li>अब “11 बार क्यों” का सबसे सुंदर जवाब — 12 घंटे में <b>मिनट सुई 12 चक्कर</b> लगाती है और <b>घंटा सुई 1 चक्कर</b>। इसलिए मिनट सुई घंटा सुई से कुल <span class="fx">12 − 1 = 11 चक्कर</span> आगे निकलती है। हर एक चक्कर की बढ़त पर ठीक <b>एक मिलन</b> होता है — इसलिए <b>11 मिलन</b>।</li>
+      <li>24 घंटे में यही दोगुना = <b>22 बार</b>। और 12:00 वाला मिलन दोनों सिरों पर दोहराया न जाए, इसका ध्यान रखना ही 12 बनाम 11 का असली फ़र्क़ है।</li>
+    </ol>
+
+    <div class="mini">
+      <div class="mt">ग्यारहों मिलन — एक-एक करके देखो</div>
+      <div class="minirow">
+        <div class="minicol">
+          <div class="cbox mc big" id="coClock"></div>
+          <div class="cap" id="coCap">मिलन 1 — 12:00:00</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;justify-content:center;margin-top:12px;flex-wrap:wrap;">
+        <button class="btn sm" type="button" id="coPrev">‹ पिछला</button>
+        <button class="btn sm gold" type="button" id="coNext">अगला मिलन ›</button>
+      </div>
+      <div style="text-align:center;font-size:13px;color:var(--tx3);margin-top:8px;">सुनहरे बिंदु = वे सभी 11 जगहें जहाँ सुइयाँ मिलती हैं</div>
+    </div>
+
+    <div class="acts">
+      <button class="btn" data-set="12:00" data-msg="12:00 — पहला मिलन। दोनों सुइयाँ ठीक ऊपर।">12:00 का मिलन</button>
+      <button class="btn" data-total="65.4545" data-msg="लगभग 1:05:27 — दूसरा मिलन। ध्यान दो, 1:00 पर नहीं!">दूसरा मिलन (≈1:05:27)</button>
+      <button class="btn" data-set="1:00" data-msg="1:00 — देखो, यहाँ सुइयाँ मिली नहीं हैं! मिनट सुई 12 पर है, घंटा सुई 1 पर। कोण 30° बचा है।">1:00 — यहाँ मिलन नहीं होता</button>
+    </div>
+    <div class="aha"><b>मिलन के सारे समय (12 घंटे में):</b> 12:00, 1:05<sup>5</sup>⁄<sub>11</sub>, 2:10<sup>10</sup>⁄<sub>11</sub>, 3:16<sup>4</sup>⁄<sub>11</sub>, 4:21<sup>9</sup>⁄<sub>11</sub>, 5:27<sup>3</sup>⁄<sub>11</sub>, 6:32<sup>8</sup>⁄<sub>11</sub>, 7:38<sup>2</sup>⁄<sub>11</sub>, 8:43<sup>7</sup>⁄<sub>11</sub>, 9:49<sup>1</sup>⁄<sub>11</sub>, 10:54<sup>6</sup>⁄<sub>11</sub> — और फिर 12:00। ग़ौर करो: <b>11 और 12 के बीच कोई मिलन नहीं</b>, यही एक कम होने की वजह है।</div>
+  </div>
+</section>
+
+<!-- =========== पाठ 7 =========== -->
+<section class="lesson" id="p7">
+  <div class="lhead"><div class="lno">7</div><div>
+    <div class="lkicker">स्थिति · 90°</div>
+    <div class="ltitle">समकोण — 12 घंटे में 22 बार</div>
+  </div></div>
+  <div class="lbody">
+    <ol class="pts">
+      <li>जब सुइयों के बीच का कोण ठीक <b>90°</b> हो, वह <b>समकोण</b> है — जैसे ठीक 3:00 और ठीक 9:00 पर।</li>
+      <li>गिनती का जादुई तर्क वही है — मिनट सुई 12 घंटे में घंटा सुई से <b>11 चक्कर</b> आगे निकलती है।</li>
+      <li>अब हर <b>एक चक्कर की बढ़त</b> में सुइयाँ <b>दो बार</b> 90° पर आती हैं — एक बार 90° की बढ़त पर, दूसरी बार 270° की बढ़त पर (जो पीछे से देखने पर भी 90° ही है)।</li>
+      <li>इसलिए कुल समकोण = <span class="fx">11 × 2 = 22 बार</span> (24 घंटे में 44 बार)।</li>
+      <li>अब वह जाल जिसमें सब फँसते हैं — “हर घंटे में 2 बार, तो 12 घंटे में 24 बार” <b>ग़लत है</b>। सच यह है कि <b>2 से 4 बजे के बीच कुल 3 बार</b> ही समकोण बनता है (2 + 2 = 4 नहीं), और वैसे ही <b>8 से 10 बजे के बीच भी 3 बार</b>। इन्हीं दो जगहों पर एक-एक कम होकर 24 घटकर <b>22</b> रह जाता है।</li>
+      <li>किसी ख़ास घंटे में समय निकालना हो तो वही एक सूत्र लगाओ: <span class="fx">|30H − 5.5M| = 90</span> — इसके दो हल आएँगे, यानी दो समय।</li>
+    </ol>
+    <div class="acts">
+      <button class="btn" data-set="3:00" data-msg="3:00 — साफ़-सुथरा समकोण। मिनट सुई 12 पर, घंटा सुई 3 पर।">3:00 का समकोण</button>
+      <button class="btn" data-set="9:00" data-msg="9:00 — दूसरा साफ़ समकोण, इस बार दूसरी तरफ़।">9:00 का समकोण</button>
+      <button class="btn" data-total="332.727" data-msg="लगभग 5:32:44 — यहाँ भी ठीक 90° बनता है। सूत्र |150 − 5.5M| = 90 का दूसरा हल।">5:32<sup>8</sup>⁄<sub>11</sub> — छिपा हुआ समकोण</button>
+    </div>
+    <div class="grid g3">
+      <div class="stat"><span class="n">11</span><span class="c">मिलन 0°</span></div>
+      <div class="stat"><span class="n">22</span><span class="c">समकोण 90°</span></div>
+      <div class="stat"><span class="n">11</span><span class="c">विपरीत 180°</span></div>
+    </div>
+    <div class="aha"><b>एक तर्क, तीनों गिनतियाँ:</b> 12 घंटे में <b>11 चक्कर की बढ़त</b> बनती है। हर चक्कर में मिलन 1 बार, समकोण 2 बार, विपरीत 1 बार। इसलिए क्रमशः <b>11, 22, 11</b>। इसे रटना नहीं पड़ता — यह अपने-आप निकलता है।</div>
+  </div>
+</section>
+
+<!-- =========== पाठ 8 =========== -->
+<section class="lesson" id="p8">
+  <div class="lhead"><div class="lno">8</div><div>
+    <div class="lkicker">स्थिति · 180°</div>
+    <div class="ltitle">विपरीत दिशा और सीधी रेखा</div>
+  </div></div>
+  <div class="lbody">
+    <ol class="pts">
+      <li>जब सुइयाँ <b>ठीक आमने-सामने</b> हों, कोण <b>180°</b> होता है — जैसे ठीक 6:00 पर।</li>
+      <li>हर एक चक्कर की बढ़त में यह स्थिति <b>एक ही बार</b> बनती है, इसलिए 12 घंटे में <span class="fx">11 बार</span> (24 घंटे में 22 बार)।</li>
+      <li>अब एक बारीक़ बात जो परीक्षा में सीधे पूछी जाती है — <b>“सीधी रेखा” दो तरह से बनती है:</b></li>
+      <li>पहली — 180° पर, जब दोनों आमने-सामने हों। दूसरी — <b>0° पर, जब दोनों एक-दूसरे पर चढ़ी हों</b> (वे भी तो एक ही रेखा पर हैं)।</li>
+      <li>इसलिए 12 घंटे में सीधी रेखा कुल <span class="fx">11 + 11 = 22 बार</span> बनती है, और 24 घंटे में <b>44 बार</b>।</li>
+      <li>प्रश्न में “opposite direction” लिखा हो तो सिर्फ़ 180° गिनो; “straight line” लिखा हो तो दोनों गिनो। <b>यही एक शब्द नंबर बना या बिगाड़ देता है।</b></li>
+    </ol>
+    <div class="acts">
+      <button class="btn" data-set="6:00" data-msg="6:00 — सुइयाँ ठीक विपरीत, कोण 180°, और एक सीधी रेखा भी।">6:00 — विपरीत 180°</button>
+      <button class="btn" data-set="12:00" data-msg="12:00 — कोण 0°, पर यह भी एक सीधी रेखा ही है। इसीलिए सीधी रेखा 22 बार बनती है।">12:00 — यह भी सीधी रेखा है</button>
+      <button class="btn" data-total="392.727" data-msg="लगभग 6:32:44 — यहाँ सुइयाँ फिर 180° पर आती हैं। ग़ौर करो, ठीक 7:00 पर नहीं।">अगली 180° स्थिति</button>
+    </div>
+    <div class="warn"><b>जाल:</b> “24 घंटे में सुइयाँ कितनी बार सीधी रेखा में होंगी?” का उत्तर 22 नहीं, <b>44</b> है। और “कितनी बार विपरीत दिशा में होंगी?” का उत्तर <b>22</b> है। शब्द ध्यान से पढ़ो।</div>
+  </div>
+</section>
+
+<!-- =========== पाठ 9 =========== -->
+<section class="lesson" id="p9">
+  <div class="lhead"><div class="lno">9</div><div>
+    <div class="lkicker">दूसरा अध्याय-खंड</div>
+    <div class="ltitle">खराब घड़ी — तेज़ (fast) और सुस्त (slow)</div>
+  </div></div>
+  <div class="lbody">
+    <ol class="pts">
+      <li>कुछ घड़ियाँ सही समय से <b>आगे भागती</b> हैं (तेज़/gaining) और कुछ <b>पीछे रह जाती</b> हैं (सुस्त/losing)।</li>
+      <li>ऐसे सवालों का पूरा तरीक़ा सिर्फ़ <b>अनुपात</b> है: पहले निकालो कि <b>प्रति घंटे या प्रति दिन कितना अंतर</b> पड़ रहा है, फिर उसे पूछे गए समय से गुणा कर दो।</li>
+      <li>उदाहरण: कोई घड़ी हर घंटे 2 मिनट तेज़ है। 12 घंटे में वह <b>2 × 12 = 24 मिनट</b> आगे निकल जाएगी।</li>
+      <li>दूसरा प्रकार: “घड़ी सुबह 8 बजे सही थी, दोपहर 2 बजे वह 6 मिनट आगे दिखा रही थी।” यानी <b>6 घंटे में 6 मिनट</b>, तो दर = 1 मिनट प्रति घंटा।</li>
+      <li>तीसरा और सबसे चालाक प्रकार — <b>सुइयों के मिलन से खराबी पकड़ना।</b> सही घड़ी में सुइयाँ हर <b>65<sup>5</sup>⁄<sub>11</sub> मिनट</b> पर मिलती हैं। अगर किसी घड़ी में वे <b>65 मिनट</b> में ही मिल जाएँ, तो वह घड़ी <b>तेज़</b> है (काम जल्दी निपटा रही है)। अगर 66 मिनट लगाए, तो <b>सुस्त</b> है।</li>
+      <li>उस स्थिति में हिसाब: <span class="fx">अंतर प्रति मिलन = 65<sup>5</sup>⁄<sub>11</sub> − 65 = <sup>5</sup>⁄<sub>11</sub> मिनट</span>, और दिए गए समय में कितने मिलन हुए, उससे गुणा कर दो।</li>
+    </ol>
+
+    <div class="mini">
+      <div class="mt">सही घड़ी बनाम खराब घड़ी — खुद चलाकर देखो</div>
+      <div class="minirow">
+        <div class="minicol">
+          <div class="cbox mc" id="okClock"></div>
+          <div class="cap">✅ सही घड़ी<br><b id="okT" style="color:var(--gold-hi)">12:00</b></div>
+        </div>
+        <div class="minicol">
+          <div class="cbox mc" id="badClock"></div>
+          <div class="cap">⚠️ खराब घड़ी<br><b id="badT" style="color:#ffb0b0">12:00</b></div>
+        </div>
+      </div>
+      <div style="margin-top:14px;">
+        <div style="font-size:13px;color:var(--tx3);text-align:center;margin-bottom:4px;">बीता वास्तविक समय: <b id="elT" style="color:var(--gold-hi)">0 घंटे</b></div>
+        <input type="range" id="elR" min="0" max="12" step="1" value="0" style="max-width:100%;width:100%">
+      </div>
+      <div style="display:flex;gap:7px;justify-content:center;margin-top:12px;flex-wrap:wrap;">
+        <button class="btn sm" type="button" data-rate="2">+2 मि/घंटा (तेज़)</button>
+        <button class="btn sm" type="button" data-rate="5">+5 मि/घंटा (तेज़)</button>
+        <button class="btn sm" type="button" data-rate="-3">−3 मि/घंटा (सुस्त)</button>
+      </div>
+      <div style="text-align:center;font-size:14px;color:var(--tx2);margin-top:10px;" id="badCalc"></div>
+    </div>
+
+    <div class="aha"><b>सोचने का तरीक़ा:</b> खराब घड़ी के सवाल में घड़ी को भूल जाओ — यह सिर्फ़ “प्रति घंटे इतना अंतर, तो इतने घंटों में कितना अंतर” वाला साधारण अनुपात है। घड़ी सिर्फ़ कहानी है।</div>
+  </div>
+</section>
+
+<!-- =========== पाठ 10 =========== -->
+<section class="lesson" id="p10">
+  <div class="lhead"><div class="lno">10</div><div>
+    <div class="lkicker">पक्का नंबर देने वाला</div>
+    <div class="ltitle">दर्पण-छवि (Mirror Image)</div>
+  </div></div>
+  <div class="lbody">
+    <ol class="pts">
+      <li>घड़ी को शीशे के सामने रखो तो उसमें दिखने वाला समय अलग होता है। सवाल यही पूछता है — <b>“दर्पण में क्या समय दिखेगा?”</b></li>
+      <li>नियम बहुत सीधा है: दिए गए समय को <span class="fx">11:60</span> में से घटा दो।</li>
+      <li>उदाहरण: 4:20 का दर्पण-समय = 11:60 − 4:20 = <b>7:40</b>। नीचे शीशे में जाकर मिला लो।</li>
+      <li><b>अपवाद:</b> अगर समय 12 और 1 के बीच का हो (जैसे 12:35), तो <b>12:60</b> में से घटाओ। 12:60 − 12:35 = <b>0:25</b> यानी 12:25।</li>
+      <li>ऐसा क्यों? क्योंकि दर्पण घड़ी को <b>बाएँ-दाएँ पलट</b> देता है। हर सुई का कोण θ बदलकर <b>360 − θ</b> हो जाता है, और 360° का यह पलटाव समय में 12 घंटे वाले पैमाने पर 11:60 के घटाव जैसा दिखता है।</li>
+      <li>जाँच का आसान तरीक़ा — <b>दोनों समयों का जोड़ हमेशा 11:60 (यानी 12:00) आना चाहिए।</b> जोड़कर देख लो, ग़लती पकड़ में आ जाएगी।</li>
+    </ol>
+
+    <div class="mini">
+      <div class="mt">असली घड़ी और उसका दर्पण — साथ-साथ</div>
+      <div class="minirow">
+        <div class="minicol">
+          <div class="cbox mc" id="realClock"></div>
+          <div class="cap">असली घड़ी<br><b id="mrT" style="color:var(--gold-hi)">4:20</b></div>
+        </div>
+        <div class="minicol">
+          <div class="cbox mc" id="mirClock"></div>
+          <div class="cap">🪞 दर्पण में<br><b id="mmT" style="color:#cfc2ff">7:40</b></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:7px;justify-content:center;margin-top:14px;flex-wrap:wrap;">
+        <button class="btn sm" type="button" data-mir="4:20">4:20</button>
+        <button class="btn sm" type="button" data-mir="2:30">2:30</button>
+        <button class="btn sm" type="button" data-mir="9:45">9:45</button>
+        <button class="btn sm" type="button" data-mir="12:35">12:35</button>
+        <button class="btn sm" type="button" data-mir="6:00">6:00</button>
+      </div>
+      <div style="text-align:center;font-size:14px;color:var(--tx2);margin-top:11px;" id="mirCalc"></div>
+    </div>
+
+    <div class="aha"><b>पानी में छवि (Water Image) भी पूछते हैं:</b> वह ऊपर-नीचे का पलटाव है, इसलिए नियम बदल जाता है — वहाँ <b>18:30 (यानी 6:30) में से घटाते</b> हैं। दोनों को गड्ड-मड्ड मत करना: <b>दर्पण = 11:60, पानी = 18:30</b>।</div>
+  </div>
+</section>
+
+<!-- =========== पाठ 11 =========== -->
+<section class="lesson" id="p11">
+  <div class="lhead"><div class="lno">11</div><div>
+    <div class="lkicker">अब बारी आपकी</div>
+    <div class="ltitle">अभ्यास — हर सवाल घड़ी पर देखो</div>
+  </div></div>
+  <div class="lbody">
+    <p style="color:var(--tx2);font-size:14.5px;margin:0 0 4px;">पहले खुद हल करो, फिर “घड़ी पर देखो” दबाकर आँखों से मिलाओ। जो देखकर मिलाया जाता है, वह भूलता नहीं।</p>
+
+    <div class="q">
+      <div class="qt">3 बजकर 40 मिनट पर दोनों सुइयों के बीच का कोण क्या है? <em>SSC CGL</em></div>
+      <div class="qb">
+        <button class="btn sm" data-sol>उत्तर देखें</button>
+        <button class="btn sm gold" data-set="3:40" data-arc="split" data-msg="3:40 — नीला चाप 240°, नारंगी चाप 110°, अंतर 130°।">घड़ी पर देखो</button>
+      </div>
+      <div class="sol">
+        <span class="s">θ = |30 × 3 − 5.5 × 40|</span>
+        <span class="s">= |90 − 220| = |−130|</span>
+        <span class="s ans">= 130°</span>
+      </div>
+    </div>
+
+    <div class="q">
+      <div class="qt">4 बजकर 20 मिनट पर कोण क्या होगा? <em>सावधान!</em></div>
+      <div class="qb">
+        <button class="btn sm" data-sol>उत्तर देखें</button>
+        <button class="btn sm gold" data-set="4:20" data-arc="split" data-msg="4:20 — घंटा सुई 4 से 10° आगे खिसक चुकी है। इसीलिए कोण 20° नहीं, सिर्फ़ 10° है।">घड़ी पर देखो</button>
+      </div>
+      <div class="sol">
+        <span class="s">θ = |30 × 4 − 5.5 × 20| = |120 − 110|</span>
+        <span class="s ans">= 10°</span>
+        <span class="s" style="color:#ffc9c9">जाल: घंटा सुई को 4 पर मान लेते तो उत्तर 120 − 120 = 0° या 20° आ जाता — जो ग़लत है। वह 4 से 10° आगे खिसकी हुई है।</span>
+      </div>
+    </div>
+
+    <div class="q">
+      <div class="qt">2 बजे और 3 बजे के बीच सुइयाँ किस समय मिलेंगी?</div>
+      <div class="qb">
+        <button class="btn sm" data-sol>उत्तर देखें</button>
+        <button class="btn sm gold" data-total="130.909" data-msg="2:10 और 11/11 मिनट — यहीं दोनों सुइयाँ एक-दूसरे पर चढ़ी हुई हैं।">घड़ी पर देखो</button>
+      </div>
+      <div class="sol">
+        <span class="s">2 बजे घंटा सुई 60° आगे है। मिनट सुई को यह 60° का फ़ासला पाटना है।</span>
+        <span class="s">समय = 60 ÷ 5.5 = 120/11</span>
+        <span class="s ans">= 2 बजकर 10<sup>10</sup>⁄<sub>11</sub> मिनट</span>
+      </div>
+    </div>
+
+    <div class="q">
+      <div class="qt">5 बजे और 6 बजे के बीच सुइयाँ कब समकोण बनाएँगी?</div>
+      <div class="qb">
+        <button class="btn sm" data-sol>उत्तर देखें</button>
+        <button class="btn sm gold" data-total="310.909" data-msg="लगभग 5:10:55 — पहला समकोण। दूसरा 5:43:38 पर बनता है।">पहला समकोण देखो</button>
+        <button class="btn sm gold" data-total="343.636" data-msg="लगभग 5:43:38 — दूसरा समकोण।">दूसरा समकोण देखो</button>
+      </div>
+      <div class="sol">
+        <span class="s">|30 × 5 − 5.5M| = 90 → |150 − 5.5M| = 90</span>
+        <span class="s">पहला हल: 150 − 5.5M = 90 → 5.5M = 60 → M = 120/11 = 10<sup>10</sup>⁄<sub>11</sub></span>
+        <span class="s">दूसरा हल: 5.5M − 150 = 90 → 5.5M = 240 → M = 480/11 = 43<sup>7</sup>⁄<sub>11</sub></span>
+        <span class="s ans">5:10<sup>10</sup>⁄<sub>11</sub> और 5:43<sup>7</sup>⁄<sub>11</sub> — दो बार</span>
+      </div>
+    </div>
+
+    <div class="q">
+      <div class="qt">एक घड़ी में सुइयाँ हर 65 मिनट पर मिलती हैं। यह घड़ी 24 घंटे में कितनी तेज़/सुस्त हो जाएगी?</div>
+      <div class="qb"><button class="btn sm" data-sol>उत्तर देखें</button></div>
+      <div class="sol">
+        <span class="s">सही घड़ी में मिलन का अंतराल = 65<sup>5</sup>⁄<sub>11</sub> मिनट, पर यह घड़ी 65 मिनट ले रही है।</span>
+        <span class="s">हर मिलन पर यह <sup>5</sup>⁄<sub>11</sub> मिनट का काम जल्दी निपटा रही है → घड़ी <b>तेज़</b> है।</span>
+        <span class="s">24 घंटे = 1440 मिनट। इस घड़ी के हिसाब से मिलन हुए = 1440 ÷ 65 ≈ 22.15 बार</span>
+        <span class="s ans">कुल बढ़त ≈ 22.15 × <sup>5</sup>⁄<sub>11</sub> ≈ 10<sup>10</sup>⁄<sub>143</sub> मिनट तेज़</span>
+      </div>
+    </div>
+
+    <div class="q">
+      <div class="qt">9:45 का दर्पण-प्रतिबिंब क्या होगा?</div>
+      <div class="qb">
+        <button class="btn sm" data-sol>उत्तर देखें</button>
+        <button class="btn sm gold" data-mirjump="9:45">दर्पण में देखो</button>
+      </div>
+      <div class="sol">
+        <span class="s">11:60 − 9:45</span>
+        <span class="s ans">= 2:15</span>
+        <span class="s">जाँच: 9:45 + 2:15 = 12:00 ✓</span>
+      </div>
+    </div>
+
+    <div class="q">
+      <div class="qt">24 घंटे में घड़ी की सुइयाँ कितनी बार एक सीधी रेखा में होंगी?</div>
+      <div class="qb"><button class="btn sm" data-sol>उत्तर देखें</button></div>
+      <div class="sol">
+        <span class="s">सीधी रेखा दो तरह से — 0° (चढ़ी हुई) और 180° (विपरीत)।</span>
+        <span class="s">12 घंटे में: 11 + 11 = 22 बार</span>
+        <span class="s ans">24 घंटे में = 44 बार</span>
+      </div>
+    </div>
+
+    <div class="q">
+      <div class="qt">7:20 पर सुइयों के बीच का कोण?</div>
+      <div class="qb">
+        <button class="btn sm" data-sol>उत्तर देखें</button>
+        <button class="btn sm gold" data-set="7:20" data-arc="split" data-msg="7:20 — नीला 120°, नारंगी 220°, अंतर 100°।">घड़ी पर देखो</button>
+      </div>
+      <div class="sol">
+        <span class="s">θ = |30 × 7 − 5.5 × 20| = |210 − 110|</span>
+        <span class="s ans">= 100°</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========== चुनौती =========== -->
+<section class="lesson chal" id="pchal">
+  <div class="lhead"><div class="lno">★</div><div>
+    <div class="lkicker">खुद करके दिखाओ</div>
+    <div class="ltitle">चुनौती — घड़ी को सही जगह सेट करो</div>
+  </div></div>
+  <div class="lbody">
+    <p style="color:var(--tx2);font-size:14.5px;margin:0 0 10px;">ऊपर की बड़ी घड़ी की सुई खींचकर नीचे कहा गया काम करो, फिर “जाँचो” दबाओ। यही असली परीक्षा है।</p>
+    <div class="cq" id="chalQ">चुनौती 1: घड़ी को ऐसे समय पर सेट करो जहाँ दोनों सुइयों के बीच ठीक <b>90°</b> का कोण बने।</div>
+    <div class="qb" style="display:flex;gap:7px;margin-top:12px;flex-wrap:wrap;">
+      <button class="btn gold" type="button" id="chalCheck">✓ जाँचो</button>
+      <button class="btn" type="button" id="chalNext">अगली चुनौती ›</button>
+    </div>
+    <div class="fb" id="chalFb"></div>
+  </div>
+</section>
+
+<!-- =========== पाठ 12 =========== -->
+<section class="lesson" id="p12">
+  <div class="lhead"><div class="lno">12</div><div>
+    <div class="lkicker">परीक्षा से पाँच मिनट पहले</div>
+    <div class="ltitle">सूत्र-पत्र — बस इतना ही याद रखना है</div>
+  </div></div>
+  <div class="lbody">
+    <div class="sheet">
+      <div class="sf"><div class="sfi">🔵</div><div><div class="sfx">मिनट सुई = 6° / मिनट</div><div class="sfd">एक चक्कर 60 मिनट में</div></div></div>
+      <div class="sf"><div class="sfi">🟠</div><div><div class="sfx">घंटा सुई = 0.5° / मिनट</div><div class="sfd">एक चक्कर 720 मिनट में</div></div></div>
+      <div class="sf"><div class="sfi">⚡</div><div><div class="sfx">सापेक्ष चाल = 5.5° / मिनट</div><div class="sfd">6 − 0.5 — पूरे अध्याय की जान</div></div></div>
+      <div class="sf"><div class="sfi">📐</div><div><div class="sfx">θ = | 30H − 5.5M |</div><div class="sfd">180° से बड़ा आए तो 360 − θ लो</div></div></div>
+      <div class="sf"><div class="sfi">🎯</div><div><div class="sfx">मिलन का अंतराल = 65<sup>5</sup>⁄<sub>11</sub> मिनट</div><div class="sfd">720 ÷ 11 — सही घड़ी में</div></div></div>
+      <div class="sf"><div class="sfi">🔢</div><div><div class="sfx">12 घंटे में — 0°: 11, 90°: 22, 180°: 11</div><div class="sfd">सीधी रेखा = 11 + 11 = 22</div></div></div>
+      <div class="sf"><div class="sfi">🪞</div><div><div class="sfx">दर्पण-छवि = 11:60 − समय</div><div class="sfd">12 से 1 के बीच हो तो 12:60 − समय</div></div></div>
+      <div class="sf"><div class="sfi">💧</div><div><div class="sfx">पानी-छवि = 18:30 − समय</div><div class="sfd">दर्पण से अलग है, गड्ड-मड्ड मत करो</div></div></div>
+      <div class="sf"><div class="sfi">⏱</div><div><div class="sfx">खराब घड़ी = साधारण अनुपात</div><div class="sfd">प्रति घंटे का अंतर × कुल घंटे</div></div></div>
+    </div>
+
+    <div class="aha" style="margin-top:16px;"><b>आख़िरी बात, आदित्य:</b> इस अध्याय में याद रखने लायक़ सिर्फ़ <b>दो संख्याएँ</b> हैं — <b>5.5</b> और <b>11</b>। 5.5 से हर कोण और हर समय निकलता है, 11 से हर गिनती। बाक़ी सब इन्हीं दो का खेल है।</div>
+  </div>
+</section>
+
+<footer>
+  <b>बोधि क्लासेस</b> · अवधारणा की स्पष्टता, अभ्यास की निरंतरता<br>
+  घड़ी अध्याय · CSAT / SSC / UPSSSC / UPPCS
+</footer>
+
+</div>
+
+<button class="fab" id="fab" title="घड़ी पर जाओ">⏱</button>
+
+<script>
+(function(){
+"use strict";
+
+/* ================= ज्यामिति सहायक ================= */
+var VB = 300, C = 150;
+function pol(r, deg){ var a = (deg - 90) * Math.PI / 180; return { x: C + r*Math.cos(a), y: C + r*Math.sin(a) }; }
+function svgEl(tag, at){
+  var e = document.createElementNS("http://www.w3.org/2000/svg", tag);
+  if(at) for(var k in at) e.setAttribute(k, at[k]);
+  return e;
+}
+function arcD(r, from, sweep){
+  if(sweep <= 0.05) return "";
+  if(sweep > 359.9) sweep = 359.9;
+  var p1 = pol(r, from), p2 = pol(r, from + sweep);
+  var large = sweep > 180 ? 1 : 0;
+  return "M" + p1.x.toFixed(2) + " " + p1.y.toFixed(2) +
+         "A" + r + " " + r + " 0 " + large + " 1 " + p2.x.toFixed(2) + " " + p2.y.toFixed(2);
+}
+function norm360(a){ return ((a % 360) + 360) % 360; }
+function between(a, b){ var d = Math.abs(norm360(a) - norm360(b)); return d > 180 ? 360 - d : d; }
+function fmt(total){
+  var t = ((total % 720) + 720) % 720;
+  var h = Math.floor(t / 60), m = Math.floor(t % 60);
+  var hh = h % 12; if(hh === 0) hh = 12;
+  return hh + ":" + (m < 10 ? "0" : "") + m;
+}
+function fmtSec(total){
+  var t = ((total % 720) + 720) % 720;
+  var h = Math.floor(t / 60), m = Math.floor(t % 60);
+  var s = Math.round((t - Math.floor(t)) * 60);
+  if(s === 60){ s = 0; m += 1; }
+  var hh = h % 12; if(hh === 0) hh = 12;
+  return hh + ":" + (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
+}
+
+/* ================= घड़ी बनाने वाली फ़ैक्टरी ================= */
+function makeClock(host, opt){
+  opt = opt || {};
+  var mirror = !!opt.mirror;
+  var sgn = mirror ? -1 : 1;
+
+  var svg = svgEl("svg", { viewBox: "0 0 300 300", "class": "clk" });
+  host.appendChild(svg);
+
+  // बाहरी छल्ला
+  svg.appendChild(svgEl("circle", { cx:C, cy:C, r:143, fill:"#060d1a", stroke:"#1c2b45" }));
+  var ring = svgEl("circle", { cx:C, cy:C, r:141, fill:"#0a1425", stroke:"#2b3f61", "stroke-width":"3" });
+  svg.appendChild(ring);
+  svg.appendChild(svgEl("circle", { cx:C, cy:C, r:131, fill:"none", stroke:"#16233a", "stroke-width":"1" }));
+
+  // निशान
+  for(var i = 0; i < 60; i++){
+    var big = (i % 5 === 0);
+    var ang = sgn * i * 6;
+    var p1 = pol(big ? 127 : 130, ang), p2 = pol(big ? 116 : 123, ang);
+    svg.appendChild(svgEl("line", {
+      x1:p1.x, y1:p1.y, x2:p2.x, y2:p2.y,
+      stroke: big ? "#8299bd" : "#3a4c6b",
+      "stroke-width": big ? 3 : 1.2, "stroke-linecap":"round"
+    }));
+  }
+  // अंक
+  for(var n = 1; n <= 12; n++){
+    var pp = pol(100, sgn * n * 30);
+    var t = svgEl("text", {
+      x:pp.x, y:pp.y, "text-anchor":"middle", "dominant-baseline":"central",
+      "font-family":"'Mukta',sans-serif", "font-size": opt.small ? 20 : 19,
+      "font-weight":"700", fill:"#c3d2ea"
+    });
+    t.textContent = n;
+    svg.appendChild(t);
+  }
+
+  // मिलन-बिंदु परत (वैकल्पिक)
+  var dots = svgEl("g", {});
+  svg.appendChild(dots);
+
+  // चाप
+  var arcSplitM = svgEl("path", { d:"", fill:"none", stroke:"#4ea8ff", "stroke-width":"6", "stroke-linecap":"round", opacity:"0" });
+  var arcSplitH = svgEl("path", { d:"", fill:"none", stroke:"#ff7d55", "stroke-width":"6", "stroke-linecap":"round", opacity:"0" });
+  var arcBetween = svgEl("path", { d:"", fill:"none", stroke:"#5fe3a1", "stroke-width":"7", "stroke-linecap":"round", opacity:"0" });
+  svg.appendChild(arcSplitM); svg.appendChild(arcSplitH); svg.appendChild(arcBetween);
+
+  var lblG = svgEl("g", { opacity:"0" });
+  var lblT = svgEl("text", {
+    "text-anchor":"middle", "dominant-baseline":"central",
+    "font-family":"'Mukta',sans-serif", "font-size":"15", "font-weight":"800", fill:"#bff3d8"
+  });
+  lblG.appendChild(lblT); svg.appendChild(lblG);
+
+  var lblM = svgEl("text", { "text-anchor":"middle","dominant-baseline":"central","font-family":"'Mukta',sans-serif","font-size":"13","font-weight":"800",fill:"#9fd2ff",opacity:"0" });
+  var lblH = svgEl("text", { "text-anchor":"middle","dominant-baseline":"central","font-family":"'Mukta',sans-serif","font-size":"13","font-weight":"800",fill:"#ffb59a",opacity:"0" });
+  svg.appendChild(lblM); svg.appendChild(lblH);
+
+  // सुइयाँ
+  var hourH = svgEl("line", { x1:C, y1:C, x2:C, y2:C-66, stroke:"#ff7d55", "stroke-width":"9", "stroke-linecap":"round" });
+  var minH  = svgEl("line", { x1:C, y1:C, x2:C, y2:C-98, stroke:"#4ea8ff", "stroke-width":"6.5", "stroke-linecap":"round" });
+  svg.appendChild(hourH); svg.appendChild(minH);
+
+  // पकड़ने के लिए मोटी अदृश्य रेखाएँ
+  var minGrab = svgEl("line", { x1:C, y1:C, x2:C, y2:C-98, stroke:"transparent", "stroke-width":"34", "stroke-linecap":"round" });
+  svg.appendChild(minGrab);
+
+  svg.appendChild(svgEl("circle", { cx:C, cy:C, r:9, fill:"#0c1526", stroke:"#d9ae5f", "stroke-width":"3" }));
+  svg.appendChild(svgEl("circle", { cx:C, cy:C, r:3, fill:"#d9ae5f" }));
+
+  var total = opt.start != null ? opt.start : 0;
+  var arcMode = opt.arc || "none";
+  var listeners = [];
+
+  // चाप — दर्पण घड़ी में दिशा उलटी हो जाती है
+  function mirrorArc(r, start, sweep){
+    if(sweep <= 0.05) return "";
+    if(sweep > 359.9) sweep = 359.9;
+    var lg = sweep > 180 ? 1 : 0;
+    if(!mirror) return arcD(r, start, sweep);
+    var p1 = pol(r, -(start + sweep)), p2 = pol(r, -start);
+    return "M" + p1.x.toFixed(2) + " " + p1.y.toFixed(2) +
+           "A" + r + " " + r + " 0 " + lg + " 1 " + p2.x.toFixed(2) + " " + p2.y.toFixed(2);
+  }
+
+  function angles(){
+    var t = ((total % 720) + 720) % 720;
+    return { m: (t % 60) * 6, h: t * 0.5, t: t };
+  }
+
+  function draw(){
+    var a = angles();
+    var mA = sgn * a.m, hA = sgn * a.h;
+    var mp = pol(98, mA), hp = pol(66, hA);
+    minH.setAttribute("x2", mp.x); minH.setAttribute("y2", mp.y);
+    minGrab.setAttribute("x2", mp.x); minGrab.setAttribute("y2", mp.y);
+    hourH.setAttribute("x2", hp.x); hourH.setAttribute("y2", hp.y);
+
+    arcBetween.setAttribute("opacity", 0);
+    arcSplitM.setAttribute("opacity", 0);
+    arcSplitH.setAttribute("opacity", 0);
+    lblG.setAttribute("opacity", 0);
+    lblM.setAttribute("opacity", 0);
+    lblH.setAttribute("opacity", 0);
+
+    if(arcMode === "between"){
+      var d = norm360(a.m - a.h), start = a.h, sweep = d;
+      if(d > 180){ start = a.m; sweep = 360 - d; }
+      arcBetween.setAttribute("d", mirrorArc(44, start, sweep));
+      if(sweep > 1.5){
+        arcBetween.setAttribute("opacity", .95);
+        var mid = pol(62, sgn * (start + sweep / 2));
+        lblT.setAttribute("x", mid.x); lblT.setAttribute("y", mid.y);
+        lblT.textContent = (Math.round(sweep * 10) / 10) + "°";
+        lblG.setAttribute("opacity", 1);
+      }
+    } else if(arcMode === "split"){
+      if(a.m > 1.5){
+        arcSplitM.setAttribute("d", mirrorArc(52, 0, a.m));
+        arcSplitM.setAttribute("opacity", .9);
+        var mm = pol(66, sgn * (a.m / 2));
+        lblM.setAttribute("x", mm.x); lblM.setAttribute("y", mm.y);
+        lblM.textContent = Math.round(a.m) + "°";
+        lblM.setAttribute("opacity", 1);
+      }
+      if(a.h > 1.5){
+        arcSplitH.setAttribute("d", mirrorArc(33, 0, a.h));
+        arcSplitH.setAttribute("opacity", .9);
+        var hh2 = pol(22, sgn * (a.h / 2));
+        lblH.setAttribute("x", hh2.x); lblH.setAttribute("y", hh2.y);
+        lblH.textContent = Math.round(a.h * 10) / 10 + "°";
+        lblH.setAttribute("opacity", 1);
+      }
+    }
+    for(var i = 0; i < listeners.length; i++) listeners[i](total);
+  }
+
+  /* ---- खींचना (drag) ---- */
+  if(opt.draggable){
+    var dragging = false;
+    function evAngle(ev){
+      var r = svg.getBoundingClientRect();
+      var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      var px = (ev.touches ? ev.touches[0].clientX : ev.clientX) - cx;
+      var py = (ev.touches ? ev.touches[0].clientY : ev.clientY) - cy;
+      var deg = Math.atan2(px, -py) * 180 / Math.PI;
+      return norm360(deg);
+    }
+    function moveTo(ev){
+      var a = evAngle(ev);
+      var target = a / 6;                 // 0..60 मिनट
+      var cur = ((total % 60) + 60) % 60;
+      var d = target - cur;
+      if(d > 30) d -= 60;
+      if(d < -30) d += 60;
+      total = ((total + d) % 720 + 720) % 720;
+      draw();
+    }
+    function down(ev){ dragging = true; host.classList.add("drag"); moveTo(ev); ev.preventDefault(); }
+    function move(ev){ if(dragging){ moveTo(ev); ev.preventDefault(); } }
+    function up(){ dragging = false; host.classList.remove("drag"); }
+    svg.addEventListener("mousedown", down);
+    window.addEventListener("mousemove", move);
+    window.addEventListener("mouseup", up);
+    svg.addEventListener("touchstart", down, { passive:false });
+    window.addEventListener("touchmove", move, { passive:false });
+    window.addEventListener("touchend", up);
+  }
+
+  draw();
+
+  return {
+    set: function(t){ total = ((t % 720) + 720) % 720; draw(); },
+    get: function(){ return total; },
+    arc: function(m){ arcMode = m; draw(); },
+    on: function(fn){ listeners.push(fn); fn(total); },
+    dots: function(list){
+      while(dots.firstChild) dots.removeChild(dots.firstChild);
+      for(var i = 0; i < list.length; i++){
+        var p = pol(112, sgn * ((list[i] % 60) * 6));
+        dots.appendChild(svgEl("circle", { cx:p.x, cy:p.y, r:4, fill:"#d9ae5f", opacity:".85" }));
+      }
+    },
+    tween: function(target, ms){
+      var from = total, to = target;
+      var diff = ((to - from) % 720 + 720) % 720;
+      if(diff > 360) diff -= 720;
+      var t0 = null, dur = ms || 700;
+      function st(ts){
+        if(t0 === null) t0 = ts;
+        var k = Math.min(1, (ts - t0) / dur);
+        var e = k < .5 ? 2*k*k : 1 - Math.pow(-2*k+2, 2)/2;
+        total = ((from + diff * e) % 720 + 720) % 720;
+        draw();
+        if(k < 1) requestAnimationFrame(st);
+        else { total = ((to % 720) + 720) % 720; draw(); }
+      }
+      requestAnimationFrame(st);
+    }
+  };
+}
+
+/* ================= मुख्य घड़ी ================= */
+var main = makeClock(document.getElementById("mainClock"), { draggable:true, arc:"between", start:180 });
+
+var rTime = document.getElementById("rTime"), rMin = document.getElementById("rMin"),
+    rHr = document.getElementById("rHr"), rAng = document.getElementById("rAng"),
+    vH = document.getElementById("vH"), vM = document.getElementById("vM"),
+    liveBox = document.getElementById("liveBox");
+
+main.on(function(t){
+  var tt = ((t % 720) + 720) % 720;
+  var mA = (tt % 60) * 6, hA = tt * 0.5;
+  var H = Math.floor(tt / 60) % 12, M = tt % 60;
+  var Hd = H === 0 ? 12 : H;
+  rTime.textContent = fmt(tt);
+  rMin.textContent = Math.round(mA) + "°";
+  rHr.textContent = (Math.round(hA * 10) / 10) + "°";
+  var ang = between(mA, hA);
+  rAng.textContent = (Math.round(ang * 10) / 10) + "°";
+  vH.textContent = Hd;
+  vM.textContent = (Math.floor(M) < 10 ? "0" : "") + Math.floor(M);
+
+  var Mi = Math.floor(M);
+  var raw = Math.abs(30 * H - 5.5 * Mi);
+  var real = raw > 180 ? 360 - raw : raw;
+  var l1 = "θ = |30×" + H + " − 5.5×" + Mi + "| = |" + (30*H) + " − " + (Math.round(5.5*Mi*10)/10) + "| = " + (Math.round(raw*10)/10) + "°";
+  var l2 = raw > 180
+    ? "यह 180° से बड़ा है → असली कोण = 360 − " + (Math.round(raw*10)/10) + " = <span class='fin'>" + (Math.round(real*10)/10) + "°</span>"
+    : "<span class='fin'>कोण = " + (Math.round(real*10)/10) + "°</span>";
+  liveBox.innerHTML =
+    "<span class='l'><span class='mm'>मिनट सुई</span> = 6×" + Mi + " = " + (6*Mi) + "°" +
+    " &nbsp;·&nbsp; <span class='hh'>घंटा सुई</span> = 30×" + H + " + 0.5×" + Mi + " = " + (Math.round((30*H+0.5*Mi)*10)/10) + "°</span>" +
+    "<span class='l'>" + l1 + "</span><span class='l'>" + l2 + "</span>";
+});
+
+/* ---- नियंत्रण ---- */
+document.addEventListener("click", function(ev){
+  var b = ev.target.closest ? ev.target.closest("[data-adj]") : null;
+  if(b){ main.set(main.get() + parseFloat(b.getAttribute("data-adj"))); }
+});
+
+var playing = false, rafId = null, lastTs = null;
+var playBtn = document.getElementById("playBtn"), spd = document.getElementById("spd");
+function tick(ts){
+  if(!playing) return;
+  if(lastTs === null) lastTs = ts;
+  var dt = (ts - lastTs) / 1000; lastTs = ts;
+  if(dt > .2) dt = .2;
+  main.set(main.get() + dt * parseFloat(spd.value));
+  rafId = requestAnimationFrame(tick);
+}
+playBtn.addEventListener("click", function(){
+  playing = !playing;
+  playBtn.textContent = playing ? "⏸ रोको" : "▶ चलाओ";
+  playBtn.classList.toggle("on", playing);
+  if(playing){ lastTs = null; rafId = requestAnimationFrame(tick); }
+  else if(rafId) cancelAnimationFrame(rafId);
+});
+document.getElementById("resetBtn").addEventListener("click", function(){
+  playing = false; playBtn.textContent = "▶ चलाओ"; playBtn.classList.remove("on");
+  if(rafId) cancelAnimationFrame(rafId);
+  main.set(0);
+});
+
+var arcSeg = document.getElementById("arcSeg");
+arcSeg.addEventListener("click", function(ev){
+  var b = ev.target.closest("button[data-arc]");
+  if(!b) return;
+  [].forEach.call(arcSeg.querySelectorAll("button"), function(x){ x.classList.remove("act"); });
+  b.classList.add("act");
+  main.arc(b.getAttribute("data-arc"));
+});
+function setArcSeg(mode){
+  [].forEach.call(arcSeg.querySelectorAll("button"), function(x){
+    x.classList.toggle("act", x.getAttribute("data-arc") === mode);
+  });
+  main.arc(mode);
+}
+
+/* ---- पाठों के बटन ---- */
+var toast = document.getElementById("toast");
+function showToast(msg){
+  if(!msg) return;
+  toast.innerHTML = msg;
+  toast.classList.remove("show");
+  void toast.offsetWidth;
+  toast.classList.add("show");
+}
+function parseTime(s){
+  var p = s.split(":"), h = parseInt(p[0], 10) % 12, m = parseInt(p[1], 10);
+  return h * 60 + m;
+}
+document.addEventListener("click", function(ev){
+  var b = ev.target.closest ? ev.target.closest("[data-set],[data-total]") : null;
+  if(!b) return;
+  playing = false; playBtn.textContent = "▶ चलाओ"; playBtn.classList.remove("on");
+  if(rafId) cancelAnimationFrame(rafId);
+  var target = b.hasAttribute("data-total") ? parseFloat(b.getAttribute("data-total")) : parseTime(b.getAttribute("data-set"));
+  var am = b.getAttribute("data-arc");
+  if(am) setArcSeg(am);
+  main.tween(target, 750);
+  showToast(b.getAttribute("data-msg"));
+  document.getElementById("lab").scrollIntoView({ behavior:"smooth", block:"start" });
+});
+
+document.getElementById("fab").addEventListener("click", function(){
+  document.getElementById("lab").scrollIntoView({ behavior:"smooth", block:"start" });
+});
+
+/* ================= पाठ 4 — दौड़ ================= */
+var raceR = document.getElementById("raceR"), rn1 = document.getElementById("rn1"),
+    rn2 = document.getElementById("rn2"), raceT = document.getElementById("raceT"),
+    raceG = document.getElementById("raceG"), gapBar = document.getElementById("gapBar");
+function race(){
+  var m = parseFloat(raceR.value);
+  var mDeg = 6 * m, hDeg = 0.5 * m, gap = mDeg - hDeg;
+  rn1.style.left = (6 + (mDeg / 360) * 88) + "%";
+  rn2.style.left = (6 + (hDeg / 360) * 88) + "%";
+  raceT.textContent = m;
+  raceG.textContent = (Math.round(gap * 10) / 10) + "°";
+  gapBar.style.width = Math.min(100, (gap / 330) * 100) + "%";
+}
+raceR.addEventListener("input", race); race();
+
+/* ================= पाठ 6 — मिलन ================= */
+var coClock = makeClock(document.getElementById("coClock"), { arc:"none", start:0, small:true });
+var coTimes = [];
+for(var ci = 0; ci < 11; ci++) coTimes.push(ci * 720 / 11);
+coClock.dots(coTimes);
+var coIdx = 0, coCap = document.getElementById("coCap");
+function coShow(){
+  var t = coTimes[coIdx];
+  coClock.tween(t, 600);
+  coCap.innerHTML = "मिलन " + (coIdx + 1) + " / 11 — <b style='color:var(--gold-hi)'>" + fmtSec(t) + "</b>";
+}
+document.getElementById("coNext").addEventListener("click", function(){ coIdx = (coIdx + 1) % 11; coShow(); });
+document.getElementById("coPrev").addEventListener("click", function(){ coIdx = (coIdx + 10) % 11; coShow(); });
+coShow();
+
+/* ================= पाठ 9 — खराब घड़ी ================= */
+var okClock = makeClock(document.getElementById("okClock"), { arc:"none", start:0, small:true });
+var badClock = makeClock(document.getElementById("badClock"), { arc:"none", start:0, small:true });
+var elR = document.getElementById("elR"), elT = document.getElementById("elT"),
+    okT = document.getElementById("okT"), badT = document.getElementById("badT"),
+    badCalc = document.getElementById("badCalc");
+var rate = 2;
+function badShow(){
+  var hrs = parseFloat(elR.value);
+  var okTotal = hrs * 60;
+  var drift = rate * hrs;
+  var badTotal = okTotal + drift;
+  okClock.set(okTotal); badClock.set(badTotal);
+  elT.textContent = hrs + " घंटे";
+  okT.textContent = fmt(okTotal);
+  badT.textContent = fmt(badTotal);
+  var word = rate >= 0 ? "आगे (तेज़)" : "पीछे (सुस्त)";
+  badCalc.innerHTML = hrs === 0
+    ? "स्लाइडर खिसकाओ — दोनों घड़ियों का फ़ासला बढ़ता दिखेगा।"
+    : "दर " + (rate>0?"+":"") + rate + " मिनट/घंटा × " + hrs + " घंटे = <b style='color:" + (rate>=0?"#ffb0b0":"#9fd2ff") + "'>" + Math.abs(drift) + " मिनट " + word + "</b>";
+}
+elR.addEventListener("input", badShow);
+document.addEventListener("click", function(ev){
+  var b = ev.target.closest ? ev.target.closest("[data-rate]") : null;
+  if(!b) return;
+  rate = parseFloat(b.getAttribute("data-rate"));
+  [].forEach.call(document.querySelectorAll("[data-rate]"), function(x){ x.classList.remove("on"); });
+  b.classList.add("on");
+  badShow();
+});
+badShow();
+
+/* ================= पाठ 10 — दर्पण ================= */
+var realClock = makeClock(document.getElementById("realClock"), { arc:"none", start:260, small:true });
+var mirClock = makeClock(document.getElementById("mirClock"), { arc:"none", start:260, small:true, mirror:true });
+var mrT = document.getElementById("mrT"), mmT = document.getElementById("mmT"), mirCalc = document.getElementById("mirCalc");
+function mirrorTime(total){
+  var t = ((total % 720) + 720) % 720;
+  var mt = (720 - t) % 720;
+  return mt;
+}
+function mirShow(total){
+  realClock.tween(total, 600); mirClock.tween(total, 600);
+  var mt = mirrorTime(total);
+  mrT.textContent = fmt(total);
+  mmT.textContent = fmt(mt);
+  var H = Math.floor(total / 60) % 12, M = total % 60;
+  var base = (H === 0) ? "12:60" : "11:60";
+  mirCalc.innerHTML = "<b style='color:var(--gold-hi)'>" + base + " − " + fmt(total) + " = " + fmt(mt) + "</b>" +
+    "<br><span style='color:var(--tx3);font-size:13px'>जाँच: " + fmt(total) + " + " + fmt(mt) + " = 12:00 ✓</span>";
+}
+document.addEventListener("click", function(ev){
+  var b = ev.target.closest ? ev.target.closest("[data-mir],[data-mirjump]") : null;
+  if(!b) return;
+  var val = b.getAttribute("data-mir") || b.getAttribute("data-mirjump");
+  mirShow(parseTime(val));
+  if(b.hasAttribute("data-mirjump")) document.getElementById("p10").scrollIntoView({ behavior:"smooth", block:"start" });
+});
+mirShow(260);
+
+/* ================= अभ्यास ================= */
+document.addEventListener("click", function(ev){
+  var b = ev.target.closest ? ev.target.closest("[data-sol]") : null;
+  if(!b) return;
+  var sol = b.closest(".q").querySelector(".sol");
+  sol.classList.toggle("show");
+  b.textContent = sol.classList.contains("show") ? "उत्तर छिपाएँ" : "उत्तर देखें";
+});
+
+/* ================= चुनौती ================= */
+var chals = [
+  { q:"घड़ी को ऐसे समय पर सेट करो जहाँ दोनों सुइयों के बीच ठीक <b>90°</b> का कोण बने।", test:function(a){ return Math.abs(a - 90) <= 3; }, hint:"संकेत: 3:00 सबसे आसान है।" },
+  { q:"घड़ी को ऐसे समय पर सेट करो जहाँ सुइयाँ <b>एक-दूसरे पर चढ़ी</b> हों (कोण 0°)।", test:function(a){ return a <= 3; }, hint:"संकेत: 12:00 या लगभग 1:05।" },
+  { q:"घड़ी को ऐसे समय पर सेट करो जहाँ सुइयाँ <b>ठीक विपरीत</b> हों (180°)।", test:function(a){ return Math.abs(a - 180) <= 3; }, hint:"संकेत: 6:00 सबसे आसान है।" },
+  { q:"घड़ी को <b>4 और 5 बजे के बीच</b> ऐसे समय पर सेट करो जहाँ कोण <b>0°</b> हो।", test:function(a, t){ return a <= 3 && t >= 240 && t < 300; }, hint:"संकेत: लगभग 4:21:49।" },
+  { q:"घड़ी को ऐसे समय पर सेट करो जहाँ कोण <b>ठीक 30°</b> हो।", test:function(a){ return Math.abs(a - 30) <= 3; }, hint:"संकेत: 1:00 पर देखो।" }
+];
+var chalIdx = 0;
+var chalQ = document.getElementById("chalQ"), chalFb = document.getElementById("chalFb");
+function chalShow(){
+  chalQ.innerHTML = "चुनौती " + (chalIdx + 1) + ": " + chals[chalIdx].q;
+  chalFb.textContent = ""; chalFb.className = "fb";
+}
+document.getElementById("chalCheck").addEventListener("click", function(){
+  var t = main.get();
+  var a = between((t % 60) * 6, t * 0.5);
+  if(chals[chalIdx].test(a, t)){
+    chalFb.innerHTML = "✅ शाबाश! समय " + fmt(t) + ", कोण " + (Math.round(a*10)/10) + "° — बिल्कुल सही।";
+    chalFb.className = "fb good";
+  } else {
+    chalFb.innerHTML = "❌ अभी नहीं। आपका कोण " + (Math.round(a*10)/10) + "° है। " + chals[chalIdx].hint;
+    chalFb.className = "fb bad";
+  }
+});
+document.getElementById("chalNext").addEventListener("click", function(){
+  chalIdx = (chalIdx + 1) % chals.length; chalShow();
+});
+chalShow();
+
+})();
+</script>
+<script defer src="/assets/bodhi-watermark.js"></script>
+</body>
+</html>

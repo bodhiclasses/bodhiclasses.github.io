@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>कैलेंडर (Calendar) — शून्य से महारत | बोधि क्लासेस</title>
+<meta name="description" content="CSAT / SSC / UPSSSC के लिए कैलेंडर अध्याय — विषम दिन की मशीन से किसी भी तारीख का दिन निकालो, और असली कैलेंडर से मिलाकर देखो।">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink0:#060B16; --ink1:#0B1322; --ink2:#111C2F; --ink3:#18263D;
+  --line:#22334f; --line2:#2d4266;
+  --tx:#e9f0fb; --tx2:#9db0cf; --tx3:#6f83a3;
+  --gold:#d9ae5f; --gold-hi:#f0cf8a;
+  --blue:#4ea8ff; --blueb:#8ecbff;
+  --orange:#ff7d55; --orangeb:#ffb59a;
+  --green:#5fe3a1;
+  --violet:#a78bfa;
+  --red:#ff6b6b;
+  --ok:#4ade80;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;padding:0 0 96px;
+  font-family:'Mukta','Noto Sans Devanagari',system-ui,sans-serif;
+  background:
+    radial-gradient(900px 500px at 50% -8%,#152341 0%,transparent 60%),
+    radial-gradient(700px 400px at 0% 30%,#1a1c3a 0%,transparent 55%),
+    var(--ink0);
+  background-attachment:fixed;
+  color:var(--tx);font-size:16.5px;line-height:1.75;overflow-x:hidden;
+}
+.wrap{max-width:800px;margin:0 auto;padding:0 14px;}
+
+.hero{text-align:center;padding:34px 12px 8px;}
+.brand{display:inline-flex;align-items:center;gap:9px;font-size:12px;letter-spacing:2.4px;color:var(--gold);text-transform:uppercase;font-weight:700;margin-bottom:16px;}
+.brand i{width:26px;height:1px;background:linear-gradient(90deg,transparent,var(--gold));display:block;}
+.brand i:last-child{background:linear-gradient(90deg,var(--gold),transparent);}
+h1{font-size:31px;line-height:1.3;margin:0 0 10px;font-weight:800;letter-spacing:-.3px;}
+h1 span{background:linear-gradient(100deg,var(--gold-hi),var(--gold));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.hsub{color:var(--tx2);font-size:15.5px;max-width:560px;margin:0 auto;}
+.pill{display:inline-block;margin-top:14px;font-size:13px;color:var(--gold-hi);border:1px solid rgba(217,174,95,.35);background:rgba(217,174,95,.08);padding:7px 16px;border-radius:999px;font-weight:600;}
+
+/* ==== LAB ==== */
+.lab{
+  background:linear-gradient(170deg,var(--ink2),var(--ink1));
+  border:1px solid var(--line2);border-radius:24px;padding:16px 14px 18px;margin:20px 0 10px;
+  box-shadow:0 26px 60px -30px rgba(0,0,0,.95),0 0 0 1px rgba(217,174,95,.07) inset;position:relative;
+}
+.lab::before{content:"";position:absolute;top:0;left:12%;right:12%;height:1.5px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.labtag{text-align:center;font-size:12px;letter-spacing:2px;color:var(--gold);font-weight:700;text-transform:uppercase;}
+.labtip{text-align:center;font-size:13.5px;color:var(--tx3);margin-bottom:12px;}
+
+.dpick{display:flex;flex-direction:column;gap:11px;}
+.prow{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;}
+.stepper{display:inline-flex;align-items:center;border:1px solid var(--line2);border-radius:12px;overflow:hidden;background:var(--ink3);}
+.stepper button{font-family:inherit;width:38px;height:40px;border:none;background:transparent;color:var(--gold-hi);font-size:20px;font-weight:700;cursor:pointer;line-height:1;}
+.stepper button:active{background:rgba(217,174,95,.2);}
+.stepper .val{min-width:74px;text-align:center;height:40px;display:flex;align-items:center;justify-content:center;flex-direction:column;line-height:1.05;border-left:1px solid var(--line);border-right:1px solid var(--line);}
+.stepper .val input{
+  width:70px;background:transparent;border:none;outline:none;color:var(--tx);
+  font-family:inherit;font-size:16px;font-weight:800;text-align:center;
+}
+.stepper .val span{font-size:16px;font-weight:800;}
+.stepper .val small{font-size:9.5px;color:var(--tx3);font-weight:600;letter-spacing:.5px;}
+
+.months{display:grid;grid-template-columns:repeat(6,1fr);gap:5px;margin-top:2px;}
+.mo{
+  font-family:inherit;font-size:12.5px;font-weight:700;padding:8px 2px;border-radius:9px;
+  background:var(--ink3);border:1px solid var(--line);color:var(--tx2);cursor:pointer;text-align:center;
+}
+.mo.act{background:linear-gradient(135deg,var(--gold-hi),var(--gold));color:#1a1204;border-color:var(--gold);}
+
+.answer{
+  margin-top:14px;text-align:center;background:linear-gradient(135deg,rgba(95,227,161,.12),rgba(95,227,161,.04));
+  border:1px solid rgba(95,227,161,.35);border-radius:16px;padding:14px 12px;
+}
+.answer .dt{font-size:14px;color:var(--tx2);}
+.answer .dy{font-size:30px;font-weight:800;color:var(--green);line-height:1.25;margin-top:2px;}
+
+.steps{margin-top:13px;background:#070d19;border:1px dashed var(--line2);border-radius:14px;padding:13px 13px;}
+.steps .sh{font-size:12px;letter-spacing:1.6px;text-transform:uppercase;color:var(--tx3);font-weight:700;text-align:center;margin-bottom:9px;}
+.st{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-top:1px solid rgba(34,51,79,.6);font-size:14.5px;}
+.st:first-of-type{border-top:none;}
+.st .sn{flex:none;width:23px;height:23px;border-radius:7px;background:rgba(167,139,250,.16);color:#cfc2ff;border:1px solid #4a3d7a;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;margin-top:2px;}
+.st .sx{flex:1;color:var(--tx2);}
+.st .sx b{color:#fff;}
+.st .sv{flex:none;font-weight:800;color:var(--gold-hi);font-variant-numeric:tabular-nums;}
+.total{
+  margin-top:9px;padding-top:9px;border-top:1px solid var(--line2);display:flex;justify-content:space-between;
+  font-size:15px;font-weight:800;color:var(--green);
+}
+
+/* week dots */
+.wdots{display:flex;gap:5px;justify-content:center;margin-top:12px;flex-wrap:wrap;}
+.wd{
+  width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:800;background:var(--ink3);border:1px solid var(--line);color:var(--tx3);
+}
+.wd.on{background:linear-gradient(135deg,var(--green),#2fbb7a);color:#052015;border-color:var(--green);transform:scale(1.08);}
+
+/* real calendar grid */
+.cal{margin-top:14px;background:#070d19;border:1px solid var(--line);border-radius:15px;padding:12px 10px 14px;}
+.cal .ct{text-align:center;font-size:14.5px;font-weight:800;color:var(--gold-hi);margin-bottom:9px;}
+.cgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;}
+.cgrid .hd{font-size:11.5px;font-weight:800;color:var(--tx3);text-align:center;padding:4px 0;}
+.cgrid .hd.sun{color:#ff9b9b;}
+.cgrid .cell{
+  aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;
+  border-radius:8px;color:var(--tx2);background:rgba(24,38,61,.5);font-variant-numeric:tabular-nums;
+}
+.cgrid .cell.empty{background:transparent;}
+.cgrid .cell.sun{color:#ff9b9b;}
+.cgrid .cell.hit{background:linear-gradient(135deg,var(--gold-hi),var(--gold));color:#1a1204;font-weight:800;transform:scale(1.06);box-shadow:0 4px 12px -4px rgba(217,174,95,.8);}
+.calnote{text-align:center;font-size:12.5px;color:var(--tx3);margin-top:9px;}
+
+.qbtns{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:12px;}
+.btn{
+  font-family:inherit;font-size:13px;font-weight:700;color:var(--tx);background:var(--ink3);
+  border:1px solid var(--line2);border-radius:11px;padding:8px 12px;cursor:pointer;transition:.16s;
+}
+.btn:active{transform:scale(.95);}
+.btn.gold{background:linear-gradient(135deg,var(--gold-hi),var(--gold));color:#1a1204;border-color:var(--gold);}
+.btn.sm{padding:7px 10px;font-size:12.5px;}
+.btn.on{background:rgba(95,227,161,.16);border-color:#2c6b4c;color:#a9f2cd;}
+
+/* ==== LESSONS ==== */
+.lesson{background:linear-gradient(175deg,var(--ink2),var(--ink1));border:1px solid var(--line);border-radius:20px;padding:20px 17px;margin:16px 0;box-shadow:0 20px 46px -32px rgba(0,0,0,.9);}
+.lhead{display:flex;align-items:flex-start;gap:12px;}
+.lno{flex:none;width:40px;height:40px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;color:#1a1204;background:linear-gradient(135deg,var(--gold-hi),var(--gold));box-shadow:0 6px 16px -6px rgba(217,174,95,.7);}
+.ltitle{font-size:20.5px;font-weight:800;line-height:1.35;margin:2px 0 0;}
+.lkicker{font-size:12px;letter-spacing:1.6px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:3px;}
+.lbody{margin-top:12px;}
+ol.pts{list-style:none;counter-reset:p;margin:8px 0 0;padding:0;}
+ol.pts>li{position:relative;padding:10px 2px 10px 38px;border-top:1px solid rgba(34,51,79,.7);}
+ol.pts>li:first-child{border-top:none;padding-top:4px;}
+ol.pts>li::before{counter-increment:p;content:counter(p);position:absolute;left:0;top:11px;width:25px;height:25px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;background:rgba(78,168,255,.13);color:#8cc6ff;border:1px solid #2b5480;}
+ol.pts>li:first-child::before{top:5px;}
+.pts b{color:#fff;font-weight:700;}
+.hl{color:var(--gold-hi);font-weight:700;}
+.fx{display:inline-block;font-weight:800;white-space:nowrap;background:rgba(167,139,250,.14);border:1px solid #4a3d7a;color:#cfc2ff;padding:2px 9px;border-radius:8px;font-variant-numeric:tabular-nums;}
+.warn{margin-top:12px;background:rgba(255,107,107,.08);border:1px solid rgba(255,107,107,.32);border-left:4px solid var(--red);border-radius:12px;padding:11px 13px;font-size:14.5px;color:#ffc9c9;}
+.warn b{color:#fff;}
+.aha{margin-top:12px;background:rgba(95,227,161,.08);border:1px solid rgba(95,227,161,.3);border-left:4px solid var(--green);border-radius:12px;padding:11px 13px;font-size:14.5px;color:#b6f2d5;}
+.aha b{color:#fff;}
+.mini{margin-top:14px;background:#070d19;border:1px solid var(--line);border-radius:16px;padding:14px 12px;}
+.mini .mt{font-size:12.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--tx3);font-weight:700;text-align:center;margin-bottom:10px;}
+
+/* odd-day machine */
+.omach input[type=number]{
+  width:110px;background:var(--ink3);border:1px solid var(--line2);border-radius:10px;color:var(--tx);
+  font-family:inherit;font-size:16px;font-weight:800;text-align:center;padding:9px 6px;outline:none;
+}
+.weeks{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-top:12px;max-height:150px;overflow:hidden;}
+.wk{display:flex;gap:2px;padding:3px;border-radius:7px;background:rgba(24,38,61,.55);border:1px solid var(--line);}
+.wk i{width:8px;height:8px;border-radius:2px;background:#3d5478;display:block;}
+.wk.rem{border-color:var(--gold);background:rgba(217,174,95,.14);}
+.wk.rem i{background:var(--gold-hi);}
+.omres{text-align:center;margin-top:11px;font-size:15px;color:var(--tx2);}
+.omres b{color:var(--gold-hi);font-size:19px;font-weight:800;}
+
+/* leap tree */
+.tree{display:flex;flex-direction:column;gap:8px;margin-top:12px;}
+.tn{display:flex;align-items:center;gap:10px;background:var(--ink3);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:14px;color:var(--tx3);transition:.2s;}
+.tn .ti{flex:none;width:26px;height:26px;border-radius:8px;background:#22334f;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;}
+.tn.yes{border-color:var(--green);background:rgba(95,227,161,.1);color:#b6f2d5;}
+.tn.yes .ti{background:var(--green);color:#052015;}
+.tn.no{border-color:var(--red);background:rgba(255,107,107,.08);color:#ffc9c9;}
+.tn.no .ti{background:var(--red);color:#2a0808;}
+.leapres{text-align:center;margin-top:12px;font-size:19px;font-weight:800;}
+
+/* code tiles */
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:11px;}
+.tile{background:var(--ink3);border:1px solid var(--line);border-radius:12px;padding:10px 4px;text-align:center;}
+.tile .tn2{font-size:12.5px;color:var(--tx3);font-weight:700;}
+.tile .tv{font-size:20px;font-weight:800;color:var(--gold-hi);line-height:1.25;}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:12px;}
+.grid.g4{grid-template-columns:repeat(4,1fr);}
+.stat{background:var(--ink3);border:1px solid var(--line);border-radius:14px;padding:12px 8px;text-align:center;}
+.stat .n{display:block;font-size:21px;font-weight:800;color:var(--gold-hi);line-height:1.2;}
+.stat .c{font-size:12px;color:var(--tx3);margin-top:2px;font-weight:600;}
+
+/* practice */
+.q{background:#070d19;border:1px solid var(--line);border-radius:15px;padding:14px;margin:11px 0;}
+.q .qt{font-weight:700;color:#fff;font-size:15.5px;}
+.q .qt em{color:var(--violet);font-style:normal;font-weight:800;margin-left:6px;}
+.q .sol{display:none;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line2);font-size:14.8px;color:var(--tx2);}
+.q .sol.show{display:block;}
+.q .sol .s{display:block;margin:4px 0;}
+.q .sol .ans{color:var(--ok);font-weight:800;font-size:16px;}
+.q .qb{display:flex;gap:7px;margin-top:11px;flex-wrap:wrap;}
+
+.sheet{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
+.sf{display:flex;align-items:center;gap:11px;background:var(--ink3);border:1px solid var(--line);border-radius:13px;padding:11px 13px;}
+.sf .sfi{flex:none;width:34px;height:34px;border-radius:10px;background:rgba(217,174,95,.13);display:flex;align-items:center;justify-content:center;font-size:15px;}
+.sf .sfx{font-weight:800;color:var(--gold-hi);font-size:15px;}
+.sf .sfd{font-size:13px;color:var(--tx3);}
+
+.nav{display:flex;gap:7px;overflow-x:auto;padding:6px 2px 12px;scrollbar-width:none;}
+.nav::-webkit-scrollbar{display:none;}
+.nav a{flex:none;font-size:12.5px;font-weight:700;color:var(--tx2);text-decoration:none;background:var(--ink2);border:1px solid var(--line);border-radius:999px;padding:7px 13px;white-space:nowrap;}
+.fab{position:fixed;right:14px;bottom:18px;width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--gold-hi),var(--gold));color:#1a1204;border:none;font-size:22px;cursor:pointer;z-index:80;box-shadow:0 12px 28px -8px rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;font-family:inherit;}
+.fab:active{transform:scale(.92);}
+footer{text-align:center;color:var(--tx3);font-size:13px;margin-top:30px;padding:18px 12px 0;border-top:1px solid var(--line);}
+footer b{color:var(--gold);}
+@media(max-width:420px){h1{font-size:26px;}.ltitle{font-size:18.5px;}.tiles{grid-template-columns:repeat(3,1fr);}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div class="brand"><i></i>बोधि क्लासेस<i></i></div>
+  <h1>कैलेंडर <span>(Calendar)</span><br>शून्य से महारत तक</h1>
+  <p class="hsub">कोई भी तारीख डालो — <b>पूरी गणना कदम-दर-कदम</b> सामने खुलेगी, और नीचे असली कैलेंडर से मिलान भी हो जाएगा। भरोसा तभी बनता है जब आँख देख ले।</p>
+  <div class="pill">📅 नीचे कोई भी तारीख डालकर देखो</div>
+</header>
+
+<!-- ============ LAB ============ -->
+<section class="lab" id="lab">
+  <div class="labtag">प्रयोगशाला · तारीख से दिन</div>
+  <div class="labtip">तारीख बदलो — हर कदम अपने-आप बदलता दिखेगा</div>
+
+  <div class="dpick">
+    <div class="prow">
+      <div class="stepper">
+        <button type="button" data-d="-1">−</button>
+        <div class="val"><span id="vD">15</span><small>तारीख</small></div>
+        <button type="button" data-d="1">+</button>
+      </div>
+      <div class="stepper">
+        <button type="button" data-y="-1">−</button>
+        <div class="val"><input id="vY" type="number" value="1947" inputmode="numeric"><small>वर्ष</small></div>
+        <button type="button" data-y="1">+</button>
+      </div>
+    </div>
+    <div class="months" id="months"></div>
+  </div>
+
+  <div class="answer">
+    <div class="dt" id="ansDate">15 अगस्त 1947</div>
+    <div class="dy" id="ansDay">शुक्रवार</div>
+  </div>
+
+  <div class="wdots" id="wdots"></div>
+
+  <div class="steps">
+    <div class="sh">विषम-दिन विधि · पूरी गणना</div>
+    <div id="stepsBox"></div>
+  </div>
+
+  <div class="cal">
+    <div class="ct" id="calTitle">अगस्त 1947</div>
+    <div class="cgrid" id="calGrid"></div>
+    <div class="calnote">🟡 = आपकी तारीख · असली कैलेंडर से मिलान</div>
+  </div>
+
+  <div class="qbtns">
+    <button class="btn sm" data-date="15-8-1947">15 अगस्त 1947</button>
+    <button class="btn sm" data-date="26-1-1950">26 जनवरी 1950</button>
+    <button class="btn sm" data-date="2-10-1869">2 अक्टूबर 1869</button>
+    <button class="btn sm" data-date="29-2-2024">29 फरवरी 2024</button>
+    <button class="btn sm gold" id="todayBtn">आज</button>
+  </div>
+</section>
+
+<nav class="nav">
+  <a href="#p1">1 · विषम दिन</a>
+  <a href="#p2">2 · साधारण वर्ष</a>
+  <a href="#p3">3 · लीप वर्ष</a>
+  <a href="#p4">4 · सदियों के कोड</a>
+  <a href="#p5">5 · महीनों के कोड</a>
+  <a href="#p6">6 · पूरी विधि</a>
+  <a href="#p7">7 · तेज़ विधि</a>
+  <a href="#p8">8 · कैलेंडर दोहराव</a>
+  <a href="#p9">9 · अभ्यास</a>
+  <a href="#p10">10 · सूत्र-पत्र</a>
+</nav>
+
+<!-- ============ पाठ 1 ============ -->
+<section class="lesson" id="p1">
+  <div class="lhead"><div class="lno">1</div><div>
+    <div class="lkicker">पूरी नींव</div>
+    <div class="ltitle">विषम दिन (Odd Days) — पूरा अध्याय बस यही है</div>
+  </div></div>
+  <div class="lbody">
+    <ol class="pts">
+      <li>हफ़्ता <b>7 दिन</b> का होता है और घूम-फिरकर वही सात दिन दोहराते रहते हैं। इसका मतलब — <b>पूरे हफ़्ते बेकार हैं</b>, वे दिन नहीं बदलते।</li>
+      <li>अगर आज मंगलवार है, तो <b>7 दिन बाद भी मंगलवार</b>, 14 दिन बाद भी मंगलवार, 700 दिन बाद भी मंगलवार। दिन बदलता है सिर्फ़ <b>बचे हुए दिनों</b> से।</li>
+      <li>इन्हीं बचे हुए दिनों को <b>विषम दिन (odd days)</b> कहते हैं। सीधा नियम — <span class="fx">विषम दिन = कुल दिन ÷ 7 का शेषफल</span></li>
+      <li>उदाहरण: 100 दिन बाद कौन-सा दिन होगा? 100 ÷ 7 = 14 हफ़्ते और <b>2 दिन बाक़ी</b>। तो सिर्फ़ 2 दिन आगे गिनो। अगर आज सोमवार है तो उत्तर <b>बुधवार</b>।</li>
+      <li>नीचे की मशीन में कोई भी संख्या डालकर देखो — पूरे हफ़्ते नीले पड़ जाएँगे और बचे हुए दिन <b>सुनहरे</b> चमकेंगे। वही सुनहरे दिन ही मायने रखते हैं।</li>
+      <li>यही एक विचार पूरे अध्याय की जड़ है। आगे हम बस यह सीखेंगे कि <b>वर्षों और महीनों के विषम दिन</b> कैसे गिने जाते हैं।</li>
+    </ol>
+
+    <div class="mini omach">
+      <div class="mt">विषम दिन की मशीन</div>
+      <div style="text-align:center;">
+        <span style="font-size:14px;color:var(--tx3)">कुल दिन: </span>
+        <input type="number" id="omIn" value="100" min="0" max="400" inputmode="numeric">
+      </div>
+      <div class="weeks" id="omWeeks"></div>
+      <div class="omres" id="omRes"></div>
+    </div>
+
+    <div class="aha"><b>दिनों का कोड (हमेशा 0 से शुरू):</b> 0 = रविवार, 1 = सोमवार, 2 = मंगलवार, 3 = बुधवार, 4 = गुरुवार, 5 = शुक्रवार, 6 = शनिवार। यह क्रम रट लो — पूरे अध्याय में यही चलेगा।</div>
+  </div>
+</section>
+
+<!-- ============ पाठ 2 ============ -->
+<section class="lesson" id="p2">
+  <div class="lhead"><div class="lno">2</div><div>
+    <div class="lkicker">पहली गिनती</div>
+    <div class="ltitle">साधारण वर्ष = 1 विषम दिन</div>
+  </div></div>
+  <div class="lbody">
+    <ol class="pts">
+      <li>साधारण वर्ष में <b>365 दिन</b> होते हैं। अब इसे 7 से भाग दो:</li>
+      <li><span class="fx">365 ÷ 7 = 52 हफ़्ते + 1 दिन</span> — यानी साधारण वर्ष में <b>1 विषम दिन</b>।</li>
+      <li>इसका बहुत काम का नतीजा — <b>अगले साल वही तारीख एक दिन आगे खिसक जाती है।</b></li>
+      <li>जैसे 1 जनवरी 2023 रविवार था, तो 1 जनवरी 2024 <b>सोमवार</b> होगा (क्योंकि 2023 साधारण वर्ष है)।</li>
+      <li>यही वजह है कि आपका जन्मदिन हर साल एक दिन आगे सरकता जाता है — और लीप वर्ष पड़ने पर दो दिन कूद जाता है।</li>
+    </ol>
+    <div class="qbtns" style="justify-content:flex-start">
+      <button class="btn" data-date="1-1-2023">1 जनवरी 2023 देखो</button>
+      <button class="btn" data-date="1-1-2024">1 जनवरी 2024 देखो</button>
+    </div>
+    <div class="aha"><b>ऊपर दोनों बटन दबाकर मिला लो</b> — एक दिन का खिसकाव अपनी आँखों से दिख जाएगा। यही “1 विषम दिन” है।</div>
+  </div>
+</section>
+
+<!-- ============ पाठ 3 ============ -->
+<section class="lesson" id="p3">
+  <div class="lhead"><div class="lno">3</div><div>
+    <div class="lkicker">यहाँ सबसे ज़्यादा नंबर कटते हैं</div>
+    <div class="ltitle">लीप वर्ष = 2 विषम दिन (और 400 का नियम)</div>
+  </div></div>
+  <div class="lbody">
+    <ol class="pts">
+      <li>लीप वर्ष में <b>366 दिन</b> होते हैं। 366 ÷ 7 = 52 हफ़्ते + <b>2 दिन</b>। इसलिए लीप वर्ष में <span class="fx">2 विषम दिन</span>।</li>
+      <li>अब लीप वर्ष पहचानने का नियम — पहला हिस्सा आसान है: जो वर्ष <b>4 से पूरा-पूरा कट जाए</b>, वह लीप वर्ष है। जैसे 2020, 2024, 1996।</li>
+      <li>पर <b>सदी वर्षों (century years)</b> के लिए नियम बदल जाता है। 1700, 1800, 1900, 2000 जैसे वर्ष 100 से कटते हैं — इनके लिए 4 का नियम काफ़ी नहीं।</li>
+      <li>ऐसा वर्ष लीप तभी होगा जब वह <b>400 से पूरा कट जाए</b>। इसलिए <b>2000 लीप वर्ष है</b>, पर <b>1900, 1800, 1700 लीप वर्ष नहीं हैं</b> — भले ही वे 4 से कटते हों।</li>
+      <li>ऐसा क्यों? क्योंकि पृथ्वी को सूरज का एक चक्कर लगाने में ठीक 365.25 दिन नहीं, बल्कि लगभग <b>365.2422 दिन</b> लगते हैं। हर चार साल में एक दिन जोड़ने से हिसाब थोड़ा <b>ज़्यादा</b> हो जाता है, इसलिए हर 100 साल में एक लीप <b>छोड़ते</b> हैं — और हर 400 साल में वह छोड़ा हुआ वापस <b>जोड़</b> देते हैं।</li>
+      <li>नीचे कोई भी वर्ष डालकर देखो — निर्णय की तीनों सीढ़ियाँ एक-एक करके जलती हुई दिखेंगी।</li>
+    </ol>
+
+    <div class="mini">
+      <div class="mt">लीप वर्ष की जाँच-मशीन</div>
+      <div style="text-align:center;">
+        <span style="font-size:14px;color:var(--tx3)">वर्ष: </span>
+        <input type="number" id="lyIn" value="1900" inputmode="numeric" style="width:120px;background:var(--ink3);border:1px solid var(--line2);border-radius:10px;color:var(--tx);font-family:inherit;font-size:16px;font-weight:800;text-align:center;padding:9px 6px;outline:none">
+      </div>
+      <div class="tree">
+        <div class="tn" id="t1"><div class="ti">1</div><div>क्या यह वर्ष <b>4 से</b> पूरा कटता है?</div></div>
+        <div class="tn" id="t2"><div class="ti">2</div><div>क्या यह <b>सदी वर्ष</b> है (100 से कटता है)?</div></div>
+        <div class="tn" id="t3"><div class="ti">3</div><div>क्या यह <b>400 से</b> पूरा कटता है?</div></div>
+      </div>
+      <div class="leapres" id="lyRes"></div>
+      <div class="qbtns">
+        <button class="btn sm" data-ly="1900">1900</button>
+        <button class="btn sm" data-ly="2000">2000</button>
+        <button class="btn sm" data-ly="2024">2024</button>
+        <button class="btn sm" data-ly="2100">2100</button>
+        <button class="btn sm" data-ly="1947">1947</button>
+      </div>
+    </div>
+
+    <div class="warn"><b>परीक्षा का सबसे प्यारा जाल:</b> “1900 लीप वर्ष था” — यह <b>ग़लत</b> है। 1900 ÷ 4 = 475 (कटता है), पर 1900 ÷ 400 पूरा नहीं कटता। इसलिए 1900 साधारण वर्ष था, उसमें 1 ही विषम दिन था। वहीं <b>2000 लीप वर्ष था</b>, क्योंकि 2000 ÷ 400 = 5 पूरा कटता है।</div>
+  </div>
+</section>
+
+<!-- ============ पाठ 4 ============ -->
+<section class="lesson" id="p4">
+  <div class="lhead"><div class="lno">4</div><div>
+    <div class="lkicker">रट लो — पर समझकर</div>
+    <div class="ltitle">100, 200, 300, 400 वर्षों के विषम दिन</div>
+  </div></div>
+  <div class="lbody">
+    <ol class="pts">
+      <li>अब बड़ी छलाँग — <b>100 वर्षों में कुल कितने विषम दिन?</b> इसे एक बार खुद निकाल लो, फिर कभी संदेह नहीं रहेगा।</li>
+      <li>100 वर्षों में लीप वर्ष होते हैं: 4 से कटने वाले 25 वर्ष, पर उनमें से सदी वर्ष (जैसे 100वाँ) लीप नहीं होता — इसलिए <b>24 लीप वर्ष</b> और <b>76 साधारण वर्ष</b>।</li>
+      <li>कुल विषम दिन = (76 × 1) + (24 × 2) = 76 + 48 = <b>124</b>। अब 124 ÷ 7 = 17 हफ़्ते + <b>5 दिन</b>।</li>
+      <li>इसलिए <span class="fx">100 वर्ष = 5 विषम दिन</span></li>
+      <li>अब आगे आसान है — 200 वर्ष = 5 + 5 = 10 → 10 ÷ 7 का शेष = <span class="fx">3 विषम दिन</span></li>
+      <li>300 वर्ष = 5 × 3 = 15 → 15 ÷ 7 का शेष = <span class="fx">1 विषम दिन</span></li>
+      <li>400 वर्ष = 5 × 4 = 20, <b>पर यहाँ 400वाँ वर्ष लीप होता है</b> इसलिए एक दिन और जुड़ता है = 21 → 21 ÷ 7 का शेष = <span class="fx">0 विषम दिन</span></li>
+      <li>यही सबसे सुंदर बात है — <b>हर 400 वर्ष बाद कैलेंडर बिल्कुल वैसा का वैसा दोहरा जाता है।</b> 1 जनवरी 1601 और 1 जनवरी 2001 एक ही दिन पड़े थे।</li>
+    </ol>
+    <div class="grid g4">
+      <div class="stat"><span class="n">5</span><span class="c">100 वर्ष</span></div>
+      <div class="stat"><span class="n">3</span><span class="c">200 वर्ष</span></div>
+      <div class="stat"><span class="n">1</span><span class="c">300 वर्ष</span></div>
+      <div class="stat"><span class="n">0</span><span class="c">400 वर्ष</span></div>
+    </div>
+    <div class="aha"><b>याद रखने की खूँटी:</b> <b>5 – 3 – 1 – 0</b> — हर बार 2 घटता जाता है। 5, फिर 3, फिर 1, और आख़िर में 0। इतना ही याद रखना है।</div>
+  </div>
+</section>
+
+<!-- ============ पाठ 5 ============ -->
+<section class="lesson" id="p5">
+  <div class="lhead"><div class="lno">5</div><div>
+    <div class="lkicker">महीनों की गिनती</div>
+    <div class="ltitle">हर महीने के विषम दिन</div>
+  </div></div>
+  <div class="lbody">
+    <ol class="pts">
+      <li>महीने के विषम दिन निकालना बेहद आसान है — <b>महीने के दिनों को 7 से भाग दो, शेषफल ही विषम दिन है।</b></li>
+      <li>31 दिन वाला महीना → 31 ÷ 7 = 4 हफ़्ते + <b>3</b>। इसलिए हर 31-दिनी महीने के <b>3 विषम दिन</b>।</li>
+      <li>30 दिन वाला महीना → 30 ÷ 7 = 4 हफ़्ते + <b>2</b>। इसलिए <b>2 विषम दिन</b>।</li>
+      <li>फरवरी → साधारण वर्ष में 28 दिन = ठीक 4 हफ़्ते = <b>0 विषम दिन</b>; लीप वर्ष में 29 दिन = <b>1 विषम दिन</b>।</li>
+      <li>नीचे सारे महीनों के विषम दिन एक नज़र में हैं — पर इन्हें रटने की ज़रूरत नहीं, बस “31 वाला = 3, 30 वाला = 2, फरवरी = 0 या 1” याद रखो।</li>
+    </ol>
+    <div class="tiles" id="moTiles"></div>
+    <div class="aha"><b>ध्यान दो:</b> गणना करते समय हम <b>पूरे बीत चुके महीनों</b> के दिन जोड़ते हैं, और फिर उसमें <b>चालू महीने की तारीख</b> जोड़ देते हैं। पूरी गिनती एक साथ करके अंत में 7 से भाग देना सबसे कम ग़लती वाला तरीक़ा है — यही ऊपर की प्रयोगशाला करती है।</div>
+  </div>
+</section>
+
+<!-- ============ पाठ 6 ============ -->
+<section class="lesson" id="p6">
+  <div class="lhead"><div class="lno">6</div><div>
+    <div class="lkicker">असली हथियार</div>
+    <div class="ltitle">किसी भी तारीख का दिन — पूरी विधि</div>
+  </div></div>
+  <div class="lbody">
+    <ol class="pts">
+      <li>मान लो निकालना है: <b>15 अगस्त 1947 को कौन-सा दिन था?</b> विधि चार साफ़ कदमों की है।</li>
+      <li><b>कदम 1 — बीत चुके पूरे वर्ष अलग करो।</b> 1947 अभी चल रहा है, इसलिए पूरे बीते वर्ष = <b>1946</b>।</li>
+      <li><b>कदम 2 — 1946 को सदियों में तोड़ो।</b> 1946 = 1600 + 346। अब 1600 वर्ष = 4 × 400 वर्ष = <b>0 विषम दिन</b> (मुफ़्त में हट गए!)। बचे 346 = 300 वर्ष + 46 वर्ष।</li>
+      <li>300 वर्ष = <b>1 विषम दिन</b>। और 46 वर्षों में लीप वर्ष = 46 ÷ 4 = 11, साधारण = 35। विषम दिन = 35 + (11 × 2) = 57। कुल = 1 + 57 = 58 → 58 ÷ 7 का शेष = <b>2 विषम दिन</b>।</li>
+      <li><b>कदम 3 — 1947 में 15 अगस्त तक के दिन जोड़ो।</b> जनवरी 31 + फरवरी 28 + मार्च 31 + अप्रैल 30 + मई 31 + जून 30 + जुलाई 31 = 212, और + 15 = <b>227 दिन</b>। 227 ÷ 7 का शेष = <b>3 विषम दिन</b>।</li>
+      <li><b>कदम 4 — दोनों जोड़ो।</b> 2 + 3 = 5 विषम दिन। और कोड के हिसाब से <b>5 = शुक्रवार</b>।</li>
+      <li>इसीलिए <b>15 अगस्त 1947 शुक्रवार था</b>। ऊपर प्रयोगशाला में यही तारीख डालकर हर कदम और असली कैलेंडर दोनों मिला लो।</li>
+    </ol>
+    <div class="qbtns" style="justify-content:flex-start">
+      <button class="btn gold" data-date="15-8-1947">15 अगस्त 1947 — ऊपर देखो</button>
+      <button class="btn" data-date="26-1-1950">26 जनवरी 1950 आज़माओ</button>
+    </div>
+    <div class="warn"><b>सबसे आम भूल:</b> कदम 1 में पूरा 1947 गिन लेना। याद रखो — <b>चालू वर्ष कभी नहीं गिनते</b>, उससे <b>एक कम</b> गिनते हैं। और फरवरी के दिन उसी वर्ष के हिसाब से लेते हैं जिसका दिन पूछा गया है (1947 साधारण वर्ष था, इसलिए फरवरी 28)।</div>
+  </div>
+</section>
+
+<!-- ============ पाठ 7 ============ -->
+<section class="lesson" id="p7">
+  <div class="lhead"><div class="lno">7</div><div>
+    <div class="lkicker">परीक्षा-हॉल की रफ़्तार</div>
+    <div class="ltitle">तेज़ विधि — कोड लगाकर 15 सेकंड में</div>
+  </div></div>
+  <div class="lbody">
+    <ol class="pts">
+      <li>ऊपर वाली विधि पक्की है पर लंबी है। परीक्षा में यह <b>कोड-विधि</b> बहुत तेज़ पड़ती है। सूत्र यह है:</li>
+      <li><span class="fx">दिन = ( तारीख + महीना-कोड + YY + [YY ÷ 4] + सदी-कोड ) ÷ 7 का शेष</span></li>
+      <li>यहाँ <b>YY</b> = वर्ष के आख़िरी दो अंक, और <b>[YY ÷ 4]</b> = भागफल का पूर्णांक भाग (दशमलव छोड़ दो)।</li>
+      <li><b>महीना-कोड</b> क्रम से — जनवरी 0, फरवरी 3, मार्च 3, अप्रैल 6, मई 1, जून 4, जुलाई 6, अगस्त 2, सितंबर 5, अक्टूबर 0, नवंबर 3, दिसंबर 5। नीचे टाइलों में देख लो।</li>
+      <li><b>सदी-कोड</b> — 1600 व 2000 की सदी = 6, 1700 व 2100 की = 4, 1800 व 2200 की = 2, 1900 व 2300 की = 0। यानी <b>6 – 4 – 2 – 0</b> का सुंदर क्रम, जो हर 400 साल में दोहराता है।</li>
+      <li><b>एक ही अपवाद:</b> अगर वर्ष लीप हो और महीना <b>जनवरी या फरवरी</b> हो, तो अंत में <b>1 घटा दो</b>।</li>
+      <li>आज़माओ — 15 अगस्त 1947: 15 + 2 + 47 + 11 + 0 = 75। और 75 ÷ 7 का शेष = <b>5 = शुक्रवार</b>। वही उत्तर, पर पंद्रह सेकंड में।</li>
+    </ol>
+    <div class="tiles" id="cdTiles"></div>
+    <div class="mini">
+      <div class="mt">तेज़ विधि — ऊपर वाली तारीख पर लगी हुई</div>
+      <div id="fastBox" style="font-size:14.6px;color:var(--tx2);"></div>
+    </div>
+    <div class="aha"><b>दोनों विधियाँ हमेशा एक ही उत्तर देंगी</b> — ऊपर प्रयोगशाला में तारीख बदलकर देखो, यह डिब्बा भी साथ-साथ बदलेगा और उत्तर वही आएगा। जिस विधि में हाथ बैठ जाए, वही परीक्षा में इस्तेमाल करना।</div>
+  </div>
+</section>
+
+<!-- ============ पाठ 8 ============ -->
+<section class="lesson" id="p8">
+  <div class="lhead"><div class="lno">8</div><div>
+    <div class="lkicker">पक्का सवाल</div>
+    <div class="ltitle">कैलेंडर कब दोहराता है?</div>
+  </div></div>
+  <div class="lbody">
+    <ol class="pts">
+      <li>दो वर्षों का कैलेंडर तभी एक जैसा होगा जब <b>दोनों का पहला दिन एक हो</b> और <b>दोनों एक ही जाति के हों</b> (दोनों साधारण या दोनों लीप)।</li>
+      <li>साधारण वर्ष में 1 विषम दिन जुड़ता है, लीप वर्ष में 2। कैलेंडर दोहराने के लिए कुल विषम दिन <b>7 का गुणक</b> बनने चाहिए।</li>
+      <li>इससे एक बहुत काम का पैटर्न निकलता है — साधारण वर्षों के लिए अंतर आमतौर पर <b>+6, +11, या +11</b> वर्ष होता है, इस पर निर्भर करते हुए कि लीप वर्ष बीच में कितने पड़ते हैं।</li>
+      <li><b>लीप वर्ष का कैलेंडर आमतौर पर 28 वर्ष बाद दोहराता है</b> — जैसे 2024 का कैलेंडर 2052 में वापस आएगा। (सदी-वर्ष के अपवाद बीच में पड़ें तो यह बदल सकता है।)</li>
+      <li>नीचे कोई भी वर्ष डालकर देखो — अगले तीन वर्ष जिनका कैलेंडर बिल्कुल वही होगा, गिनकर निकाल दिए जाएँगे।</li>
+    </ol>
+    <div class="mini">
+      <div class="mt">कैलेंडर दोहराव खोजो</div>
+      <div style="text-align:center;">
+        <span style="font-size:14px;color:var(--tx3)">वर्ष: </span>
+        <input type="number" id="rpIn" value="2024" inputmode="numeric" style="width:120px;background:var(--ink3);border:1px solid var(--line2);border-radius:10px;color:var(--tx);font-family:inherit;font-size:16px;font-weight:800;text-align:center;padding:9px 6px;outline:none">
+      </div>
+      <div id="rpRes" style="margin-top:12px;font-size:14.6px;color:var(--tx2);text-align:center;"></div>
+      <div class="qbtns">
+        <button class="btn sm" data-rp="2024">2024</button>
+        <button class="btn sm" data-rp="2023">2023</button>
+        <button class="btn sm" data-rp="1996">1996</button>
+        <button class="btn sm" data-rp="2001">2001</button>
+      </div>
+    </div>
+    <div class="aha"><b>रटने के बजाय:</b> परीक्षा में विकल्प दिए होते हैं। सबसे तेज़ तरीक़ा — दिए गए वर्ष से अगले वर्षों के <b>विषम दिन जोड़ते जाओ</b>, और जहाँ जोड़ 7 का गुणक बने, वही उत्तर है।</div>
+  </div>
+</section>
+
+<!-- ============ पाठ 9 ============ -->
+<section class="lesson" id="p9">
+  <div class="lhead"><div class="lno">9</div><div>
+    <div class="lkicker">अब बारी आपकी</div>
+    <div class="ltitle">अभ्यास — हर सवाल ऊपर मिलाकर देखो</div>
+  </div></div>
+  <div class="lbody">
+    <div class="q">
+      <div class="qt">15 अगस्त 1947 को कौन-सा दिन था? <em>बहु-बार पूछा गया</em></div>
+      <div class="qb">
+        <button class="btn sm" data-sol>उत्तर देखें</button>
+        <button class="btn sm gold" data-date="15-8-1947">ऊपर मिलाओ</button>
+      </div>
+      <div class="sol">
+        <span class="s">1946 वर्षों के विषम दिन = 2</span>
+        <span class="s">1947 में 15 अगस्त तक 227 दिन → 227 ÷ 7 का शेष = 3</span>
+        <span class="s">कुल = 2 + 3 = 5</span>
+        <span class="s ans">5 = शुक्रवार</span>
+      </div>
+    </div>
+
+    <div class="q">
+      <div class="qt">26 जनवरी 1950 को कौन-सा दिन था?</div>
+      <div class="qb">
+        <button class="btn sm" data-sol>उत्तर देखें</button>
+        <button class="btn sm gold" data-date="26-1-1950">ऊपर मिलाओ</button>
+      </div>
+      <div class="sol">
+        <span class="s">1949 वर्षों के विषम दिन = 6</span>
+        <span class="s">1950 में 26 जनवरी तक 26 दिन → 26 ÷ 7 का शेष = 5</span>
+        <span class="s">कुल = 6 + 5 = 11 → 11 ÷ 7 का शेष = 4</span>
+        <span class="s ans">4 = गुरुवार</span>
+      </div>
+    </div>
+
+    <div class="q">
+      <div class="qt">क्या वर्ष 2100 एक लीप वर्ष होगा?</div>
+      <div class="qb">
+        <button class="btn sm" data-sol>उत्तर देखें</button>
+        <button class="btn sm gold" data-ly="2100">जाँच-मशीन में देखो</button>
+      </div>
+      <div class="sol">
+        <span class="s">2100 ÷ 4 = 525 — कटता है ✓</span>
+        <span class="s">पर 2100 सदी वर्ष है, इसलिए 400 का नियम लगेगा।</span>
+        <span class="s">2100 ÷ 400 पूरा नहीं कटता ✗</span>
+        <span class="s ans">नहीं — 2100 लीप वर्ष नहीं होगा</span>
+      </div>
+    </div>
+
+    <div class="q">
+      <div class="qt">400 लगातार वर्षों में कुल कितने विषम दिन होते हैं?</div>
+      <div class="qb"><button class="btn sm" data-sol>उत्तर देखें</button></div>
+      <div class="sol">
+        <span class="s">100 वर्ष = 5 विषम दिन, इसलिए 400 वर्ष = 20</span>
+        <span class="s">पर 400वाँ वर्ष स्वयं लीप होता है → 1 दिन और = 21</span>
+        <span class="s">21 ÷ 7 का शेष = 0</span>
+        <span class="s ans">0 विषम दिन — कैलेंडर हूबहू दोहरा जाता है</span>
+      </div>
+    </div>
+
+    <div class="q">
+      <div class="qt">यदि 6 मार्च 2005 सोमवार था, तो 6 मार्च 2004 कौन-सा दिन था?</div>
+      <div class="qb">
+        <button class="btn sm" data-sol>उत्तर देखें</button>
+        <button class="btn sm gold" data-date="6-3-2004">ऊपर मिलाओ</button>
+      </div>
+      <div class="sol">
+        <span class="s">2004 लीप वर्ष है और 6 मार्च 29 फरवरी के <b>बाद</b> आता है — इसलिए 6 मार्च 2004 से 6 मार्च 2005 के बीच 366 दिन पड़े।</span>
+        <span class="s">366 ÷ 7 का शेष = 2 → 2 दिन का खिसकाव</span>
+        <span class="s">सोमवार से 2 दिन पीछे = शनिवार</span>
+        <span class="s ans">शनिवार</span>
+      </div>
+    </div>
+
+    <div class="q">
+      <div class="qt">2024 का कैलेंडर अगली बार किस वर्ष दोहराएगा?</div>
+      <div class="qb">
+        <button class="btn sm" data-sol>उत्तर देखें</button>
+        <button class="btn sm gold" data-rp="2024">मशीन में देखो</button>
+      </div>
+      <div class="sol">
+        <span class="s">2024 एक लीप वर्ष है, और लीप वर्ष का कैलेंडर सामान्यतः 28 वर्ष बाद लौटता है।</span>
+        <span class="s ans">2052</span>
+      </div>
+    </div>
+
+    <div class="q">
+      <div class="qt">1 जनवरी 2008 मंगलवार था। 1 जनवरी 2009 कौन-सा दिन होगा?</div>
+      <div class="qb">
+        <button class="btn sm" data-sol>उत्तर देखें</button>
+        <button class="btn sm gold" data-date="1-1-2009">ऊपर मिलाओ</button>
+      </div>
+      <div class="sol">
+        <span class="s">2008 लीप वर्ष है → उसमें 2 विषम दिन</span>
+        <span class="s">मंगलवार + 2 दिन = गुरुवार</span>
+        <span class="s ans">गुरुवार</span>
+        <span class="s" style="color:#ffc9c9">जाल: 2008 लीप है यह भूलकर 1 ही जोड़ देना — तब ग़लत उत्तर बुधवार आ जाता।</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ पाठ 10 ============ -->
+<section class="lesson" id="p10">
+  <div class="lhead"><div class="lno">10</div><div>
+    <div class="lkicker">परीक्षा से पाँच मिनट पहले</div>
+    <div class="ltitle">सूत्र-पत्र — बस इतना ही याद रखना है</div>
+  </div></div>
+  <div class="lbody">
+    <div class="sheet">
+      <div class="sf"><div class="sfi">🧮</div><div><div class="sfx">विषम दिन = कुल दिन ÷ 7 का शेष</div><div class="sfd">पूरे हफ़्ते बेकार, सिर्फ़ बचे दिन काम के</div></div></div>
+      <div class="sf"><div class="sfi">📅</div><div><div class="sfx">साधारण वर्ष = 1 · लीप वर्ष = 2</div><div class="sfd">365 = 52×7 + 1 · 366 = 52×7 + 2</div></div></div>
+      <div class="sf"><div class="sfi">🔁</div><div><div class="sfx">लीप = ÷4, पर सदी वर्ष = ÷400</div><div class="sfd">2000 लीप ✓ · 1900 लीप नहीं ✗</div></div></div>
+      <div class="sf"><div class="sfi">💯</div><div><div class="sfx">100 · 200 · 300 · 400 = 5 · 3 · 1 · 0</div><div class="sfd">हर 400 वर्ष बाद कैलेंडर दोहराता है</div></div></div>
+      <div class="sf"><div class="sfi">🗓</div><div><div class="sfx">31 दिन = 3 · 30 दिन = 2 · फरवरी = 0/1</div><div class="sfd">महीने के दिन ÷ 7 का शेष</div></div></div>
+      <div class="sf"><div class="sfi">🔢</div><div><div class="sfx">0 र · 1 सो · 2 मं · 3 बु · 4 गु · 5 शु · 6 श</div><div class="sfd">दिनों का कोड — रविवार से शुरू</div></div></div>
+      <div class="sf"><div class="sfi">⚡</div><div><div class="sfx">तारीख + महीना-कोड + YY + [YY÷4] + सदी-कोड</div><div class="sfd">सदी-कोड 6-4-2-0 · लीप के जन/फर में −1</div></div></div>
+      <div class="sf"><div class="sfi">♻️</div><div><div class="sfx">लीप वर्ष का कैलेंडर = 28 वर्ष बाद</div><div class="sfd">साधारण के लिए +6 / +11 का पैटर्न</div></div></div>
+    </div>
+    <div class="aha" style="margin-top:16px;"><b>आख़िरी बात, आदित्य:</b> इस अध्याय में असल में सिर्फ़ <b>एक ही विचार</b> है — <b>7 से भाग देकर बचा हुआ देखो</b>। साल हो, सदी हो, महीना हो या तारीख — सब पर वही एक कैंची चलती है। बाक़ी सब उसी की सजावट है।</div>
+  </div>
+</section>
+
+<footer>
+  <b>बोधि क्लासेस</b> · अवधारणा की स्पष्टता, अभ्यास की निरंतरता<br>
+  कैलेंडर अध्याय · CSAT / SSC / UPSSSC / UPPCS
+</footer>
+
+</div>
+<button class="fab" id="fab" title="ऊपर जाओ">📅</button>
+
+<script>
+(function(){
+"use strict";
+
+var MONTHS = ["जनवरी","फरवरी","मार्च","अप्रैल","मई","जून","जुलाई","अगस्त","सितंबर","अक्टूबर","नवंबर","दिसंबर"];
+var MSHORT = ["जन","फर","मार्च","अप्रै","मई","जून","जुला","अग","सित","अक्तू","नव","दिस"];
+var DAYS = ["रविवार","सोमवार","मंगलवार","बुधवार","गुरुवार","शुक्रवार","शनिवार"];
+var DSHORT = ["रवि","सोम","मंगल","बुध","गुरु","शुक्र","शनि"];
+var MCODE = [0,3,3,6,1,4,6,2,5,0,3,5];
+
+function isLeap(y){ return (y % 400 === 0) || (y % 4 === 0 && y % 100 !== 0); }
+function mlen(m, y){ return [31, isLeap(y) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][m - 1]; }
+function daysBefore(m, y){ var s = 0; for(var i = 1; i < m; i++) s += mlen(i, y); return s; }
+
+/* बीत चुके Y वर्षों के विषम दिन */
+function oddYears(Y){
+  if(Y <= 0) return 0;
+  var rem = Y % 400;
+  var od = [0, 5, 3, 1][Math.floor(rem / 100)];
+  var r = rem % 100;
+  od += r + Math.floor(r / 4);
+  return ((od % 7) + 7) % 7;
+}
+function dayIndex(d, m, y){
+  return (oddYears(y - 1) + daysBefore(m, y) + d) % 7;
+}
+function centuryCode(y){
+  // 1600/2000 → 6, 1700/2100 → 4, 1800/2200 → 2, 1900/2300 → 0
+  var c = Math.floor(y / 100) % 4;   // 16%4=0, 17%4=1, 18%4=2, 19%4=3, 20%4=0
+  return [6, 4, 2, 0][c];
+}
+function fastDay(d, m, y){
+  var YY = y % 100;
+  var sum = d + MCODE[m - 1] + YY + Math.floor(YY / 4) + centuryCode(y);
+  if(isLeap(y) && m <= 2) sum -= 1;
+  return { sum: sum, day: ((sum % 7) + 7) % 7, YY: YY, q: Math.floor(YY / 4), cc: centuryCode(y), mc: MCODE[m - 1] };
+}
+
+/* ================= प्रयोगशाला ================= */
+var D = 15, M = 8, Y = 1947;
+var vD = document.getElementById("vD"), vY = document.getElementById("vY"),
+    monthsBox = document.getElementById("months"),
+    ansDate = document.getElementById("ansDate"), ansDay = document.getElementById("ansDay"),
+    stepsBox = document.getElementById("stepsBox"), wdots = document.getElementById("wdots"),
+    calTitle = document.getElementById("calTitle"), calGrid = document.getElementById("calGrid"),
+    fastBox = document.getElementById("fastBox");
+
+for(var mi = 0; mi < 12; mi++){
+  var b = document.createElement("button");
+  b.className = "mo"; b.type = "button";
+  b.setAttribute("data-m", mi + 1);
+  b.textContent = MSHORT[mi];
+  monthsBox.appendChild(b);
+}
+for(var di = 0; di < 7; di++){
+  var w = document.createElement("div");
+  w.className = "wd"; w.setAttribute("data-w", di);
+  w.innerHTML = "<span>" + di + "</span>";
+  w.title = DAYS[di];
+  wdots.appendChild(w);
+}
+
+function clampDate(){
+  if(Y < 1600) Y = 1600;
+  if(Y > 2400) Y = 2400;
+  if(M < 1) M = 1; if(M > 12) M = 12;
+  var L = mlen(M, Y);
+  if(D < 1) D = L;
+  if(D > L) D = 1;
+}
+
+function render(){
+  clampDate();
+  vD.textContent = D;
+  if(document.activeElement !== vY) vY.value = Y;
+  [].forEach.call(monthsBox.children, function(x){
+    x.classList.toggle("act", parseInt(x.getAttribute("data-m"), 10) === M);
+  });
+
+  var idx = dayIndex(D, M, Y);
+  ansDate.textContent = D + " " + MONTHS[M - 1] + " " + Y;
+  ansDay.textContent = DAYS[idx];
+
+  [].forEach.call(wdots.children, function(x, i){
+    x.classList.toggle("on", i === idx);
+    x.innerHTML = "<span>" + DSHORT[i] + "</span>";
+    x.style.fontSize = "10.5px";
+  });
+
+  /* कदम-दर-कदम */
+  var Yp = Y - 1;
+  var block400 = Math.floor((Yp % 400 === 0 ? Yp : Yp) / 400) * 400;
+  var rem = Yp % 400;
+  var c100 = Math.floor(rem / 100);
+  var r = rem % 100;
+  var leaps = Math.floor(r / 4);
+  var ordinary = r - leaps;
+  var odC = [0, 5, 3, 1][c100];
+  var odR = r + leaps;
+  var odYears = ((odC + odR) % 7 + 7) % 7;
+  var dBefore = daysBefore(M, Y);
+  var dTotal = dBefore + D;
+  var odDays = dTotal % 7;
+  var grand = (odYears + odDays) % 7;
+
+  var rows = [
+    ["बीत चुके पूरे वर्ष", "<b>" + Y + " − 1 = " + Yp + "</b> वर्ष (चालू वर्ष कभी नहीं गिनते)", ""],
+    ["सदियों में तोड़ो", Yp + " = <b>" + block400 + "</b> (=" + (block400 / 400) + "×400, विषम दिन 0) + <b>" + rem + "</b>", ""],
+    [(c100 * 100) + " वर्ष", c100 === 0 ? "कोई पूरी सदी नहीं बची" : "<b>" + (c100 * 100) + " वर्ष</b> का कोड", odC + " विषम"],
+    ["बचे " + r + " वर्ष", "<b>" + ordinary + "</b> साधारण (×1) + <b>" + leaps + "</b> लीप (×2) = " + ordinary + " + " + (leaps * 2) + " = <b>" + odR + "</b>", (odR % 7) + " विषम"],
+    ["वर्षों का कुल", "(" + odC + " + " + odR + ") ÷ 7 का शेष", odYears + " विषम"],
+    [Y + " के दिन", "1 जन से " + (M > 1 ? MONTHS[M - 2] + " तक " + dBefore + " दिन + " : "") + D + " = <b>" + dTotal + " दिन</b>", odDays + " विषम"],
+  ];
+  var html = "";
+  for(var i = 0; i < rows.length; i++){
+    html += "<div class='st'><div class='sn'>" + (i + 1) + "</div><div class='sx'><b>" + rows[i][0] + "</b><br>" + rows[i][1] + "</div>" +
+            (rows[i][2] ? "<div class='sv'>" + rows[i][2] + "</div>" : "") + "</div>";
+  }
+  html += "<div class='total'><span>" + odYears + " + " + odDays + " = " + (odYears + odDays) + " → ÷7 का शेष</span><span>" + grand + " = " + DAYS[grand] + "</span></div>";
+  stepsBox.innerHTML = html;
+
+  /* असली कैलेंडर */
+  calTitle.textContent = MONTHS[M - 1] + " " + Y + (isLeap(Y) ? "  ·  लीप वर्ष" : "");
+  var first = dayIndex(1, M, Y);
+  var L = mlen(M, Y);
+  var g = "";
+  for(var h = 0; h < 7; h++) g += "<div class='hd" + (h === 0 ? " sun" : "") + "'>" + DSHORT[h] + "</div>";
+  for(var e = 0; e < first; e++) g += "<div class='cell empty'></div>";
+  for(var dd = 1; dd <= L; dd++){
+    var col = (first + dd - 1) % 7;
+    g += "<div class='cell" + (col === 0 ? " sun" : "") + (dd === D ? " hit" : "") + "'>" + dd + "</div>";
+  }
+  calGrid.innerHTML = g;
+
+  /* तेज़ विधि */
+  var f = fastDay(D, M, Y);
+  fastBox.innerHTML =
+    "<div style='text-align:center;font-weight:700;color:#fff;margin-bottom:6px'>" + D + " " + MONTHS[M - 1] + " " + Y + "</div>" +
+    "तारीख <b style='color:var(--gold-hi)'>" + D + "</b> + महीना-कोड <b style='color:var(--gold-hi)'>" + f.mc + "</b> + YY <b style='color:var(--gold-hi)'>" + f.YY + "</b> + [YY÷4] <b style='color:var(--gold-hi)'>" + f.q + "</b> + सदी-कोड <b style='color:var(--gold-hi)'>" + f.cc + "</b>" +
+    (isLeap(Y) && M <= 2 ? " − 1 <span style='color:#ffc9c9'>(लीप वर्ष का जन/फर)</span>" : "") +
+    "<br>= <b style='color:#fff'>" + f.sum + "</b> → " + f.sum + " ÷ 7 का शेष = <b style='color:var(--green);font-size:17px'>" + f.day + " = " + DAYS[f.day] + "</b>";
+}
+
+document.addEventListener("click", function(ev){
+  var t = ev.target.closest ? ev.target : null;
+  if(!t) return;
+  var b;
+  if((b = t.closest("[data-d]"))){ D += parseInt(b.getAttribute("data-d"), 10); render(); return; }
+  if((b = t.closest("[data-y]"))){ Y += parseInt(b.getAttribute("data-y"), 10); render(); return; }
+  if((b = t.closest("[data-m]"))){ M = parseInt(b.getAttribute("data-m"), 10); render(); return; }
+  if((b = t.closest("[data-date]"))){
+    var p = b.getAttribute("data-date").split("-");
+    D = parseInt(p[0], 10); M = parseInt(p[1], 10); Y = parseInt(p[2], 10);
+    render();
+    document.getElementById("lab").scrollIntoView({ behavior:"smooth", block:"start" });
+    return;
+  }
+});
+vY.addEventListener("input", function(){
+  var v = parseInt(vY.value, 10);
+  if(!isNaN(v) && v >= 1600 && v <= 2400){ Y = v; render(); }
+});
+document.getElementById("todayBtn").addEventListener("click", function(){
+  var n = new Date();
+  D = n.getDate(); M = n.getMonth() + 1; Y = n.getFullYear();
+  render();
+  document.getElementById("lab").scrollIntoView({ behavior:"smooth", block:"start" });
+});
+document.getElementById("fab").addEventListener("click", function(){
+  document.getElementById("lab").scrollIntoView({ behavior:"smooth", block:"start" });
+});
+
+/* ================= पाठ 1 — विषम दिन मशीन ================= */
+var omIn = document.getElementById("omIn"), omWeeks = document.getElementById("omWeeks"), omRes = document.getElementById("omRes");
+function omShow(){
+  var n = parseInt(omIn.value, 10);
+  if(isNaN(n) || n < 0) n = 0;
+  if(n > 400) n = 400;
+  var full = Math.floor(n / 7), rem = n % 7;
+  var h = "";
+  for(var a = 0; a < full; a++){
+    var s = "<div class='wk'>";
+    for(var b2 = 0; b2 < 7; b2++) s += "<i></i>";
+    s += "</div>";
+    h += s;
+  }
+  if(rem > 0){
+    var s2 = "<div class='wk rem'>";
+    for(var c = 0; c < rem; c++) s2 += "<i></i>";
+    s2 += "</div>";
+    h += s2;
+  }
+  omWeeks.innerHTML = h;
+  omRes.innerHTML = n + " ÷ 7 = <b>" + full + "</b> पूरे हफ़्ते + <b>" + rem + "</b> दिन बाक़ी<br>" +
+    "<span style='font-size:14px;color:var(--tx3)'>इसलिए विषम दिन = <b style='color:var(--green);font-size:17px'>" + rem + "</b>" +
+    (rem === 0 ? " — दिन बिल्कुल नहीं बदलेगा" : " — दिन " + rem + " कदम आगे खिसकेगा") + "</span>";
+}
+omIn.addEventListener("input", omShow); omShow();
+
+/* ================= पाठ 3 — लीप जाँच ================= */
+var lyIn = document.getElementById("lyIn"), lyRes = document.getElementById("lyRes");
+var T1 = document.getElementById("t1"), T2 = document.getElementById("t2"), T3 = document.getElementById("t3");
+function lyShow(){
+  var y = parseInt(lyIn.value, 10);
+  T1.className = "tn"; T2.className = "tn"; T3.className = "tn";
+  if(isNaN(y)){ lyRes.textContent = ""; return; }
+  var by4 = (y % 4 === 0), cent = (y % 100 === 0), by400 = (y % 400 === 0);
+  T1.className = "tn " + (by4 ? "yes" : "no");
+  T1.querySelector(".ti").textContent = by4 ? "✓" : "✗";
+  if(!by4){
+    T2.className = "tn"; T3.className = "tn";
+    T2.querySelector(".ti").textContent = "2"; T3.querySelector(".ti").textContent = "3";
+    lyRes.innerHTML = "<span style='color:#ffb0b0'>❌ " + y + " लीप वर्ष नहीं है</span><br><span style='font-size:13.5px;color:var(--tx3);font-weight:600'>4 से ही नहीं कटता — 1 विषम दिन</span>";
+    return;
+  }
+  T2.className = "tn " + (cent ? "yes" : "no");
+  T2.querySelector(".ti").textContent = cent ? "✓" : "✗";
+  if(!cent){
+    T3.className = "tn";
+    T3.querySelector(".ti").textContent = "3";
+    lyRes.innerHTML = "<span style='color:var(--ok)'>✅ " + y + " लीप वर्ष है</span><br><span style='font-size:13.5px;color:var(--tx3);font-weight:600'>4 से कटता है और सदी वर्ष भी नहीं — 2 विषम दिन</span>";
+    return;
+  }
+  T3.className = "tn " + (by400 ? "yes" : "no");
+  T3.querySelector(".ti").textContent = by400 ? "✓" : "✗";
+  lyRes.innerHTML = by400
+    ? "<span style='color:var(--ok)'>✅ " + y + " लीप वर्ष है</span><br><span style='font-size:13.5px;color:var(--tx3);font-weight:600'>सदी वर्ष है और 400 से भी कटता है — 2 विषम दिन</span>"
+    : "<span style='color:#ffb0b0'>❌ " + y + " लीप वर्ष नहीं है</span><br><span style='font-size:13.5px;color:var(--tx3);font-weight:600'>सदी वर्ष है पर 400 से नहीं कटता — यही सबसे बड़ा जाल!</span>";
+}
+lyIn.addEventListener("input", lyShow);
+document.addEventListener("click", function(ev){
+  var b = ev.target.closest ? ev.target.closest("[data-ly]") : null;
+  if(!b) return;
+  lyIn.value = b.getAttribute("data-ly"); lyShow();
+  document.getElementById("p3").scrollIntoView({ behavior:"smooth", block:"start" });
+});
+lyShow();
+
+/* ================= पाठ 5 — महीनों की टाइलें ================= */
+var moTiles = document.getElementById("moTiles");
+var mt = "";
+for(var k = 0; k < 12; k++){
+  var days = [31,28,31,30,31,30,31,31,30,31,30,31][k];
+  var odd = days % 7;
+  mt += "<div class='tile'><div class='tn2'>" + MSHORT[k] + "</div><div class='tv'>" + odd + (k === 1 ? "/1" : "") + "</div><div class='tn2' style='font-size:11px'>" + days + (k === 1 ? "/29" : "") + " दिन</div></div>";
+}
+moTiles.innerHTML = mt;
+
+/* ================= पाठ 7 — कोड टाइलें ================= */
+var cdTiles = document.getElementById("cdTiles");
+var ct = "";
+for(var k2 = 0; k2 < 12; k2++){
+  ct += "<div class='tile'><div class='tn2'>" + MSHORT[k2] + "</div><div class='tv'>" + MCODE[k2] + "</div></div>";
+}
+cdTiles.innerHTML = ct;
+
+/* ================= पाठ 8 — कैलेंडर दोहराव ================= */
+var rpIn = document.getElementById("rpIn"), rpRes = document.getElementById("rpRes");
+function calSig(y){ return dayIndex(1, 1, y) + "|" + (isLeap(y) ? "L" : "O"); }
+function rpShow(){
+  var y = parseInt(rpIn.value, 10);
+  if(isNaN(y) || y < 1600 || y > 2300){ rpRes.textContent = "1600 से 2300 के बीच का वर्ष डालो।"; return; }
+  var sig = calSig(y), found = [];
+  for(var n = y + 1; n <= y + 250 && found.length < 3; n++){
+    if(calSig(n) === sig) found.push(n);
+  }
+  var txt = "<b style='color:#fff'>" + y + "</b> (" + (isLeap(y) ? "लीप वर्ष" : "साधारण वर्ष") + ", 1 जनवरी = " + DAYS[dayIndex(1,1,y)] + ")<br>" +
+            "<span style='color:var(--tx3);font-size:13.5px'>इसका कैलेंडर हूबहू दोहराएगा:</span><br>";
+  for(var f = 0; f < found.length; f++){
+    txt += "<span style='display:inline-block;margin:5px 4px 0;background:rgba(217,174,95,.14);border:1px solid rgba(217,174,95,.4);color:var(--gold-hi);border-radius:9px;padding:5px 12px;font-weight:800'>" +
+           found[f] + " <span style='font-size:12px;font-weight:600;color:var(--tx3)'>(+" + (found[f] - y) + ")</span></span>";
+  }
+  rpRes.innerHTML = txt;
+}
+rpIn.addEventListener("input", rpShow);
+document.addEventListener("click", function(ev){
+  var b = ev.target.closest ? ev.target.closest("[data-rp]") : null;
+  if(!b) return;
+  rpIn.value = b.getAttribute("data-rp"); rpShow();
+  document.getElementById("p8").scrollIntoView({ behavior:"smooth", block:"start" });
+});
+rpShow();
+
+/* ================= अभ्यास ================= */
+document.addEventListener("click", function(ev){
+  var b = ev.target.closest ? ev.target.closest("[data-sol]") : null;
+  if(!b) return;
+  var sol = b.closest(".q").querySelector(".sol");
+  sol.classList.toggle("show");
+  b.textContent = sol.classList.contains("show") ? "उत्तर छिपाएँ" : "उत्तर देखें";
+});
+
+render();
+})();
+</script>
+<script defer src="/assets/bodhi-watermark.js"></script>
+</body>
+</html>
