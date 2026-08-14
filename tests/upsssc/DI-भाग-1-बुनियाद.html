@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>भाग 1 · आँकड़े पढ़ना शुरू से — UPSSSC PET का DI</title>
+<meta name="description" content="UPSSSC PET के 20 अंक वाले DI (तालिका और ग्राफ) की बुनियाद — बिल्कुल शुरू से, आसान हिन्दी में।">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Noto+Sans+Devanagari:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#faf7f0; --card:#fffefb; --ink:#191b21; --ink2:#4a4f5e; --ink3:#7d8394; --ink4:#a7adbb;
+  --line:#e8e2d5; --line2:#d6cdb9;
+  --saf:#cf5314; --saf-l:#fff1e6; --saf-d:#94390a;
+  --ind:#33359e; --ind-l:#eeeeff;
+  --teal:#0a6d5f; --teal-l:#e2f5f0;
+  --rose:#b31340; --rose-l:#ffe9ef;
+  --gold:#95690a; --gold-l:#fdf3d8;
+  --vio:#6c31a8; --vio-l:#f5ecff;
+  --sh:0 1px 0 var(--line2), 0 10px 26px -20px rgba(25,27,33,.55);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);
+  font-family:'Noto Sans Devanagari',system-ui,'Nirmala UI',sans-serif;
+  font-size:17.5px;line-height:1.88;letter-spacing:.1px;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Tiro Devanagari Hindi','Noto Sans Devanagari',serif;font-weight:400;line-height:1.38}
+.mono,.num{font-family:'JetBrains Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.wrap{max-width:880px;margin:0 auto;padding:0 18px}
+section{padding:52px 0;scroll-margin-top:64px}
+p{margin:12px 0}
+b,strong{font-weight:700}
+.eng{color:var(--ink3);font-weight:600;font-size:.86em}
+
+/* नेविगेशन */
+#bar{position:fixed;top:0;left:0;height:3px;width:0;z-index:99;background:linear-gradient(90deg,var(--saf),var(--rose),var(--ind))}
+nav{position:sticky;top:0;z-index:60;background:rgba(250,247,240,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:5px;align-items:center;overflow-x:auto;padding:9px 14px;scrollbar-width:none}
+nav .wrap::-webkit-scrollbar{display:none}
+nav a{flex:0 0 auto;font-size:13.5px;font-weight:600;color:var(--ink2);text-decoration:none;padding:6px 12px;border-radius:99px;white-space:nowrap}
+nav a:hover,nav a.on{background:var(--ink);color:#fff}
+.bm{flex:0 0 auto;font-family:'Tiro Devanagari Hindi',serif;font-size:15.5px;color:var(--saf);padding-right:10px;border-right:1px solid var(--line);margin-right:5px;white-space:nowrap}
+
+/* कवर */
+.cover{padding:44px 0 8px}
+.kick{display:inline-block;font-size:12px;font-weight:800;letter-spacing:1.6px;color:var(--saf-d);background:var(--saf-l);border:1px solid #f4cdae;padding:6px 14px;border-radius:99px}
+.cover h1{font-size:clamp(32px,6.6vw,54px);margin:20px 0 0;letter-spacing:-.5px}
+.cover h1 em{font-style:normal;color:var(--saf)}
+.lede{font-size:clamp(17px,2.2vw,20px);color:var(--ink2);margin-top:16px}
+.kvrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:26px}
+.kv{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:var(--sh)}
+.kv b{display:block;font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:700;color:var(--ind);line-height:1.1}
+.kv span{display:block;font-size:13px;color:var(--ink3);margin-top:4px;font-weight:600;line-height:1.55}
+
+/* शीर्षक */
+.sh{display:flex;align-items:flex-start;gap:14px;margin-bottom:4px}
+.chip{flex:0 0 auto;width:42px;height:42px;border-radius:13px;display:grid;place-items:center;
+  font-family:'Tiro Devanagari Hindi',serif;font-size:19px;color:#fff;background:var(--ink)}
+h2{font-size:clamp(25px,4.2vw,36px);letter-spacing:-.3px}
+h3{font-size:clamp(19px,2.9vw,25px);margin:26px 0 4px}
+h4{font-size:19px}
+.sub{color:var(--ink3);font-size:14.5px;margin-top:2px;font-weight:600}
+.rule{height:1px;background:linear-gradient(90deg,var(--line2) 0,var(--line2) 80px,var(--line) 80px,transparent);margin:14px 0 24px}
+
+/* बॉक्स */
+.card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:20px;box-shadow:var(--sh)}
+.box{border-left:4px solid;border-radius:0 13px 13px 0;padding:14px 17px;font-size:16px;margin:16px 0}
+.tip{border-color:var(--teal);background:var(--teal-l)}
+.trap{border-color:var(--rose);background:var(--rose-l)}
+.note{border-color:var(--gold);background:var(--gold-l)}
+.new{border-color:var(--vio);background:var(--vio-l)}
+.mark{background:#ffeeb0;padding:1px 5px;border-radius:4px;font-weight:700}
+.big-say{font-family:'Tiro Devanagari Hindi',serif;font-size:clamp(21px,3.4vw,28px);line-height:1.55;
+  background:var(--ink);color:#fff8ea;border-radius:20px;padding:24px 24px;margin:22px 0;text-align:center}
+.big-say em{font-style:normal;color:#ffcf6b}
+
+/* तालिका */
+.tblwrap{overflow-x:auto;margin:14px 0;-webkit-overflow-scrolling:touch;border-radius:14px}
+.dt{width:100%;border-collapse:separate;border-spacing:0;font-size:15px;background:#fff;
+  border:1px solid var(--line2);border-radius:14px;overflow:hidden;min-width:min(100%,460px)}
+.dt th,.dt td{padding:10px 11px;text-align:center;border-bottom:1px solid var(--line);border-right:1px solid var(--line)}
+.dt tr:last-child td,.dt tr:last-child th{border-bottom:none}
+.dt th:last-child,.dt td:last-child{border-right:none}
+.dt thead th{background:var(--ink);color:#fff;font-weight:700;font-size:13.5px;border-color:#2c2f38;line-height:1.4}
+.dt tbody th{background:#f8f4e9;font-weight:700;font-size:14px;white-space:nowrap;text-align:right}
+.dt td{font-family:'JetBrains Mono',monospace;font-weight:600}
+.dt td.hl{background:#ffe7cd;color:var(--saf-d);font-weight:800}
+.dt td.hl2{background:#e6e5ff;color:var(--ind);font-weight:800}
+.unit{display:inline-block;font-size:13px;font-weight:700;color:var(--rose);background:var(--rose-l);
+  border:1px dashed #f5bfcd;border-radius:9px;padding:5px 12px}
+
+/* प्रश्न कार्ड */
+.qc{background:var(--card);border:1px solid var(--line);border-radius:18px;margin:22px 0;box-shadow:var(--sh);overflow:hidden}
+.qc>.head{background:#f6f2e7;border-bottom:1px solid var(--line);padding:13px 18px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.qn{font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:700;color:#fff;background:var(--ink);border-radius:8px;padding:3px 10px}
+.pat{font-size:12.5px;font-weight:700;color:var(--vio);background:var(--vio-l);border:1px solid #e2d0f5;border-radius:99px;padding:3px 11px}
+.qc>.body{padding:18px}
+.qt{font-size:17.5px;font-weight:600;line-height:1.75}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+@media(max-width:560px){.opts{grid-template-columns:1fr}}
+.opt{border:1.5px solid var(--line2);background:#fff;border-radius:11px;padding:9px 13px;font-size:15.5px;font-weight:600}
+.opt i{font-style:normal;font-family:'JetBrains Mono',monospace;color:var(--ink3);font-weight:700;margin-right:7px}
+.opt.right{border-color:var(--teal);background:var(--teal-l);color:var(--teal)}
+.opt.right i{color:var(--teal)}
+.solve{margin-top:18px;border-top:1px dashed var(--line2);padding-top:8px}
+.slab{font-size:12px;font-weight:800;letter-spacing:1.5px;color:var(--saf-d);margin-bottom:4px}
+ol.steps{list-style:none;counter-reset:s;margin:6px 0 0}
+ol.steps li{counter-increment:s;position:relative;padding:11px 0 11px 42px;border-bottom:1px dashed var(--line);font-size:16.5px;line-height:1.8}
+ol.steps li:last-child{border-bottom:none}
+ol.steps li:before{content:counter(s);position:absolute;left:0;top:12px;width:28px;height:28px;border-radius:9px;
+  background:#eef0fa;color:var(--ind);border:1px solid #d8daf0;display:grid;place-items:center;
+  font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700}
+.calc{display:inline-block;font-family:'JetBrains Mono',monospace;font-weight:700;background:var(--ink);color:#ffd98a;
+  border-radius:9px;padding:4px 11px;margin:4px 2px;font-size:15px}
+.ansbar{margin-top:16px;background:linear-gradient(120deg,var(--teal),#12907d);color:#fff;border-radius:13px;
+  padding:12px 18px;font-weight:700;font-size:17.5px}
+.trapbar{margin-top:11px;background:var(--rose-l);border:1px solid #f5c3d0;border-radius:13px;padding:12px 16px;font-size:15.5px}
+.trapbar b{color:var(--rose)}
+
+/* चित्र */
+.fig{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--sh);margin:16px 0}
+.fig svg{width:100%;height:auto;display:block;overflow:visible}
+.fig .cap{font-size:14px;color:var(--ink3);font-weight:600;text-align:center;margin-top:9px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;font-size:13.5px;font-weight:700;margin-top:10px;color:var(--ink2)}
+.legend i{display:inline-block;width:13px;height:13px;border-radius:4px;margin-right:6px;vertical-align:-2px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+@media(max-width:760px){.g2{grid-template-columns:1fr}}
+
+/* बटन */
+.btn{font-family:inherit;font-size:14.5px;font-weight:700;padding:9px 15px;border-radius:11px;
+  border:1.5px solid var(--line2);background:#fff;cursor:pointer;color:var(--ink2);transition:.15s}
+.btn:hover{border-color:var(--saf);color:var(--saf-d)}
+.btn.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.pill{font-size:12.5px;font-weight:700;color:var(--ink3);background:#f2ede1;border-radius:99px;padding:5px 12px}
+
+footer{padding:40px 0 60px;text-align:center;color:var(--ink3);font-size:14px;border-top:1px solid var(--line);margin-top:20px}
+footer b{color:var(--saf-d)}
+.next{display:block;background:var(--ink);color:#fff;border-radius:18px;padding:20px 22px;text-decoration:none;margin-top:24px}
+.next span{display:block;font-size:12.5px;font-weight:800;letter-spacing:1.4px;color:#ffcf6b}
+.next b{display:block;font-family:'Tiro Devanagari Hindi',serif;font-weight:400;font-size:24px;margin-top:4px;color:#fff}
+.next i{display:block;font-style:normal;font-size:15px;color:#c9c5ba;margin-top:5px}
+
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<nav><div class="wrap">
+  <span class="bm">भाग 1 · बुनियाद</span>
+  <a href="#s1">DI है क्या</a>
+  <a href="#s2">PET में कहाँ</a>
+  <a href="#s3">चार रूप</a>
+  <a href="#s4">खंड</a>
+  <a href="#s5">तीन कदम</a>
+  <a href="#s6">छह नियम</a>
+  <a href="#s7">पैटर्न कैसे बदला</a>
+  <a href="#s8">पूरा सेट हल</a>
+  <a href="#s9">भिन्न</a>
+  <a href="#s10">बारह जाल</a>
+  <a href="#s11">अभ्यास</a>
+  <a href="#s12">अंतिम पन्ना</a>
+</div></nav>
+
+<header class="cover"><div class="wrap">
+  <span class="kick">भाग 1 · बुनियाद</span>
+  <h1>आँकड़े पढ़ना — <em>बिल्कुल शुरू से</em></h1>
+  <p class="lede">UPSSSC PET में 20 अंक सिर्फ़ तालिका और ग्राफ़ पढ़ने के हैं। इसमें याद कुछ नहीं करना पड़ता — सब कुछ पेपर पर सामने लिखा होता है। यह पन्ना मानकर चलता है कि आपने आज तक DI का एक भी प्रश्न नहीं देखा।</p>
+  <div class="kvrow">
+    <div class="kv"><b>20</b><span>अंक — सिर्फ़ तालिका और ग्राफ़ से</span></div>
+    <div class="kv"><b>4</b><span>सेट — 2 तालिका, 2 ग्राफ़</span></div>
+    <div class="kv"><b>5</b><span>प्रश्न — हर एक सेट पर</span></div>
+    <div class="kv"><b>0</b><span>चीज़ें — जो रटनी पड़ें</span></div>
+  </div>
+</div></header>
+
+<!-- ══════════ 1 ══════════ -->
+<section id="s1"><div class="wrap">
+  <div class="sh"><div class="chip">१</div><div>
+    <h2>DI है क्या — दो मिनट में</h2>
+    <div class="sub">नाम डरावना है, काम आसान</div>
+  </div></div>
+  <div class="rule"></div>
+
+  <p><b>DI का पूरा नाम है Data Interpretation</b> — हिन्दी में <b>आँकड़ों का निर्वचन और विश्लेषण</b>। नाम सुनकर लगता है कोई बड़ा विषय होगा। असल में इसका मतलब सिर्फ़ इतना है —</p>
+
+  <div class="big-say">आपको एक <em>तालिका</em> या एक <em>ग्राफ़</em> दिया जाएगा,<br>और उसी में से पाँच सवालों के जवाब निकालने होंगे।</div>
+
+  <p>ध्यान दीजिए — <b>सारे आँकड़े सामने दिए रहते हैं।</b> कुछ याद नहीं करना। कोई तारीख़, कोई नाम, कोई सूत्र नहीं। जो कुछ चाहिए, वह उसी चित्र में लिखा है। इसीलिए पूरे पेपर में यही 20 अंक सबसे पक्के हैं — और इसीलिए इन्हें छोड़ देना सबसे बड़ा घाटा है।</p>
+
+  <h3>गणित कितना लगता है?</h3>
+  <p>बस इतना — <b>जोड़, घटाव, गुणा, भाग और प्रतिशत।</b> संख्याएँ भी दो-तीन अंकों की होती हैं। कक्षा छह-सात का गणित काफ़ी है।</p>
+
+  <div class="box trap"><b>तो कठिनाई कहाँ है?</b> कठिनाई गणित में नहीं, <b>पढ़ने में</b> है। दस में से नौ ग़लतियाँ इसलिए होती हैं कि छात्र ने प्रश्न ग़लत समझा — गणना ग़लत नहीं की। इसीलिए यह पूरा पन्ना गणना सिखाने पर नहीं, <b>यह तय करना</b> सिखाने पर टिका है कि करना क्या है।</p></div>
+
+  <h3>एक छोटा-सा उदाहरण — अभी करके देखिए</h3>
+  <p>नीचे दो दुकानों की दो महीने की बिक्री दी है। बस इतनी-सी तालिका।</p>
+
+  <div class="tblwrap">
+  <table class="dt">
+    <thead><tr><th>दुकान</th><th>जनवरी</th><th>फरवरी</th></tr></thead>
+    <tbody>
+      <tr><th>दुकान A</th><td>40</td><td>60</td></tr>
+      <tr><th>दुकान B</th><td>50</td><td>50</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="qc">
+    <div class="head"><span class="qn">नमूना प्रश्न</span><span class="pat">सबसे आसान रूप</span></div>
+    <div class="body">
+      <div class="qt">फरवरी में दुकान A की बिक्री, दुकान B की बिक्री से कितने प्रतिशत अधिक है?</div>
+      <div class="opts">
+        <div class="opt"><i>a)</i> 10%</div>
+        <div class="opt right"><i>b)</i> 20%</div>
+        <div class="opt"><i>c)</i> 25%</div>
+        <div class="opt"><i>d)</i> 16.67%</div>
+        <div class="opt"><i>e)</i> उपर्युक्त में से कोई नहीं</div>
+      </div>
+      <div class="solve">
+        <div class="slab">हल</div>
+        <ol class="steps">
+          <li>तालिका में उँगली रखिए — फरवरी में A = <b>60</b>, B = <b>50</b>।</li>
+          <li>फ़र्क़ निकालिए — <span class="calc">60 − 50 = 10</span></li>
+          <li>अब सबसे ज़रूरी बात — <b>किससे तुलना है?</b> प्रश्न कहता है “B <b>से</b> कितना अधिक”। इसलिए नीचे <b>B</b> जाएगा, यानी 50।</li>
+          <li><span class="calc">10 ÷ 50 × 100 = 20%</span></li>
+        </ol>
+        <div class="ansbar">उत्तर — (b) 20%</div>
+        <div class="trapbar"><b>यहीं जाल है।</b> अगर आप नीचे 60 रख देते तो 16.67% आता — और देखिए, वह विकल्प (d) में रखा ही हुआ है। पेपर बनाने वाला जानता है कि छात्र यहीं फिसलेगा। <b>“से / का” के ठीक पहले वाला नाम नीचे जाता है</b> — यह एक बात पकड़ लीजिए, आधा DI यहीं निकल जाएगा।</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box tip">बस — DI का पूरा खेल यही है। बाक़ी सब इसी का बड़ा रूप है। आगे हम यही काम बड़ी तालिकाओं, दंड आलेखों और पाई चार्ट पर करेंगे।</div>
+</div></section>
+
+<!-- ══════════ 2 ══════════ -->
+<section id="s2"><div class="wrap">
+  <div class="sh"><div class="chip" style="background:var(--ind)">२</div><div>
+    <h2>PET में DI कहाँ से आता है</h2>
+    <div class="sub">पहले यह जान लीजिए, तैयारी का नक़्शा साफ़ हो जाएगा</div>
+  </div></div>
+  <div class="rule"></div>
+
+  <p>UPSSSC PET में कुल <b>100 प्रश्न, 100 अंक और 2 घंटे</b> होते हैं। हर ग़लत उत्तर पर <b>0.25 अंक</b> कटता है। इन 100 अंकों में से पूरे <b>20 अंक</b> सिर्फ़ आँकड़े पढ़ने के हैं —</p>
+
+  <div class="tblwrap">
+  <table class="dt">
+    <thead><tr><th>खंड</th><th>प्रश्न</th><th>अंक</th><th>रूप</th></tr></thead>
+    <tbody>
+      <tr><th>तालिका का निर्वचन एवं विश्लेषण</th><td>10</td><td class="hl">10</td><td>2 तालिकाएँ</td></tr>
+      <tr><th>ग्राफ़ का निर्वचन एवं विश्लेषण</th><td>10</td><td class="hl">10</td><td>2 ग्राफ़</td></tr>
+      <tr><th>कुल DI</th><td>20</td><td class="hl">20</td><td>4 सेट</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>“सेट” का मतलब क्या है</h3>
+  <p>पेपर में ये 20 प्रश्न बिखरे हुए नहीं आते। ये <b>चार गुच्छों</b> में आते हैं। एक गुच्छे को <b>सेट</b> कहते हैं —</p>
+
+  <div class="fig">
+    <svg viewBox="0 0 560 190" role="img" aria-label="एक सेट का ढाँचा">
+      <rect x="10" y="16" width="200" height="150" rx="14" fill="#fff1e6" stroke="#e6b78f" stroke-width="2"/>
+      <text x="110" y="52" text-anchor="middle" font-size="15" font-weight="700" fill="#94390a" font-family="Noto Sans Devanagari">एक तालिका</text>
+      <text x="110" y="76" text-anchor="middle" font-size="15" font-weight="700" fill="#94390a" font-family="Noto Sans Devanagari">या एक ग्राफ़</text>
+      <rect x="42" y="96" width="136" height="9" rx="4" fill="#e8b58d"/>
+      <rect x="42" y="114" width="136" height="9" rx="4" fill="#e8b58d"/>
+      <rect x="42" y="132" width="94" height="9" rx="4" fill="#e8b58d"/>
+      <path d="M222 91 L262 91" stroke="#7d8394" stroke-width="2.5"/>
+      <path d="M256 84 L266 91 L256 98 Z" fill="#7d8394"/>
+      <g font-family="Noto Sans Devanagari" font-size="14.5" font-weight="700" fill="#33359e">
+        <rect x="278" y="16" width="272" height="26" rx="8" fill="#eeeeff" stroke="#c9caf0"/><text x="292" y="34">प्रश्न 1</text>
+        <rect x="278" y="47" width="272" height="26" rx="8" fill="#eeeeff" stroke="#c9caf0"/><text x="292" y="65">प्रश्न 2</text>
+        <rect x="278" y="78" width="272" height="26" rx="8" fill="#eeeeff" stroke="#c9caf0"/><text x="292" y="96">प्रश्न 3</text>
+        <rect x="278" y="109" width="272" height="26" rx="8" fill="#eeeeff" stroke="#c9caf0"/><text x="292" y="127">प्रश्न 4</text>
+        <rect x="278" y="140" width="272" height="26" rx="8" fill="#eeeeff" stroke="#c9caf0"/><text x="292" y="158">प्रश्न 5</text>
+      </g>
+    </svg>
+    <div class="cap">एक चित्र, उसी पर पाँच प्रश्न — यही एक सेट है। ऐसे चार सेट आते हैं।</div>
+  </div>
+
+  <div class="box tip"><b>यह बात सोने की है।</b> चित्र को समझने में जो मेहनत लगती है, वह <b>एक बार</b> लगती है — और उससे <b>पाँच</b> प्रश्न खुलते हैं। इसलिए सेट को बीच में छोड़कर भागना सबसे बड़ा नुक़सान है। जो 40 सेकंड आपने चित्र समझने में लगाए, उन्हें पाँच बार वसूलिए।</div>
+
+  <div class="box note"><b>समय का हिसाब।</b> 100 प्रश्न, 120 मिनट — यानी औसतन 72 सेकंड प्रति प्रश्न। पर DI में हिसाब अलग है: एक सेट पर लगभग <b>4 से 5 मिनट</b> रखिए (पहले 40–50 सेकंड चित्र पढ़ने के, फिर हर प्रश्न 40–50 सेकंड)। चारों सेट मिलाकर लगभग 18–20 मिनट।</div>
+</div></section>
+
+<!-- ══════════ 3 ══════════ -->
+<section id="s3"><div class="wrap">
+  <div class="sh"><div class="chip" style="background:var(--teal)">३</div><div>
+    <h2>आँकड़े सिर्फ़ चार रूपों में आते हैं</h2>
+    <div class="sub">इन चार को पहचान लीजिए — पाँचवाँ कोई रूप नहीं है</div>
+  </div></div>
+  <div class="rule"></div>
+
+  <p>पेपर देखकर घबराहट इसलिए होती है कि हर सेट नया लगता है। असल में रूप सिर्फ़ चार हैं, और हर रूप को पढ़ने का <b>पहला काम</b> तय है। वह पहला काम कर लिया, तो बाक़ी अपने आप चलता है।</p>
+
+  <h3>रूप 1 · तालिका <span class="eng">(Table)</span></h3>
+  <div class="tblwrap">
+  <table class="dt">
+    <thead><tr><th>दुकान</th><th>जनवरी</th><th>फरवरी</th><th>मार्च</th></tr></thead>
+    <tbody>
+      <tr><th>A</th><td>40</td><td>60</td><td>55</td></tr>
+      <tr><th>B</th><td>50</td><td>50</td><td>70</td></tr>
+      <tr><th>C</th><td>30</td><td>45</td><td>65</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="box tip"><b>पहला काम —</b> पंक्तियाँ (बाएँ के नाम) और स्तंभ (ऊपर के नाम) ज़ोर से पढ़िए। कोई भी संख्या उठाने से पहले उँगली से पंक्ति और स्तंभ दोनों मिलाइए। और तालिका के ऊपर लिखी छोटी लाइन ज़रूर देखिए — “सैकड़ों में / हज़ारों में / दर्जन में”।</div>
+
+  <h3>रूप 2 · दंड आलेख <span class="eng">(Bar Graph)</span></h3>
+  <div class="fig">
+    <svg viewBox="0 0 460 210" role="img" aria-label="दंड आलेख का नमूना">
+      <g stroke="#e8e2d5"><line x1="46" y1="10" x2="450" y2="10"/><line x1="46" y1="50" x2="450" y2="50"/><line x1="46" y1="90" x2="450" y2="90"/><line x1="46" y1="130" x2="450" y2="130"/><line x1="46" y1="170" x2="450" y2="170"/></g>
+      <g font-family="JetBrains Mono" font-size="11" fill="#7d8394" text-anchor="end">
+        <text x="40" y="14">80</text><text x="40" y="54">60</text><text x="40" y="94">40</text><text x="40" y="134">20</text><text x="40" y="174">0</text></g>
+      <g fill="#cf5314">
+        <rect x="76" y="90" width="52" height="80" rx="5"/>
+        <rect x="176" y="40" width="52" height="130" rx="5"/>
+        <rect x="276" y="110" width="52" height="60" rx="5"/>
+        <rect x="376" y="60" width="52" height="110" rx="5"/></g>
+      <g font-family="JetBrains Mono" font-size="12.5" font-weight="700" fill="#191b21" text-anchor="middle">
+        <text x="102" y="83">40</text><text x="202" y="33">65</text><text x="302" y="103">30</text><text x="402" y="53">55</text></g>
+      <g font-family="Noto Sans Devanagari" font-size="13.5" font-weight="700" fill="#4a4f5e" text-anchor="middle">
+        <text x="102" y="192">गाँव A</text><text x="202" y="192">गाँव B</text><text x="302" y="192">गाँव C</text><text x="402" y="192">गाँव D</text></g>
+    </svg>
+    <div class="cap">गेहूँ का उत्पादन (क्विंटल में)</div>
+  </div>
+  <div class="box tip"><b>पहला काम —</b> हर दंड का सिरा देखकर उसकी संख्या हाशिये पर लिख लीजिए। दंड आलेख में आँख धोखा देती है — दो दंड बराबर से दिखते हैं पर बराबर होते नहीं। संख्या लिख लेने पर धोखा ख़त्म।</div>
+
+  <h3>रूप 3 · रेखा आलेख <span class="eng">(Line Graph)</span></h3>
+  <div class="fig">
+    <svg viewBox="0 0 460 200" role="img" aria-label="रेखा आलेख का नमूना">
+      <g stroke="#e8e2d5"><line x1="46" y1="25" x2="450" y2="25"/><line x1="46" y1="65" x2="450" y2="65"/><line x1="46" y1="105" x2="450" y2="105"/><line x1="46" y1="145" x2="450" y2="145"/></g>
+      <g font-family="JetBrains Mono" font-size="11" fill="#7d8394" text-anchor="end">
+        <text x="40" y="29">600</text><text x="40" y="69">400</text><text x="40" y="109">200</text><text x="40" y="149">0</text></g>
+      <polyline fill="none" stroke="#33359e" stroke-width="3" stroke-linejoin="round" points="86,105 176,55 266,85 356,35 431,65"/>
+      <g fill="#fff" stroke="#33359e" stroke-width="3">
+        <circle cx="86" cy="105" r="5.5"/><circle cx="176" cy="55" r="5.5"/><circle cx="266" cy="85" r="5.5"/><circle cx="356" cy="35" r="5.5"/><circle cx="431" cy="65" r="5.5"/></g>
+      <g font-family="JetBrains Mono" font-size="12" font-weight="700" fill="#33359e" text-anchor="middle">
+        <text x="86" y="94">200</text><text x="176" y="44">450</text><text x="266" y="74">300</text><text x="356" y="24">550</text><text x="431" y="54">400</text></g>
+      <g font-family="JetBrains Mono" font-size="12.5" font-weight="700" fill="#4a4f5e" text-anchor="middle">
+        <text x="86" y="170">2020</text><text x="176" y="170">2021</text><text x="266" y="170">2022</text><text x="356" y="170">2023</text><text x="431" y="170">2024</text></g>
+    </svg>
+    <div class="cap">एक कारखाने का उत्पादन (टन में)</div>
+  </div>
+  <div class="box tip"><b>पहला काम —</b> रेखा-आलेख में हर बिंदु की संख्या पहले लिख लीजिए। और यह देखिए कि रेखा एक है या दो-तीन। तीन रेखाएँ हों तो घबराइए मत — बारह संख्याएँ ही तो हैं, उन्हें तुरंत एक छोटी तालिका में उतार लीजिए।</div>
+
+  <h3>रूप 4 · पाई चार्ट <span class="eng">(Pie Chart)</span></h3>
+  <div class="fig">
+    <div class="g2" style="align-items:center">
+      <svg viewBox="0 0 160 160" role="img" aria-label="पाई चार्ट का नमूना" style="max-width:230px;margin:0 auto">
+        <circle cx="80" cy="80" r="50" fill="none" stroke="#cf5314" stroke-width="28" stroke-dasharray="94.25 314.16" stroke-dashoffset="0" transform="rotate(-90 80 80)"/>
+        <circle cx="80" cy="80" r="50" fill="none" stroke="#33359e" stroke-width="28" stroke-dasharray="78.54 314.16" stroke-dashoffset="-94.25" transform="rotate(-90 80 80)"/>
+        <circle cx="80" cy="80" r="50" fill="none" stroke="#0a6d5f" stroke-width="28" stroke-dasharray="78.54 314.16" stroke-dashoffset="-172.79" transform="rotate(-90 80 80)"/>
+        <circle cx="80" cy="80" r="50" fill="none" stroke="#95690a" stroke-width="28" stroke-dasharray="62.83 314.16" stroke-dashoffset="-251.33" transform="rotate(-90 80 80)"/>
+        <g font-family="JetBrains Mono" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">
+          <text x="120" y="55">30%</text><text x="103" y="129">25%</text><text x="36" y="107">25%</text><text x="51" y="44">20%</text></g>
+        <text x="80" y="76" text-anchor="middle" font-size="10.5" font-weight="700" fill="#7d8394" font-family="Noto Sans Devanagari">कुल</text>
+        <text x="80" y="95" text-anchor="middle" font-size="17" font-weight="700" fill="#191b21" font-family="JetBrains Mono">7,200</text>
+      </svg>
+      <div>
+        <div class="legend" style="justify-content:flex-start">
+          <span><i style="background:#cf5314"></i>जनवरी 30%</span>
+          <span><i style="background:#33359e"></i>फरवरी 25%</span>
+        </div>
+        <div class="legend" style="justify-content:flex-start;margin-top:6px">
+          <span><i style="background:#0a6d5f"></i>मार्च 25%</span>
+          <span><i style="background:#95690a"></i>अप्रैल 20%</span>
+        </div>
+        <p style="font-size:15.5px;color:var(--ink2);margin-top:12px">बीच में कुल संख्या लिखी रहती है, और हर टुकड़ा उसका हिस्सा बताता है।</p>
+      </div>
+    </div>
+  </div>
+  <div class="box tip"><b>पहला काम —</b> पाई में हिस्सा प्रतिशत में मिलता है, संख्या में नहीं। इसलिए सबसे पहले <b>1% निकाल लीजिए</b>। यहाँ कुल 7,200 है, तो 1% = 72। अब कोई भी टुकड़ा एक ही गुणा में संख्या बन जाएगा — जनवरी 30% = 72 × 30 = 2,160।</div>
+
+  <div class="box new"><b>और एक बात।</b> हाल के पेपरों में कभी-कभी दो रूप एक ही सेट में आ जाते हैं — जैसे ऊपर पाई से महीने का हिस्सा और साथ में एक छोटी तालिका से उस महीने का अनुपात। घबराने की बात नहीं: <b>पहले पाई से संख्या बनाइए, फिर तालिका से बाँटिए।</b> दो कदम, दोनों आसान।</div>
+</div></section>
+
+<!-- ══════════ 4 ══════════ -->
+<section id="s4"><div class="wrap">
+  <div class="sh"><div class="chip" style="background:var(--saf)">४</div><div>
+    <h2>एक बात, जो पूरा DI खोल देती है</h2>
+    <div class="sub">इसे छोड़कर आगे मत जाइए</div>
+  </div></div>
+  <div class="rule"></div>
+
+  <p>छात्र DI को तीन अलग-अलग विषय समझकर पढ़ते हैं — <b>अनुपात</b> अलग, <b>प्रतिशत</b> अलग, <b>भिन्न</b> अलग। यही सबसे बड़ी ग़लती है।</p>
+
+  <div class="big-say">ये तीनों एक ही चीज़ हैं।<br>तीनों <em>खंड गिनने</em> के तीन नाम हैं।</div>
+
+  <p>तस्वीर यह बनाइए — हर संख्या को <b>खंडों (ईंटों) का ढेर</b> मान लीजिए। मान लीजिए ढेर A में 5 खंड हैं और ढेर B में 4।</p>
+
+  <ol class="steps" style="margin-top:6px">
+    <li><b>अनुपात</b> बताता है कि दोनों ढेरों में कितने-कितने खंड हैं — <span class="calc">5 : 4</span></li>
+    <li><b>प्रतिशत</b> बताता है कि एक ढेर दूसरे के मुक़ाबले कितना है — A, B का <span class="calc">125%</span></li>
+    <li><b>भिन्न</b> बताता है कि एक ढेर पूरे का कितना हिस्सा है — A कुल का <span class="calc">5/9</span></li>
+  </ol>
+
+  <p style="margin-top:14px">तीनों एक ही तस्वीर से निकले। नीचे उसे अपने हाथ से चलाकर देखिए — खंड बदलिए और देखिए कि सारे उत्तर <b>अपने आप</b> बदल जाते हैं, बिना एक भी सूत्र लगाए।</p>
+
+  <div class="card" style="margin-top:16px">
+    <div class="slab">छूकर देखिए</div>
+    <p style="font-size:15.5px;color:var(--ink2);margin-top:2px">नीचे के बटनों से A और B के खंड घटाइए-बढ़ाइए।</p>
+    <div class="btnrow" id="kPre"></div>
+    <div class="btnrow" style="align-items:center;margin-top:4px;gap:14px">
+      <span style="display:inline-flex;align-items:center;gap:7px;white-space:nowrap">
+        <span style="font-size:14px;font-weight:700;color:var(--saf-d)">ढेर A</span>
+        <button class="btn" data-d="a-1" aria-label="A घटाइए">−</button>
+        <span class="mono" id="kA" style="font-size:20px;font-weight:700;color:var(--saf-d);min-width:24px;text-align:center">5</span>
+        <button class="btn" data-d="a+1" aria-label="A बढ़ाइए">+</button>
+      </span>
+      <span style="display:inline-flex;align-items:center;gap:7px;white-space:nowrap">
+        <span style="font-size:14px;font-weight:700;color:var(--ind)">ढेर B</span>
+        <button class="btn" data-d="b-1" aria-label="B घटाइए">−</button>
+        <span class="mono" id="kB" style="font-size:20px;font-weight:700;color:var(--ind);min-width:24px;text-align:center">4</span>
+        <button class="btn" data-d="b+1" aria-label="B बढ़ाइए">+</button>
+      </span>
+    </div>
+    <div id="kBlocks" style="margin-top:14px"></div>
+    <div id="kRead" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:9px;margin-top:14px"></div>
+    <div class="box tip" id="kSay" style="margin-bottom:0"></div>
+  </div>
+
+  <div class="box note" style="margin-top:20px"><b>अब पूरे DI का सबसे कीमती वाक्य।</b> A में 5 खंड, B में 4 — फ़र्क़ <b>1 खंड</b>। वही एक खंड, B के 4 खंडों के मुक़ाबले <b>25%</b> है, पर A के 5 खंडों के मुक़ाबले <b>20%</b>। <span class="mark">फ़र्क़ नहीं बदला — तुलना का ढेर बदल गया।</span> बस इतनी-सी बात है, और इसी पर DI के आधे प्रश्न टिके हैं।</div>
+
+  <div class="card" style="border:2px dashed var(--line2);background:#fffdf6;margin-top:18px">
+    <div class="slab">यहाँ रुकिए · ख़ुद करके देखिए</div>
+    <p style="font-size:16.5px;font-weight:600;margin:6px 0 10px">किसी कक्षा में लड़कों और लड़कियों का अनुपात 7 : 5 है। लड़कियाँ, लड़कों से कितने प्रतिशत कम हैं? और लड़कियाँ पूरी कक्षा का कितना प्रतिशत हैं?</p>
+    <button class="btn" data-reveal="r1">उत्तर देखिए</button>
+    <div class="box tip" id="r1" style="display:none">
+      खंड गिनिए — लड़के <b>7</b>, लड़कियाँ <b>5</b>, कुल <b>12</b>। फ़र्क़ <b>2 खंड</b>।<br>
+      <b>लड़कों से कितनी कम:</b> तुलना लड़कों से है, तो नीचे 7 → <span class="calc">2 ÷ 7 = 28.57% कम</span><br>
+      <b>पूरी कक्षा का कितना:</b> नीचे कुल 12 → <span class="calc">5 ÷ 12 = 41.67%</span><br>
+      एक ही तस्वीर से दोनों उत्तर निकल आए। बदला सिर्फ़ <b>नीचे वाला ढेर</b>।
+    </div>
+  </div>
+</div></section>
+
+<!-- ══════════ 5 ══════════ -->
+<section id="s5"><div class="wrap">
+  <div class="sh"><div class="chip" style="background:var(--vio)">५</div><div>
+    <h2>हर प्रश्न पर यही तीन कदम</h2>
+    <div class="sub">नज़र · निशाना · नाप — इसी क्रम में, हर बार</div>
+  </div></div>
+  <div class="rule"></div>
+
+  <p>सीधे गणना में कूदने वाला छात्र सिर्फ़ समय नहीं गँवाता — वह अक्सर <b>ग़लत सवाल</b> हल कर बैठता है। इसलिए यह क्रम याद रखिए।</p>
+
+  <div class="g3" style="margin-top:18px">
+    <div class="card" style="border-top:5px solid var(--saf)">
+      <div class="pill">कदम 1 · पूरे सेट पर एक बार · ~40 सेकंड</div>
+      <h3 style="margin:8px 0 2px">नज़र</h3>
+      <p style="font-size:15.5px;color:var(--ink2)">अभी कोई गणना नहीं। सिर्फ़ देखना —</p>
+      <ol class="steps" style="font-size:15px">
+        <li>पंक्तियाँ क्या हैं, स्तंभ क्या हैं? नाम <b>ज़ोर से पढ़िए</b>।</li>
+        <li>इकाई क्या है — सैकड़ों, हज़ारों, क्विंटल, दर्जन?</li>
+        <li>“कुल” की पंक्ति दी है? कोई ख़ाना ख़ाली है?</li>
+        <li>चित्र एक है या दो (तालिका + ग्राफ़ दोनों)?</li>
+      </ol>
+    </div>
+    <div class="card" style="border-top:5px solid var(--ind)">
+      <div class="pill">कदम 2 · हर प्रश्न पर · ~10 सेकंड</div>
+      <h3 style="margin:8px 0 2px">निशाना</h3>
+      <p style="font-size:15.5px;color:var(--ink2)">तय कीजिए कि करना क्या है —</p>
+      <ol class="steps" style="font-size:15px">
+        <li>सिर्फ़ दो चीज़ें उठाइए — <b>ऊपर कौन</b> और <b>नीचे कौन</b>।</li>
+        <li>काम पहचानिए: औसत / अनुपात / प्रतिशत / अंतर / क्रम।</li>
+        <li>इन शब्दों पर उँगली रखिए — “मिलाकर”, “क्रमशः”, “की तुलना में”, “में से”, “तीसरा सबसे”।</li>
+        <li>क्या प्रश्न किसी ऐसी चीज़ की बात कर रहा है जो चित्र में है ही नहीं?</li>
+      </ol>
+    </div>
+    <div class="card" style="border-top:5px solid var(--teal)">
+      <div class="pill">कदम 3 · हर प्रश्न पर · ~30 सेकंड</div>
+      <h3 style="margin:8px 0 2px">नाप</h3>
+      <p style="font-size:15.5px;color:var(--ink2)">अब गणना, और वह भी सबसे छोटी —</p>
+      <ol class="steps" style="font-size:15px">
+        <li>खंडों में सोचिए। अनुपात दिया हो तो अक्सर संख्या निकालने की ज़रूरत ही नहीं पड़ती।</li>
+        <li>लंबा भाग मत दीजिए — <b>10% की ईंट</b> से गिनिए (नियम 2 में है)।</li>
+        <li>इकाई दोबारा जाँचिए, <b>फिर</b> विकल्प देखिए।</li>
+        <li>“मिलता-जुलता” विकल्प देखकर मत रुकिए — पूरी गणना कीजिए।</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="box trap"><b>एक चेतावनी।</b> अगर आपका उत्तर विकल्पों में नहीं मिल रहा, तो सबसे पहले <b>गणना दोबारा मत कीजिए — प्रश्न दोबारा पढ़िए।</b> दस में से नौ बार ग़लती पढ़ने में हुई होती है, गणित में नहीं।</div>
+</div></section>
+
+<!-- ══════════ 6 ══════════ -->
+<section id="s6"><div class="wrap">
+  <div class="sh"><div class="chip" style="background:var(--gold)">६</div><div>
+    <h2>छह नियम — इतने ही काफ़ी हैं</h2>
+    <div class="sub">हर नियम के साथ एक तस्वीर · परीक्षा में सूत्र नहीं, तस्वीर याद आएगी</div>
+  </div></div>
+  <div class="rule"></div>
+  <p>पूरे DI में गिनती के छह हालात आते हैं। हर हालात का एक पक्का इलाज है। इन छह को पहचान लीजिए — सातवाँ हालात आता ही नहीं।</p>
+
+  <!-- नियम 1 -->
+  <div class="card" style="margin-top:22px;border-top:5px solid var(--saf)">
+    <div class="pill">नियम 1 · बुनियाद · सबसे ज़रूरी</div>
+    <h3 style="margin:8px 0 2px">तराजू — “का / से” वाला नीचे बैठता है</h3>
+    <p style="font-size:15.5px;color:var(--ink2)">DI की सत्तर प्रतिशत ग़लतियाँ यहीं रुक जाती हैं।</p>
+    <div class="big-say" style="font-size:clamp(17px,2.8vw,22px);padding:18px">जिस नाम के <em>तुरंत बाद</em> “का” / “से” / “की तुलना में” आए —<br>वही संख्या <em>नीचे</em> जाएगी।</div>
+    <p style="font-size:15.5px">अंग्रेज़ी में यही काम <b>of</b> और <b>than</b> करते हैं। और PET का पेपर दोनों भाषाओं में एक साथ आता है, इसलिए दोनों पहचानिए।</p>
+
+    <h4 style="margin-top:18px">तीन वाक्य, तीन बार यही नियम</h4>
+    <div class="tblwrap">
+    <table class="dt">
+      <thead><tr><th>प्रश्न का वाक्य</th><th>ऊपर</th><th>नीचे</th><th>उत्तर</th></tr></thead>
+      <tbody>
+        <tr><th style="text-align:left;white-space:normal">जुलाई की बिक्री, मार्च की बिक्री <span class="mark">से</span> कितने % अधिक?</th><td>320 − 240 = 80</td><td class="hl2">240</td><td>33.33%</td></tr>
+        <tr><th style="text-align:left;white-space:normal">दुकान P की बिक्री, दुकान Q की बिक्री <span class="mark">का</span> कितना % है?</th><td>320</td><td class="hl2">288</td><td>111.11%</td></tr>
+        <tr><th style="text-align:left;white-space:normal">अप्रैल की मशीनें, कुल मशीनों <span class="mark">का</span> कितना % हैं?</th><td>2,160</td><td class="hl2">7,200</td><td>30%</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="box trap"><b>जाल —</b> पहले वाक्य में अगर आप नीचे 320 रख देते, तो 25% आता — और 25% विकल्प में ज़रूर रखा होगा। दूसरे वाक्य में उत्तर 100 से ऊपर आया; यही इशारा है कि आधार सही पकड़ा गया, क्योंकि ऊपर वाली संख्या बड़ी थी।</div>
+    <div class="box note"><b>एक नया मोड़ जो अब आने लगा है।</b> कभी-कभी वाक्य ऐसा होता है — “दुकानदार को मिक्सर पर <b>उसके अंकित मूल्य का 10%</b> लाभ मिलता है।” आमतौर पर लाभ लागत पर होता है, पर यहाँ वाक्य साफ़ कह रहा है “अंकित मूल्य का”। तो नीचे अंकित मूल्य जाएगा, लागत नहीं। <b>वाक्य जो कहे वही मानिए, आदत जो कहे वह नहीं।</b></div>
+  </div>
+
+  <!-- नियम 2 -->
+  <div class="card" style="margin-top:22px;border-top:5px solid var(--gold)">
+    <div class="pill">नियम 2 · गति</div>
+    <h3 style="margin:8px 0 2px">10% की ईंट — लंबा भाग मत दीजिए</h3>
+    <p style="font-size:15.5px;color:var(--ink2)">परीक्षा में सवाल यह नहीं है कि “बिल्कुल सही उत्तर क्या है”। सवाल यह है कि “<b>पाँच विकल्पों में से कौन-सा</b>”।</p>
+    <div class="big-say" style="font-size:clamp(17px,2.8vw,22px);padding:18px">नीचे वाली संख्या का 10% निकालिए — वह हुई <em>एक ईंट</em>।<br>अब ईंटें जोड़ते जाइए जब तक ऊपर वाली संख्या तक न पहुँच जाएँ।</div>
+
+    <h4 style="margin-top:16px">उदाहरण — 504 है 420 का कितने प्रतिशत?</h4>
+    <ol class="steps">
+      <li>420 की एक ईंट = <span class="calc">42</span></li>
+      <li>दस ईंट = 420 → यानी <span class="calc">100%</span> हो गया, और अभी 84 बाक़ी है।</li>
+      <li>बचा हुआ 84 = दो ईंट और → <span class="calc">+20%</span></li>
+      <li>कुल <span class="calc">120%</span> — बिना एक भी भाग दिए।</li>
+    </ol>
+
+    <h4 style="margin-top:16px">दूसरा उदाहरण — 86 है 234 का कितने प्रतिशत?</h4>
+    <ol class="steps">
+      <li>234 की एक ईंट = <span class="calc">23.4</span></li>
+      <li>तीन ईंट = 70.2 → <span class="calc">30%</span> पार, अभी 15.8 बाक़ी।</li>
+      <li>आधी ईंट (5%) = 11.7 → अब <span class="calc">35%</span>, बचा 4.1।</li>
+      <li>यानी उत्तर <b>35% और 40% के बीच</b> है। विकल्प देखिए — इतना ही काफ़ी है। (असली उत्तर 36.75%)</li>
+    </ol>
+    <div class="box note"><b>ईंट कब छोड़ दें —</b> जब विकल्प बहुत पास-पास हों, जैसे 33.5 / 34.6 / 35.3। तब एक दशमलव तक ठीक-ठीक निकालिए। पर जब विकल्प दूर-दूर हों (जैसे 21% / 27% / 66% / 78%), तब ईंट से मोटा अंदाज़ा ही उत्तर पकड़ा देता है।</div>
+  </div>
+
+  <!-- नियम 3 -->
+  <div class="card" style="margin-top:22px;border-top:5px solid var(--ind)">
+    <div class="pill">नियम 3 · मध्यम · बहुत आता है</div>
+    <h3 style="margin:8px 0 2px">सीढ़ी — “से कम / और ऊपर” वाली तालिका सीधी नहीं होती</h3>
+    <p style="font-size:15.5px;color:var(--ink2)">ऐसी तालिका को <b>संचयी</b> <span class="eng">(Cumulative)</span> कहते हैं। इसे बिना घटाए हल करेंगे तो हर उत्तर ग़लत आएगा।</p>
+
+    <p style="margin-top:12px">“30 से कम अंक वाले 66 छात्र” का मतलब यह <b>नहीं</b> कि 30 से 39 के बीच 66 छात्र हैं। इसका मतलब है — 0 से 29 तक के <b>सारे</b> छात्र मिलाकर 66। यानी हर आगे वाली संख्या में पीछे वाली पहले से जुड़ी हुई है।</p>
+
+    <div class="big-say" style="font-size:clamp(17px,2.8vw,22px);padding:18px">किसी एक पैड़ी के छात्र =<br><em>इस पैड़ी तक</em> − <em>पिछली पैड़ी तक</em></div>
+
+    <p style="font-size:15.5px"><b>पहचान कैसे करें:</b> संख्याएँ लगातार बढ़ती जा रही हैं, और आख़िरी संख्या कुल छात्रों के बराबर है — तो तालिका संचयी है। नीचे बटन दबाकर देखिए कि घटाने पर असली तस्वीर कैसे बदल जाती है।</p>
+
+    <div class="btnrow"><button class="btn on" id="stRe">जैसी दी गई है (संचयी)</button><button class="btn" id="stGo">घटाकर असली तस्वीर</button></div>
+    <div id="stG"></div>
+    <div class="box tip" id="stA" style="margin-bottom:0"></div>
+  </div>
+
+  <!-- नियम 4 -->
+  <div class="card" style="margin-top:22px;border-top:5px solid var(--teal)">
+    <div class="pill">नियम 4 · मध्यम</div>
+    <h3 style="margin:8px 0 2px">बाल्टी — “शामिल हुए / छोड़कर गए” को जोड़ते चलिए</h3>
+    <p style="font-size:15.5px;color:var(--ink2)">जब हर साल कुछ लोग जुड़ते हैं और कुछ जाते हैं, तब किसी एक साल की संख्या जानने के लिए <b>शुरू से</b> हिसाब जोड़ना पड़ता है।</p>
+    <div class="big-say" style="font-size:clamp(17px,2.8vw,22px);padding:18px">उस वर्ष की संख्या = <em>शुरुआती संख्या</em> + <em>अब तक जुड़े</em> − <em>अब तक गए</em></div>
+    <p style="font-size:15.5px">एक बाल्टी सोचिए — ऊपर से नल चालू है (लोग जुड़े), नीचे छेद है (लोग गए)। पानी का स्तर जानने के लिए सिर्फ़ इस साल का नल नहीं, <b>पहले दिन से अब तक</b> का हिसाब चाहिए। शुरुआत में 4,000 कर्मचारी थे —</p>
+    <div class="tblwrap">
+    <table class="dt">
+      <thead><tr><th>वर्ष</th><th>जुड़े</th><th>गए</th><th>वर्ष के अंत में</th></tr></thead>
+      <tbody>
+        <tr><th>2019</th><td>+600</td><td>−200</td><td>4,400</td></tr>
+        <tr><th>2020</th><td>+500</td><td>−350</td><td>4,550</td></tr>
+        <tr><th>2021</th><td>+800</td><td>−550</td><td>4,800</td></tr>
+        <tr><th>2022</th><td>+700</td><td>−900</td><td class="hl">4,600</td></tr>
+        <tr><th>2023</th><td>+950</td><td>−600</td><td>4,950</td></tr>
+        <tr><th>2024</th><td>+850</td><td>−700</td><td>5,100</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="box trap"><b>जाल —</b> 2022 में शुद्ध बदलाव सिर्फ़ <b>−200</b> था, पर संख्या 4,600 है। जो छात्र सीधे “−200” उठा लेता है, वह मारा जाता है। <b>बाल्टी शुरू से भरी हुई थी</b> — यह भूलना ही सबसे आम भूल है।</div>
+    <div class="box note"><b>एक और जाल, इसी तालिका से।</b> “छोड़कर जाने वालों में सबसे ज़्यादा वृद्धि किस वर्ष हुई?” — <b>संख्या</b> में सबसे बड़ी छलाँग 2022 की है (350 ज़्यादा), पर <b>प्रतिशत</b> में सबसे बड़ी 2020 की है (350 में से 150 की वृद्धि = 75%)। प्रश्न में “प्रतिशत” शब्द है या नहीं — बस यही देखिए।</div>
+  </div>
+
+  <!-- नियम 5 -->
+  <div class="card" style="margin-top:22px;border-top:5px solid var(--vio)">
+    <div class="pill">नियम 5 · कठिन · अब ज़्यादा आने लगा है</div>
+    <h3 style="margin:8px 0 2px">छलनी — हर मंज़िल पर “100%” बदल जाता है</h3>
+    <p style="font-size:15.5px;color:var(--ink2)">जब प्रतिशत के अंदर प्रतिशत हो, तब यह नियम लगता है।</p>
+    <div class="big-say" style="font-size:clamp(17px,2.8vw,22px);padding:18px">जो हिस्सा नीचे उतरता है,<br>वही अगली मंज़िल का <em>नया 100%</em> बन जाता है।</div>
+    <p style="font-size:15.5px">एक उदाहरण से देखिए। कंपनी P में कुल 2,400 कर्मचारी हैं। उनमें 60% पुरुष हैं। कुल में से 75% उत्पादन विभाग में हैं। और उत्पादन विभाग के अंदर पुरुष : महिला = 5 : 4 है।</p>
+    <div class="tblwrap">
+    <table class="dt">
+      <thead><tr><th>मंज़िल</th><th>किसका प्रतिशत</th><th>गणना</th><th>संख्या</th></tr></thead>
+      <tbody>
+        <tr><th>1 · कुल कर्मचारी</th><td>यही पहला 100%</td><td>—</td><td class="hl">2,400</td></tr>
+        <tr><th>2 · पुरुष</th><td>कुल का 60%</td><td>2400 × 60%</td><td>1,440</td></tr>
+        <tr><th>2 · महिला</th><td>बचा हुआ 40%</td><td>2400 − 1440</td><td>960</td></tr>
+        <tr><th>3 · उत्पादन विभाग</th><td>कुल का 75%</td><td>2400 × 75%</td><td class="hl">1,800</td></tr>
+        <tr><th>4 · उत्पादन में पुरुष</th><td>1,800 का 5/9</td><td>1800 × 5 ÷ 9</td><td>1,000</td></tr>
+        <tr><th>4 · उत्पादन में महिला</th><td>1,800 का 4/9</td><td>1800 × 4 ÷ 9</td><td>800</td></tr>
+        <tr><th>5 · बिक्री में पुरुष</th><td>घटाकर निकलेगा</td><td>1440 − 1000</td><td class="hl2">440</td></tr>
+        <tr><th>5 · बिक्री में महिला</th><td>घटाकर निकलेगा</td><td>960 − 800</td><td class="hl2">160</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="box trap"><b>यहाँ सबसे ज़्यादा नंबर कटते हैं।</b> दो जगह —<br>
+      <b>पहली:</b> 75% को सीधे पुरुषों पर लगा देना (1440 × 75% = 1080)। ग़लत। 75% <b>कुल कर्मचारियों</b> पर है, पुरुषों पर नहीं।<br>
+      <b>दूसरी:</b> प्रश्न अक्सर <b>दूसरे</b> विभाग (बिक्री/मार्केटिंग) के बारे में पूछता है, जिसका कोई आँकड़ा तालिका में दिया ही नहीं होता। उसे <b>घटाकर</b> निकालना पड़ता है — जैसे ऊपर की आख़िरी दो पंक्तियों में।</div>
+  </div>
+
+  <!-- नियम 6 -->
+  <div class="card" style="margin-top:22px;border-top:5px solid var(--rose)">
+    <div class="pill">नियम 6 · कठिनतम</div>
+    <h3 style="margin:8px 0 2px">जो नहीं बदलता, उसे पकड़ लीजिए</h3>
+    <p style="font-size:15.5px;color:var(--ink2)">ऐसे प्रश्नों में दो-तीन चीज़ें एक साथ बदलती दिखती हैं। पर हर बार <b>एक चीज़ बिल्कुल नहीं बदलती</b>। उसे पकड़ लीजिए, बाक़ी सब उसी से निकल आएगा।</p>
+    <div class="g3" style="margin-top:14px">
+      <div class="card" style="padding:15px;background:#fff"><div class="pill">दूध में पानी</div>
+        <p style="font-size:17px;margin:7px 0 8px"><b>दूध</b> नहीं बदलता</p>
+        <div class="calc" style="display:block;text-align:center">कुल घोल = दूध ÷ (1 − पानी%)</div></div>
+      <div class="card" style="padding:15px;background:#fff"><div class="pill">छूट और लाभ</div>
+        <p style="font-size:17px;margin:7px 0 8px"><b>विक्रय मूल्य</b> नहीं बदलता</p>
+        <div class="calc" style="display:block;text-align:center">लागत + लाभ = अंकित − छूट</div></div>
+      <div class="card" style="padding:15px;background:#fff"><div class="pill">उत्पादन-आयात-निर्यात</div>
+        <p style="font-size:17px;margin:7px 0 8px"><b>देश में बचा माल</b></p>
+        <div class="calc" style="display:block;text-align:center">खपत = उत्पादन + आयात − निर्यात</div></div>
+    </div>
+    <h4 style="margin-top:18px">दूध वाला उदाहरण — कदम दर कदम</h4>
+    <p style="font-size:16px">दुकानदार के पास 800 लीटर शुद्ध दूध है। वह उसमें पानी मिलाकर ऐसा घोल बनाता है जिसमें <b>पानी की मात्रा 20%</b> है। कितना पानी मिलाया?</p>
+    <ol class="steps">
+      <li><b>क्या नहीं बदला?</b> दूध। पहले भी 800 था, अब भी 800 है — पानी मिलाने से दूध नहीं बढ़ता।</li>
+      <li>घोल में पानी 20% है ⟹ दूध घोल का <span class="calc">80%</span> है।</li>
+      <li>तो 800 ही घोल का 80% हुआ ⟹ <span class="calc">कुल घोल = 800 ÷ 0.80 = 1000</span></li>
+      <li>पानी = <span class="calc">1000 − 800 = 200 लीटर</span></li>
+    </ol>
+    <div class="box trap"><b>यहाँ नब्बे प्रतिशत छात्र मरते हैं।</b> वे 800 का 20% निकालकर <b>160</b> लिख देते हैं — और 160 विकल्पों में मौजूद रहता है। पर “पानी 20%” का मतलब <b>नए घोल का</b> 20% है, दूध का नहीं। <span class="mark">यहाँ भाग देना है, गुणा नहीं।</span></div>
+  </div>
+</div></section>
+
+<!-- ══════════ 7 ══════════ -->
+<section id="s7"><div class="wrap">
+  <div class="sh"><div class="chip" style="background:var(--rose)">७</div><div>
+    <h2>पहले पेपर ऐसा आता था, अब ऐसा आता है</h2>
+    <div class="sub">पिछले कुछ सालों में पैटर्न बदला है — पर उतना नहीं, जितना डर लगता है</div>
+  </div></div>
+  <div class="rule"></div>
+
+  <p>पुराने पेपरों (2021, 2022) में एक सेट का मतलब था — एक साफ़ तालिका और पाँच सीधे सवाल। हाल के पेपरों में वही तालिका थोड़ी और गुँथी हुई आती है। नीचे साफ़-साफ़ देखिए कि क्या बदला —</p>
+
+  <div class="tblwrap">
+  <table class="dt">
+    <thead><tr><th style="width:30%">बात</th><th>पहले ऐसा होता था</th><th>अब ऐसा होने लगा है</th></tr></thead>
+    <tbody>
+      <tr><th>चित्र</th><td style="text-align:left;font-family:inherit;font-weight:400">एक सेट में एक ही चित्र</td><td style="text-align:left;font-family:inherit;font-weight:400" class="hl">कभी-कभी दो — पाई के साथ एक छोटी तालिका</td></tr>
+      <tr><th>तालिका की परतें</th><td style="text-align:left;font-family:inherit;font-weight:400">कुल → उसमें % → उसमें अनुपात (तीन परत)</td><td style="text-align:left;font-family:inherit;font-weight:400" class="hl">एक परत और जुड़ गई (चार परत)</td></tr>
+      <tr><th>जो चित्र में है ही नहीं</th><td style="text-align:left;font-family:inherit;font-weight:400">जो पूछा, वह चित्र में मिल जाता था</td><td style="text-align:left;font-family:inherit;font-weight:400" class="hl">कभी एक इकाई (जैसे गाँव F) शर्त से बनानी पड़ती है</td></tr>
+      <tr><th>प्रतिशत</th><td style="text-align:left;font-family:inherit;font-weight:400">“कुल का कितना प्रतिशत?”</td><td style="text-align:left;font-family:inherit;font-weight:400" class="hl">उल्टा — “210, कुल का 71.42% है, कुल निकालिए”</td></tr>
+      <tr><th>स्तंभों का क्रम</th><td style="text-align:left;font-family:inherit;font-weight:400">जनवरी, फरवरी, मार्च — सीधे क्रम में</td><td style="text-align:left;font-family:inherit;font-weight:400" class="hl">जान-बूझकर गड़बड़ — जून, जुलाई, मई, अक्टूबर</td></tr>
+      <tr><th>विकल्प</th><td style="text-align:left;font-family:inherit;font-weight:400">चार विकल्प</td><td style="text-align:left;font-family:inherit;font-weight:400" class="hl">पाँच — पाँचवाँ है “उपर्युक्त में से कोई नहीं”</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>इन बदलावों का असली मतलब</h3>
+  <p>पाँचवें विकल्प वाली बात सबसे छोटी दिखती है, पर असर सबसे बड़ा है। पहले अगर आपका उत्तर विकल्पों में न मिलता, तो आप मान लेते थे कि गणना ग़लत हुई। <b>अब वह भरोसा टूट गया है</b> — क्योंकि अब सचमुच ऐसा हो सकता है कि सही उत्तर विकल्पों में हो ही नहीं और “उपर्युक्त में से कोई नहीं” ही सही हो। और तुक्के की संभावना भी 25% से घटकर 20% रह गई।</p>
+
+  <div class="box new"><b>पर एक बात जो कोई नहीं बताता —</b> ये बदलाव डेटा को कठिन नहीं बनाते, <b>पढ़ने को</b> कठिन बनाते हैं। संख्याएँ आज भी दो-तीन अंकों की हैं और गणित आज भी जोड़-भाग का है। बदला सिर्फ़ इतना है कि अब <b>यह तय करने में ज़्यादा समय लगता है कि करना क्या है</b>। इसीलिए ऊपर वाले तीन कदम — नज़र, निशाना, नाप — अब पहले से कहीं ज़्यादा कीमती हो गए हैं।</div>
+
+  <div class="box tip"><b>तैयारी में इसका क्या करें?</b> तीन ही चीज़ें — <b>(1)</b> नीचे वाली भिन्न-सूची याद कर लीजिए, क्योंकि उल्टे प्रतिशत वाले प्रश्न इसी से खुलते हैं। <b>(2)</b> हर प्रश्न में स्तंभ का नाम पढ़कर उँगली रखिए, जगह याद मत रखिए। <b>(3)</b> गणना पूरी करके तब विकल्प देखिए, पहले नहीं।</div>
+</div></section>
+
+<!-- ══════════ 8 ══════════ -->
+<section id="s8"><div class="wrap">
+  <div class="sh"><div class="chip" style="background:var(--ind)">८</div><div>
+    <h2>अब एक पूरा सेट — शुरू से आख़िर तक</h2>
+    <div class="sub">एक तालिका, पाँच प्रश्न · हर प्रश्न में विकल्प, हल, उत्तर और जाल</div>
+  </div></div>
+  <div class="rule"></div>
+
+  <p>अब तक जो सीखा, वह एक जगह लगाकर देखिए। नीचे ठीक वैसी तालिका है जैसी पेपर में आती है — और वैसे ही पाँच प्रश्न।</p>
+
+  <div class="box note"><b>पहले “नज़र” वाला कदम लगाइए।</b> तालिका को देखिए और तीन बातें नोट कीजिए — <b>(1)</b> पंक्तियाँ पाँच दुकानें हैं: P, Q, R, S, T। <b>(2)</b> स्तंभ चार महीने हैं। <b>(3)</b> और अब ध्यान से — स्तंभों का क्रम है <span class="mark">जुलाई, मार्च, दिसंबर, अप्रैल</span>। कैलेंडर वाला क्रम नहीं है। यही सबसे बड़ी चाल है।</div>
+
+  <div class="tblwrap">
+  <table class="dt">
+    <thead><tr><th>दुकान</th><th>जुलाई</th><th>मार्च</th><th>दिसंबर</th><th>अप्रैल</th></tr></thead>
+    <tbody>
+      <tr><th>P</th><td>320</td><td>240</td><td>180</td><td>260</td></tr>
+      <tr><th>Q</th><td>288</td><td>320</td><td>216</td><td>176</td></tr>
+      <tr><th>R</th><td>150</td><td>375</td><td>225</td><td>300</td></tr>
+      <tr><th>S</th><td>264</td><td>200</td><td>330</td><td>220</td></tr>
+      <tr><th>T</th><td>400</td><td>280</td><td>240</td><td>320</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p style="font-size:14.5px;color:var(--ink3)">पाँच दुकानों द्वारा चार महीनों में बेची गई मशीनों की संख्या।</p>
+
+  <!-- प्र 1 -->
+  <div class="qc">
+    <div class="head"><span class="qn">प्रश्न 1</span><span class="pat">पैटर्न · अनुपात</span></div>
+    <div class="body">
+      <div class="qt">मार्च में दुकान P और Q द्वारा बेची गई मशीनों का, अप्रैल में दुकान R और T द्वारा बेची गई मशीनों से अनुपात क्या है?</div>
+      <div class="opts">
+        <div class="opt"><i>a)</i> 14 : 17</div>
+        <div class="opt"><i>b)</i> 31 : 28</div>
+        <div class="opt right"><i>c)</i> 28 : 31</div>
+        <div class="opt"><i>d)</i> 5 : 6</div>
+        <div class="opt"><i>e)</i> उपर्युक्त में से कोई नहीं</div>
+      </div>
+      <div class="solve"><div class="slab">हल</div>
+        <ol class="steps">
+          <li><b>नज़र —</b> मार्च कौन-सा स्तंभ है? <b>दूसरा</b>। अप्रैल? <b>चौथा</b>। नाम पढ़कर उँगली रखिए, जगह मत मानिए।</li>
+          <li><b>निशाना —</b> ऊपर जाएगा “मार्च में P + Q”, नीचे जाएगा “अप्रैल में R + T”। जो प्रश्न में पहले आया, वही ऊपर।</li>
+          <li>ऊपर = <span class="calc">240 + 320 = 560</span> &nbsp; नीचे = <span class="calc">300 + 320 = 620</span></li>
+          <li><b>नाप —</b> 560 : 620 → दोनों के शून्य काटिए → 56 : 62 → दोनों को 2 से काटिए → <span class="calc">28 : 31</span></li>
+        </ol>
+        <div class="ansbar">उत्तर — (c) 28 : 31</div>
+        <div class="trapbar"><b>जाल।</b> क्रम उलटने पर 31 : 28 आता है, और वह विकल्प (b) में रखा हुआ है। बचाव सीधा है — अनुपात लिखते समय नाम भी साथ लिखिए: “मार्च : अप्रैल = 560 : 620”। नाम लिखे रहेंगे तो क्रम कभी नहीं उलटेगा।</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- प्र 2 -->
+  <div class="qc">
+    <div class="head"><span class="qn">प्रश्न 2</span><span class="pat">पैटर्न · भिन्न पहचान</span></div>
+    <div class="body">
+      <div class="qt">यदि जुलाई में दुकान T द्वारा बेची गई मशीनों में से 37.5% दोषपूर्ण हैं, तो जुलाई में T द्वारा बेची गई गैर-दोषपूर्ण मशीनें कितनी हैं?</div>
+      <div class="opts">
+        <div class="opt right"><i>a)</i> 250</div>
+        <div class="opt"><i>b)</i> 150</div>
+        <div class="opt"><i>c)</i> 262</div>
+        <div class="opt"><i>d)</i> 300</div>
+        <div class="opt"><i>e)</i> उपर्युक्त में से कोई नहीं</div>
+      </div>
+      <div class="solve"><div class="slab">हल</div>
+        <ol class="steps">
+          <li><b>नज़र —</b> जुलाई <b>पहला</b> स्तंभ है, T आख़िरी पंक्ति। मान = <span class="calc">400</span></li>
+          <li><b>निशाना —</b> दोषपूर्ण 37.5% हैं, तो <b>गैर-दोषपूर्ण 62.5%</b>। घटाव पहले कीजिए, गुणा बाद में — इससे एक पूरा कदम बच जाता है।</li>
+          <li><b>खंड-सोच —</b> 62.5% कोई अजीब संख्या नहीं है, वह <span class="calc">5/8</span> है। यानी 400 को 8 खंडों में बाँटकर 5 खंड लेने हैं।</li>
+          <li><span class="calc">400 ÷ 8 = 50</span> &nbsp;→&nbsp; <span class="calc">50 × 5 = 250</span></li>
+        </ol>
+        <div class="ansbar">उत्तर — (a) 250</div>
+        <div class="trapbar"><b>जाल।</b> 400 का 37.5% निकालकर <b>150</b> पर रुक जाना सबसे आम भूल है — वही विकल्प (b) है। प्रश्न दोषपूर्ण नहीं, <b>गैर-दोषपूर्ण</b> पूछ रहा है। पढ़ते समय “गैर” शब्द पर गोला लगा दीजिए।</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- प्र 3 -->
+  <div class="qc">
+    <div class="head"><span class="qn">प्रश्न 3</span><span class="pat">पैटर्न · औसत</span></div>
+    <div class="body">
+      <div class="qt">दिसंबर में दुकान P, R और T द्वारा बेची गई मशीनों की औसत संख्या क्या है?</div>
+      <div class="opts">
+        <div class="opt"><i>a)</i> 645</div>
+        <div class="opt"><i>b)</i> 129</div>
+        <div class="opt"><i>c)</i> 205</div>
+        <div class="opt right"><i>d)</i> 215</div>
+        <div class="opt"><i>e)</i> उपर्युक्त में से कोई नहीं</div>
+      </div>
+      <div class="solve"><div class="slab">हल</div>
+        <ol class="steps">
+          <li><b>नज़र —</b> दिसंबर <b>तीसरा</b> स्तंभ है। P = 180, R = 225, T = 240।</li>
+          <li><b>निशाना —</b> कितने नाम लिए गए हैं? <b>तीन</b>। तो भाजक 3 होगा, 5 नहीं। उँगली से गिनना दो सेकंड का काम है और पूरा प्रश्न बचा देता है।</li>
+          <li>जोड़ = <span class="calc">180 + 225 + 240 = 645</span></li>
+          <li>औसत = <span class="calc">645 ÷ 3 = 215</span></li>
+        </ol>
+        <div class="ansbar">उत्तर — (d) 215</div>
+        <div class="trapbar"><b>दो जाल एक साथ।</b> पाँच से भाग देने पर 129 आता है — विकल्प (b)। और जोड़ पर ही रुक जाने वाले को 645 दिखता है — विकल्प (a)। दोनों जान-बूझकर रखे गए हैं।</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- प्र 4 -->
+  <div class="qc">
+    <div class="head"><span class="qn">प्रश्न 4</span><span class="pat">पैटर्न · आधार पहचानना</span></div>
+    <div class="body">
+      <div class="qt">जुलाई और दिसंबर में मिलाकर दुकान Q द्वारा बेची गई मशीनें, मार्च और अप्रैल में मिलाकर दुकान S द्वारा बेची गई मशीनों का कितना प्रतिशत हैं?</div>
+      <div class="opts">
+        <div class="opt"><i>a)</i> 83.33%</div>
+        <div class="opt"><i>b)</i> 116.67%</div>
+        <div class="opt"><i>c)</i> 20%</div>
+        <div class="opt right"><i>d)</i> 120%</div>
+        <div class="opt"><i>e)</i> उपर्युक्त में से कोई नहीं</div>
+      </div>
+      <div class="solve"><div class="slab">हल</div>
+        <ol class="steps">
+          <li><b>नज़र —</b> Q की पंक्ति से जुलाई (288) और दिसंबर (216)। S की पंक्ति से मार्च (200) और अप्रैल (220)।</li>
+          <li><b>निशाना · नियम 1 —</b> वाक्य में लिखा है “S द्वारा बेची गई मशीनों <span class="mark">का</span>”। इसलिए <b>S नीचे</b> जाएगा।</li>
+          <li>ऊपर = <span class="calc">288 + 216 = 504</span> &nbsp; नीचे = <span class="calc">200 + 220 = 420</span></li>
+          <li><b>नाप · ईंट से —</b> 420 की एक ईंट = 42। दस ईंट = 420 यानी 100%, और 84 बाक़ी। 84 = दो ईंट और = 20% ⟹ <span class="calc">120%</span></li>
+        </ol>
+        <div class="ansbar">उत्तर — (d) 120%</div>
+        <div class="trapbar"><b>जाल।</b> 504 को नीचे रख देने पर 83.33% आता है — विकल्प (a)। यही तराजू पलटने वाली भूल है। “का / से” के ठीक पहले वाला नाम नीचे — यह देखे बिना उँगली मत उठाइए।</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- प्र 5 -->
+  <div class="qc">
+    <div class="head"><span class="qn">प्रश्न 5</span><span class="pat">पैटर्न · उल्टा प्रतिशत (नया रूप)</span></div>
+    <div class="body">
+      <div class="qt">दिसंबर में दुकान S द्वारा बेची गई मशीनें, उस महीने दुकान में मौजूद कुल मशीनों का 62.5% हैं। दिसंबर में दुकान S में कितनी मशीनें नहीं बिकीं?</div>
+      <div class="opts">
+        <div class="opt"><i>a)</i> 528</div>
+        <div class="opt right"><i>b)</i> 198</div>
+        <div class="opt"><i>c)</i> 132</div>
+        <div class="opt"><i>d)</i> 206</div>
+        <div class="opt"><i>e)</i> उपर्युक्त में से कोई नहीं</div>
+      </div>
+      <div class="solve"><div class="slab">हल</div>
+        <ol class="steps">
+          <li><b>नज़र —</b> दिसंबर में S = <b>330</b>। पर सावधान — यह <b>बिकी हुई</b> संख्या है, कुल नहीं। तालिका इस बार पूरा नहीं, <b>हिस्सा</b> दे रही है।</li>
+          <li><b>निशाना · उल्टा प्रतिशत —</b> 330 कुल का 62.5% है। और <span class="calc">62.5% = 5/8</span></li>
+          <li><b>खंड-सोच —</b> 5 खंड = 330 ⟹ 1 खंड = <span class="calc">330 ÷ 5 = 66</span> ⟹ कुल 8 खंड = <span class="calc">66 × 8 = 528</span></li>
+          <li>न बिकीं = बचे हुए 3 खंड = <span class="calc">66 × 3 = 198</span> &nbsp;(528 − 330 करने से भी यही आएगा, पर खंड गिनना तेज़ है)</li>
+        </ol>
+        <div class="ansbar">उत्तर — (b) 198</div>
+        <div class="trapbar"><b>जाल।</b> 528 (कुल संख्या) चुन लेना सबसे आम भूल है — विकल्प (a)। प्रश्न कुल नहीं, <b>न बिकी</b> मशीनें पूछ रहा है। बचाव — गणना ख़त्म करके एक बार प्रश्न की आख़िरी लाइन दोबारा पढ़िए।</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box tip"><b>पीछे मुड़कर देखिए।</b> इन पाँचों प्रश्नों में गणित क्या था? जोड़, घटाव, और एक भाग। बस। पूरी मेहनत यह तय करने में लगी कि <b>कौन-सी संख्या उठानी है और किसे नीचे रखना है</b>। DI की तैयारी का मतलब यही है।</div>
+</div></section>
+
+<!-- ══════════ 9 ══════════ -->
+<section id="s9"><div class="wrap">
+  <div class="sh"><div class="chip" style="background:var(--vio)">९</div><div>
+    <h2>भिन्न की सूची — सबसे कीमती दो मिनट</h2>
+    <div class="sub">“71.42%” पढ़ते ही दिमाग़ में “5/7” आना चाहिए</div>
+  </div></div>
+  <div class="rule"></div>
+
+  <p>हाल के पेपर में एक प्रश्न ऐसा आया — <i>“दुकान ने 210 लैपटॉप बेचे, जो कुल का 71.42% है। न बिके लैपटॉप निकालिए।”</i></p>
+  <p>जिस छात्र को दिखा कि <b>71.42% = 5/7</b>, उसने दस सेकंड में उत्तर निकाल लिया: 5 खंड = 210, तो 1 खंड = 42, कुल 7 खंड = 294, न बिके = 84। और जिसे यह नहीं दिखा, वह 210 ÷ 0.7142 का भाग करता रह गया।</p>
+
+  <div class="box tip"><b>यह याद करने वाली चीज़ है, समझने वाली नहीं।</b> रोज़ दो मिनट, दस दिन — बस इतना काफ़ी है। नीचे पहले ख़ुद जाँचिए, फिर पूरी सूची देख लीजिए।</div>
+
+  <div class="card" style="text-align:center;margin-top:16px">
+    <div class="slab">यह प्रतिशत किस भिन्न का है?</div>
+    <div class="mono" id="fdQ" style="font-size:clamp(34px,8vw,52px);font-weight:700;color:var(--ind);line-height:1.2;margin:8px 0">—</div>
+    <div id="fdO" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:9px;max-width:460px;margin:14px auto 0"></div>
+    <div id="fdE" style="margin-top:14px;font-size:16px;font-weight:700;min-height:26px"></div>
+    <div class="btnrow" style="justify-content:center;margin-top:10px"><button class="btn on" id="fdN">अगला →</button><span class="pill" id="fdS">सही 0 · ग़लत 0</span></div>
+  </div>
+
+  <h3>पूरी सूची — यही याद करनी है</h3>
+  <div id="fdT" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(98px,1fr));gap:8px;margin-top:12px"></div>
+
+  <div class="box note"><b>इस्तेमाल कैसे करें।</b> किसी संख्या का 12.5% निकालना हो तो आठ से भाग दे दीजिए। 16.67% निकालना हो तो छह से। 37.5% निकालना हो तो आठ से भाग देकर तीन से गुणा। देखने में छोटी बात है, पर पाँच प्रश्नों में पूरा एक मिनट बचा देती है।</div>
+</div></section>
+
+<!-- ══════════ 10 ══════════ -->
+<section id="s10"><div class="wrap">
+  <div class="sh"><div class="chip" style="background:var(--rose)">१०</div><div>
+    <h2>बारह जाल — जहाँ नंबर कटते हैं</h2>
+    <div class="sub">इनमें एक भी गणित की ग़लती नहीं है · सब पढ़ने की ग़लतियाँ हैं</div>
+  </div></div>
+  <div class="rule"></div>
+  <p>परीक्षा से एक रात पहले सिर्फ़ यह हिस्सा पढ़ लीजिए। हर जाल के साथ उसका बचाव भी लिखा है।</p>
+  <div id="tg" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px;margin-top:18px"></div>
+</div></section>
+
+<!-- ══════════ 11 ══════════ -->
+<section id="s11"><div class="wrap">
+  <div class="sh"><div class="chip" style="background:var(--teal)">११</div><div>
+    <h2>अभ्यास — पंद्रह प्रश्न, पाँच विकल्प</h2>
+    <div class="sub">हर प्रश्न किसी न किसी जाल पर बना है · उत्तर चुनते ही कारण खुल जाएगा</div>
+  </div></div>
+  <div class="rule"></div>
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px">
+      <span class="pill mono" id="dC">प्रश्न 1 / 15</span>
+      <span class="mono" id="dS" style="font-weight:700;font-size:14px;background:var(--ink);color:#ffd166;border-radius:10px;padding:6px 13px">सही 0 · ग़लत 0</span>
+    </div>
+    <div id="dD" style="font-size:15px;color:var(--ink2);background:#f8f5ec;border:1px solid var(--line);border-radius:12px;padding:12px 15px;margin-bottom:12px"></div>
+    <div id="dQ" style="font-size:17.5px;font-weight:600;line-height:1.75;margin:6px 0 14px"></div>
+    <div id="dO" class="opts"></div>
+    <div id="dE" style="margin-top:13px;background:var(--ink);color:#ece7db;border-radius:13px;padding:14px 17px;font-size:15.5px;display:none;line-height:1.8"></div>
+    <div class="btnrow" style="margin-top:14px"><button class="btn on" id="dN">अगला प्रश्न →</button><button class="btn" id="dR">फिर से शुरू</button></div>
+  </div>
+</div></section>
+
+<!-- ══════════ 12 ══════════ -->
+<section id="s12"><div class="wrap">
+  <div class="sh"><div class="chip" style="background:var(--saf)">१२</div><div>
+    <h2>अंतिम पन्ना — परीक्षा से दस मिनट पहले</h2>
+    <div class="sub">बाक़ी सब भूल जाइए · ये पंद्रह पंक्तियाँ याद रहीं तो बीस अंक आपके हैं</div>
+  </div></div>
+  <div class="rule"></div>
+  <div class="card" style="background:var(--ink);color:#e6e2d6;border:none">
+    <ol class="steps" id="lastList" style="font-size:16.5px"></ol>
+  </div>
+  <div class="box tip" style="margin-top:20px"><b>और आख़िरी बात।</b> पेपर देखकर डरने की ज़रूरत नहीं है। संख्याएँ आज भी दो-तीन अंकों की हैं और गणित आज भी जोड़-भाग का है। जो बढ़ा है वह सिर्फ़ <b>पढ़ने का बोझ</b> है — और पढ़ने का बोझ हल्का करने का एक ही तरीक़ा है: <b>तय क्रम</b>। वह क्रम अब आपके पास है।</div>
+
+  <a class="next" href="DI-भाग-2-और-ऊपर.html"><span>अगला भाग</span><b>भाग 2 · संचयी तालिका — “और ऊपर” वाली</b><i>एक पूरा सेट, पाँच प्रश्न, कदम-दर-कदम हल — जहाँ एक ही शब्द पूरा खेल पलट देता है।</i></a>
+</div></section>
+
+
+<section style="padding:10px 0 40px"><div class="wrap"><div class="slab" style="margin-bottom:8px">तीनों भाग</div><div class="g3"><a href="DI-भाग-1-बुनियाद.html" style="display:block;text-decoration:none;border-radius:14px;padding:14px 16px;border:1.5px solid var(--saf);background:var(--saf-l)"><span style="display:block;font-size:12px;font-weight:800;letter-spacing:1.2px;color:var(--saf-d)">भाग 1</span><b style="display:block;font-family:'Tiro Devanagari Hindi',serif;font-weight:400;font-size:18px;line-height:1.4;margin-top:3px;color:var(--saf-d)">आँकड़े पढ़ना, बिल्कुल शुरू से</b><span style="display:block;font-size:12.5px;font-weight:700;color:var(--saf-d);margin-top:4px">आप यहीं हैं</span></a><a href="DI-भाग-2-और-ऊपर.html" style="display:block;text-decoration:none;border-radius:14px;padding:14px 16px;border:1.5px solid var(--line2);background:#fff"><span style="display:block;font-size:12px;font-weight:800;letter-spacing:1.2px;color:var(--ink3)">भाग 2</span><b style="display:block;font-family:'Tiro Devanagari Hindi',serif;font-weight:400;font-size:18px;line-height:1.4;margin-top:3px;color:var(--ink)">संचयी तालिका — “और ऊपर” वाली</b></a><a href="DI-भाग-3-से-कम-वेन-और-श्रेणी.html" style="display:block;text-decoration:none;border-radius:14px;padding:14px 16px;border:1.5px solid var(--line2);background:#fff"><span style="display:block;font-size:12px;font-weight:800;letter-spacing:1.2px;color:var(--ink3)">भाग 3</span><b style="display:block;font-family:'Tiro Devanagari Hindi',serif;font-weight:400;font-size:18px;line-height:1.4;margin-top:3px;color:var(--ink)">“से कम” वाली तालिका, वेन और श्रेणी</b></a></div></div></section>
+<footer><div class="wrap">
+  <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:20px;color:var(--ink);margin-bottom:6px">भाग 1 · आँकड़े पढ़ना, बिल्कुल शुरू से</div>
+  UPSSSC PET · तालिका एवं ग्राफ का निर्वचन एवं विश्लेषण · <b>तस्वीर याद रहेगी, तो सूत्र अपने आप याद आ जाएगा</b><br>
+  <span style="font-size:12.5px;color:var(--ink4)">अभ्यास के सारे आँकड़े सिखाने के लिए स्वयं बनाए गए हैं। पैटर्न पिछले वर्षों के वास्तविक PET पेपरों पर आधारित हैं।</span>
+</div></footer>
+
+<script>
+const $=(s,p=document)=>p.querySelector(s), $$=(s,p=document)=>[...p.querySelectorAll(s)];
+const R2=n=>Math.round(n*100)/100;
+const gcd=(a,b)=>b?gcd(b,a%b):a;
+const rat=(a,b)=>{const g=gcd(Math.round(a),Math.round(b))||1;return Math.round(a/g)+' : '+Math.round(b/g);};
+
+/* प्रगति-पट्टी और नेविगेशन */
+addEventListener('scroll',()=>{const h=document.documentElement;
+  $('#bar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+  let c='';$$('section[id]').forEach(s=>{if(s.getBoundingClientRect().top<160)c=s.id;});
+  $$('nav a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+c));},{passive:true});
+
+/* उत्तर देखिए */
+document.addEventListener('click',e=>{const t=e.target.closest('[data-reveal]');if(!t)return;
+  const r=$('#'+t.dataset.reveal);const open=r.style.display==='block';
+  r.style.display=open?'none':'block';t.textContent=open?'उत्तर देखिए':'छिपाइए';});
+
+/* ── खंड वाली तस्वीर ── */
+(function(){
+  let a=5,b=4;
+  const PRE=[[5,4,'5 : 4'],[4,3,'4 : 3'],[3,2,'3 : 2'],[7,5,'7 : 5'],[5,7,'5 : 7'],[1,1,'बराबर']];
+  const pre=$('#kPre');
+  PRE.forEach(([x,y,l])=>{const t=document.createElement('button');t.className='btn';t.textContent=l;
+    t.onclick=()=>{a=x;b=y;draw();};pre.appendChild(t);});
+  $$('[data-d]').forEach(btn=>btn.onclick=()=>{
+    const d=btn.dataset.d;
+    if(d==='a+1'&&a<12)a++; if(d==='a-1'&&a>1)a--;
+    if(d==='b+1'&&b<12)b++; if(d==='b-1'&&b>1)b--; draw();});
+  function row(lab,n,col){
+    let s='';for(let i=0;i<n;i++)s+='<div style="width:34px;height:40px;border-radius:8px;background:'+col+';color:#fff;display:grid;place-items:center;font-family:JetBrains Mono,monospace;font-size:11px;font-weight:700;box-shadow:inset 0 -4px 0 rgba(0,0,0,.18)">'+(i+1)+'</div>';
+    return '<div style="display:flex;align-items:center;gap:10px;margin:8px 0;flex-wrap:wrap"><div style="flex:0 0 62px;font-weight:800;font-size:15px;color:'+col+'">'+lab+'</div><div style="display:flex;gap:5px;flex-wrap:wrap">'+s+'</div></div>';}
+  function draw(){
+    $('#kA').textContent=a; $('#kB').textContent=b;
+    $('#kBlocks').innerHTML=row('ढेर A',a,'#cf5314')+row('ढेर B',b,'#33359e');
+    const diff=Math.abs(a-b);
+    const R=[['अनुपात A : B',rat(a,b)],
+             ['A, B का कितना %',R2(a/b*100)+'%'],
+             ['A कुल का कितना %',R2(a/(a+b)*100)+'%'],
+             ['A भिन्न में',(a/gcd(a,a+b))+'/'+((a+b)/gcd(a,a+b))]];
+    $('#kRead').innerHTML=R.map(([k,v])=>'<div style="background:#f8f5ec;border:1px solid var(--line);border-radius:12px;padding:10px 13px"><div style="font-size:12.5px;font-weight:700;color:var(--ink3)">'+k+'</div><div class="mono" style="font-size:19px;font-weight:700;color:var(--teal);margin-top:2px">'+v+'</div></div>').join('');
+    $('#kSay').innerHTML = a===b
+      ? 'दोनों ढेर बराबर हैं, इसलिए हर तुलना 100% पर आ गई। यह जाँचने का सबसे तेज़ तरीक़ा है कि आपने आधार सही पकड़ा या नहीं।'
+      : '<b>फ़र्क़ है '+diff+' खंड।</b> वही '+diff+' खंड, B के '+b+' खंडों के मुक़ाबले <b>'+R2(diff/b*100)+'%</b> है, पर A के '+a+' खंडों के मुक़ाबले <b>'+R2(diff/a*100)+'%</b>। फ़र्क़ नहीं बदला — <b>तुलना का ढेर बदल गया</b>। और परीक्षा दोनों संख्याओं को विकल्प बनाकर रखती है।';
+  }
+  draw();
+})();
+
+/* ── नियम 3 · सीढ़ी ── */
+(function(){
+  const rows=[['10 से कम',12,15],['20 से कम',30,42],['30 से कम',66,78],['40 से कम',108,120],['50 से कम',140,150],['60 से कम',160,170]];
+  const lab=['0–9','10–19','20–29','30–39','40–49','50–59'];
+  const G=$('#stG');let open=false;
+  function draw(){
+    const M=rows.map(r=>r[1]),Rn=rows.map(r=>r[2]);
+    const im=M.map((v,i)=>i?v-M[i-1]:v),ir=Rn.map((v,i)=>i?v-Rn[i-1]:v);
+    const mx=open?Math.max(...im,...ir):170;
+    G.innerHTML='<div style="display:grid;grid-template-columns:96px 1fr 1fr;gap:8px;font-size:12px;font-weight:800;color:var(--ink3);margin-bottom:6px"><span>'+(open?'अंक-सीमा':'तालिका में')+'</span><span>गणित</span><span>तर्कशक्ति</span></div>'+
+      rows.map((r,i)=>{const x=open?im[i]:M[i],y=open?ir[i]:Rn[i];
+      return '<div style="display:grid;grid-template-columns:96px 1fr 1fr;gap:8px;align-items:center;margin:5px 0">'+
+        '<div style="font-size:13.5px;font-weight:700;color:var(--ink2)">'+(open?lab[i]:r[0])+'</div>'+
+        bar(x,mx,'#33359e')+bar(y,mx,'#0a6d5f')+'</div>';}).join('');
+    $('#stA').innerHTML=open
+      ? '<b>अब असली तस्वीर।</b> सबसे ज़्यादा छात्र <b>30–39</b> वाली पैड़ी पर हैं — दोनों विषयों में <b>42</b>। तालिका में यह संख्या कहीं लिखी ही नहीं थी।<br><br>और देखिए — “किस अंक-सीमा में दोनों विषयों की संख्या बराबर है?” का उत्तर <b>तीन जगह</b> है: 20–29, 30–39 और 50–59। बिना घटाए यह कभी दिखता ही नहीं।'
+      : '<b>पहचान।</b> दोनों पट्टियाँ लगातार बढ़ रही हैं और आख़िरी पट्टी कुल छात्रों के बराबर है — यही संचयी होने का पक्का चिह्न है। इसी रूप में हल करने की कोशिश करेंगे तो हर उत्तर ग़लत आएगा। ऊपर <b>“घटाकर असली तस्वीर”</b> दबाइए।';
+  }
+  function bar(v,mx,col){
+    return '<div style="position:relative;height:34px;border-radius:9px;background:#efe9da;overflow:hidden">'+
+      '<i style="position:absolute;left:0;top:0;bottom:0;border-radius:9px;background:'+col+';width:'+(v/mx*100)+'%;transition:width .55s cubic-bezier(.2,.9,.25,1)"></i>'+
+      '<span class="mono" style="position:absolute;right:9px;top:50%;transform:translateY(-50%);font-size:13px;font-weight:700;color:var(--ink)">'+v+'</span></div>';}
+  $('#stGo').onclick=()=>{open=true;$('#stGo').classList.add('on');$('#stRe').classList.remove('on');draw();};
+  $('#stRe').onclick=()=>{open=false;$('#stRe').classList.add('on');$('#stGo').classList.remove('on');draw();};
+  draw();
+})();
+
+/* ── भिन्न ── */
+const FR=[['1/2','50%'],['1/3','33.33%'],['2/3','66.67%'],['1/4','25%'],['3/4','75%'],['1/5','20%'],['2/5','40%'],['3/5','60%'],['4/5','80%'],['1/6','16.67%'],['5/6','83.33%'],['1/7','14.29%'],['2/7','28.57%'],['3/7','42.86%'],['4/7','57.14%'],['5/7','71.43%'],['1/8','12.5%'],['3/8','37.5%'],['5/8','62.5%'],['7/8','87.5%'],['1/9','11.11%'],['4/9','44.44%'],['1/11','9.09%'],['1/12','8.33%'],['1/15','6.67%'],['1/16','6.25%']];
+(function(){
+  $('#fdT').innerHTML=FR.map(([f,p])=>'<div style="background:#fff;border:1px solid var(--line);border-radius:12px;padding:9px;text-align:center;box-shadow:var(--sh)"><div class="mono" style="font-size:18px;font-weight:700;color:var(--ind)">'+f+'</div><div class="mono" style="font-size:13px;font-weight:700;color:var(--saf-d);margin-top:2px">'+p+'</div></div>').join('');
+  let ok=0,no=0,cur=null,done=false;
+  function next(){
+    done=false;$('#fdE').innerHTML='';
+    const i=Math.floor(Math.random()*FR.length);cur=FR[i];
+    $('#fdQ').textContent=cur[1];
+    const pool=FR.filter((_,j)=>j!==i).sort(()=>Math.random()-.5).slice(0,3).map(x=>x[0]);
+    const opts=[cur[0],...pool].sort(()=>Math.random()-.5);
+    $('#fdO').innerHTML=opts.map(o=>'<button class="btn mono" data-o="'+o+'" style="font-size:19px;padding:13px 8px">'+o+'</button>').join('');
+    $$('#fdO button').forEach(b=>b.onclick=()=>{
+      if(done)return;done=true;
+      $$('#fdO button').forEach(x=>{x.disabled=true;if(x.dataset.o===cur[0]){x.style.background='var(--teal-l)';x.style.borderColor='var(--teal)';x.style.color='var(--teal)';}});
+      if(b.dataset.o===cur[0]){ok++;$('#fdE').innerHTML='<span style="color:var(--teal)">सही।</span> '+cur[1]+' = '+cur[0];}
+      else{no++;b.style.background='var(--rose-l)';b.style.borderColor='var(--rose)';b.style.color='var(--rose)';
+        $('#fdE').innerHTML='<span style="color:var(--rose)">नहीं।</span> '+cur[1]+' = <b>'+cur[0]+'</b>';}
+      $('#fdS').textContent='सही '+ok+' · ग़लत '+no;});
+  }
+  $('#fdN').onclick=next;next();
+})();
+
+/* ── बारह जाल ── */
+const TRAPS=[
+ ['आधार-जाल','“A, B से कितना प्रतिशत अधिक है” — इसमें नीचे <b>B</b> जाता है, A नहीं।','प्रश्न पढ़ते ही उस नाम पर उँगली रखिए जिसके ठीक बाद “का / से / की तुलना में” आया है। वही नीचे लिखिए, तब आगे बढ़िए। अंग्रेज़ी में <b>of</b> और <b>than</b> यही काम करते हैं।'],
+ ['उल्टा-जाल','A, B से 25% अधिक है — तो B, A से 25% कम <b>नहीं</b>, 20% कम है।','खंडों में देखिए — A = 5, B = 4। एक खंड का फ़र्क़ 4 में से 25% है, पर 5 में से 20%। दोनों संख्याएँ विकल्पों में रखी होती हैं।'],
+ ['सीढ़ी-जाल','“40 से कम = 108” को “30 से 39 वाले 108” समझ लेना।','संख्याएँ लगातार बढ़ रही हों और आख़िरी संख्या कुल के बराबर हो — तो पहले घटाकर हर अंतराल निकालिए, तब कुछ कीजिए।'],
+ ['औसत-जाल','तीन नामों की जगह पाँच से भाग दे देना, या “कुल” वाली पंक्ति को एक अलग मद गिन लेना।','भाग देने से पहले उँगली से गिनिए कि प्रश्न में कितने नाम लिए गए हैं। दो सेकंड का काम, पूरा प्रश्न बचाता है।'],
+ ['क्रमशः-जाल','अनुपात का क्रम उलट जाना। उल्टा अनुपात भी विकल्प में रखा होता है।','अनुपात लिखते समय नाम भी साथ लिखिए — “मार्च : अप्रैल = 560 : 620”। नाम लिखे रहेंगे तो क्रम नहीं उलटेगा।'],
+ ['अधिकतम-जाल','सर्वाधिक <b>वृद्धि</b> और सर्वाधिक <b>प्रतिशत वृद्धि</b> अलग-अलग वर्षों में होती हैं।','प्रश्न में “प्रतिशत” शब्द है या नहीं — बस यही देखिए। है, तो हर वर्ष का अलग आधार लगेगा।'],
+ ['इकाई-जाल','तालिका के ऊपर छोटे अक्षरों में लिखा रहता है — “सैकड़ों में / हज़ारों में / दर्जन में”।','“नज़र” वाले कदम में सबसे पहले यही पढ़िए, और तालिका के किनारे पेंसिल से ×100 या ×12 लिख लीजिए।'],
+ ['मिलाकर-जाल','“A और B मिलाकर” का मतलब है पहले जोड़िए, फिर काम कीजिए। प्रतिशत या अनुपात का औसत लेना ग़लत है।','“मिलाकर” दिखते ही पहले जोड़ का कोष्ठक बना लीजिए, तब उसमें आगे बढ़िए।'],
+ ['घोल-जाल','“पानी 20%” का मतलब है <b>नए घोल का</b> 20% पानी। दूध का 20% पानी मिलाया — यह नहीं।','दूध को स्थिर मानिए। कुल घोल = दूध ÷ (1 − पानी%)। यहाँ भाग देना है, गुणा नहीं।'],
+ ['क्रम-जाल','स्तंभों का क्रम कैलेंडर वाला नहीं होता — जुलाई, मार्च, दिसंबर, अप्रैल। नज़र बाएँ से दाएँ चलती है और ग़लत ख़ाना उठ जाता है।','हर प्रश्न में महीने का <b>नाम</b> पढ़कर उँगली उसी स्तंभ पर रखिए। स्तंभ की जगह याद मत रखिए।'],
+ ['छिपा-विभाग जाल','चार-परत वाली तालिका में दूसरे विभाग (बिक्री/मार्केटिंग) का कोई आँकड़ा दिया ही नहीं होता।','दो घटाव कीजिए — कुल में से पहला विभाग, और कुल पुरुषों में से पहले विभाग के पुरुष। बाक़ी अपने आप निकलेगा।'],
+ ['पाँचवाँ-विकल्प जाल','अब हर प्रश्न में (e) “उपर्युक्त में से कोई नहीं” रहता है, और वह सचमुच सही हो सकता है।','गणना पूरी कीजिए, <b>फिर</b> विकल्प देखिए। “मिलता-जुलता” विकल्प देखकर रुक जाना अब महँगा पड़ता है।']];
+$('#tg').innerHTML=TRAPS.map(([n,d,b],i)=>
+ '<div class="card" style="padding:0;overflow:hidden">'+
+ '<div style="background:var(--rose-l);border-bottom:1px solid #f5c3d0;padding:12px 16px">'+
+   '<span class="mono" style="font-size:11.5px;font-weight:700;color:var(--rose)">जाल '+(i+1)+'</span>'+
+   '<h4 style="margin:4px 0 5px">'+n+'</h4>'+
+   '<div style="font-size:15px;color:var(--ink2);line-height:1.7">'+d+'</div></div>'+
+ '<div style="padding:12px 16px;background:var(--teal-l)">'+
+   '<span class="mono" style="font-size:11.5px;font-weight:700;color:var(--teal)">बचाव</span>'+
+   '<div style="font-size:15px;color:var(--ink2);line-height:1.7;margin-top:3px">'+b+'</div></div></div>').join('');
+
+/* ── अंतिम पन्ना ── */
+const LAST=[
+ '<b style="color:#fff">खंडों में सोचिए।</b> अनुपात, प्रतिशत और भिन्न एक ही चीज़ हैं। अनुपात दिया हो तो अक्सर संख्या निकालने की ज़रूरत ही नहीं पड़ती।',
+ '<b style="color:#fff">इकाई पहले।</b> सैकड़ों? हज़ारों? दर्जन? — तालिका के ऊपर की वह छोटी लाइन सबसे महँगी लाइन है।',
+ '<b style="color:#fff">स्तंभों के नाम ज़ोर से पढ़िए।</b> उनका क्रम कैलेंडर के हिसाब से नहीं होता।',
+ '<b style="color:#fff">“का / से / की तुलना में” वाला नीचे।</b> अंग्रेज़ी में of / than के बाद वाला।',
+ '<b style="color:#fff">वृद्धि प्रतिशत का आधार हमेशा पुराना वर्ष।</b> और हर वर्ष के लिए वह बदलता है।',
+ '<b style="color:#fff">“से कम / और ऊपर” दिखे तो सीढ़ी।</b> घटाए बिना कुछ मत कीजिए।',
+ '<b style="color:#fff">“जुड़े / गए” दिखे तो बाल्टी।</b> शुरू से जोड़ते चलिए।',
+ '<b style="color:#fff">प्रतिशत के अंदर प्रतिशत = छलनी।</b> जो नीचे उतरा, वही अगली मंज़िल का नया 100%।',
+ '<b style="color:#fff">दूसरा विभाग घटाकर निकलता है।</b> उसका आँकड़ा तालिका में होता ही नहीं।',
+ '<b style="color:#fff">घोल में सांद्रता नए घोल की होती है।</b> दूध ÷ (1 − पानी%)। भाग, गुणा नहीं।',
+ '<b style="color:#fff">लाभ प्रतिशत किस पर लगा है — वह वाक्य दोबारा पढ़िए।</b> हमेशा लागत पर नहीं होता।',
+ '<b style="color:#fff">अधिकतम और अधिकतम प्रतिशत अलग हैं।</b> प्रश्न में “प्रतिशत” शब्द है या नहीं, बस यही देखिए।',
+ '<b style="color:#fff">“तीसरा सबसे कम” = पहले क्रम लिखिए।</b> सारे कुल एक लाइन में आरोही क्रम में, फिर गिनिए।',
+ '<b style="color:#fff">पाँचवाँ विकल्प सचमुच सही हो सकता है।</b> गणना पूरी कीजिए, फिर विकल्प देखिए — उल्टा नहीं।',
+ '<b style="color:#fff">सेट बीच में मत छोड़िए।</b> “नज़र” वाला कदम आपने एक बार लगाया है — उसे पाँच बार वसूलिए।'];
+$('#lastList').innerHTML=LAST.map(t=>'<li style="border-bottom-color:#3a3f4b;color:#d8d3c6">'+t+'</li>').join('');
+
+</script>
+<style>#lastList li:before{background:#2f333e;color:#ffd166;border-color:#454b58}</style>
+<script>
+/* ── पंद्रह प्रश्न की ड्रिल ── */
+const NOTA='उपर्युक्त में से कोई नहीं';
+const DR=[
+ {d:'एक तालिका के स्तंभ इस क्रम में हैं — <b>जुलाई, मार्च, दिसंबर, अप्रैल</b>। दुकान R की पंक्ति है: 150, 375, 225, 300।',
+  q:'मार्च में दुकान R ने कितनी मशीनें बेचीं?',
+  o:['375','150','225','300',NOTA],c:0,
+  e:'मार्च <b>दूसरा</b> स्तंभ है, पहला नहीं। बाएँ से पहला जुलाई है (150)। <b>जाल 10 — क्रम-जाल।</b> स्तंभों का क्रम जान-बूझकर कैलेंडर वाला नहीं रखा जाता।'},
+ {d:'एक तालिका के ऊपर छोटे अक्षरों में लिखा है — “सभी आँकड़े <b>दर्जन में</b>”। दिसंबर में दुकान S का ख़ाना = 330।',
+  q:'दिसंबर में दुकान S ने वास्तव में कितनी मशीनें बेचीं?',
+  o:['330','3,960','2,640','33,000',NOTA],c:1,
+  e:'330 दर्जन × 12 = <b>3,960</b>। 330 चुनने वाला गणित सही करता है, पढ़ना ग़लत। <b>जाल 7 — इकाई-जाल।</b>'},
+ {d:'दिसंबर में दुकान S ने 330 मशीनें बेचीं, जो उस महीने दुकान में मौजूद कुल मशीनों का 62.5% है।',
+  q:'दिसंबर में दुकान S में कितनी मशीनें नहीं बिकीं?',
+  o:['528','132','198','206',NOTA],c:2,
+  e:'62.5% = <b>5/8</b>। 5 खंड = 330 ⟹ 1 खंड = 66 ⟹ कुल 8 खंड = 528। न बिकीं = बचे 3 खंड = <b>198</b>। 528 (कुल) चुन लेना सबसे आम भूल है।'},
+ {d:'कंपनी Q — कुल कर्मचारी 3,200; उनमें पुरुष 75%; कुल में से 50% उत्पादन विभाग में; उत्पादन में पुरुष : महिला = 7 : 3। कंपनी में सिर्फ़ दो विभाग हैं — उत्पादन और बिक्री।',
+  q:'कंपनी Q के बिक्री विभाग में कितने पुरुष कर्मचारी हैं?',
+  o:['1,120','1,280','2,400','1,600',NOTA],c:1,
+  e:'कुल पुरुष = 3200 × 75% = 2,400। उत्पादन = 1,600, उसमें पुरुष = 1600 × 7/10 = 1,120। बिक्री के पुरुष = 2400 − 1120 = <b>1,280</b>। 1,120 (उत्पादन वाले) चुन लेना जाल है। <b>जाल 11 — छिपा-विभाग।</b>'},
+ {d:'कंपनी R — कुल 1,600; पुरुष 50%; कुल में से 62.5% उत्पादन विभाग में; उत्पादन में पुरुष : महिला = 3 : 2। सिर्फ़ दो विभाग हैं।',
+  q:'कंपनी R के बिक्री विभाग में कितनी महिला कर्मचारी हैं?',
+  o:['200','300','360','480',NOTA],c:4,
+  e:'कुल महिला = 800। उत्पादन = 1600 × 62.5% = 1,000, उसमें महिला = 1000 × 2/5 = 400। बिक्री की महिलाएँ = 800 − 400 = <b>400</b> — और 400 विकल्पों में है ही नहीं। इसलिए सही उत्तर <b>(e)</b> है। <b>जाल 12 — पाँचवाँ विकल्प सचमुच सही हो सकता है।</b>'},
+ {d:'कुल सिलाई मशीनें 7,200। पाई — जनवरी 25%, फरवरी 20%, मार्च 15%, अप्रैल 30%, मई 10%। घरेलू : औद्योगिक — जनवरी 3:2, फरवरी 5:3, मार्च 2:1, अप्रैल 7:5, मई 1:1।',
+  q:'अप्रैल में कितनी औद्योगिक मशीनें बनीं?',
+  o:['1,260','1,080','720','900',NOTA],c:3,
+  e:'अप्रैल = 7200 × 30% = 2,160। अनुपात 7 : 5 ⟹ 12 खंड ⟹ औद्योगिक = 2160 × 5/12 = <b>900</b>। 1,260 घरेलू है — क्रम उलटने का जाल। <b>जाल 5 — क्रमशः-जाल।</b>'},
+ {d:'उसी सेट से — जनवरी में बनी कुल मशीनों का 20% नहीं बिका। न बिकी मशीनों में <b>औद्योगिक : घरेलू = 3 : 2</b> है।',
+  q:'जनवरी में कितनी घरेलू मशीनें बिकीं?',
+  o:['1,080','864','936','1,008',NOTA],c:2,
+  e:'जनवरी कुल = 1,800; उसमें घरेलू (3:2) = 1,080। न बिकीं = 360; पर यहाँ <b>औद्योगिक पहले</b> लिखा है, इसलिए घरेलू = 360 × 2/5 = 144। बिकीं = 1080 − 144 = <b>936</b>। दोनों अनुपातों का क्रम अलग है — यही पूरा जाल। 864 वही ग़लत उत्तर है।'},
+ {d:'समूहित दंड आलेख — गेहूँ: A 480, B 720, C 960, D 720, E 1040। चना: A 640, B 560, C 480, D 880, E 600। गाँव F का गेहूँ, A, C और D के गेहूँ की औसत मात्रा के बराबर है, और F में गेहूँ : चना = 4 : 5।',
+  q:'गाँव F में कितना चना उगा?',
+  o:['900','576','720','1,125',NOTA],c:0,
+  e:'A, C, D का गेहूँ = 480 + 960 + 720 = 2,160 ⟹ औसत = 720 = F का गेहूँ। 4 खंड = 720 ⟹ 1 खंड = 180 ⟹ चना = 5 खंड = <b>900</b>। अनुपात उलटने पर 576 आता है। <b>गाँव F ग्राफ़ में है ही नहीं — शर्त से बनाना पड़ा।</b>'},
+ {d:'उसी दंड आलेख से (पाँच गाँव A से E)।',
+  q:'सभी पाँच गाँवों में मिलाकर उगे गेहूँ और चने की मात्रा में कितना अंतर है?',
+  o:['640','760','700','820',NOTA],c:1,
+  e:'गेहूँ = 480+720+960+720+1040 = 3,920। चना = 640+560+480+880+600 = 3,160। अंतर = <b>760</b>। पहले एक रंग के सारे दंड पढ़िए, फिर दूसरा रंग — आँख को बार-बार रंग बदलने मत दीजिए।'},
+ {d:'दंड आलेख — अंकित मूल्य: पंखा ₹4,000, फ़्रिज ₹24,000, मिक्सर ₹3,000, कूलर ₹12,000, हीटर ₹5,000। मिक्सर का लागत मूल्य ₹2,400 है और दुकानदार को मिक्सर पर <b>उसके अंकित मूल्य का 10%</b> लाभ मिलता है।',
+  q:'मिक्सर का विक्रय मूल्य क्या है?',
+  o:['₹2,640','₹3,300','₹2,400','₹2,700',NOTA],c:3,
+  e:'लाभ = <b>अंकित मूल्य</b> का 10% = 3000 × 10% = 300। विक्रय = 2400 + 300 = <b>₹2,700</b>। लागत पर 10% लगाने वाला ₹2,640 चुनता है। <b>जाल 1 — आधार-जाल।</b>'},
+ {d:'उसी आलेख से — कूलर के विक्रय मूल्य और अंकित मूल्य का अनुपात 4 : 5 है, और दुकानदार को कूलर पर 25% लाभ मिलता है। कूलर का अंकित मूल्य ₹12,000 है।',
+  q:'कूलर का लागत मूल्य क्या है?',
+  o:['₹7,200','₹9,600','₹7,680','₹8,000',NOTA],c:2,
+  e:'विक्रय = 12000 × 4/5 = 9,600। लाभ 25% <b>लागत पर</b> है ⟹ विक्रय = लागत × 1.25 ⟹ लागत = 9600 ÷ 1.25 = 9600 × 4/5 = <b>₹7,680</b>। 9,600 में से 25% घटाकर ₹7,200 लेना ग़लत है। <b>जाल 2 — उल्टा-जाल।</b>'},
+ {d:'उसी आलेख से — हीटर का अंकित मूल्य (₹5,000) उसके लागत मूल्य से 25% अधिक है, और उस पर 12% की छूट दी जाती है।',
+  q:'हीटर पर लाभ प्रतिशत क्या है?',
+  o:['13%','11%','12.5%','10%',NOTA],c:3,
+  e:'“25% अधिक” को खंडों में पढ़िए — लागत 4 खंड, अंकित 5 खंड ⟹ 5 खंड = 5,000 ⟹ लागत = 4,000। विक्रय = 5000 × 88% = 4,400। लाभ = 400 ⟹ 400 ÷ 4000 = <b>10%</b>। 25 − 12 = 13% कर देना सबसे आम भूल — प्रतिशत यूँ घटते नहीं।'},
+ {d:'पाँच किसानों की कुल फ़सल (क्विंटल में) — अजय 1,700 · भानु 1,780 · चंदन 1,790 · दिनेश 1,900 · एकांत 1,840।',
+  q:'किस किसान ने तीसरी सबसे कम फ़सल उगाई?',
+  o:['अजय','चंदन','भानु','एकांत',NOTA],c:1,
+  e:'आरोही क्रम लिखिए — अजय 1,700 → भानु 1,780 → <b>चंदन 1,790</b> → एकांत 1,840 → दिनेश 1,900। तीसरा नाम = चंदन। पहले पूरा क्रम एक लाइन में लिख लीजिए, फिर गिनिए।'},
+ {d:'संचयी तालिका (गणित विषय) — 10 से कम 12, 20 से कम 30, 30 से कम 66, 40 से कम 108, 50 से कम 140, 60 से कम 160।',
+  q:'30 से 39 के बीच अंक पाने वाले छात्रों की संख्या कितनी है?',
+  o:['108','42','66','36',NOTA],c:1,
+  e:'108 − 66 = <b>42</b>। सीधे 108 या 66 उठा लेना संचयी तालिका का सबसे आम शिकार है। <b>जाल 3 — सीढ़ी-जाल।</b>'},
+ {d:'कंपनी छोड़कर जाने वाले कर्मचारी — 2019: 200, 2020: 350, 2021: 550, 2022: 900, 2023: 600, 2024: 700।',
+  q:'किस वर्ष कंपनी छोड़ने वालों की संख्या में पिछले वर्ष की तुलना में सर्वाधिक <b>प्रतिशत</b> वृद्धि हुई?',
+  o:['2020','2021','2022','2024',NOTA],c:0,
+  e:'2020: 150 ÷ 200 = <b>75%</b> · 2021: 200 ÷ 350 = 57.1% · 2022: 350 ÷ 550 = 63.6% · 2024: 100 ÷ 600 = 16.7%। <b>संख्या</b> में सबसे बड़ी छलाँग 2022 की है (+350), पर <b>प्रतिशत</b> में 2020 की। <b>जाल 6 — अधिकतम-जाल।</b>'}];
+(function(){
+  let i=0,ok=0,no=0,done=false;
+  function R(){
+    done=false;
+    document.querySelector('#dC').textContent='प्रश्न '+(i+1)+' / '+DR.length;
+    document.querySelector('#dS').textContent='सही '+ok+' · ग़लत '+no;
+    document.querySelector('#dD').innerHTML='<b>दिया हुआ:</b> '+DR[i].d;
+    document.querySelector('#dQ').innerHTML=DR[i].q;
+    document.querySelector('#dE').style.display='none';
+    document.querySelector('#dO').innerHTML=DR[i].o.map((o,k)=>'<button class="opt" data-k="'+k+'" style="cursor:pointer;text-align:left;font-family:inherit"><i>'+'abcde'[k]+')</i> '+o+'</button>').join('');
+    [...document.querySelectorAll('#dO .opt')].forEach(b=>b.onclick=()=>{
+      if(done)return;done=true;const k=+b.dataset.k,c=DR[i].c;
+      [...document.querySelectorAll('#dO .opt')].forEach((x,j)=>{x.disabled=true;x.style.cursor='default';if(j===c)x.classList.add('right');});
+      if(k!==c){b.style.background='var(--rose-l)';b.style.borderColor='var(--rose)';b.style.color='var(--rose)';no++;}else ok++;
+      document.querySelector('#dS').textContent='सही '+ok+' · ग़लत '+no;
+      document.querySelector('#dE').innerHTML=(k===c?'<b style="color:#7ee7d0">सही।</b> ':'<b style="color:#ffd166">सही उत्तर — ('+'abcde'[c]+') '+DR[i].o[c]+'</b><br>')+DR[i].e;
+      document.querySelector('#dE').style.display='block';});
+  }
+  document.querySelector('#dN').onclick=()=>{if(i<DR.length-1){i++;R();}else{
+    document.querySelector('#dQ').innerHTML='ड्रिल पूरी। <b>'+ok+' / '+DR.length+'</b> सही।';
+    document.querySelector('#dO').innerHTML='';
+    document.querySelector('#dD').innerHTML=ok>=13?'<b>बहुत अच्छे।</b> यह परीक्षा के स्तर पर है। अब असली पेपर उठाइए — तरीक़ा वही रहेगा।':ok>=8?'<b>ठीक है।</b> जो ग़लत हुए, उनके सामने लिखा जाल-नंबर देखिए और ऊपर वही कार्ड दोबारा पढ़िए।':'<b>दोबारा शुरू कीजिए।</b> पहले ऊपर की खंड-सोच और छह नियम एक बार और देख लीजिए — ख़ासकर तराजू और छलनी।';
+    document.querySelector('#dE').style.display='none';document.querySelector('#dC').textContent='समाप्त';}};
+  document.querySelector('#dR').onclick=()=>{i=0;ok=0;no=0;R();};
+  R();
+})();
+</script>
+<script defer src="/assets/bodhi-watermark.js"></script>
+</body>
+</html>

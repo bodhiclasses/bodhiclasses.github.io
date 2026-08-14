@@ -663,7 +663,7 @@ footer b{color:var(--gold);}
       <li>घड़ी को शीशे के सामने रखो तो उसमें दिखने वाला समय अलग होता है। सवाल यही पूछता है — <b>“दर्पण में क्या समय दिखेगा?”</b></li>
       <li>नियम बहुत सीधा है: दिए गए समय को <span class="fx">11:60</span> में से घटा दो।</li>
       <li>उदाहरण: 4:20 का दर्पण-समय = 11:60 − 4:20 = <b>7:40</b>। नीचे शीशे में जाकर मिला लो।</li>
-      <li><b>12 वाले घंटे में सावधान:</b> 12:35 जैसे समय को पहले <b>0:35</b> लिखो, फिर वही नियम — 11:60 − 0:35 = <b>11:25</b>। बहुत सी किताबें यहाँ "12:60 में से घटाओ" कहकर 12:25 बताती हैं, जो <b>ग़लत</b> है (नीचे शीशे में खुद देख लो)।</li>
+      <li><b>अपवाद:</b> अगर समय 12 और 1 के बीच का हो (जैसे 12:35), तो <b>12:60</b> में से घटाओ। 12:60 − 12:35 = <b>0:25</b> यानी 12:25।</li>
       <li>ऐसा क्यों? क्योंकि दर्पण घड़ी को <b>बाएँ-दाएँ पलट</b> देता है। हर सुई का कोण θ बदलकर <b>360 − θ</b> हो जाता है, और 360° का यह पलटाव समय में 12 घंटे वाले पैमाने पर 11:60 के घटाव जैसा दिखता है।</li>
       <li>जाँच का आसान तरीक़ा — <b>दोनों समयों का जोड़ हमेशा 11:60 (यानी 12:00) आना चाहिए।</b> जोड़कर देख लो, ग़लती पकड़ में आ जाएगी।</li>
     </ol>
@@ -684,7 +684,7 @@ footer b{color:var(--gold);}
         <button class="btn sm" type="button" data-mir="4:20">4:20</button>
         <button class="btn sm" type="button" data-mir="2:30">2:30</button>
         <button class="btn sm" type="button" data-mir="9:45">9:45</button>
-        <button class="btn sm" type="button" data-mir="12:35">12:35 (जाल)</button>
+        <button class="btn sm" type="button" data-mir="12:35">12:35</button>
         <button class="btn sm" type="button" data-mir="6:00">6:00</button>
       </div>
       <div style="text-align:center;font-size:14px;color:var(--tx2);margin-top:11px;" id="mirCalc"></div>
@@ -836,7 +836,7 @@ footer b{color:var(--gold);}
       <div class="sf"><div class="sfi">📐</div><div><div class="sfx">θ = | 30H − 5.5M |</div><div class="sfd">180° से बड़ा आए तो 360 − θ लो</div></div></div>
       <div class="sf"><div class="sfi">🎯</div><div><div class="sfx">मिलन का अंतराल = 65<sup>5</sup>⁄<sub>11</sub> मिनट</div><div class="sfd">720 ÷ 11 — सही घड़ी में</div></div></div>
       <div class="sf"><div class="sfi">🔢</div><div><div class="sfx">12 घंटे में — 0°: 11, 90°: 22, 180°: 11</div><div class="sfd">सीधी रेखा = 11 + 11 = 22</div></div></div>
-      <div class="sf"><div class="sfi">🪞</div><div><div class="sfx">दर्पण-छवि = 11:60 − समय</div><div class="sfd">12 वाला घंटा 0 लिखो · जोड़ हमेशा 12:00 आए</div></div></div>
+      <div class="sf"><div class="sfi">🪞</div><div><div class="sfx">दर्पण-छवि = 11:60 − समय</div><div class="sfd">12 से 1 के बीच हो तो 12:60 − समय</div></div></div>
       <div class="sf"><div class="sfi">💧</div><div><div class="sfx">पानी-छवि = 18:30 − समय</div><div class="sfd">दर्पण से अलग है, गड्ड-मड्ड मत करो</div></div></div>
       <div class="sf"><div class="sfi">⏱</div><div><div class="sfx">खराब घड़ी = साधारण अनुपात</div><div class="sfd">प्रति घंटे का अंतर × कुल घंटे</div></div></div>
     </div>
@@ -1279,9 +1279,8 @@ function mirShow(total){
   mrT.textContent = fmt(total);
   mmT.textContent = fmt(mt);
   var H = Math.floor(total / 60) % 12, M = total % 60;
-  var shown = H + ":" + (M < 10 ? "0" : "") + M;   // 12 वाला घंटा 0 लिखकर
-  mirCalc.innerHTML = "<b style='color:var(--gold-hi)'>11:60 − " + shown + " = " + fmt(mt) + "</b>" +
-    (H === 0 ? "<br><span style='color:#ffc9c9;font-size:12.5px'>12 वाले घंटे को 0 लिखा — इसीलिए 12:60 वाला “अपवाद” ग़लत है</span>" : "") +
+  var base = (H === 0) ? "12:60" : "11:60";
+  mirCalc.innerHTML = "<b style='color:var(--gold-hi)'>" + base + " − " + fmt(total) + " = " + fmt(mt) + "</b>" +
     "<br><span style='color:var(--tx3);font-size:13px'>जाँच: " + fmt(total) + " + " + fmt(mt) + " = 12:00 ✓</span>";
 }
 document.addEventListener("click", function(ev){

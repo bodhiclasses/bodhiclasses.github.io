@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>भाग 2 · संचयी तालिका — “और ऊपर” वाली | UPSSSC PET का DI</title>
+<meta name="description" content="एक पूरा DI सेट — पाँच प्रश्न, विकल्प, कदम-दर-कदम हल और हर जाल। संचयी तालिका को खोलकर समझना।">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Noto+Sans+Devanagari:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#faf7f0; --card:#fffefb; --ink:#191b21; --ink2:#4a4f5e; --ink3:#7d8394; --ink4:#a7adbb;
+  --line:#e8e2d5; --line2:#d6cdb9;
+  --saf:#cf5314; --saf-l:#fff1e6; --saf-d:#94390a;
+  --ind:#33359e; --ind-l:#eeeeff;
+  --teal:#0a6d5f; --teal-l:#e2f5f0;
+  --rose:#b31340; --rose-l:#ffe9ef;
+  --gold:#95690a; --gold-l:#fdf3d8;
+  --vio:#6c31a8; --vio-l:#f5ecff;
+  --sh:0 1px 0 var(--line2), 0 10px 26px -20px rgba(25,27,33,.55);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);
+  font-family:'Noto Sans Devanagari',system-ui,'Nirmala UI',sans-serif;
+  font-size:17.5px;line-height:1.88;letter-spacing:.1px;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Tiro Devanagari Hindi','Noto Sans Devanagari',serif;font-weight:400;line-height:1.38}
+.mono,.num{font-family:'JetBrains Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.wrap{max-width:880px;margin:0 auto;padding:0 18px}
+section{padding:52px 0;scroll-margin-top:64px}
+p{margin:12px 0}
+b,strong{font-weight:700}
+.eng{color:var(--ink3);font-weight:600;font-size:.86em}
+
+/* नेविगेशन */
+#bar{position:fixed;top:0;left:0;height:3px;width:0;z-index:99;background:linear-gradient(90deg,var(--saf),var(--rose),var(--ind))}
+nav{position:sticky;top:0;z-index:60;background:rgba(250,247,240,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:5px;align-items:center;overflow-x:auto;padding:9px 14px;scrollbar-width:none}
+nav .wrap::-webkit-scrollbar{display:none}
+nav a{flex:0 0 auto;font-size:13.5px;font-weight:600;color:var(--ink2);text-decoration:none;padding:6px 12px;border-radius:99px;white-space:nowrap}
+nav a:hover,nav a.on{background:var(--ink);color:#fff}
+.bm{flex:0 0 auto;font-family:'Tiro Devanagari Hindi',serif;font-size:15.5px;color:var(--saf);padding-right:10px;border-right:1px solid var(--line);margin-right:5px;white-space:nowrap}
+
+/* कवर */
+.cover{padding:44px 0 8px}
+.kick{display:inline-block;font-size:12px;font-weight:800;letter-spacing:1.6px;color:var(--saf-d);background:var(--saf-l);border:1px solid #f4cdae;padding:6px 14px;border-radius:99px}
+.cover h1{font-size:clamp(32px,6.6vw,54px);margin:20px 0 0;letter-spacing:-.5px}
+.cover h1 em{font-style:normal;color:var(--saf)}
+.lede{font-size:clamp(17px,2.2vw,20px);color:var(--ink2);margin-top:16px}
+.kvrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:26px}
+.kv{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:var(--sh)}
+.kv b{display:block;font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:700;color:var(--ind);line-height:1.1}
+.kv span{display:block;font-size:13px;color:var(--ink3);margin-top:4px;font-weight:600;line-height:1.55}
+
+/* शीर्षक */
+.sh{display:flex;align-items:flex-start;gap:14px;margin-bottom:4px}
+.chip{flex:0 0 auto;width:42px;height:42px;border-radius:13px;display:grid;place-items:center;
+  font-family:'Tiro Devanagari Hindi',serif;font-size:19px;color:#fff;background:var(--ink)}
+h2{font-size:clamp(25px,4.2vw,36px);letter-spacing:-.3px}
+h3{font-size:clamp(19px,2.9vw,25px);margin:26px 0 4px}
+h4{font-size:19px}
+.sub{color:var(--ink3);font-size:14.5px;margin-top:2px;font-weight:600}
+.rule{height:1px;background:linear-gradient(90deg,var(--line2) 0,var(--line2) 80px,var(--line) 80px,transparent);margin:14px 0 24px}
+
+/* बॉक्स */
+.card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:20px;box-shadow:var(--sh)}
+.box{border-left:4px solid;border-radius:0 13px 13px 0;padding:14px 17px;font-size:16px;margin:16px 0}
+.tip{border-color:var(--teal);background:var(--teal-l)}
+.trap{border-color:var(--rose);background:var(--rose-l)}
+.note{border-color:var(--gold);background:var(--gold-l)}
+.new{border-color:var(--vio);background:var(--vio-l)}
+.mark{background:#ffeeb0;padding:1px 5px;border-radius:4px;font-weight:700}
+.big-say{font-family:'Tiro Devanagari Hindi',serif;font-size:clamp(21px,3.4vw,28px);line-height:1.55;
+  background:var(--ink);color:#fff8ea;border-radius:20px;padding:24px 24px;margin:22px 0;text-align:center}
+.big-say em{font-style:normal;color:#ffcf6b}
+
+/* तालिका */
+.tblwrap{overflow-x:auto;margin:14px 0;-webkit-overflow-scrolling:touch;border-radius:14px}
+.dt{width:100%;border-collapse:separate;border-spacing:0;font-size:15px;background:#fff;
+  border:1px solid var(--line2);border-radius:14px;overflow:hidden;min-width:min(100%,460px)}
+.dt th,.dt td{padding:10px 11px;text-align:center;border-bottom:1px solid var(--line);border-right:1px solid var(--line)}
+.dt tr:last-child td,.dt tr:last-child th{border-bottom:none}
+.dt th:last-child,.dt td:last-child{border-right:none}
+.dt thead th{background:var(--ink);color:#fff;font-weight:700;font-size:13.5px;border-color:#2c2f38;line-height:1.4}
+.dt tbody th{background:#f8f4e9;font-weight:700;font-size:14px;white-space:nowrap;text-align:right}
+.dt td{font-family:'JetBrains Mono',monospace;font-weight:600}
+.dt td.hl{background:#ffe7cd;color:var(--saf-d);font-weight:800}
+.dt td.hl2{background:#e6e5ff;color:var(--ind);font-weight:800}
+.unit{display:inline-block;font-size:13px;font-weight:700;color:var(--rose);background:var(--rose-l);
+  border:1px dashed #f5bfcd;border-radius:9px;padding:5px 12px}
+
+/* प्रश्न कार्ड */
+.qc{background:var(--card);border:1px solid var(--line);border-radius:18px;margin:22px 0;box-shadow:var(--sh);overflow:hidden}
+.qc>.head{background:#f6f2e7;border-bottom:1px solid var(--line);padding:13px 18px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.qn{font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:700;color:#fff;background:var(--ink);border-radius:8px;padding:3px 10px}
+.pat{font-size:12.5px;font-weight:700;color:var(--vio);background:var(--vio-l);border:1px solid #e2d0f5;border-radius:99px;padding:3px 11px}
+.qc>.body{padding:18px}
+.qt{font-size:17.5px;font-weight:600;line-height:1.75}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+@media(max-width:560px){.opts{grid-template-columns:1fr}}
+.opt{border:1.5px solid var(--line2);background:#fff;border-radius:11px;padding:9px 13px;font-size:15.5px;font-weight:600}
+.opt i{font-style:normal;font-family:'JetBrains Mono',monospace;color:var(--ink3);font-weight:700;margin-right:7px}
+.opt.right{border-color:var(--teal);background:var(--teal-l);color:var(--teal)}
+.opt.right i{color:var(--teal)}
+.solve{margin-top:18px;border-top:1px dashed var(--line2);padding-top:8px}
+.slab{font-size:12px;font-weight:800;letter-spacing:1.5px;color:var(--saf-d);margin-bottom:4px}
+ol.steps{list-style:none;counter-reset:s;margin:6px 0 0}
+ol.steps li{counter-increment:s;position:relative;padding:11px 0 11px 42px;border-bottom:1px dashed var(--line);font-size:16.5px;line-height:1.8}
+ol.steps li:last-child{border-bottom:none}
+ol.steps li:before{content:counter(s);position:absolute;left:0;top:12px;width:28px;height:28px;border-radius:9px;
+  background:#eef0fa;color:var(--ind);border:1px solid #d8daf0;display:grid;place-items:center;
+  font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700}
+.calc{display:inline-block;font-family:'JetBrains Mono',monospace;font-weight:700;background:var(--ink);color:#ffd98a;
+  border-radius:9px;padding:4px 11px;margin:4px 2px;font-size:15px}
+.ansbar{margin-top:16px;background:linear-gradient(120deg,var(--teal),#12907d);color:#fff;border-radius:13px;
+  padding:12px 18px;font-weight:700;font-size:17.5px}
+.trapbar{margin-top:11px;background:var(--rose-l);border:1px solid #f5c3d0;border-radius:13px;padding:12px 16px;font-size:15.5px}
+.trapbar b{color:var(--rose)}
+
+/* चित्र */
+.fig{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--sh);margin:16px 0}
+.fig svg{width:100%;height:auto;display:block;overflow:visible}
+.fig .cap{font-size:14px;color:var(--ink3);font-weight:600;text-align:center;margin-top:9px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;font-size:13.5px;font-weight:700;margin-top:10px;color:var(--ink2)}
+.legend i{display:inline-block;width:13px;height:13px;border-radius:4px;margin-right:6px;vertical-align:-2px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+@media(max-width:760px){.g2{grid-template-columns:1fr}}
+
+/* बटन */
+.btn{font-family:inherit;font-size:14.5px;font-weight:700;padding:9px 15px;border-radius:11px;
+  border:1.5px solid var(--line2);background:#fff;cursor:pointer;color:var(--ink2);transition:.15s}
+.btn:hover{border-color:var(--saf);color:var(--saf-d)}
+.btn.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.pill{font-size:12.5px;font-weight:700;color:var(--ink3);background:#f2ede1;border-radius:99px;padding:5px 12px}
+
+footer{padding:40px 0 60px;text-align:center;color:var(--ink3);font-size:14px;border-top:1px solid var(--line);margin-top:20px}
+footer b{color:var(--saf-d)}
+.next{display:block;background:var(--ink);color:#fff;border-radius:18px;padding:20px 22px;text-decoration:none;margin-top:24px}
+.next span{display:block;font-size:12.5px;font-weight:800;letter-spacing:1.4px;color:#ffcf6b}
+.next b{display:block;font-family:'Tiro Devanagari Hindi',serif;font-weight:400;font-size:24px;margin-top:4px;color:#fff}
+.next i{display:block;font-style:normal;font-size:15px;color:#c9c5ba;margin-top:5px}
+
+.dots{display:grid;grid-template-columns:repeat(10,1fr);gap:3px;max-width:240px;margin:0 auto}
+.dots i{aspect-ratio:1;border-radius:3px;display:block}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<nav><div class="wrap">
+  <span class="bm">भाग 2 · और ऊपर</span>
+  <a href="#s1">एक शब्द का खेल</a>
+  <a href="#s2">तालिका पढ़िए</a>
+  <a href="#s3">असली तस्वीर</a>
+  <a href="#s4">तीन नियम</a>
+  <a href="#s5">पाँच प्रश्न</a>
+  <a href="#s6">कट-ऑफ मशीन</a>
+  <a href="#s7">चेकलिस्ट</a>
+</div></nav>
+
+<header class="cover"><div class="wrap">
+  <span class="kick">भाग 2 · एक पूरा सेट</span>
+  <h1>“और ऊपर” — <em>एक शब्द</em>, जो पूरी तालिका पलट देता है</h1>
+  <p class="lede">यह सेट कठिन नहीं है। इसका गणित सिर्फ़ घटाव और प्रतिशत है। पर इसमें एक ऐसा शब्द छिपा है कि जब तक आप उसे नहीं पकड़ते, हर संख्या झूठ बोलती हुई लगती है। इस पन्ने में वही शब्द पकड़ेंगे, और फिर पाँचों प्रश्न एक-एक करके हल करेंगे।</p>
+  <div class="kvrow">
+    <div class="kv"><b>1</b><span>तालिका — दो विषय, पाँच खाने</span></div>
+    <div class="kv"><b>5</b><span>प्रश्न — पूरे हल के साथ</span></div>
+    <div class="kv"><b>3</b><span>नियम — इतने ही लगते हैं</span></div>
+    <div class="kv"><b>50</b><span>पूर्णांक — हर प्रतिशत इसी से बनेगा</span></div>
+  </div>
+  <div class="box note" style="margin-top:22px"><b>यह सेट कहाँ से लिया गया है।</b> यह एक वास्तविक UPSSSC पेपर (वन रक्षक, 21 अगस्त 2022) का DI सेट है। मूल पेपर में इसके प्रश्नों के नंबर 236 से 240 थे और चार विकल्प थे। यहाँ हमने प्रश्नों को <b>1 से 5</b> गिना है और अभ्यास आज के पेपर जैसा रहे, इसलिए हर प्रश्न में <b>पाँचवाँ विकल्प</b> — “उपर्युक्त में से कोई नहीं” — जोड़ दिया है।</div>
+</div></header>
+
+<!-- ══════════ 1 ══════════ -->
+<section id="s1"><div class="wrap">
+  <div class="sh"><div class="chip">१</div><div>
+    <h2>पहले असली दिक़्क़त पहचानिए</h2>
+    <div class="sub">गणित नहीं — एक शब्द</div>
+  </div></div>
+  <div class="rule"></div>
+
+  <p>यह तालिका सौ छात्रों के अंकों की है। दो विषय हैं — संस्कृत और कम्प्यूटर — और एक तीसरी पंक्ति है “कुल मिलाकर”। पूर्णांक (अधिकतम अंक) <b>50</b> हैं।</p>
+
+  <div class="tblwrap">
+  <table class="dt">
+    <thead>
+      <tr><th rowspan="2">विषय</th><th colspan="5">50 में से अंक</th></tr>
+      <tr><th>40 और ऊपर</th><th>30 और ऊपर</th><th>20 और ऊपर</th><th>10 और ऊपर</th><th>0 और ऊपर</th></tr>
+    </thead>
+    <tbody>
+      <tr><th>संस्कृत</th><td>8</td><td>31</td><td>81</td><td>91</td><td>100</td></tr>
+      <tr><th>कम्प्यूटर</th><td>5</td><td>20</td><td>67</td><td>80</td><td>100</td></tr>
+      <tr><th>कुल मिलाकर</th><td>10</td><td>25</td><td>75</td><td>85</td><td>100</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>अब देखिए दिमाग़ क्या करता है। कम्प्यूटर की पंक्ति में “30 और ऊपर” के नीचे 20 लिखा है। नब्बे प्रतिशत छात्र इसे ऐसे पढ़ते हैं —</p>
+
+  <div class="box trap" style="font-size:17px"><b>ग़लत पढ़ना:</b> “30 अंक पाने वाले 20 छात्र हैं।”</div>
+  <div class="box tip" style="font-size:17px"><b>सही पढ़ना:</b> “30 <b>या उससे ज़्यादा</b> अंक पाने वाले 20 छात्र हैं।”</div>
+
+  <div class="big-say">यह <em>संचयी</em> तालिका है।<br>ऊपर वाला खाना, नीचे वाले खाने के <em>अंदर</em> समाया हुआ है।</div>
+
+  <p>यानी 45 अंक पाने वाला एक छात्र <b>पाँचों</b> खानों में गिना गया है — “40 और ऊपर” में भी, “30 और ऊपर” में भी, “20 और ऊपर” में भी, “10 और ऊपर” में भी और “0 और ऊपर” में भी। एक ही छात्र, पाँच बार।</p>
+
+  <div class="box note"><b>पहचानने का पक्का चिह्न।</b> संचयी तालिका में संख्याएँ बाएँ से दाएँ <b>हमेशा बढ़ती</b> हैं, और आख़िरी खाना हमेशा <b>कुल संख्या</b> के बराबर होता है। यहाँ तीनों पंक्तियों का आख़िरी खाना 100 है। सबूत मिल गया।</div>
+
+  <p>इसलिए पहला काम गणना करना नहीं है। पहला काम है — <b>तालिका को वाक्य में बदलना</b>। जो तालिका आपको दी गई है, वह कच्चा माल नहीं है; वह पहले से पका हुआ माल है। आपको उसे वापस कच्चे रूप में लाना है।</p>
+</div></section>
+
+<!-- ══════════ 2 ══════════ -->
+<section id="s2"><div class="wrap">
+  <div class="sh"><div class="chip" style="background:var(--ind)">२</div><div>
+    <h2>हर खाने को वाक्य में बदलिए</h2>
+    <div class="sub">यह पंद्रह सेकंड का काम है, और पूरा सेट खोल देता है</div>
+  </div></div>
+  <div class="rule"></div>
+
+  <p>कम्प्यूटर की पंक्ति लीजिए और हर संख्या को ज़ोर से वाक्य बनाकर पढ़िए —</p>
+
+  <div class="tblwrap">
+  <table class="dt">
+    <thead><tr><th>खाना</th><th>संख्या</th><th>पूरा वाक्य</th></tr></thead>
+    <tbody>
+      <tr><th>40 और ऊपर</th><td class="hl">5</td><td style="text-align:left;font-family:inherit;font-weight:400">50 में से 40 या उससे अधिक अंक पाने वाले छात्र = 5</td></tr>
+      <tr><th>30 और ऊपर</th><td class="hl">20</td><td style="text-align:left;font-family:inherit;font-weight:400">30 या उससे अधिक अंक पाने वाले = 20 <span style="color:var(--ink3)">(इन 20 में वे 5 भी शामिल हैं)</span></td></tr>
+      <tr><th>20 और ऊपर</th><td class="hl">67</td><td style="text-align:left;font-family:inherit;font-weight:400">20 या उससे अधिक अंक पाने वाले = 67 <span style="color:var(--ink3)">(इन 67 में वे 20 भी शामिल हैं)</span></td></tr>
+      <tr><th>10 और ऊपर</th><td class="hl">80</td><td style="text-align:left;font-family:inherit;font-weight:400">10 या उससे अधिक अंक पाने वाले = 80</td></tr>
+      <tr><th>0 और ऊपर</th><td class="hl">100</td><td style="text-align:left;font-family:inherit;font-weight:400">0 या उससे अधिक अंक पाने वाले = 100 <span style="color:var(--ink3)">(यानी सब)</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="box tip"><b>बस इतना कर लीजिए और आधा काम हो गया।</b> अब कोई भी प्रश्न आए, आपको पता है कि हर खाना असल में क्या कह रहा है। बाक़ी सिर्फ़ घटाव है।</div>
+</div></section>
+
+<!-- ══════════ 3 ══════════ -->
+<section id="s3"><div class="wrap">
+  <div class="sh"><div class="chip" style="background:var(--teal)">३</div><div>
+    <h2>घटाइए — और असली तस्वीर सामने आ जाएगी</h2>
+    <div class="sub">दो पड़ोसी खानों का अंतर ही उस पट्टी में फँसे छात्र हैं</div>
+  </div></div>
+  <div class="rule"></div>
+
+  <div class="big-say" style="font-size:clamp(18px,3vw,24px)">किसी एक पट्टी के छात्र =<br><em>इस खाने की संख्या</em> − <em>अगले (कड़े) खाने की संख्या</em></div>
+
+  <p>उदाहरण से देखिए। कम्प्यूटर में “30 और ऊपर” = 20 और “40 और ऊपर” = 5। तो ठीक 30 से 39 के बीच वाले छात्र = <b>20 − 5 = 15</b>। बस यही एक सूत्र पूरी तालिका खोल देता है।</p>
+
+  <div class="tblwrap">
+  <table class="dt">
+    <thead><tr><th>विषय</th><th>40–50</th><th>30–39</th><th>20–29</th><th>10–19</th><th>0–9</th><th>कुल</th></tr></thead>
+    <tbody>
+      <tr><th>संस्कृत</th><td>8</td><td>23</td><td class="hl">50</td><td>10</td><td>9</td><td>100</td></tr>
+      <tr><th>कम्प्यूटर</th><td>5</td><td>15</td><td class="hl">47</td><td>13</td><td>20</td><td>100</td></tr>
+      <tr><th>कुल मिलाकर</th><td>10</td><td>15</td><td class="hl">50</td><td>10</td><td>15</td><td>100</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <details class="card" style="margin-top:8px">
+    <summary style="cursor:pointer;font-weight:700;font-size:16.5px">पूरी गणना खोलकर देखिए</summary>
+    <div style="margin-top:12px">
+      <p><b>संस्कृत —</b></p>
+      <p><span class="calc">40–50 = 8</span> <span class="calc">30–39 = 31 − 8 = 23</span> <span class="calc">20–29 = 81 − 31 = 50</span> <span class="calc">10–19 = 91 − 81 = 10</span> <span class="calc">0–9 = 100 − 91 = 9</span></p>
+      <p><b>कम्प्यूटर —</b></p>
+      <p><span class="calc">40–50 = 5</span> <span class="calc">30–39 = 20 − 5 = 15</span> <span class="calc">20–29 = 67 − 20 = 47</span> <span class="calc">10–19 = 80 − 67 = 13</span> <span class="calc">0–9 = 100 − 80 = 20</span></p>
+      <p><b>कुल मिलाकर —</b></p>
+      <p><span class="calc">40–50 = 10</span> <span class="calc">30–39 = 25 − 10 = 15</span> <span class="calc">20–29 = 75 − 25 = 50</span> <span class="calc">10–19 = 85 − 75 = 10</span> <span class="calc">0–9 = 100 − 85 = 15</span></p>
+      <div class="box tip" style="margin-bottom:0"><b>तीनों पंक्तियों का जोड़ 100 आया।</b> इसका मतलब है कि आपका घटाव कहीं ग़लत नहीं हुआ। यह जाँच पंद्रह सेकंड में हो जाती है और पूरे सेट को सुरक्षित कर देती है।</div>
+    </div>
+  </details>
+
+  <h3>अब आँखों से देखिए — 100 छात्र, 100 बिंदु</h3>
+  <p>हर बिंदु एक छात्र है, और उसका रंग बताता है कि वह किस अंक-पट्टी में है। एक नज़र में साफ़ दिख जाता है कि भीड़ कहाँ है।</p>
+  <div class="legend">
+    <span><i style="background:#b31340"></i>40–50</span>
+    <span><i style="background:#cf5314"></i>30–39</span>
+    <span><i style="background:#95690a"></i>20–29</span>
+    <span><i style="background:#0a6d5f"></i>10–19</span>
+    <span><i style="background:#7d8394"></i>0–9</span>
+  </div>
+  <div class="g3" style="margin-top:14px" id="dotWrap"></div>
+
+  <div class="box note"><b>परीक्षा-रणनीति।</b> यह अंतराल-तालिका बनाने में लगभग 40 सेकंड लगते हैं। सेट में पाँच प्रश्न हैं, तो यह 40 सेकंड का निवेश हर प्रश्न को 15 सेकंड का बना देता है। पर अगर किसी सेट में सिर्फ़ एक-दो प्रश्न हों, तो अंतराल-तालिका मत बनाइए — सीधे संचयी संख्या उठा लीजिए।</div>
+</div></section>
+
+<!-- ══════════ 4 ══════════ -->
+<section id="s4"><div class="wrap">
+  <div class="sh"><div class="chip" style="background:var(--gold)">४</div><div>
+    <h2>तीन नियम — पूरा सेट इन्हीं पर खड़ा है</h2>
+    <div class="sub">पाँचों प्रश्न इन्हीं तीन में से किसी एक को छूते हैं</div>
+  </div></div>
+  <div class="rule"></div>
+
+  <div class="g3">
+    <div class="card" style="border-top:5px solid var(--saf)">
+      <div class="pill">नियम 1</div>
+      <h4 style="margin:8px 0 4px">प्रतिशत को पहले अंक में बदलिए</h4>
+      <p style="font-size:15.5px;color:var(--ink2)">तालिका अंकों की भाषा बोलती है (50 में से), और प्रश्न प्रतिशत की भाषा बोलता है। दोनों को मिलाइए मत — पहले अनुवाद कीजिए।</p>
+      <div class="calc" style="display:block;text-align:center;margin-top:8px">60% = 60 × 50 ÷ 100 = 30 अंक</div>
+      <div class="calc" style="display:block;text-align:center">40% = 40 × 50 ÷ 100 = 20 अंक</div>
+    </div>
+    <div class="card" style="border-top:5px solid var(--ind)">
+      <div class="pill">नियम 2</div>
+      <h4 style="margin:8px 0 4px">“से कम” = कुल − “और ऊपर”</h4>
+      <p style="font-size:15.5px;color:var(--ink2)">तालिका में “से कम” का कोई खाना है ही नहीं। उसे बनाना पड़ता है — 100 में से घटाकर।</p>
+      <div class="calc" style="display:block;text-align:center;margin-top:8px">20 से कम = 100 − (20 और ऊपर)</div>
+    </div>
+    <div class="card" style="border-top:5px solid var(--teal)">
+      <div class="pill">नियम 3</div>
+      <h4 style="margin:8px 0 4px">कट-ऑफ X = “X और ऊपर” वाला खाना</h4>
+      <p style="font-size:15.5px;color:var(--ink2)">कट-ऑफ का मतलब है — X अंक या उससे अधिक पाने वाला उत्तीर्ण। यह ठीक-ठीक संचयी खाने की परिभाषा है। कोई गणना नहीं — सीधे उठा लीजिए।</p>
+      <div class="calc" style="display:block;text-align:center;margin-top:8px">कट-ऑफ 30 (कम्प्यूटर) → 20 छात्र</div>
+    </div>
+  </div>
+
+  <div class="box tip"><b>नियम 3 का उल्टा रूप भी आता है —</b> जब संख्या दी हो और कट-ऑफ पूछा हो। तब उस संख्या को दो पड़ोसी खानों के बीच पकड़िए। जैसे कम्प्यूटर में 23 छात्र चाहिए: कट-ऑफ 30 पर सिर्फ़ 20 मिलते हैं (कम पड़ गए), कट-ऑफ 20 पर 67 मिलते हैं (काफ़ी हैं)। इसलिए कट-ऑफ 20 और 30 के बीच होगा।</div>
+
+  <div class="box trap"><b>यहाँ बहुत छात्र फँसते हैं।</b> “कुल मिलाकर” वाली पंक्ति को एक <b>अलग विषय</b> मानिए। यह संस्कृत और कम्प्यूटर का औसत निकालकर नहीं बनी है — यह स्वतंत्र रूप से दी गई है। जहाँ भी “कुल मिलाकर” लिखा दिखे, बस तीसरी पंक्ति पर उँगली रख दीजिए। जोड़-भाग करने की कोशिश मत कीजिए।</div>
+</div></section>
+
+<!-- ══════════ 5 ══════════ -->
+<section id="s5"><div class="wrap">
+  <div class="sh"><div class="chip" style="background:var(--ind)">५</div><div>
+    <h2>अब पाँचों प्रश्न — एक-एक करके</h2>
+    <div class="sub">हर प्रश्न में: प्रश्न, विकल्प, कदम-दर-कदम हल, उत्तर और जाल</div>
+  </div></div>
+  <div class="rule"></div>
+  <p>हर प्रश्न पर सबसे पहले यह देखिए कि वह ऊपर वाले <b>किस नियम</b> को छू रहा है। नियम पहचानते ही उत्तर दस सेकंड में आ जाता है।</p>
+
+  <!-- प्र 1 -->
+  <div class="qc">
+    <div class="head"><span class="qn">प्रश्न 1</span><span class="pat">नियम 3 · सीधा उठाना</span></div>
+    <div class="body">
+      <div class="qt">कम्प्यूटर में कट-ऑफ 30 रखने पर उत्तीर्ण होने वाले छात्रों की संख्या, और कुल मिलाकर कट-ऑफ 30 रखने पर उत्तीर्ण होने वाले छात्रों की संख्या — दोनों में कितना अंतर है?</div>
+      <div class="opts">
+        <div class="opt"><i>a)</i> 3</div>
+        <div class="opt"><i>b)</i> 4</div>
+        <div class="opt right"><i>c)</i> 5</div>
+        <div class="opt"><i>d)</i> 15</div>
+        <div class="opt"><i>e)</i> उपर्युक्त में से कोई नहीं</div>
+      </div>
+      <div class="solve"><div class="slab">हल</div>
+        <ol class="steps">
+          <li><b>प्रश्न का अनुवाद कीजिए।</b> “कट-ऑफ 30 के साथ उत्तीर्ण” का मतलब है — 30 <b>या उससे अधिक</b> अंक पाने वाले। यानी सीधे “30 और ऊपर” वाला खाना।</li>
+          <li><b>पहली संख्या उठाइए।</b> कम्प्यूटर की पंक्ति, “30 और ऊपर” का खाना = <b>20</b></li>
+          <li><b>दूसरी संख्या उठाइए।</b> कुल मिलाकर वाली पंक्ति, “30 और ऊपर” का खाना = <b>25</b></li>
+          <li><b>अंतर निकालिए।</b> यहाँ न प्रतिशत चाहिए, न घटाकर अंतराल बनाना — बस सीधा घटाव। <span class="calc">25 − 20 = 5</span></li>
+        </ol>
+        <div class="ansbar">उत्तर — (c) 5</div>
+        <div class="trapbar"><b>जाल।</b> अगर आपने “30 और ऊपर” की जगह “ठीक 30 से 39 वाले” उठा लिए होते, तो कम्प्यूटर के 15 और कुल के भी 15 आते, और अंतर <b>0</b> निकलता — जो विकल्पों में है ही नहीं। यही सबसे सस्ता अलार्म है: <b>उत्तर विकल्पों में न मिले तो गणना नहीं, पढ़ना दोबारा जाँचिए।</b></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- प्र 2 -->
+  <div class="qc">
+    <div class="head"><span class="qn">प्रश्न 2</span><span class="pat">नियम 3 का उल्टा रूप</span></div>
+    <div class="body">
+      <div class="qt">यदि कम्प्यूटर पर होने वाली संगोष्ठी के लिए कम से कम 23 छात्र पात्र थे, तो पात्रता के न्यूनतम योग्यता अंक किस सीमा में होंगे?</div>
+      <div class="opts">
+        <div class="opt right"><i>a)</i> 20 – 30</div>
+        <div class="opt"><i>b)</i> 30 – 40</div>
+        <div class="opt"><i>c)</i> 10 – 20</div>
+        <div class="opt"><i>d)</i> 40 – 50</div>
+        <div class="opt"><i>e)</i> उपर्युक्त में से कोई नहीं</div>
+      </div>
+      <div class="solve"><div class="slab">हल</div>
+        <ol class="steps">
+          <li><b>दिशा पहचानिए।</b> यहाँ छात्रों की संख्या दी है और कट-ऑफ पूछा है। यह उल्टा प्रश्न है — इसलिए 23 को संचयी खानों में ढूँढ़ना है।</li>
+          <li><b>कम्प्यूटर की पूरी पंक्ति सामने रखिए।</b> <span class="calc">40+ → 5</span> <span class="calc">30+ → 20</span> <span class="calc">20+ → 67</span> <span class="calc">10+ → 80</span> <span class="calc">0+ → 100</span></li>
+          <li><b>अब 23 को दो खानों के बीच पकड़िए।</b> अगर कट-ऑफ 30 होता, तो सिर्फ़ 20 छात्र पात्र होते — 23 से कम, यानी शर्त टूट जाती। अगर कट-ऑफ 20 होता, तो 67 छात्र पात्र होते — 23 से कहीं ज़्यादा, यानी शर्त पूरी।</li>
+          <li><b>निष्कर्ष।</b> तो कट-ऑफ 30 से नीचे है, पर 20 के बराबर या ऊपर है। <span class="calc">20 &lt; 23 &lt; 67 ⟹ सीमा 20 से 30</span></li>
+        </ol>
+        <div class="ansbar">उत्तर — (a) 20 – 30</div>
+        <div class="trapbar"><b>सोचने का ढंग।</b> <b>कट-ऑफ जितना ऊँचा, पात्र छात्र उतने कम</b> — यह उल्टा रिश्ता है। “कम से कम 23 चाहिए” का मतलब है, कट-ऑफ इतना ऊँचा मत रखो कि संख्या 23 से नीचे गिर जाए। इसी उल्टे रिश्ते को न पकड़ पाना इस प्रश्न की सबसे आम भूल है। नीचे “कट-ऑफ मशीन” चलाकर इसे महसूस कीजिए।</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- प्र 3 -->
+  <div class="qc">
+    <div class="head"><span class="qn">प्रश्न 3</span><span class="pat">नियम 1 + नियम 3</span></div>
+    <div class="body">
+      <div class="qt">यदि संस्कृत में उच्च अध्ययन के लिए कम से कम 60% अंक आवश्यक हैं, तो कितने छात्र पात्र होंगे?</div>
+      <div class="opts">
+        <div class="opt"><i>a)</i> 81</div>
+        <div class="opt right"><i>b)</i> 31</div>
+        <div class="opt"><i>c)</i> 91</div>
+        <div class="opt"><i>d)</i> 8</div>
+        <div class="opt"><i>e)</i> उपर्युक्त में से कोई नहीं</div>
+      </div>
+      <div class="solve"><div class="slab">हल</div>
+        <ol class="steps">
+          <li><b>प्रतिशत को अंक में बदलिए।</b> पूर्णांक 50 है, इसलिए — <span class="calc">60% = 60 × 50 ÷ 100 = 30 अंक</span></li>
+          <li><b>शर्त लिखिए।</b> “कम से कम 60%” यानी “30 अंक या उससे अधिक”। यह ठीक-ठीक “30 और ऊपर” वाला खाना है।</li>
+          <li><b>संस्कृत की पंक्ति से उठाइए।</b> संस्कृत, “30 और ऊपर” = <b>31</b></li>
+          <li>कोई और गणना ज़रूरी नहीं। उत्तर सीधे तालिका में बैठा था।</li>
+        </ol>
+        <div class="ansbar">उत्तर — (b) 31</div>
+        <div class="trapbar"><b>जाल।</b> विकल्पों में 81 और 91 भी रखे गए हैं — ये संस्कृत की उसी पंक्ति के <b>पड़ोसी खाने</b> हैं। अगर आप 60% को 30 अंक में बदलने के बजाय ग़लती से 20 या 10 वाले खाने पर उँगली रख देते, तो सीधे इन्हीं में गिरते। <b>DI के विकल्प अक्सर पड़ोसी खानों से ही बनाए जाते हैं</b> — इसलिए खाना गिनकर उँगली रखिए।</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- प्र 4 -->
+  <div class="qc">
+    <div class="head"><span class="qn">प्रश्न 4</span><span class="pat">नियम 1 + आधार पहचानना</span></div>
+    <div class="body">
+      <div class="qt">कुल मिलाकर कम से कम 40% अंक पाने वाले छात्रों की तुलना में, कम्प्यूटर में कम से कम 60% अंक पाने वाले छात्र लगभग कितने प्रतिशत हैं?</div>
+      <div class="opts">
+        <div class="opt right"><i>a)</i> 27%</div>
+        <div class="opt"><i>b)</i> 21%</div>
+        <div class="opt"><i>c)</i> 33%</div>
+        <div class="opt"><i>d)</i> 75%</div>
+        <div class="opt"><i>e)</i> उपर्युक्त में से कोई नहीं</div>
+      </div>
+      <div class="solve"><div class="slab">हल</div>
+        <ol class="steps">
+          <li><b>दोनों प्रतिशतों को अंक में बदलिए।</b> <span class="calc">60% = 30 अंक</span> <span class="calc">40% = 20 अंक</span></li>
+          <li><b>ऊपर वाली संख्या।</b> कम्प्यूटर, “30 और ऊपर” = <b>20</b></li>
+          <li><b>नीचे वाली संख्या।</b> कुल मिलाकर, “20 और ऊपर” = <b>75</b></li>
+          <li><b>आधार पक्का कीजिए।</b> वाक्य में लिखा है “कुल मिलाकर … <span class="mark">की तुलना में</span>”। जिस चीज़ के बाद “की तुलना में” आता है, वही नीचे जाती है। इसलिए 75 नीचे।</li>
+          <li><span class="calc">20 ÷ 75 × 100 = 26.67% ≈ 27%</span></li>
+        </ol>
+        <div class="ansbar">उत्तर — (a) 27%</div>
+        <div class="trapbar"><b>सबसे बड़ा जाल — आधार में 100 रख देना।</b> अगर आप नीचे 100 रख देते (20 ÷ 100 = 20%), तो विकल्प (b) 21% के पास पहुँच जाते और ग़लत उत्तर “लगभग सही” लगने लगता। और अगर ऊपर-नीचे उलट देते तो 375% आता, जो विकल्पों में है ही नहीं। <b>“की तुलना में / से” वाले शब्द पर पेंसिल से गोला लगाइए</b> — वही नीचे तय करता है।</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- प्र 5 -->
+  <div class="qc">
+    <div class="head"><span class="qn">प्रश्न 5</span><span class="pat">नियम 1 + नियम 2</span></div>
+    <div class="body">
+      <div class="qt">कुल मिलाकर 40% से कम अंक प्राप्त करने वाले छात्रों की संख्या कितनी है?</div>
+      <div class="opts">
+        <div class="opt"><i>a)</i> 15</div>
+        <div class="opt"><i>b)</i> 19</div>
+        <div class="opt"><i>c)</i> 20</div>
+        <div class="opt right"><i>d)</i> 25</div>
+        <div class="opt"><i>e)</i> उपर्युक्त में से कोई नहीं</div>
+      </div>
+      <div class="solve"><div class="slab">हल</div>
+        <ol class="steps">
+          <li><b>प्रतिशत को अंक में बदलिए।</b> <span class="calc">40% = 40 × 50 ÷ 100 = 20 अंक</span></li>
+          <li><b>दिशा पहचानिए।</b> प्रश्न “से कम” पूछ रहा है, जबकि तालिका सिर्फ़ “और ऊपर” देती है। इसलिए पलटना पड़ेगा।</li>
+          <li><b>घटाइए।</b> कुल मिलाकर वाली पंक्ति, “20 और ऊपर” = 75। <span class="calc">20 से कम = 100 − 75 = 25</span></li>
+          <li><b>दूसरे रास्ते से जाँचिए।</b> ऊपर बनी अंतराल-तालिका देखिए — “कुल मिलाकर” की 10–19 पट्टी में 10 छात्र और 0–9 पट्टी में 15 छात्र हैं। <span class="calc">10 + 15 = 25</span> दोनों रास्ते एक ही उत्तर पर पहुँचे।</li>
+        </ol>
+        <div class="ansbar">उत्तर — (d) 25</div>
+        <div class="trapbar"><b>जाल।</b> विकल्प (c) 20 इसलिए रखा गया है कि आप शायद “40% = 20 अंक” निकालने के बाद वहीं रुककर 20 लिख दें — यानी <b>अंक की संख्या</b> को <b>छात्रों की संख्या</b> समझ बैठें। <span class="mark">“से कम” दिखते ही 100 में से घटाने का हाथ अपने आप उठना चाहिए।</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box tip"><b>अब पीछे मुड़कर देखिए।</b> पूरे सेट में गणित क्या था? सिर्फ़ तीन चीज़ें — <span class="calc">25 − 20</span> <span class="calc">100 − 75</span> <span class="calc">20 ÷ 75</span>। तीनों कक्षा छह के स्तर के हैं। कठिनाई पूरी की पूरी <b>भाषा</b> में थी, गणित में नहीं।</div>
+</div></section>
+
+<!-- ══════════ 6 ══════════ -->
+<section id="s6"><div class="wrap">
+  <div class="sh"><div class="chip" style="background:var(--vio)">६</div><div>
+    <h2>कट-ऑफ मशीन — ख़ुद चलाकर देखिए</h2>
+    <div class="sub">एक बार महसूस हो गया तो यह नियम कभी नहीं भूलेगा</div>
+  </div></div>
+  <div class="rule"></div>
+  <p>विषय और कट-ऑफ चुनिए, और देखिए कि उत्तीर्ण-अनुत्तीर्ण की तस्वीर कैसे बदलती है। यही खेल आपकी उँगली को तालिका पर सही जगह रखना सिखा देगा।</p>
+
+  <div class="card">
+    <div class="slab">विषय चुनिए</div>
+    <div class="btnrow" id="mSub"></div>
+    <div class="slab" style="margin-top:8px">कट-ऑफ चुनिए (50 में से)</div>
+    <div class="btnrow" id="mCut"></div>
+    <div class="slab" style="margin-top:8px">या प्रतिशत से चुनिए</div>
+    <div class="btnrow" id="mPct"></div>
+    <div id="mOut" style="margin-top:6px"></div>
+  </div>
+
+  <div class="box tip"><b>एक बात साफ़ महसूस हुई होगी —</b> कट-ऑफ और उत्तीर्ण संख्या <b>उल्टे चलते हैं</b>। कट-ऑफ बढ़ाइए, संख्या गिरेगी; कट-ऑफ घटाइए, संख्या चढ़ेगी। DI के हर पात्रता / कट-ऑफ वाले प्रश्न की जड़ यही एक वाक्य है।</div>
+</div></section>
+
+<!-- ══════════ 7 ══════════ -->
+<section id="s7"><div class="wrap">
+  <div class="sh"><div class="chip" style="background:var(--saf)">७</div><div>
+    <h2>साठ सेकंड की चेकलिस्ट</h2>
+    <div class="sub">ऐसी कोई भी तालिका दिखे, तो बस यही क्रम दोहराइए</div>
+  </div></div>
+  <div class="rule"></div>
+  <div class="card" style="background:var(--ink);color:#e6e2d6;border:none">
+    <ol class="steps" id="chk" style="font-size:16.5px"></ol>
+  </div>
+  <div class="box trap" style="margin-top:20px"><b>अंतिम बात।</b> इस सेट में गणित सिर्फ़ 25 − 20, 100 − 75 और 20 ÷ 75 था। कठिनाई पूरी भाषा में थी। इसलिए DI की तैयारी का असली मतलब है — <b>तालिका के शीर्षकों को वाक्य में बदलने का अभ्यास</b>, न कि तेज़ गणना का अभ्यास।</div>
+
+  <a class="next" href="DI-भाग-3-से-कम-वेन-और-श्रेणी.html"><span>अगला भाग</span><b>भाग 3 · “से कम” वाली तालिका और वेन आरेख</b><i>वही संचयी खेल, पर उल्टी दिशा में — और साथ में वेन आरेख तथा श्रेणी के प्रश्न।</i></a>
+</div></section>
+
+
+<section style="padding:10px 0 40px"><div class="wrap"><div class="slab" style="margin-bottom:8px">तीनों भाग</div><div class="g3"><a href="DI-भाग-1-बुनियाद.html" style="display:block;text-decoration:none;border-radius:14px;padding:14px 16px;border:1.5px solid var(--line2);background:#fff"><span style="display:block;font-size:12px;font-weight:800;letter-spacing:1.2px;color:var(--ink3)">भाग 1</span><b style="display:block;font-family:'Tiro Devanagari Hindi',serif;font-weight:400;font-size:18px;line-height:1.4;margin-top:3px;color:var(--ink)">आँकड़े पढ़ना, बिल्कुल शुरू से</b></a><a href="DI-भाग-2-और-ऊपर.html" style="display:block;text-decoration:none;border-radius:14px;padding:14px 16px;border:1.5px solid var(--saf);background:var(--saf-l)"><span style="display:block;font-size:12px;font-weight:800;letter-spacing:1.2px;color:var(--saf-d)">भाग 2</span><b style="display:block;font-family:'Tiro Devanagari Hindi',serif;font-weight:400;font-size:18px;line-height:1.4;margin-top:3px;color:var(--saf-d)">संचयी तालिका — “और ऊपर” वाली</b><span style="display:block;font-size:12.5px;font-weight:700;color:var(--saf-d);margin-top:4px">आप यहीं हैं</span></a><a href="DI-भाग-3-से-कम-वेन-और-श्रेणी.html" style="display:block;text-decoration:none;border-radius:14px;padding:14px 16px;border:1.5px solid var(--line2);background:#fff"><span style="display:block;font-size:12px;font-weight:800;letter-spacing:1.2px;color:var(--ink3)">भाग 3</span><b style="display:block;font-family:'Tiro Devanagari Hindi',serif;font-weight:400;font-size:18px;line-height:1.4;margin-top:3px;color:var(--ink)">“से कम” वाली तालिका, वेन और श्रेणी</b></a></div></div></section>
+<footer><div class="wrap">
+  <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:20px;color:var(--ink);margin-bottom:6px">भाग 2 · संचयी तालिका — “और ऊपर” वाली</div>
+  UPSSSC PET · तालिका का निर्वचन एवं विश्लेषण · <b>पहले अनुवाद, फिर घटाव, तब गणना</b><br>
+  <span style="font-size:12.5px;color:var(--ink4)">मूल सेट — UPSSSC वन रक्षक परीक्षा, 21 अगस्त 2022। प्रश्न यहाँ 1 से 5 गिने गए हैं और पाँचवाँ विकल्प अभ्यास के लिए जोड़ा गया है।</span>
+</div></footer>
+
+<script>
+const $=(s,p=document)=>p.querySelector(s), $$=(s,p=document)=>[...p.querySelectorAll(s)];
+addEventListener('scroll',()=>{const h=document.documentElement;
+  $('#bar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+  let c='';$$('section[id]').forEach(s=>{if(s.getBoundingClientRect().top<160)c=s.id;});
+  $$('nav a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+c));},{passive:true});
+
+const DATA={
+  sans:{hi:'संस्कृत',   cum:[8,31,81,91,100],  band:[8,23,50,10,9]},
+  comp:{hi:'कम्प्यूटर', cum:[5,20,67,80,100],  band:[5,15,47,13,20]},
+  agg :{hi:'कुल मिलाकर',cum:[10,25,75,85,100], band:[10,15,50,10,15]}};
+const CUTS=[40,30,20,10,0];
+const BANDS=['40–50','30–39','20–29','10–19','0–9'];
+const COLORS=['#b31340','#cf5314','#95690a','#0a6d5f','#7d8394'];
+
+/* बिंदु-चित्र */
+$('#dotWrap').innerHTML=Object.values(DATA).map(d=>{
+  let dots='';
+  d.band.forEach((n,i)=>{for(let j=0;j<n;j++)dots+='<i style="background:'+COLORS[i]+'" title="'+BANDS[i]+'"></i>';});
+  return '<div class="card" style="padding:14px"><h4 style="text-align:center;margin-bottom:10px">'+d.hi+'</h4>'+
+    '<div class="dots">'+dots+'</div>'+
+    '<div style="text-align:center;font-size:12.5px;color:var(--ink3);margin-top:9px;font-weight:600">'+
+    d.band.map((n,i)=>BANDS[i]+' : '+n).join(' · ')+'</div></div>';}).join('');
+
+/* कट-ऑफ मशीन */
+(function(){
+  let sub='comp', cut=30;
+  $('#mSub').innerHTML=Object.keys(DATA).map(k=>'<button class="btn" data-s="'+k+'">'+DATA[k].hi+'</button>').join('');
+  $('#mCut').innerHTML=CUTS.slice().reverse().map(c=>'<button class="btn mono" data-c="'+c+'">'+c+'</button>').join('');
+  $('#mPct').innerHTML=[[20,10],[40,20],[60,30],[80,40]].map(([p,c])=>'<button class="btn" data-p="'+c+'">'+p+'% = '+c+' अंक</button>').join('');
+  $$('#mSub .btn').forEach(b=>b.onclick=()=>{sub=b.dataset.s;draw();});
+  $$('#mCut .btn').forEach(b=>b.onclick=()=>{cut=+b.dataset.c;draw();});
+  $$('#mPct .btn').forEach(b=>b.onclick=()=>{cut=+b.dataset.p;draw();});
+  function draw(){
+    $$('#mSub .btn').forEach(b=>b.classList.toggle('on',b.dataset.s===sub));
+    $$('#mCut .btn').forEach(b=>b.classList.toggle('on',+b.dataset.c===cut));
+    $$('#mPct .btn').forEach(b=>b.classList.toggle('on',+b.dataset.p===cut));
+    const d=DATA[sub], idx=CUTS.indexOf(cut), pass=d.cum[idx], fail=100-pass, pct=cut/50*100;
+    $('#mOut').innerHTML=
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px">'+
+      '<div style="background:var(--teal-l);border:1px solid #bfe4dc;border-radius:13px;padding:13px 15px">'+
+        '<div style="font-size:13px;font-weight:700;color:var(--teal)">उत्तीर्ण छात्र</div>'+
+        '<div class="mono" style="font-size:30px;font-weight:700;color:var(--teal)">'+pass+'</div>'+
+        '<div style="font-size:12.5px;color:var(--ink3);font-weight:600">यानी “'+cut+' और ऊपर” वाला खाना</div></div>'+
+      '<div style="background:var(--rose-l);border:1px solid #f5c3d0;border-radius:13px;padding:13px 15px">'+
+        '<div style="font-size:13px;font-weight:700;color:var(--rose)">अनुत्तीर्ण छात्र</div>'+
+        '<div class="mono" style="font-size:30px;font-weight:700;color:var(--rose)">'+fail+'</div>'+
+        '<div style="font-size:12.5px;color:var(--ink3);font-weight:600">100 − '+pass+'</div></div></div>'+
+      '<div style="height:16px;border-radius:99px;background:var(--rose-l);overflow:hidden;margin-top:12px">'+
+        '<i style="display:block;height:100%;background:var(--teal);width:'+pass+'%;transition:width .5s"></i></div>'+
+      '<div class="box tip" style="margin-bottom:0">पढ़िए — “<b>'+d.hi+'</b> में कट-ऑफ <b>'+cut+' अंक</b> ('+pct+'%) रखने पर 100 में से <b>'+pass+'</b> छात्र उत्तीर्ण होंगे और <b>'+fail+'</b> रह जाएँगे।”</div>';
+  }
+  draw();
+})();
+
+/* चेकलिस्ट */
+const CHK=[
+ '<b style="color:#fff">शीर्षक पढ़िए, संख्या नहीं।</b> पहले दस सेकंड में सिर्फ़ यह देखिए — इकाई क्या है, कुल कितना है, और खाने का शब्द क्या है (“और ऊपर”, “से कम”, “के बीच”)।',
+ '<b style="color:#fff">तय कीजिए — संचयी है या साधारण।</b> संख्याएँ एक दिशा में बढ़ती जाएँ और आख़िरी खाना कुल के बराबर हो, तो संचयी है।',
+ '<b style="color:#fff">पूर्णांक नोट कर लीजिए।</b> यहाँ 50 है। सारे प्रतिशत इसी से बनेंगे। इसे हाशिये पर बड़ा-बड़ा लिख लीजिए।',
+ '<b style="color:#fff">प्रश्न गिनिए।</b> तीन या ज़्यादा हों तो 40 सेकंड लगाकर अंतराल-तालिका बना लीजिए। एक-दो हों तो सीधे उत्तर दीजिए।',
+ '<b style="color:#fff">हर प्रश्न में तीन शब्द ढूँढ़िए</b> — “कम से कम / अधिक से अधिक”, “से कम / और ऊपर”, और “की तुलना में / का”। ये तीन शब्द ही पूरा हल तय करते हैं।',
+ '<b style="color:#fff">उत्तर विकल्प में न मिले तो गणना नहीं, पढ़ना दोहराइए।</b> DI में नब्बे प्रतिशत ग़लतियाँ पढ़ने की होती हैं।',
+ '<b style="color:#fff">अंत में एक जाँच।</b> अंतराल-तालिका बनाई है तो जोड़ मिलाइए। प्रतिशत निकाला है तो देखिए कि वह हास्यास्पद रूप से बड़ा या छोटा तो नहीं है।'];
+$('#chk').innerHTML=CHK.map(t=>'<li style="border-bottom-color:#3a3f4b;color:#d8d3c6">'+t+'</li>').join('');
+</script>
+<style>#chk li:before{background:#2f333e;color:#ffd166;border-color:#454b58}
+details>summary{list-style:none} details>summary::-webkit-details-marker{display:none}
+details>summary:before{content:"▸ ";color:var(--saf)} details[open]>summary:before{content:"▾ "}</style>
+<script defer src="/assets/bodhi-watermark.js"></script>
+</body>
+</html>

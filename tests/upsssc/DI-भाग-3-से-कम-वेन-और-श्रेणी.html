@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>भाग 3 · “से कम” वाली तालिका, वेन आरेख और श्रेणी | UPSSSC PET का DI</title>
+<meta name="description" content="संचयी तालिका का दूसरा रूप, तीन-वृत्त वेन आरेख और श्रेणी का प्रश्न — आठ प्रश्न, पूरे हल के साथ।">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Noto+Sans+Devanagari:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#faf7f0; --card:#fffefb; --ink:#191b21; --ink2:#4a4f5e; --ink3:#7d8394; --ink4:#a7adbb;
+  --line:#e8e2d5; --line2:#d6cdb9;
+  --saf:#cf5314; --saf-l:#fff1e6; --saf-d:#94390a;
+  --ind:#33359e; --ind-l:#eeeeff;
+  --teal:#0a6d5f; --teal-l:#e2f5f0;
+  --rose:#b31340; --rose-l:#ffe9ef;
+  --gold:#95690a; --gold-l:#fdf3d8;
+  --vio:#6c31a8; --vio-l:#f5ecff;
+  --sh:0 1px 0 var(--line2), 0 10px 26px -20px rgba(25,27,33,.55);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);
+  font-family:'Noto Sans Devanagari',system-ui,'Nirmala UI',sans-serif;
+  font-size:17.5px;line-height:1.88;letter-spacing:.1px;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Tiro Devanagari Hindi','Noto Sans Devanagari',serif;font-weight:400;line-height:1.38}
+.mono,.num{font-family:'JetBrains Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.wrap{max-width:880px;margin:0 auto;padding:0 18px}
+section{padding:52px 0;scroll-margin-top:64px}
+p{margin:12px 0}
+b,strong{font-weight:700}
+.eng{color:var(--ink3);font-weight:600;font-size:.86em}
+
+/* नेविगेशन */
+#bar{position:fixed;top:0;left:0;height:3px;width:0;z-index:99;background:linear-gradient(90deg,var(--saf),var(--rose),var(--ind))}
+nav{position:sticky;top:0;z-index:60;background:rgba(250,247,240,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:5px;align-items:center;overflow-x:auto;padding:9px 14px;scrollbar-width:none}
+nav .wrap::-webkit-scrollbar{display:none}
+nav a{flex:0 0 auto;font-size:13.5px;font-weight:600;color:var(--ink2);text-decoration:none;padding:6px 12px;border-radius:99px;white-space:nowrap}
+nav a:hover,nav a.on{background:var(--ink);color:#fff}
+.bm{flex:0 0 auto;font-family:'Tiro Devanagari Hindi',serif;font-size:15.5px;color:var(--saf);padding-right:10px;border-right:1px solid var(--line);margin-right:5px;white-space:nowrap}
+
+/* कवर */
+.cover{padding:44px 0 8px}
+.kick{display:inline-block;font-size:12px;font-weight:800;letter-spacing:1.6px;color:var(--saf-d);background:var(--saf-l);border:1px solid #f4cdae;padding:6px 14px;border-radius:99px}
+.cover h1{font-size:clamp(32px,6.6vw,54px);margin:20px 0 0;letter-spacing:-.5px}
+.cover h1 em{font-style:normal;color:var(--saf)}
+.lede{font-size:clamp(17px,2.2vw,20px);color:var(--ink2);margin-top:16px}
+.kvrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:26px}
+.kv{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;box-shadow:var(--sh)}
+.kv b{display:block;font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:700;color:var(--ind);line-height:1.1}
+.kv span{display:block;font-size:13px;color:var(--ink3);margin-top:4px;font-weight:600;line-height:1.55}
+
+/* शीर्षक */
+.sh{display:flex;align-items:flex-start;gap:14px;margin-bottom:4px}
+.chip{flex:0 0 auto;width:42px;height:42px;border-radius:13px;display:grid;place-items:center;
+  font-family:'Tiro Devanagari Hindi',serif;font-size:19px;color:#fff;background:var(--ink)}
+h2{font-size:clamp(25px,4.2vw,36px);letter-spacing:-.3px}
+h3{font-size:clamp(19px,2.9vw,25px);margin:26px 0 4px}
+h4{font-size:19px}
+.sub{color:var(--ink3);font-size:14.5px;margin-top:2px;font-weight:600}
+.rule{height:1px;background:linear-gradient(90deg,var(--line2) 0,var(--line2) 80px,var(--line) 80px,transparent);margin:14px 0 24px}
+
+/* बॉक्स */
+.card{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:20px;box-shadow:var(--sh)}
+.box{border-left:4px solid;border-radius:0 13px 13px 0;padding:14px 17px;font-size:16px;margin:16px 0}
+.tip{border-color:var(--teal);background:var(--teal-l)}
+.trap{border-color:var(--rose);background:var(--rose-l)}
+.note{border-color:var(--gold);background:var(--gold-l)}
+.new{border-color:var(--vio);background:var(--vio-l)}
+.mark{background:#ffeeb0;padding:1px 5px;border-radius:4px;font-weight:700}
+.big-say{font-family:'Tiro Devanagari Hindi',serif;font-size:clamp(21px,3.4vw,28px);line-height:1.55;
+  background:var(--ink);color:#fff8ea;border-radius:20px;padding:24px 24px;margin:22px 0;text-align:center}
+.big-say em{font-style:normal;color:#ffcf6b}
+
+/* तालिका */
+.tblwrap{overflow-x:auto;margin:14px 0;-webkit-overflow-scrolling:touch;border-radius:14px}
+.dt{width:100%;border-collapse:separate;border-spacing:0;font-size:15px;background:#fff;
+  border:1px solid var(--line2);border-radius:14px;overflow:hidden;min-width:min(100%,460px)}
+.dt th,.dt td{padding:10px 11px;text-align:center;border-bottom:1px solid var(--line);border-right:1px solid var(--line)}
+.dt tr:last-child td,.dt tr:last-child th{border-bottom:none}
+.dt th:last-child,.dt td:last-child{border-right:none}
+.dt thead th{background:var(--ink);color:#fff;font-weight:700;font-size:13.5px;border-color:#2c2f38;line-height:1.4}
+.dt tbody th{background:#f8f4e9;font-weight:700;font-size:14px;white-space:nowrap;text-align:right}
+.dt td{font-family:'JetBrains Mono',monospace;font-weight:600}
+.dt td.hl{background:#ffe7cd;color:var(--saf-d);font-weight:800}
+.dt td.hl2{background:#e6e5ff;color:var(--ind);font-weight:800}
+.unit{display:inline-block;font-size:13px;font-weight:700;color:var(--rose);background:var(--rose-l);
+  border:1px dashed #f5bfcd;border-radius:9px;padding:5px 12px}
+
+/* प्रश्न कार्ड */
+.qc{background:var(--card);border:1px solid var(--line);border-radius:18px;margin:22px 0;box-shadow:var(--sh);overflow:hidden}
+.qc>.head{background:#f6f2e7;border-bottom:1px solid var(--line);padding:13px 18px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.qn{font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:700;color:#fff;background:var(--ink);border-radius:8px;padding:3px 10px}
+.pat{font-size:12.5px;font-weight:700;color:var(--vio);background:var(--vio-l);border:1px solid #e2d0f5;border-radius:99px;padding:3px 11px}
+.qc>.body{padding:18px}
+.qt{font-size:17.5px;font-weight:600;line-height:1.75}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+@media(max-width:560px){.opts{grid-template-columns:1fr}}
+.opt{border:1.5px solid var(--line2);background:#fff;border-radius:11px;padding:9px 13px;font-size:15.5px;font-weight:600}
+.opt i{font-style:normal;font-family:'JetBrains Mono',monospace;color:var(--ink3);font-weight:700;margin-right:7px}
+.opt.right{border-color:var(--teal);background:var(--teal-l);color:var(--teal)}
+.opt.right i{color:var(--teal)}
+.solve{margin-top:18px;border-top:1px dashed var(--line2);padding-top:8px}
+.slab{font-size:12px;font-weight:800;letter-spacing:1.5px;color:var(--saf-d);margin-bottom:4px}
+ol.steps{list-style:none;counter-reset:s;margin:6px 0 0}
+ol.steps li{counter-increment:s;position:relative;padding:11px 0 11px 42px;border-bottom:1px dashed var(--line);font-size:16.5px;line-height:1.8}
+ol.steps li:last-child{border-bottom:none}
+ol.steps li:before{content:counter(s);position:absolute;left:0;top:12px;width:28px;height:28px;border-radius:9px;
+  background:#eef0fa;color:var(--ind);border:1px solid #d8daf0;display:grid;place-items:center;
+  font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700}
+.calc{display:inline-block;font-family:'JetBrains Mono',monospace;font-weight:700;background:var(--ink);color:#ffd98a;
+  border-radius:9px;padding:4px 11px;margin:4px 2px;font-size:15px}
+.ansbar{margin-top:16px;background:linear-gradient(120deg,var(--teal),#12907d);color:#fff;border-radius:13px;
+  padding:12px 18px;font-weight:700;font-size:17.5px}
+.trapbar{margin-top:11px;background:var(--rose-l);border:1px solid #f5c3d0;border-radius:13px;padding:12px 16px;font-size:15.5px}
+.trapbar b{color:var(--rose)}
+
+/* चित्र */
+.fig{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--sh);margin:16px 0}
+.fig svg{width:100%;height:auto;display:block;overflow:visible}
+.fig .cap{font-size:14px;color:var(--ink3);font-weight:600;text-align:center;margin-top:9px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;font-size:13.5px;font-weight:700;margin-top:10px;color:var(--ink2)}
+.legend i{display:inline-block;width:13px;height:13px;border-radius:4px;margin-right:6px;vertical-align:-2px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+@media(max-width:760px){.g2{grid-template-columns:1fr}}
+
+/* बटन */
+.btn{font-family:inherit;font-size:14.5px;font-weight:700;padding:9px 15px;border-radius:11px;
+  border:1.5px solid var(--line2);background:#fff;cursor:pointer;color:var(--ink2);transition:.15s}
+.btn:hover{border-color:var(--saf);color:var(--saf-d)}
+.btn.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.pill{font-size:12.5px;font-weight:700;color:var(--ink3);background:#f2ede1;border-radius:99px;padding:5px 12px}
+
+footer{padding:40px 0 60px;text-align:center;color:var(--ink3);font-size:14px;border-top:1px solid var(--line);margin-top:20px}
+footer b{color:var(--saf-d)}
+.next{display:block;background:var(--ink);color:#fff;border-radius:18px;padding:20px 22px;text-decoration:none;margin-top:24px}
+.next span{display:block;font-size:12.5px;font-weight:800;letter-spacing:1.4px;color:#ffcf6b}
+.next b{display:block;font-family:'Tiro Devanagari Hindi',serif;font-weight:400;font-size:24px;margin-top:4px;color:#fff}
+.next i{display:block;font-style:normal;font-size:15px;color:#c9c5ba;margin-top:5px}
+
+.cmp{display:grid;grid-template-columns:84px 1fr;gap:9px;align-items:center;margin:7px 0}
+.cmpbar{position:relative;height:38px;border-radius:9px;background:#efe9da;overflow:hidden;display:flex}
+.cmpbar i{display:block;height:100%;transition:width .6s cubic-bezier(.2,.9,.25,1)}
+.cmpv{position:absolute;top:50%;transform:translateY(-50%);font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:700;color:#fff}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<nav><div class="wrap">
+  <span class="bm">भाग 3 · से कम</span>
+  <a href="#s1">“से कम” वाली तालिका</a>
+  <a href="#s2">असली तस्वीर</a>
+  <a href="#s3">पाँच प्रश्न</a>
+  <a href="#s4">वेन आरेख</a>
+  <a href="#s5">श्रेणी</a>
+  <a href="#s6">समेटिए</a>
+</div></nav>
+
+<header class="cover"><div class="wrap">
+  <span class="kick">भाग 3 · तीन अलग रूप</span>
+  <h1>“से कम” वाली तालिका, <em>वेन आरेख</em> और श्रेणी</h1>
+  <p class="lede">भाग 2 में हमने “और ऊपर” वाली संचयी तालिका खोली थी। यहाँ वही खेल <b>उल्टी दिशा</b> में मिलेगा — “से कम”। और साथ में दो ऐसे रूप जो PET में आते तो हैं पर तैयारी में अक्सर छूट जाते हैं — वेन आरेख और श्रेणी।</p>
+  <div class="kvrow">
+    <div class="kv"><b>8</b><span>प्रश्न — तीनों रूपों से</span></div>
+    <div class="kv"><b>3</b><span>रूप — तालिका, वेन, श्रेणी</span></div>
+    <div class="kv"><b>1</b><span>सूत्र — जो आधे प्रश्न खोल देता है</span></div>
+    <div class="kv"><b>5</b><span>विकल्प — आज के पेपर जैसा</span></div>
+  </div>
+  <div class="box note" style="margin-top:22px"><b>इस भाग के बारे में।</b> इसके प्रश्न पुराने प्रश्न-पत्रों के पैटर्न पर बने हैं। मूल पेपर में इनके अपने नंबर थे और चार विकल्प थे — यहाँ प्रश्नों को <b>1 से 8</b> गिना गया है और हर प्रश्न में <b>पाँचवाँ विकल्प</b> जोड़ दिया गया है, ताकि अभ्यास आज के पेपर जैसा लगे।</div>
+</div></header>
+
+<!-- ══════════ 1 ══════════ -->
+<section id="s1"><div class="wrap">
+  <div class="sh"><div class="chip">१</div><div>
+    <h2>“से कम” — वही जाल, उल्टी दिशा में</h2>
+    <div class="sub">एक संस्थान के दो वर्ग · इतिहास और अंग्रेजी</div>
+  </div></div>
+  <div class="rule"></div>
+
+  <p>एक संस्थान में दो वर्ग चलते हैं। <b>इतिहास वर्ग में 100 छात्र</b> हैं और <b>अंग्रेजी वर्ग में 105</b>। दोनों की परीक्षा हुई और अंक इस तालिका में दिए गए हैं।</p>
+
+  <div class="tblwrap">
+  <table class="dt">
+    <thead><tr><th>अंक</th><th>इतिहास वर्ग</th><th>अंग्रेजी वर्ग</th></tr></thead>
+    <tbody>
+      <tr><th>20 से कम</th><td>8</td><td>10</td></tr>
+      <tr><th>30 से कम</th><td>20</td><td>32</td></tr>
+      <tr><th>40 से कम</th><td>50</td><td>70</td></tr>
+      <tr><th>50 से कम</th><td>75</td><td>85</td></tr>
+      <tr><th>60 से कम</th><td>90</td><td>95</td></tr>
+      <tr><th>70 से कम</th><td>100</td><td>105</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="box trap" style="font-size:17px"><b>सबसे बड़ी ग़लती।</b> “40 से कम = 50” का मतलब यह <b>नहीं</b> कि 40 से 49 के बीच 50 छात्र हैं। इसका मतलब है — 40 से कम अंक पाने वाले <b>कुल</b> छात्र 50 हैं, यानी 0 से 39 तक के सारे मिलाकर।</div>
+
+  <div class="big-say">यह भी <em>संचयी</em> तालिका है।<br>बस इस बार गिनती <em>नीचे से ऊपर</em> चढ़ रही है।</div>
+
+  <p>भाग 2 वाली तालिका में शर्त कड़ी से ढीली होती जा रही थी (“40 और ऊपर” सबसे कड़ी)। यहाँ उल्टा है — “20 से कम” सबसे कड़ी शर्त है और “70 से कम” सबसे ढीली, इसलिए वहाँ पूरे 100 आ जाते हैं। पर <b>इलाज दोनों का एक ही है — घटाव।</b></p>
+
+  <div class="box note"><b>ध्यान दीजिए — कुल छात्र अलग-अलग हैं।</b> इतिहास वर्ग में 100 और अंग्रेजी वर्ग में 105। यह छोटी-सी बात प्रश्न 2 में पूरा खेल पलट देगी। तालिका पढ़ते ही दोनों कुल संख्याएँ हाशिये पर लिख लीजिए।</div>
+</div></section>
+
+<!-- ══════════ 2 ══════════ -->
+<section id="s2"><div class="wrap">
+  <div class="sh"><div class="chip" style="background:var(--teal)">२</div><div>
+    <h2>घटाइए — और असली तस्वीर सामने आ जाएगी</h2>
+    <div class="sub">यही एक सूत्र आधे प्रश्न खोल देता है</div>
+  </div></div>
+  <div class="rule"></div>
+
+  <div class="big-say" style="font-size:clamp(18px,3vw,24px)">किसी एक पट्टी के छात्र =<br><em>इस पंक्ति की संख्या</em> − <em>ऊपर वाली पंक्ति की संख्या</em></div>
+
+  <p>इतिहास वर्ग पर लगाकर देखिए —</p>
+  <p><span class="calc">20 से कम = 8</span> <span class="calc">20–29 = 20 − 8 = 12</span> <span class="calc">30–39 = 50 − 20 = 30</span> <span class="calc">40–49 = 75 − 50 = 25</span> <span class="calc">50–59 = 90 − 75 = 15</span> <span class="calc">60–69 = 100 − 90 = 10</span></p>
+  <p>इसी तरह अंग्रेजी वर्ग पर —</p>
+  <p><span class="calc">20 से कम = 10</span> <span class="calc">20–29 = 32 − 10 = 22</span> <span class="calc">30–39 = 70 − 32 = 38</span> <span class="calc">40–49 = 85 − 70 = 15</span> <span class="calc">50–59 = 95 − 85 = 10</span> <span class="calc">60–69 = 105 − 95 = 10</span></p>
+
+  <div class="tblwrap">
+  <table class="dt">
+    <thead><tr><th>अंक-सीमा</th><th>20 से कम</th><th>20–29</th><th>30–39</th><th>40–49</th><th>50–59</th><th>60–69</th><th>कुल</th></tr></thead>
+    <tbody>
+      <tr><th>इतिहास</th><td>8</td><td>12</td><td class="hl">30</td><td>25</td><td>15</td><td>10</td><td>100</td></tr>
+      <tr><th>अंग्रेजी</th><td>10</td><td>22</td><td class="hl">38</td><td>15</td><td>10</td><td>10</td><td>105</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="box tip"><b>जोड़ मिला लीजिए।</b> इतिहास की पंक्ति का जोड़ 100 और अंग्रेजी की पंक्ति का 105 — दोनों सही। यह जाँच दस सेकंड की है और पूरे सेट को सुरक्षित कर देती है।</div>
+
+  <h3>अब आँखों से देखिए</h3>
+  <p>पट्टी की लंबाई ही छात्रों की संख्या है। एक नज़र में दिख जाता है कि भीड़ कहाँ है और कहाँ नहीं।</p>
+  <div class="fig">
+    <div class="legend" style="margin-bottom:10px"><span><i style="background:#cf5314"></i>इतिहास</span><span><i style="background:#33359e"></i>अंग्रेजी</span></div>
+    <div id="cmp"></div>
+  </div>
+  <div class="box note"><b>एक बात नोट कर लीजिए।</b> 60–69 वाली पट्टी में दोनों वर्गों के छात्र <b>बराबर</b> हैं — दस और दस। यह बात प्रश्न 3 में काम आएगी, और तालिका के मूल रूप में यह कभी नहीं दिखती।</div>
+</div></section>
+
+<!-- ══════════ 3 ══════════ -->
+<section id="s3"><div class="wrap">
+  <div class="sh"><div class="chip" style="background:var(--ind)">३</div><div>
+    <h2>पहले पाँच प्रश्न — तालिका से</h2>
+    <div class="sub">प्रश्न, विकल्प, कदम-दर-कदम हल, उत्तर और जाल</div>
+  </div></div>
+  <div class="rule"></div>
+
+  <!-- प्र 1 -->
+  <div class="qc">
+    <div class="head"><span class="qn">प्रश्न 1</span><span class="pat">पैटर्न · सबसे बड़ा वर्ग</span></div>
+    <div class="body">
+      <div class="qt">इतिहास वर्ग में सबसे ज़्यादा छात्र किस अंक-सीमा में हैं?</div>
+      <div class="opts">
+        <div class="opt"><i>a)</i> 20 – 29</div>
+        <div class="opt right"><i>b)</i> 30 – 39</div>
+        <div class="opt"><i>c)</i> 40 – 49</div>
+        <div class="opt"><i>d)</i> 50 – 59</div>
+        <div class="opt"><i>e)</i> उपर्युक्त में से कोई नहीं</div>
+      </div>
+      <div class="solve"><div class="slab">हल</div>
+        <ol class="steps">
+          <li><b>पहचानिए।</b> प्रश्न किसी <b>एक पट्टी</b> की बात कर रहा है, इसलिए मूल तालिका से सीधे उत्तर नहीं मिलेगा — पहले घटाना पड़ेगा।</li>
+          <li>इतिहास की अंतराल-पंक्ति सामने रखिए — <span class="calc">8, 12, 30, 25, 15, 10</span></li>
+          <li>सबसे बड़ी संख्या कौन-सी है? <b>30</b>। वह किस सीमा में है? <b>30 – 39</b>।</li>
+        </ol>
+        <div class="ansbar">उत्तर — (b) 30 – 39</div>
+        <div class="trapbar"><b>जाल।</b> मूल तालिका में सबसे बड़ी संख्या 100 है (“70 से कम”) और उसके पास 90 है। जो छात्र घटाए बिना सीधे बड़ी संख्या ढूँढ़ता है, वह 50–59 या 60–69 चुन बैठता है। <b>संचयी तालिका में “सबसे ज़्यादा” कभी सीधे नहीं दिखता।</b></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- प्र 2 -->
+  <div class="qc">
+    <div class="head"><span class="qn">प्रश्न 2</span><span class="pat">पैटर्न · संख्या बनाम प्रतिशत</span></div>
+    <div class="body">
+      <div class="qt">तालिका के आधार पर नीचे दिए कथनों में से कौन-सा सही है?</div>
+      <div class="opts">
+        <div class="opt"><i>a)</i> अंग्रेजी वर्ग का प्रदर्शन बेहतर रहा, क्योंकि उसमें छात्र ज़्यादा हैं</div>
+        <div class="opt right"><i>b)</i> इतिहास वर्ग का प्रदर्शन बेहतर रहा, क्योंकि उसमें 40 से कम अंक पाने वालों का प्रतिशत कम है</div>
+        <div class="opt"><i>c)</i> दोनों वर्गों का प्रदर्शन बिल्कुल बराबर रहा</div>
+        <div class="opt"><i>d)</i> इस तालिका से प्रदर्शन के बारे में कुछ भी नहीं कहा जा सकता</div>
+        <div class="opt"><i>e)</i> उपर्युक्त में से कोई नहीं</div>
+      </div>
+      <div class="solve"><div class="slab">हल</div>
+        <ol class="steps">
+          <li><b>सबसे पहले यह पकड़िए।</b> दोनों वर्गों में छात्रों की कुल संख्या अलग है — 100 और 105। इसलिए <b>सीधी संख्याएँ मिलाना ग़लत होगा</b>; प्रतिशत में बदलना पड़ेगा।</li>
+          <li><b>कमज़ोर सिरा देखिए —</b> 40 से कम अंक वाले।<br>इतिहास: <span class="calc">50 ÷ 100 = 50%</span> &nbsp; अंग्रेजी: <span class="calc">70 ÷ 105 = 66.67%</span></li>
+          <li>यानी अंग्रेजी वर्ग में <b>ज़्यादा हिस्सा</b> छात्र 40 से नीचे रह गए। यह अंग्रेजी के ख़िलाफ़ जाता है।</li>
+          <li><b>अब मज़बूत सिरा भी जाँच लीजिए —</b> 50 और उससे ऊपर वाले।<br>इतिहास: <span class="calc">100 − 75 = 25 → 25%</span> &nbsp; अंग्रेजी: <span class="calc">105 − 85 = 20 → 19.05%</span></li>
+          <li>दोनों सिरों पर इतिहास आगे है। इसलिए कथन (b) सही है।</li>
+        </ol>
+        <div class="ansbar">उत्तर — (b) इतिहास वर्ग का प्रदर्शन बेहतर रहा</div>
+        <div class="trapbar"><b>दो जाल एक साथ।</b> <b>पहला —</b> विकल्प (a) “ज़्यादा छात्र” को “बेहतर प्रदर्शन” मान लेता है। संख्या का ज़्यादा होना गुणवत्ता का ज़्यादा होना नहीं है। <b>दूसरा —</b> विकल्प (d) कहता है कि कुछ कहा ही नहीं जा सकता; पर तालिका में पूरा अंक-वितरण मौजूद है, इसलिए प्रतिशत में बदलकर तुलना बिल्कुल की जा सकती है। <span class="mark">जब दो समूहों के कुल अलग हों, तुलना हमेशा प्रतिशत में कीजिए।</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- प्र 3 -->
+  <div class="qc">
+    <div class="head"><span class="qn">प्रश्न 3</span><span class="pat">पैटर्न · पाँचवाँ विकल्प</span></div>
+    <div class="body">
+      <div class="qt">किस अंक-सीमा में दोनों वर्गों के छात्रों की संख्या बराबर है?</div>
+      <div class="opts">
+        <div class="opt"><i>a)</i> 20 – 29</div>
+        <div class="opt"><i>b)</i> 30 – 39</div>
+        <div class="opt"><i>c)</i> 40 – 49</div>
+        <div class="opt"><i>d)</i> 50 – 59</div>
+        <div class="opt right"><i>e)</i> उपर्युक्त में से कोई नहीं</div>
+      </div>
+      <div class="solve"><div class="slab">हल</div>
+        <ol class="steps">
+          <li>अंतराल-तालिका सामने रखिए और हर विकल्प जाँचिए —</li>
+          <li>20–29 → <span class="calc">12 बनाम 22</span> बराबर नहीं &nbsp;·&nbsp; 30–39 → <span class="calc">30 बनाम 38</span> बराबर नहीं</li>
+          <li>40–49 → <span class="calc">25 बनाम 15</span> बराबर नहीं &nbsp;·&nbsp; 50–59 → <span class="calc">15 बनाम 10</span> बराबर नहीं</li>
+          <li>चारों विकल्प ग़लत निकले। असल में बराबरी <b>60–69</b> में है (दस और दस), पर वह विकल्पों में रखा ही नहीं गया। इसलिए सही उत्तर है — “उपर्युक्त में से कोई नहीं”।</li>
+        </ol>
+        <div class="ansbar">उत्तर — (e) उपर्युक्त में से कोई नहीं</div>
+        <div class="trapbar"><b>यह प्रश्न ख़ास है — इसे याद रखिए।</b> यही वह हालात है जिसके लिए पाँचवाँ विकल्प बनाया गया है। पुरानी आदत कहती है कि “चारों में से कोई तो सही होगा, जो सबसे पास लगे वही चुन लो” — और यहीं नंबर कट जाता है। <span class="mark">गणना पूरी कीजिए, फिर विकल्प देखिए। सही उत्तर सचमुच (e) हो सकता है।</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- प्र 4 -->
+  <div class="qc">
+    <div class="head"><span class="qn">प्रश्न 4</span><span class="pat">पैटर्न · सीधा प्रतिशत</span></div>
+    <div class="body">
+      <div class="qt">इतिहास वर्ग में 50 से कम अंक पाने वाले छात्र, उस वर्ग के कुल छात्रों का कितने प्रतिशत हैं?</div>
+      <div class="opts">
+        <div class="opt"><i>a)</i> 50%</div>
+        <div class="opt"><i>b)</i> 90%</div>
+        <div class="opt right"><i>c)</i> 75%</div>
+        <div class="opt"><i>d)</i> 25%</div>
+        <div class="opt"><i>e)</i> उपर्युक्त में से कोई नहीं</div>
+      </div>
+      <div class="solve"><div class="slab">हल</div>
+        <ol class="steps">
+          <li><b>रुकिए — यहाँ घटाने की ज़रूरत नहीं है।</b> प्रश्न “50 से कम” पूछ रहा है और तालिका ठीक यही देती है। संचयी तालिका का यही फ़ायदा है।</li>
+          <li>इतिहास, “50 से कम” = <b>75</b>। कुल छात्र = <b>100</b>।</li>
+          <li><span class="calc">75 ÷ 100 × 100 = 75%</span></li>
+        </ol>
+        <div class="ansbar">उत्तर — (c) 75%</div>
+        <div class="trapbar"><b>सीखने की बात।</b> संचयी तालिका हमेशा दुश्मन नहीं होती। जब प्रश्न भी “से कम” की भाषा बोले, तब वह सीधे उत्तर दे देती है। <b>पहले देखिए कि प्रश्न की भाषा तालिका की भाषा से मिल रही है या नहीं</b> — मिल रही हो तो घटाइए मत, बेकार समय जाएगा।</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- प्र 5 -->
+  <div class="qc">
+    <div class="head"><span class="qn">प्रश्न 5</span><span class="pat">पैटर्न · बीच का हिस्सा</span></div>
+    <div class="body">
+      <div class="qt">इतिहास वर्ग में 30 से 49 के बीच अंक पाने वाले छात्रों का, उस वर्ग के कुल छात्रों से अनुपात क्या है?</div>
+      <div class="opts">
+        <div class="opt"><i>a)</i> 0.30</div>
+        <div class="opt right"><i>b)</i> 0.55</div>
+        <div class="opt"><i>c)</i> 0.25</div>
+        <div class="opt"><i>d)</i> 0.75</div>
+        <div class="opt"><i>e)</i> उपर्युक्त में से कोई नहीं</div>
+      </div>
+      <div class="solve"><div class="slab">हल</div>
+        <ol class="steps">
+          <li><b>“बीच का हिस्सा” चाहिए।</b> इसका सूत्र एक ही है — <b>बड़ा संचयी − छोटा संचयी</b>।</li>
+          <li>30 से 49 के बीच = (50 से कम) − (30 से कम) = <span class="calc">75 − 20 = 55</span></li>
+          <li>कुल छात्र 100 हैं, इसलिए अनुपात = <span class="calc">55 ÷ 100 = 0.55</span></li>
+          <li><b>जाँच लीजिए।</b> अंतराल-तालिका से भी मिलाइए — 30–39 में 30 और 40–49 में 25 छात्र हैं। <span class="calc">30 + 25 = 55</span> दोनों रास्ते एक ही उत्तर पर।</li>
+        </ol>
+        <div class="ansbar">उत्तर — (b) 0.55</div>
+        <div class="trapbar"><b>जाल।</b> “30 से 49” में 30 भी शामिल है — इसलिए घटाना “30 से कम” वाली संख्या को है, “40 से कम” वाली को नहीं। जो छात्र 75 − 50 = 25 कर देता है, वह विकल्प (c) में गिर जाता है। <b>सीमा के दोनों सिरों पर उँगली रखकर पढ़िए।</b></div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ══════════ 4 ══════════ -->
+<section id="s4"><div class="wrap">
+  <div class="sh"><div class="chip" style="background:var(--vio)">४</div><div>
+    <h2>वेन आरेख — गिनती जो दो बार हो जाती है</h2>
+    <div class="sub">तैयारी में सबसे ज़्यादा छूटने वाला रूप</div>
+  </div></div>
+  <div class="rule"></div>
+
+  <p>एक कक्षा के 134 छात्रों ने तीन वैकल्पिक विषय चुने — इतिहास, गणित और विज्ञान। कुछ ने एक विषय लिया, कुछ ने दो, और कुछ ने तीनों। यही तस्वीर नीचे वेन आरेख में है।</p>
+
+  <div class="fig">
+    <svg viewBox="65 8 265 290" role="img" aria-label="तीन विषयों का वेन आरेख">
+      <circle cx="150" cy="105" r="72" fill="rgba(207,83,20,.14)" stroke="#cf5314" stroke-width="2"/>
+      <circle cx="250" cy="105" r="72" fill="rgba(51,53,158,.13)" stroke="#33359e" stroke-width="2"/>
+      <circle cx="200" cy="190" r="72" fill="rgba(10,109,95,.13)" stroke="#0a6d5f" stroke-width="2"/>
+      <g font-family="Noto Sans Devanagari" font-size="15" font-weight="700">
+        <text x="110" y="26" text-anchor="middle" fill="#cf5314">इतिहास</text>
+        <text x="292" y="26" text-anchor="middle" fill="#33359e">गणित</text>
+        <text x="200" y="288" text-anchor="middle" fill="#0a6d5f">विज्ञान</text>
+      </g>
+      <g font-family="JetBrains Mono" font-size="16" font-weight="700" fill="#191b21" text-anchor="middle">
+        <text x="112" y="93">24</text>
+        <text x="288" y="93">18</text>
+        <text x="200" y="245">30</text>
+        <text x="200" y="85">14</text>
+        <text x="150" y="173">12</text>
+        <text x="250" y="173">16</text>
+        <text x="200" y="139" fill="#b31340">20</text>
+      </g>
+    </svg>
+    <div class="cap">तीनों वृत्तों के बीच वाला 20 — वे छात्र जिन्होंने तीनों विषय लिए।</div>
+  </div>
+
+  <div class="box tip"><b>पढ़ने का पूरा नियम एक लाइन में।</b> किसी विषय का “कुल” जानना हो तो उसके वृत्त के <b>अंदर पड़ने वाली सारी संख्याएँ</b> जोड़ दीजिए — अकेली वाली भी, और साझा (ओवरलैप) वाली भी। एक संख्या जितने वृत्तों के अंदर है, उतने विषयों के जोड़ में जाएगी। जैसे बीच वाला 20 तीनों में गिना जाएगा।</div>
+
+  <div class="tblwrap">
+  <table class="dt">
+    <thead><tr><th>विषय</th><th>जोड़ में कौन-कौन</th><th>कुल</th></tr></thead>
+    <tbody>
+      <tr><th>इतिहास</th><td style="text-align:left">24 + 14 + 12 + 20</td><td>70</td></tr>
+      <tr><th>गणित</th><td style="text-align:left">18 + 14 + 16 + 20</td><td>68</td></tr>
+      <tr><th>विज्ञान</th><td style="text-align:left">30 + 12 + 16 + 20</td><td class="hl">78</td></tr>
+      <tr><th>पूरी कक्षा</th><td style="text-align:left">24 + 18 + 30 + 14 + 12 + 16 + 20</td><td>134</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="box note"><b>जाँच का तरीक़ा।</b> सातों खानों का जोड़ पूरी कक्षा के बराबर आना चाहिए — यहाँ 134 आया। पर तीनों विषयों का जोड़ (70 + 68 + 78 = 216) कक्षा से कहीं ज़्यादा है, और यह <b>सही</b> है — क्योंकि जिन छात्रों ने दो या तीन विषय लिए, वे कई बार गिने गए हैं। यही वेन आरेख का पूरा मिज़ाज है।</div>
+
+  <!-- प्र 6 -->
+  <div class="qc">
+    <div class="head"><span class="qn">प्रश्न 6</span><span class="pat">पैटर्न · वेन · सबसे बड़ा</span></div>
+    <div class="body">
+      <div class="qt">सबसे ज़्यादा छात्रों ने कौन-सा विषय चुना?</div>
+      <div class="opts">
+        <div class="opt"><i>a)</i> इतिहास</div>
+        <div class="opt"><i>b)</i> गणित</div>
+        <div class="opt right"><i>c)</i> विज्ञान</div>
+        <div class="opt"><i>d)</i> तीनों बराबर</div>
+        <div class="opt"><i>e)</i> उपर्युक्त में से कोई नहीं</div>
+      </div>
+      <div class="solve"><div class="slab">हल</div>
+        <ol class="steps">
+          <li><b>एक-एक वृत्त पर उँगली रखिए</b> और उसके अंदर की सारी संख्याएँ जोड़िए। जल्दबाज़ी में सिर्फ़ “अकेले वाली” संख्या देख लेना सबसे आम भूल है।</li>
+          <li>इतिहास = <span class="calc">24 + 14 + 12 + 20 = 70</span></li>
+          <li>गणित = <span class="calc">18 + 14 + 16 + 20 = 68</span></li>
+          <li>विज्ञान = <span class="calc">30 + 12 + 16 + 20 = 78</span></li>
+          <li>सबसे बड़ा जोड़ विज्ञान का है।</li>
+        </ol>
+        <div class="ansbar">उत्तर — (c) विज्ञान · 78 छात्र</div>
+        <div class="trapbar"><b>जाल।</b> अगर आप सिर्फ़ “अकेले वाली” संख्याएँ देखते — 24, 18, 30 — तो उत्तर फिर भी विज्ञान आता, पर यह संयोग है। ज़रा-सी संख्याएँ बदल दीजिए और यह तरीक़ा टूट जाएगा। <b>हमेशा पूरा वृत्त जोड़िए, चाहे उत्तर पहले से दिख रहा हो।</b></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- प्र 7 -->
+  <div class="qc">
+    <div class="head"><span class="qn">प्रश्न 7</span><span class="pat">पैटर्न · वेन · “कम से कम”</span></div>
+    <div class="body">
+      <div class="qt">कितने छात्रों ने कम से कम दो विषय चुने?</div>
+      <div class="opts">
+        <div class="opt"><i>a)</i> 42</div>
+        <div class="opt right"><i>b)</i> 62</div>
+        <div class="opt"><i>c)</i> 72</div>
+        <div class="opt"><i>d)</i> 82</div>
+        <div class="opt"><i>e)</i> उपर्युक्त में से कोई नहीं</div>
+      </div>
+      <div class="solve"><div class="slab">हल</div>
+        <ol class="steps">
+          <li><b>“कम से कम दो” का अनुवाद कीजिए —</b> यानी <b>ठीक दो</b> वाले <b>और</b> <b>तीनों</b> वाले, दोनों मिलाकर।</li>
+          <li>ठीक दो विषय वाले = ओवरलैप के तीन खाने = <span class="calc">14 + 12 + 16 = 42</span></li>
+          <li>तीनों विषय वाले = बीच वाला खाना = <span class="calc">20</span></li>
+          <li>कुल = <span class="calc">42 + 20 = 62</span></li>
+          <li><b>जाँच लीजिए।</b> सिर्फ़ एक विषय वाले = 24 + 18 + 30 = 72। और <span class="calc">72 + 62 = 134</span> — पूरी कक्षा। जोड़ मिल गया।</li>
+        </ol>
+        <div class="ansbar">उत्तर — (b) 62</div>
+        <div class="trapbar"><b>जाल।</b> विकल्प (a) 42 उन्हें मिलता है जो बीच वाला 20 जोड़ना भूल जाते हैं — यानी “कम से कम दो” को “ठीक दो” पढ़ लेते हैं। और विकल्प (c) 72 “सिर्फ़ एक विषय” वालों की संख्या है। <span class="mark">“कम से कम” का मतलब है “इतना या इससे ज़्यादा” — ऊपर वाले सारे खाने भी जुड़ेंगे।</span></div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ══════════ 5 ══════════ -->
+<section id="s5"><div class="wrap">
+  <div class="sh"><div class="chip" style="background:var(--gold)">५</div><div>
+    <h2>श्रेणी — नियम ढूँढ़िए, फिर आगे बढ़ाइए</h2>
+    <div class="sub">यहाँ आँकड़े पढ़ना नहीं, आँकड़ों का नियम पकड़ना है</div>
+  </div></div>
+  <div class="rule"></div>
+
+  <p>कभी-कभी तालिका के बदले एक कीमत-सूची दे दी जाती है और अगली कीमत पूछ ली जाती है। ऐसे प्रश्न में गणना नहीं, <b>नियम</b> ढूँढ़ना होता है। और नियम वही मानना है जो <b>हर जोड़ी पर सही उतरे</b>।</p>
+
+  <div class="tblwrap">
+  <table class="dt">
+    <thead><tr><th>महीना</th><th>पहला सप्ताह</th><th>तीसरा सप्ताह</th></tr></thead>
+    <tbody>
+      <tr><th>दिसंबर</th><td>₹20</td><td>₹60</td></tr>
+      <tr><th>जनवरी</th><td>₹40</td><td>₹120</td></tr>
+      <tr><th>फरवरी</th><td>₹80</td><td class="hl">?</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p style="font-size:14.5px;color:var(--ink3)">प्याज़ की कीमत, रुपये प्रति किलो।</p>
+
+  <div class="qc">
+    <div class="head"><span class="qn">प्रश्न 8</span><span class="pat">पैटर्न · श्रेणी</span></div>
+    <div class="body">
+      <div class="qt">फरवरी के तीसरे सप्ताह में प्याज़ की कीमत क्या होगी?</div>
+      <div class="opts">
+        <div class="opt"><i>a)</i> ₹160</div>
+        <div class="opt right"><i>b)</i> ₹240</div>
+        <div class="opt"><i>c)</i> ₹200</div>
+        <div class="opt"><i>d)</i> ₹300</div>
+        <div class="opt"><i>e)</i> उपर्युक्त में से कोई नहीं</div>
+      </div>
+      <div class="solve"><div class="slab">हल</div>
+        <ol class="steps">
+          <li><b>पहले आड़ा (एक ही पंक्ति में) देखिए।</b> दिसंबर: 20 और 60 → तीन गुना। जनवरी: 40 और 120 → तीन गुना। दोनों जोड़ियों पर एक ही नियम उतरा।
+            <br><b>नियम 1 —</b> <span class="calc">तीसरा सप्ताह = पहले सप्ताह का 3 गुना</span></li>
+          <li><b>अब खड़ा (एक ही स्तंभ में) देखिए।</b> पहला सप्ताह: 20 → 40 → 80। हर महीने दोगुना।
+            <br><b>नियम 2 —</b> <span class="calc">हर महीने पहला सप्ताह दोगुना</span></li>
+          <li><b>दोनों नियम आपस में मिल रहे हैं?</b> जाँचिए — तीसरा सप्ताह: 60 → 120 → ? भी दोगुना होना चाहिए, यानी 240। और नियम 1 से भी 3 × 80 = 240। <b>दोनों रास्ते एक ही जगह पहुँचे।</b></li>
+          <li>इसलिए उत्तर = <span class="calc">3 × 80 = 240</span></li>
+        </ol>
+        <div class="ansbar">उत्तर — (b) ₹240</div>
+        <div class="trapbar"><b>श्रेणी के प्रश्न का पूरा तरीक़ा।</b> एक बार आड़ा देखिए, एक बार खड़ा। जो नियम <b>हर जोड़ी</b> पर सही उतरे, वही असली नियम है। और अंत में दोनों नियमों से उत्तर मिलाकर देख लीजिए — अगर दोनों एक ही संख्या दें, तो उत्तर पक्का है। <b>अगर दोनों अलग-अलग संख्या दें, तो आपने कोई नियम ग़लत पकड़ा है — दोबारा देखिए।</b></div>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<!-- ══════════ 6 ══════════ -->
+<section id="s6"><div class="wrap">
+  <div class="sh"><div class="chip" style="background:var(--saf)">६</div><div>
+    <h2>तीनों भागों को एक साथ समेटिए</h2>
+    <div class="sub">जो कुछ सीखा, वह इन आठ पंक्तियों में है</div>
+  </div></div>
+  <div class="rule"></div>
+  <div class="card" style="background:var(--ink);color:#e6e2d6;border:none">
+    <ol class="steps" id="wrapup" style="font-size:16.5px"></ol>
+  </div>
+
+  <div class="box tip" style="margin-top:20px"><b>अब आगे क्या करें?</b> तीनों भाग एक बार पढ़ लेने के बाद पिछले पाँच वर्षों के PET पेपर उठाइए और सिर्फ़ DI के सेट हल कीजिए — घड़ी लगाकर, एक सेट पाँच मिनट में। जो ग़लत हो, उसके सामने जाल का नाम लिखिए (आधार-जाल, सीढ़ी-जाल, क्रम-जाल…)। दस सेट के बाद आप ख़ुद देखेंगे कि आपकी ग़लतियाँ दो-तीन जालों में ही सिमटी हुई हैं। बस उन्हीं दो-तीन को ठीक कीजिए — बीस अंक पक्के।</div>
+
+  <a class="next" href="DI-भाग-1-बुनियाद.html"><span>वापस शुरुआत में</span><b>भाग 1 · आँकड़े पढ़ना, बिल्कुल शुरू से</b><i>बुनियाद दोबारा देखनी हो तो — DI क्या है, PET में कहाँ है, छह नियम और बारह जाल।</i></a>
+</div></section>
+
+
+<section style="padding:10px 0 40px"><div class="wrap"><div class="slab" style="margin-bottom:8px">तीनों भाग</div><div class="g3"><a href="DI-भाग-1-बुनियाद.html" style="display:block;text-decoration:none;border-radius:14px;padding:14px 16px;border:1.5px solid var(--line2);background:#fff"><span style="display:block;font-size:12px;font-weight:800;letter-spacing:1.2px;color:var(--ink3)">भाग 1</span><b style="display:block;font-family:'Tiro Devanagari Hindi',serif;font-weight:400;font-size:18px;line-height:1.4;margin-top:3px;color:var(--ink)">आँकड़े पढ़ना, बिल्कुल शुरू से</b></a><a href="DI-भाग-2-और-ऊपर.html" style="display:block;text-decoration:none;border-radius:14px;padding:14px 16px;border:1.5px solid var(--line2);background:#fff"><span style="display:block;font-size:12px;font-weight:800;letter-spacing:1.2px;color:var(--ink3)">भाग 2</span><b style="display:block;font-family:'Tiro Devanagari Hindi',serif;font-weight:400;font-size:18px;line-height:1.4;margin-top:3px;color:var(--ink)">संचयी तालिका — “और ऊपर” वाली</b></a><a href="DI-भाग-3-से-कम-वेन-और-श्रेणी.html" style="display:block;text-decoration:none;border-radius:14px;padding:14px 16px;border:1.5px solid var(--saf);background:var(--saf-l)"><span style="display:block;font-size:12px;font-weight:800;letter-spacing:1.2px;color:var(--saf-d)">भाग 3</span><b style="display:block;font-family:'Tiro Devanagari Hindi',serif;font-weight:400;font-size:18px;line-height:1.4;margin-top:3px;color:var(--saf-d)">“से कम” वाली तालिका, वेन और श्रेणी</b><span style="display:block;font-size:12.5px;font-weight:700;color:var(--saf-d);margin-top:4px">आप यहीं हैं</span></a></div></div></section>
+<footer><div class="wrap">
+  <div style="font-family:'Tiro Devanagari Hindi',serif;font-size:20px;color:var(--ink);margin-bottom:6px">भाग 3 · “से कम” वाली तालिका, वेन आरेख और श्रेणी</div>
+  UPSSSC PET · तालिका एवं ग्राफ का निर्वचन एवं विश्लेषण · <b>बीच का हिस्सा = बड़ा संचयी − छोटा संचयी</b><br>
+  <span style="font-size:12.5px;color:var(--ink4)">प्रश्न पुराने प्रश्न-पत्रों के पैटर्न पर बनाए गए हैं। यहाँ प्रश्न 1 से 8 गिने गए हैं और हर प्रश्न में पाँचवाँ विकल्प अभ्यास के लिए जोड़ा गया है।</span>
+</div></footer>
+
+<script>
+const $=(s,p=document)=>p.querySelector(s), $$=(s,p=document)=>[...p.querySelectorAll(s)];
+addEventListener('scroll',()=>{const h=document.documentElement;
+  $('#bar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';
+  let c='';$$('section[id]').forEach(s=>{if(s.getBoundingClientRect().top<160)c=s.id;});
+  $$('nav a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+c));},{passive:true});
+
+/* तुलना-पट्टियाँ */
+(function(){
+  const lab=['20 से कम','20–29','30–39','40–49','50–59','60–69'];
+  const H=[8,12,30,25,15,10], E=[10,22,38,15,10,10], mx=38;
+  const seg=(v,mx,col)=>{const w=v/mx*100, inside=w>68;
+    return '<div class="cmpbar" style="height:22px"><i style="width:'+w+'%;background:'+col+'"></i>'+
+      '<span class="cmpv" style="'+(inside?'left:'+(w-9)+'%;color:#fff':'left:'+(w+2.5)+'%;color:#191b21')+'">'+v+'</span></div>';};
+  $('#cmp').innerHTML=lab.map((l,i)=>
+    '<div class="cmp"><div style="font-size:13px;font-weight:700;color:var(--ink2);text-align:right">'+l+'</div>'+
+    '<div style="display:grid;gap:4px">'+
+      seg(H[i],mx,'#cf5314')+seg(E[i],mx,'#33359e')+
+    '</div></div>').join('');
+})();
+
+/* समेटने वाली सूची */
+const W=[
+ '<b style="color:#fff">“और ऊपर” या “से कम” दिखे तो सबसे पहले घटाइए।</b> दोनों संचयी हैं, दोनों का इलाज एक है — पड़ोसी पंक्तियों का अंतर।',
+ '<b style="color:#fff">बीच का हिस्सा = बड़ा संचयी − छोटा संचयी।</b> यही एक सूत्र संचयी तालिका के आधे प्रश्न खोल देता है।',
+ '<b style="color:#fff">जोड़ मिलाकर जाँच लीजिए।</b> सारे अंतराल जोड़ने पर कुल संख्या आनी चाहिए। दस सेकंड की जाँच, पूरा सेट सुरक्षित।',
+ '<b style="color:#fff">कुल संख्या अलग हो तो तुलना प्रतिशत में।</b> 100 में से 50 और 105 में से 70 — सीधे मिलाना ग़लत है।',
+ '<b style="color:#fff">वेन आरेख में पूरा वृत्त जोड़िए।</b> साझा खाने भी जुड़ेंगे। और “कम से कम दो” में तीनों वाला खाना भी आएगा।',
+ '<b style="color:#fff">श्रेणी में एक बार आड़ा, एक बार खड़ा देखिए।</b> जो नियम हर जोड़ी पर उतरे, वही असली है — और अंत में दोनों नियमों से उत्तर मिलाइए।',
+ '<b style="color:#fff">प्रश्न की भाषा और तालिका की भाषा मिलाइए।</b> दोनों एक हों तो घटाइए मत — उत्तर सीधे बैठा है।',
+ '<b style="color:#fff">पाँचवाँ विकल्प सचमुच सही हो सकता है।</b> गणना पूरी कीजिए, फिर विकल्प देखिए — “सबसे पास वाला” चुनने की आदत अब महँगी है।'];
+$('#wrapup').innerHTML=W.map(t=>'<li style="border-bottom-color:#3a3f4b;color:#d8d3c6">'+t+'</li>').join('');
+</script>
+<style>#wrapup li:before{background:#2f333e;color:#ffd166;border-color:#454b58}</style>
+<script defer src="/assets/bodhi-watermark.js"></script>
+</body>
+</html>
