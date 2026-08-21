@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Bodhi Classes — परीक्षा</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* =========================================================================
+   BODHI CLASSES — परीक्षा इंजन
+   रचना एवं डिज़ाइन: आदित्य चौहान
+   ========================================================================= */
+:root{
+  --ink:#0b1428;            /* गहरा नेवी — आधार */
+  --ink-2:#111e3c;          /* कार्ड नेवी */
+  --ink-3:#16264c;          /* उठा हुआ तल */
+  --line:rgba(212,175,55,.16);
+  --gold:#d4af37;
+  --gold-2:#f0c75e;
+  --gold-soft:rgba(212,175,55,.12);
+  --saffron:#ff8a3d;
+  --saffron-2:#ff6b35;
+  --emerald:#2fbf86;
+  --emerald-soft:rgba(47,191,134,.14);
+  --rose:#ff5d73;
+  --rose-soft:rgba(255,93,115,.13);
+  --violet:#9d7bff;
+  --parchment:#f6efdd;      /* गर्म सफ़ेद टेक्स्ट */
+  --muted:#9db0d0;
+  --muted-2:#6f82a6;
+  --r-lg:22px;
+  --r-md:16px;
+  --r-sm:11px;
+  --shadow:0 24px 60px -28px rgba(0,0,0,.85);
+  --display:"Rozha One", serif;
+  --body:"Noto Sans Devanagari", system-ui, sans-serif;
+  --num:"Sora", system-ui, sans-serif;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--body);
+  color:var(--parchment);
+  background:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+/* परिवेशी पृष्ठभूमि — शांत सोने की आभा, बेमतलब चहल-पहल नहीं */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(1100px 620px at 78% -8%, rgba(63,86,160,.34), transparent 60%),
+    radial-gradient(900px 600px at 6% 8%, rgba(255,138,61,.10), transparent 55%),
+    radial-gradient(1200px 900px at 50% 116%, rgba(212,175,55,.10), transparent 60%),
+    linear-gradient(180deg,#0a1226,#0b1428 40%,#0a1023);
+}
+/* कोने का मंद बोधि-चक्र — हस्ताक्षर का संकेत, दबा हुआ */
+.bc-motif{
+  position:fixed;z-index:0;pointer-events:none;opacity:.05;
+  right:-180px;top:-140px;width:560px;height:560px;color:var(--gold);
+}
+.bc-motif.b{right:auto;left:-200px;top:auto;bottom:-220px;opacity:.04;transform:rotate(18deg)}
+
+#confetti{position:fixed;inset:0;z-index:60;pointer-events:none}
+
+.bc-app{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:26px 20px 44px;}
+
+/* ===== साझा तत्व ===== */
+.bc-brand{display:flex;align-items:center;gap:13px}
+.bc-leaf{width:42px;height:42px;flex:0 0 auto;filter:drop-shadow(0 4px 10px rgba(212,175,55,.35))}
+.bc-brand-name{font-family:var(--display);font-size:26px;line-height:1;letter-spacing:.3px;
+  background:linear-gradient(180deg,#fbe9b0,#d4af37 70%,#b8902a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.bc-brand-sub{font-size:11px;letter-spacing:3.5px;text-transform:uppercase;color:var(--gold);opacity:.8;margin-top:3px;font-weight:600}
+
+.bc-screen{animation:bcFade .55s cubic-bezier(.2,.7,.2,1) both}
+@keyframes bcFade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+[hidden]{display:none !important}
+
+.bc-rule{height:1px;border:0;margin:0;background:linear-gradient(90deg,transparent,var(--gold-soft) 18%,rgba(212,175,55,.4),var(--gold-soft) 82%,transparent)}
+
+/* ===== आवरण (COVER) ===== */
+.cover-top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.cover-tag{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);
+  border:1px solid var(--line);background:var(--gold-soft);padding:7px 14px;border-radius:999px;font-weight:600}
+.cover-hero{text-align:center;padding:46px 8px 12px}
+.cover-eyebrow{font-size:13px;letter-spacing:4px;text-transform:uppercase;color:var(--saffron);font-weight:600;margin-bottom:14px}
+.cover-title{font-family:var(--display);font-size:clamp(34px,6.4vw,62px);line-height:1.05;margin:0 auto;max-width:16ch;
+  background:linear-gradient(180deg,#fff7e6,#f3d98c 55%,#cda23a);-webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 1px 0 rgba(0,0,0,.2)}
+.cover-desc{color:var(--muted);font-size:16px;max-width:60ch;margin:18px auto 0;line-height:1.7}
+
+.meta-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:34px auto 0;max-width:880px}
+.meta-card{flex:1 1 160px;min-width:150px;background:linear-gradient(180deg,var(--ink-3),var(--ink-2));
+  border:1px solid var(--line);border-radius:var(--r-md);padding:18px 18px 16px;position:relative;overflow:hidden}
+.meta-card::after{content:"";position:absolute;left:0;top:0;height:100%;width:3px;background:linear-gradient(180deg,var(--gold-2),var(--saffron))}
+.meta-k{font-size:12px;letter-spacing:.5px;color:var(--muted);display:flex;align-items:center;gap:7px}
+.meta-v{font-family:var(--num);font-weight:800;font-size:30px;margin-top:8px;color:var(--parchment)}
+.meta-v small{font-family:var(--body);font-weight:600;font-size:13px;color:var(--muted);margin-left:4px}
+
+.instructions{background:linear-gradient(180deg,var(--ink-2),rgba(17,30,60,.55));border:1px solid var(--line);
+  border-radius:var(--r-lg);padding:26px 28px;max-width:880px;margin:30px auto 0}
+.instructions h3{font-family:var(--display);font-size:24px;margin:0 0 4px;color:var(--gold-2);font-weight:400}
+.instructions .sub{color:var(--muted-2);font-size:13px;margin-bottom:16px}
+.ins-list{counter-reset:ins;list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.ins-list li{position:relative;padding-left:42px;color:#dfe7f5;line-height:1.6;font-size:15px}
+.ins-list li::before{counter-increment:ins;content:counter(ins);position:absolute;left:0;top:-1px;
+  width:28px;height:28px;border-radius:9px;display:grid;place-items:center;font-family:var(--num);font-weight:700;font-size:14px;
+  color:var(--ink);background:linear-gradient(160deg,var(--gold-2),var(--gold));box-shadow:0 6px 14px -6px rgba(212,175,55,.6)}
+
+.cta-wrap{text-align:center;margin:34px auto 0}
+
+/* ===== नाम गेट (टेस्ट शुरू करने से पहले) ===== */
+.name-gate{background:linear-gradient(180deg,var(--ink-3),var(--ink-2));border:1px solid var(--line);
+  border-radius:var(--r-lg);padding:26px 26px 24px;margin:30px auto 0;max-width:520px;text-align:center;box-shadow:var(--shadow)}
+.name-gate h3{font-family:var(--display);font-weight:400;font-size:22px;color:var(--gold-2);margin:0 0 6px}
+.name-gate .ng-sub{color:var(--muted);font-size:13.5px;margin:0 0 18px;line-height:1.6}
+.name-gate input{width:100%;font-family:var(--body);font-size:16px;color:var(--parchment);
+  background:rgba(8,14,30,.6);border:1px solid var(--line);border-radius:12px;padding:14px 16px;
+  transition:.2s;text-align:center}
+.name-gate input:focus{outline:none;border-color:rgba(212,175,55,.5);background:rgba(8,14,30,.85)}
+.ng-err{margin-top:10px;font-size:13px;color:#ffc2cc;min-height:1em}
+/* कवर पेज — टॉप स्कोर बोर्ड */
+.topboard{background:linear-gradient(180deg,var(--ink-3),var(--ink-2));border:1px solid var(--line);
+  border-radius:var(--r-lg);padding:22px 24px 18px;margin:22px auto 0;max-width:520px;box-shadow:var(--shadow)}
+.topboard h3{font-family:var(--display);font-weight:400;font-size:20px;color:var(--gold-2);margin:0 0 4px;text-align:center}
+.topboard .tb-sub{color:var(--muted);font-size:12.5px;text-align:center;margin:0 0 14px}
+.tb-list{list-style:none;margin:0;padding:0}
+.tb-list li{display:flex;align-items:center;gap:12px;padding:9px 10px;border-radius:10px;font-size:14.5px}
+.tb-list li:nth-child(odd){background:rgba(8,14,30,.45)}
+.tb-rank{width:30px;height:30px;flex:0 0 30px;display:flex;align-items:center;justify-content:center;
+  border-radius:50%;background:var(--gold-soft);color:var(--gold-2);font-weight:700;font-size:13px}
+.tb-list li:nth-child(1) .tb-rank{background:var(--gold);color:#1a1405}
+.tb-list li:nth-child(2) .tb-rank{background:#c8ccd6;color:#20242e}
+.tb-list li:nth-child(3) .tb-rank{background:#cd8a4b;color:#2b1706}
+.tb-name{flex:1;color:var(--parchment);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb-marks{color:var(--emerald);font-weight:700;font-variant-numeric:tabular-nums}
+.btn{font-family:var(--body);font-weight:700;border:0;cursor:pointer;border-radius:13px;
+  transition:transform .15s ease,box-shadow .25s ease,background .25s ease,border-color .25s;
+  font-size:16px;display:inline-flex;align-items:center;justify-content:center;gap:10px}
+.btn:active{transform:translateY(1px) scale(.99)}
+.btn-primary{position:relative;color:#2a1c05;padding:17px 40px;font-size:18px;
+  background:linear-gradient(120deg,#ffd36a,#ffb347 45%,#ff8a3d);
+  box-shadow:0 18px 40px -16px rgba(255,138,61,.7),inset 0 1px 0 rgba(255,255,255,.5)}
+.btn-primary::before{content:"";position:absolute;inset:0;border-radius:13px;padding:1px;
+  background:linear-gradient(120deg,#fff3cf,transparent 40%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;opacity:.7}
+.btn-primary:hover{box-shadow:0 22px 50px -14px rgba(255,138,61,.85);transform:translateY(-2px)}
+.btn-ghost{background:var(--gold-soft);color:var(--gold-2);border:1px solid var(--line);padding:14px 26px}
+.btn-ghost:hover{border-color:rgba(212,175,55,.45);background:rgba(212,175,55,.16)}
+.btn-quiet{background:transparent;color:var(--muted);border:1px solid rgba(157,176,208,.22);padding:13px 22px}
+.btn-quiet:hover{color:var(--parchment);border-color:rgba(157,176,208,.45)}
+.btn[disabled]{opacity:.4;cursor:not-allowed;transform:none}
+
+/* ===== परीक्षा शीर्ष पट्टी ===== */
+.exam-bar{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:12px 16px;margin:-6px -4px 20px;border-radius:16px;
+  background:linear-gradient(180deg,rgba(13,22,46,.96),rgba(13,22,46,.82));backdrop-filter:blur(10px);
+  border:1px solid var(--line);box-shadow:0 12px 30px -22px rgba(0,0,0,.9)}
+.exam-bar .bc-brand-name{font-size:20px}
+.exam-bar .bc-leaf{width:32px;height:32px}
+.timer{font-family:var(--num);font-weight:800;font-size:22px;letter-spacing:.5px;
+  display:inline-flex;align-items:center;gap:9px;padding:9px 18px;border-radius:999px;
+  color:var(--gold-2);background:var(--gold-soft);border:1px solid var(--line)}
+.timer svg{width:17px;height:17px}
+.timer.warn{color:#fff;background:linear-gradient(120deg,var(--rose),#ff7a52);border-color:transparent;animation:pulse 1s ease-in-out infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 7px rgba(255,93,115,.16)}}
+.bar-actions{display:flex;gap:9px;align-items:center}
+.icon-btn{background:var(--gold-soft);border:1px solid var(--line);color:var(--gold-2);width:42px;height:42px;border-radius:12px;
+  cursor:pointer;display:grid;place-items:center;transition:.2s}
+.icon-btn:hover{background:rgba(212,175,55,.18)}
+.icon-btn svg{width:20px;height:20px}
+
+/* प्रगति */
+.progress-shell{height:7px;border-radius:999px;background:rgba(157,176,208,.14);overflow:hidden;margin:0 0 22px}
+.progress-fill{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--gold-2),var(--saffron));
+  transition:width .4s cubic-bezier(.2,.7,.2,1)}
+
+/* परीक्षा लेआउट */
+.exam-grid{display:grid;grid-template-columns:1fr 270px;gap:22px;align-items:start}
+
+.q-card{background:linear-gradient(180deg,var(--ink-2),rgba(15,25,52,.7));border:1px solid var(--line);
+  border-radius:var(--r-lg);padding:28px 30px 26px;box-shadow:var(--shadow);min-height:340px}
+.q-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;flex-wrap:wrap}
+.q-no{font-family:var(--num);font-weight:700;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold)}
+.q-no b{color:var(--parchment);font-size:18px;margin:0 3px}
+.q-marks{display:flex;gap:8px}
+.chip{font-family:var(--num);font-size:12px;font-weight:600;padding:6px 12px;border-radius:999px;border:1px solid var(--line)}
+.chip.pos{color:var(--emerald);background:var(--emerald-soft);border-color:transparent}
+.chip.neg{color:var(--rose);background:var(--rose-soft);border-color:transparent}
+.q-text{font-size:19px;line-height:1.65;color:#eef2fa;font-weight:500;margin-bottom:22px}
+.q-text .q-pre{display:block;color:var(--muted);font-size:15px;margin-bottom:10px;font-weight:400}
+.q-hi{font-size:19px;line-height:1.72;color:#eef2fa;font-weight:600}
+.q-en{margin-top:11px;padding-top:11px;border-top:1px dashed var(--line);font-size:15px;line-height:1.6;color:var(--muted);font-weight:400}
+.q-hi br,.q-en br{content:"";display:block;margin-top:7px}
+.o-hi{display:block}
+.o-en{display:block;color:var(--muted);font-size:.86em;margin-top:4px}
+.match-tbl{width:100%;border-collapse:collapse;margin:10px 0 4px}
+.match-tbl th,.match-tbl td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top;font-size:.92em}
+.match-tbl th{color:var(--gold);font-weight:700;font-size:.82em;letter-spacing:.5px;background:rgba(212,175,55,.06)}
+.q-en .match-tbl th{color:var(--muted)}
+.mt-intro{margin-bottom:6px}.mt-outro{margin-top:8px}
+.rev-q .q-en{font-size:13.5px}
+.lang-choose{display:flex;align-items:center;gap:10px;justify-content:center;margin:2px 0 22px;flex-wrap:wrap}
+.lc-label{font-size:13px;color:var(--muted)}
+.lang-bar{display:flex;justify-content:flex-end;margin:-4px 0 14px}
+.lang-seg{display:inline-flex;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:10px;padding:3px;gap:2px}
+.lang-b{font-family:inherit;font-size:12.5px;font-weight:600;color:var(--muted);background:transparent;border:0;border-radius:8px;padding:5px 13px;cursor:pointer;transition:.15s}
+.lang-b.on{background:linear-gradient(160deg,var(--gold-2),var(--gold));color:var(--ink)}
+@media print{
+  #bodhi-wm,#screen-review .rfilters,#screen-review .cta-wrap{display:none!important}
+  body{background:#fff!important}
+  #screen-review .review-head h2{color:#111!important}
+  .rev-card{background:#fff!important;border:1px solid #ccc!important;box-shadow:none!important;break-inside:avoid}
+  .rev-q .q-hi,.rev-q{color:#111!important}.rev-q .q-en{color:#555!important}
+  .match-tbl th{color:#333!important;background:#eee!important}
+  .match-tbl th,.match-tbl td{border-color:#bbb!important;color:#111!important}
+  .rev-opt{color:#222!important;border-color:#ccc!important}
+  .rev-opt.is-correct{background:#d9f7e6!important;color:#065f37!important}
+  .rev-opt.is-wrong{background:#fde2e5!important;color:#8a1020!important}
+  .explain,.explain *{background:#f6f2e6!important;color:#333!important}
+  @page{margin:14mm}
+}
+
+.options{display:grid;gap:12px}
+.opt{display:flex;align-items:flex-start;gap:14px;width:100%;text-align:right;cursor:pointer;
+  background:linear-gradient(180deg,rgba(22,38,76,.6),rgba(17,30,60,.5));border:1.5px solid rgba(157,176,208,.16);
+  border-radius:14px;padding:15px 16px;transition:transform .14s ease,border-color .2s,background .2s,box-shadow .2s;
+  color:#e6ecf7;font-size:16px;line-height:1.5;font-family:var(--body)}
+.opt:hover{border-color:rgba(212,175,55,.45);transform:translateX(-3px);background:rgba(22,38,76,.85)}
+.opt .key{flex:0 0 auto;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;
+  font-family:var(--num);font-weight:700;font-size:15px;color:var(--gold-2);background:var(--gold-soft);
+  border:1px solid var(--line);transition:.2s}
+.opt .txt{flex:1 1 auto;padding-top:4px;text-align:right}
+.opt.sel{border-color:var(--gold);background:linear-gradient(180deg,rgba(212,175,55,.16),rgba(212,175,55,.07));
+  box-shadow:0 10px 26px -16px rgba(212,175,55,.7)}
+.opt.sel .key{background:linear-gradient(160deg,var(--gold-2),var(--gold));color:var(--ink);border-color:transparent}
+
+/* नेविगेशन */
+.nav-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:22px;flex-wrap:wrap}
+.nav-left{display:flex;gap:10px;flex-wrap:wrap}
+
+/* प्रश्न पैनल (साइड) */
+.palette{background:linear-gradient(180deg,var(--ink-2),rgba(15,25,52,.65));border:1px solid var(--line);
+  border-radius:var(--r-lg);padding:20px 18px;position:sticky;top:84px}
+.palette h4{margin:0 0 4px;font-family:var(--display);font-weight:400;font-size:19px;color:var(--gold-2)}
+.palette .pcount{font-size:12px;color:var(--muted-2);margin-bottom:14px}
+.pgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-bottom:18px}
+.pnum{aspect-ratio:1/1;border-radius:10px;border:1.5px solid rgba(157,176,208,.22);background:rgba(22,38,76,.5);
+  color:var(--muted);font-family:var(--num);font-weight:700;font-size:14px;cursor:pointer;display:grid;place-items:center;
+  transition:.16s;position:relative}
+.pnum:hover{transform:translateY(-2px)}
+.pnum.answered{background:var(--emerald-soft);border-color:transparent;color:#86f0c2}
+.pnum.notans{background:var(--rose-soft);border-color:transparent;color:#ffb3bf}
+.pnum.marked{background:rgba(157,123,255,.16);border-color:transparent;color:#cdbcff}
+.pnum.marked.answered::after{content:"";position:absolute;right:5px;bottom:5px;width:7px;height:7px;border-radius:50%;
+  background:var(--emerald);box-shadow:0 0 0 2px var(--ink-2)}
+.pnum.current{outline:2px solid var(--gold);outline-offset:2px;color:var(--gold-2)}
+.legend{display:grid;gap:9px;font-size:12.5px;color:var(--muted)}
+.legend span{display:flex;align-items:center;gap:9px}
+.dot{width:14px;height:14px;border-radius:5px;flex:0 0 auto;border:1px solid rgba(157,176,208,.22)}
+.dot.an{background:var(--emerald-soft);border-color:transparent}
+.dot.na{background:var(--rose-soft);border-color:transparent}
+.dot.mk{background:rgba(157,123,255,.18);border-color:transparent}
+.dot.nv{background:rgba(22,38,76,.6)}
+.palette .submit-side{margin-top:18px;width:100%}
+
+/* ===== परिणाम (RESULT) ===== */
+.result-head{text-align:center;margin-bottom:8px}
+.result-eyebrow{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--saffron);font-weight:600}
+.result-title{font-family:var(--display);font-size:clamp(30px,5vw,48px);margin:8px 0 0;
+  background:linear-gradient(180deg,#fff7e6,#f3d98c 60%,#cda23a);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+.score-stage{display:grid;grid-template-columns:auto 1fr;gap:34px;align-items:center;
+  background:linear-gradient(180deg,var(--ink-2),rgba(15,25,52,.6));border:1px solid var(--line);
+  border-radius:26px;padding:34px;margin:24px 0;box-shadow:var(--shadow)}
+.ring-wrap{position:relative;width:230px;height:230px;justify-self:center}
+.ring-wrap svg{transform:rotate(-90deg);width:100%;height:100%}
+.ring-center{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.ring-pct{font-family:var(--num);font-weight:800;font-size:54px;line-height:1;
+  background:linear-gradient(180deg,#fbe9b0,#d4af37);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ring-pct span{font-size:24px}
+.ring-label{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:8px}
+
+.score-side .verdict{font-family:var(--display);font-size:26px;line-height:1.25;color:var(--gold-2);font-weight:400;margin-bottom:6px}
+.score-side .sub{color:var(--muted);font-size:14px;margin-bottom:22px;line-height:1.6}
+.score-big{font-family:var(--num);font-weight:800;font-size:40px;color:var(--parchment)}
+.score-big small{font-size:18px;color:var(--muted);font-weight:600}
+
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:6px 0 26px}
+.stat{background:linear-gradient(180deg,var(--ink-3),var(--ink-2));border:1px solid var(--line);border-radius:var(--r-md);
+  padding:18px 14px;text-align:center;position:relative;overflow:hidden}
+.stat .sv{font-family:var(--num);font-weight:800;font-size:30px;line-height:1}
+.stat .sk{font-size:12.5px;color:var(--muted);margin-top:7px;display:flex;align-items:center;justify-content:center;gap:6px}
+.stat.ok .sv{color:var(--emerald)} .stat.no .sv{color:var(--rose)}
+.stat.sk0 .sv{color:var(--muted)} .stat.tm .sv{color:var(--gold-2)}
+.stat svg{width:14px;height:14px}
+
+.result-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* ===== रैंकिंग / लीडरबोर्ड ===== */
+.rank-card{background:linear-gradient(180deg,var(--ink-3),var(--ink-2));border:1px solid var(--line);
+  border-radius:var(--r-lg);padding:26px 26px 24px;margin:26px auto 0;max-width:520px;text-align:center;box-shadow:var(--shadow)}
+.rank-card h3{font-family:var(--display);font-weight:400;font-size:22px;color:var(--gold-2);margin:0 0 6px}
+.rank-card .rk-sub{color:var(--muted);font-size:13.5px;margin:0 0 18px;line-height:1.6}
+.rk-msg{margin-top:14px;font-size:13.5px;line-height:1.6}
+.rk-msg.ok{color:#9af0cb}
+.rk-msg.err{color:#ffc2cc}
+.rk-msg.busy{color:var(--muted)}
+
+/* ===== समीक्षा (REVIEW) ===== */
+.review-head{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:22px}
+.review-head h2{font-family:var(--display);font-weight:400;font-size:30px;margin:0;color:var(--gold-2)}
+.rfilters{display:flex;gap:8px;flex-wrap:wrap}
+.rfilter{font-family:var(--body);font-size:13.5px;font-weight:600;padding:8px 15px;border-radius:999px;cursor:pointer;
+  border:1px solid var(--line);background:transparent;color:var(--muted);transition:.18s}
+.rfilter.active{color:var(--ink);background:linear-gradient(160deg,var(--gold-2),var(--gold));border-color:transparent}
+.rev-card{background:linear-gradient(180deg,var(--ink-2),rgba(15,25,52,.6));border:1px solid var(--line);
+  border-left-width:4px;border-radius:var(--r-md);padding:22px 24px;margin-bottom:16px}
+.rev-card.correct{border-left-color:var(--emerald)}
+.rev-card.wrong{border-left-color:var(--rose)}
+.rev-card.skip{border-left-color:var(--muted-2)}
+.rev-top{display:flex;align-items:center;gap:11px;margin-bottom:12px;flex-wrap:wrap}
+.rev-badge{font-family:var(--num);font-size:11.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;
+  padding:5px 11px;border-radius:999px}
+.rev-badge.correct{color:var(--emerald);background:var(--emerald-soft)}
+.rev-badge.wrong{color:var(--rose);background:var(--rose-soft)}
+.rev-badge.skip{color:var(--muted);background:rgba(157,176,208,.12)}
+.rev-qno{font-family:var(--num);font-weight:700;color:var(--gold);font-size:13px}
+.rev-q{font-size:17px;line-height:1.6;color:#eef2fa;font-weight:500;margin-bottom:16px}
+.rev-opts{display:grid;gap:9px;margin-bottom:6px}
+.rev-opt{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border-radius:11px;font-size:15px;line-height:1.5;
+  border:1.5px solid rgba(157,176,208,.14);background:rgba(22,38,76,.4);color:#d7dff0}
+.rev-opt .rkey{flex:0 0 auto;width:28px;height:28px;border-radius:8px;display:grid;place-items:center;
+  font-family:var(--num);font-weight:700;font-size:13px;color:var(--muted);background:rgba(157,176,208,.12)}
+.rev-opt .rtxt{flex:1;text-align:right}
+.rev-opt.is-correct{border-color:transparent;background:var(--emerald-soft);color:#bff3da}
+.rev-opt.is-correct .rkey{background:var(--emerald);color:#04140d}
+.rev-opt.is-wrong{border-color:transparent;background:var(--rose-soft);color:#ffc9d1}
+.rev-opt.is-wrong .rkey{background:var(--rose);color:#1a0508}
+.rev-mark{margin-right:auto;font-family:var(--num);font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:5px}
+.rev-opt.is-correct .rev-mark{color:#7af0bf}
+.rev-opt.is-wrong .rev-mark{color:#ff9aa8}
+.explain{margin-top:14px;background:linear-gradient(180deg,var(--gold-soft),rgba(212,175,55,.04));
+  border:1px solid var(--line);border-radius:12px;padding:15px 17px}
+.explain .et{font-family:var(--num);font-size:11.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);
+  margin-bottom:7px;display:flex;align-items:center;gap:7px}
+.explain p{margin:0;color:#e3e9f5;line-height:1.7;font-size:14.5px}
+
+/* ===== मॉडल / ड्रॉअर ===== */
+.overlay{position:fixed;inset:0;z-index:50;background:rgba(5,9,20,.72);backdrop-filter:blur(4px);
+  display:grid;place-items:center;padding:20px;animation:bcFade .25s ease both}
+.modal{background:linear-gradient(180deg,var(--ink-3),var(--ink-2));border:1px solid var(--line);border-radius:22px;
+  padding:30px 30px 26px;max-width:440px;width:100%;text-align:center;box-shadow:var(--shadow)}
+.modal h3{font-family:var(--display);font-weight:400;font-size:26px;margin:0 0 6px;color:var(--gold-2)}
+.modal p{color:var(--muted);font-size:14.5px;margin:0 0 18px;line-height:1.6}
+.modal-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin:0 0 22px}
+.ms{background:rgba(22,38,76,.5);border:1px solid var(--line);border-radius:13px;padding:13px 8px}
+.ms .v{font-family:var(--num);font-weight:800;font-size:24px}
+.ms .k{font-size:11.5px;color:var(--muted);margin-top:4px}
+.ms.a .v{color:var(--emerald)} .ms.b .v{color:var(--rose)} .ms.c .v{color:var(--gold-2)}
+.modal-actions{display:flex;gap:11px}
+.modal-actions .btn{flex:1}
+
+/* मोबाइल पैनल बटन */
+.palette-fab{display:none}
+
+/* फुटर / श्रेय */
+.bc-credit{text-align:center;margin-top:40px;padding-top:22px;border-top:1px solid var(--line)}
+.bc-credit .made{font-family:var(--display);font-size:18px;color:var(--gold-2);font-weight:400;letter-spacing:.3px}
+.bc-credit .made b{background:linear-gradient(180deg,#fbe9b0,#d4af37);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:400}
+.bc-credit .meta{font-size:12px;color:var(--muted-2);margin-top:6px;letter-spacing:.4px}
+.bc-credit .meta b{color:var(--gold)}
+.bc-credit .join-cap{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--muted-2);font-weight:600;margin-bottom:13px}
+.bc-credit .social{display:flex;align-items:center;justify-content:center;gap:13px;margin-bottom:18px}
+.soc{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;text-decoration:none;border:1px solid var(--line);background:linear-gradient(180deg,var(--ink-3),var(--ink-2));transition:transform .18s ease,box-shadow .25s,border-color .25s}
+.soc svg{width:26px;height:26px;display:block}
+.soc:hover{transform:translateY(-3px)}
+.soc.tg:hover{border-color:#229ED9;box-shadow:0 14px 30px -14px rgba(34,158,217,.75)}
+.soc.yt:hover{border-color:#FF0033;box-shadow:0 14px 30px -14px rgba(255,0,51,.65)}
+
+/* ===== उत्तरदायी (RESPONSIVE) ===== */
+@media (max-width:880px){
+  .exam-grid{grid-template-columns:1fr}
+  .palette{display:none}
+  .score-stage{grid-template-columns:1fr;text-align:center;gap:22px;padding:26px 20px}
+  .ring-wrap{width:200px;height:200px}
+  .score-side .sub{margin-left:auto;margin-right:auto;max-width:46ch}
+  .palette-fab{display:inline-flex;position:fixed;right:16px;bottom:calc(86px + env(safe-area-inset-bottom,0px));z-index:35;
+    background:linear-gradient(160deg,var(--gold-2),var(--gold));color:var(--ink);border:0;cursor:pointer;
+    padding:12px 16px;border-radius:999px;font-family:var(--body);font-weight:700;align-items:center;gap:8px;
+    font-size:13.5px;box-shadow:0 16px 36px -14px rgba(212,175,55,.7)}
+  .palette-fab svg{width:16px;height:16px}
+  .drawer{position:fixed;inset:auto 0 0 0;z-index:55;background:linear-gradient(180deg,var(--ink-3),var(--ink-2));
+    border-top:1px solid var(--line);border-radius:24px 24px 0 0;padding:16px 20px calc(20px + env(safe-area-inset-bottom,0px));max-height:78vh;overflow:auto;
+    animation:drawerUp .3s cubic-bezier(.2,.7,.2,1) both;box-shadow:0 -20px 50px -20px rgba(0,0,0,.8)}
+  @keyframes drawerUp{from{transform:translateY(100%)}to{transform:none}}
+  .pgrid{grid-template-columns:repeat(6,1fr)}
+  .drawer-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+  .drawer-close{flex:0 0 auto;width:34px;height:34px;border-radius:10px;border:1px solid var(--line);
+    background:var(--gold-soft);color:var(--gold-2);display:grid;place-items:center;cursor:pointer}
+  .drawer-close svg{width:16px;height:16px}
+}
+@media (max-width:560px){
+  .bc-app{padding:18px 14px 36px}
+  .q-card{padding:22px 18px}
+  .q-text{font-size:17px}
+  .opt{font-size:15px;padding:13px 13px}
+  .stat-row{grid-template-columns:repeat(2,1fr)}
+  .meta-card{flex:1 1 44%}
+  .instructions{padding:22px 18px}
+  .cover-title{font-size:34px}
+  .nav-row .btn{flex:1}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms !important;transition-duration:.001ms !important}
+}
+:focus-visible{outline:2px solid var(--gold-2);outline-offset:2px;border-radius:6px}
+</style>
+</head>
+<body>
+
+<!-- मंद बोधि-चक्र (हस्ताक्षर पृष्ठभूमि) -->
+<svg class="bc-motif" viewBox="0 0 200 200" fill="none" aria-hidden="true">
+  <circle cx="100" cy="100" r="96" stroke="currentColor" stroke-width="1"/>
+  <circle cx="100" cy="100" r="62" stroke="currentColor" stroke-width="1"/>
+  <circle cx="100" cy="100" r="26" stroke="currentColor" stroke-width="1.5"/>
+  <g stroke="currentColor" stroke-width="1">
+    <line x1="100" y1="4" x2="100" y2="196"/><line x1="4" y1="100" x2="196" y2="100"/>
+    <line x1="32" y1="32" x2="168" y2="168"/><line x1="168" y1="32" x2="32" y2="168"/>
+    <line x1="66" y1="14" x2="134" y2="186"/><line x1="134" y1="14" x2="66" y2="186"/>
+    <line x1="14" y1="66" x2="186" y2="134"/><line x1="186" y1="66" x2="14" y2="134"/>
+  </g>
+</svg>
+<svg class="bc-motif b" viewBox="0 0 200 200" fill="none" aria-hidden="true">
+  <circle cx="100" cy="100" r="96" stroke="currentColor" stroke-width="1"/>
+  <circle cx="100" cy="100" r="50" stroke="currentColor" stroke-width="1"/>
+  <g stroke="currentColor" stroke-width="1">
+    <line x1="100" y1="4" x2="100" y2="196"/><line x1="4" y1="100" x2="196" y2="100"/>
+    <line x1="32" y1="32" x2="168" y2="168"/><line x1="168" y1="32" x2="32" y2="168"/>
+  </g>
+</svg>
+
+<canvas id="confetti"></canvas>
+
+<div class="bc-app">
+
+  <!-- ============================= आवरण ============================= -->
+  <section id="screen-cover" class="bc-screen">
+    <div class="cover-top">
+      <div class="bc-brand">
+        <svg class="bc-leaf" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#f5d98c"/><stop offset="1" stop-color="#c9962e"/></linearGradient></defs>
+          <path d="M32 4C20 14 9 23 9 36c0 11 9 19 20 20 0 2-2 4-4 5h14c-2-1-4-3-4-5 11-1 20-9 20-20C55 23 44 14 32 4Z"
+                fill="url(#lg)"/>
+          <path d="M32 9v44M32 24c-5 1-9 4-12 8M32 24c5 1 9 4 12 8M32 36c-3 1-6 3-8 6M32 36c3 1 6 3 8 6"
+                stroke="#0b1428" stroke-width="1.6" stroke-linecap="round" opacity=".55"/>
+        </svg>
+        <div>
+          <div class="bc-brand-name">Bodhi Classes</div>
+          <div class="bc-brand-sub">UPSC · UPPCS</div>
+        </div>
+      </div>
+      <span class="cover-tag" id="cv-tag">मॉक टेस्ट</span>
+    </div>
+
+    <div class="cover-hero">
+      <div class="cover-eyebrow" id="cv-eyebrow">अभ्यास परीक्षा</div>
+      <h1 class="cover-title" id="cv-title">परीक्षा शीर्षक</h1>
+      <p class="cover-desc" id="cv-desc"></p>
+    </div>
+
+    <div class="meta-row" id="cv-meta"></div>
+
+    <div class="lang-choose"><span class="lc-label">पढ़ने की भाषा:</span><div class="lang-seg" id="coverLang"></div></div>
+
+    <div class="instructions">
+      <h3>परीक्षा निर्देश</h3>
+      <div class="sub">शुरू करने से पहले एक बार अवश्य पढ़ें</div>
+      <ol class="ins-list" id="cv-ins"></ol>
+    </div>
+
+    <div class="name-gate">
+      <h3>शुरू करने से पहले अपना नाम लिखें</h3>
+      <p class="ng-sub">यही नाम आपके परिणाम में दिखेगा।</p>
+      <input type="text" id="studentName" placeholder="अपना पूरा नाम लिखें" maxlength="40" autocomplete="off" />
+      <div class="ng-err" id="nameErr"></div>
+    </div>
+
+    <div class="topboard" id="topBoard" hidden>
+      <h3>🏆 इस टेस्ट के टॉप स्कोर</h3>
+      <div class="tb-sub" id="tbSub"></div>
+      <ol class="tb-list" id="tbList"></ol>
+    </div>
+
+    <div class="cta-wrap">
+      <button class="btn btn-primary" id="startBtn">
+        परीक्षा शुरू करें
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+
+    <div class="bc-credit">
+      <div class="join-cap">हमसे जुड़ें</div>
+      <div class="social">
+        <a class="soc tg" href="https://t.me/bodhiclassesupsc" target="_blank" rel="noopener" title="Telegram — Bodhi Classes" aria-label="Telegram पर जुड़ें"><svg viewBox="0 0 24 24" fill="none"><path fill="#229ED9" d="M9.417 15.181l-.397 5.584c.568 0 .814-.244 1.109-.537l2.663-2.545 5.518 4.041c1.012.564 1.725.267 1.998-.931l3.622-16.972.001-.001c.321-1.496-.541-2.081-1.527-1.714L1.116 9.85c-1.473.571-1.45 1.394-.25 1.766l5.347 1.665 12.418-7.78c.584-.387 1.115-.173.678.214z"/></svg></a>
+        <a class="soc yt" href="https://youtube.com/@bodhiclasses?si=h7ktDvvJwYedkpKg" target="_blank" rel="noopener" title="YouTube — Bodhi Classes" aria-label="YouTube पर जुड़ें"><svg viewBox="0 0 24 24" fill="none"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+      </div>
+      <div class="made">Designed by <b>Aditya Chauhan</b></div>
+      <div class="meta">© Bodhi Classes · <b>@BodhiClasses</b> · सभी अधिकार सुरक्षित</div>
+    </div>
+  </section>
+
+  <!-- ============================= परीक्षा ============================= -->
+  <section id="screen-quiz" class="bc-screen" hidden>
+    <div class="exam-bar">
+      <div class="bc-brand">
+        <svg class="bc-leaf" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <defs><linearGradient id="lg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f5d98c"/><stop offset="1" stop-color="#c9962e"/></linearGradient></defs>
+          <path d="M32 4C20 14 9 23 9 36c0 11 9 19 20 20 0 2-2 4-4 5h14c-2-1-4-3-4-5 11-1 20-9 20-20C55 23 44 14 32 4Z" fill="url(#lg2)"/></svg>
+        <div class="bc-brand-name">Bodhi Classes</div>
+      </div>
+      <div class="timer" id="timer">
+        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="13" r="8" stroke="currentColor" stroke-width="2"/><path d="M12 9v4l2.5 2.5M9 2h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <span id="timerText">--:--</span>
+      </div>
+      <div class="bar-actions">
+        <button class="btn btn-ghost" id="submitTop" style="padding:11px 20px;font-size:14px">परीक्षा समाप्त करें</button>
+      </div>
+    </div>
+
+    <div class="progress-shell"><div class="progress-fill" id="progressFill"></div></div>
+
+    <div class="exam-grid">
+      <div>
+        <div class="q-card" id="qCard"><!-- JS --></div>
+        <div class="nav-row">
+          <div class="nav-left">
+            <button class="btn btn-quiet" id="prevBtn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              पिछला
+            </button>
+            <button class="btn btn-ghost" id="markBtn">समीक्षा हेतु चिह्नित करें</button>
+          </div>
+          <button class="btn btn-primary" id="nextBtn" style="padding:14px 30px;font-size:16px">
+            अगला
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <aside class="palette" id="paletteSide">
+        <h4>प्रश्न सूची</h4>
+        <div class="pcount" id="pCount"></div>
+        <div class="pgrid" id="pGrid"></div>
+        <div class="legend">
+          <span><i class="dot an"></i> उत्तर दिया गया</span>
+          <span><i class="dot na"></i> देखा, उत्तर नहीं</span>
+          <span><i class="dot mk"></i> समीक्षा हेतु चिह्नित</span>
+          <span><i class="dot nv"></i> अभी नहीं देखा</span>
+        </div>
+        <button class="btn btn-ghost submit-side" id="submitSide">परीक्षा समाप्त करें</button>
+      </aside>
+    </div>
+
+    <button class="palette-fab" id="paletteFab">
+      <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2"/><rect x="14" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2"/><rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2"/><rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2"/></svg>
+      प्रश्न सूची
+    </button>
+  </section>
+
+  <!-- ============================= परिणाम ============================= -->
+  <section id="screen-result" class="bc-screen" hidden>
+    <div class="result-head">
+      <div class="result-eyebrow">परिणाम घोषित</div>
+      <h1 class="result-title">आपका प्रदर्शन</h1>
+    </div>
+
+    <div class="score-stage">
+      <div class="ring-wrap">
+        <svg viewBox="0 0 240 240">
+          <defs>
+            <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#f0c75e"/><stop offset="1" stop-color="#ff8a3d"/>
+            </linearGradient>
+          </defs>
+          <circle cx="120" cy="120" r="100" fill="none" stroke="rgba(157,176,208,.14)" stroke-width="16"/>
+          <circle id="ringFg" cx="120" cy="120" r="100" fill="none" stroke="url(#ringGrad)" stroke-width="16"
+                  stroke-linecap="round" stroke-dasharray="628.3" stroke-dashoffset="628.3"
+                  style="filter:drop-shadow(0 0 10px rgba(255,138,61,.5))"/>
+        </svg>
+        <div class="ring-center">
+          <div class="ring-pct"><span id="ringPctNum">0</span><span>%</span></div>
+          <div class="ring-label">शुद्धता</div>
+        </div>
+      </div>
+      <div class="score-side">
+        <div class="verdict" id="verdict"></div>
+        <div class="sub" id="verdictSub"></div>
+        <div class="score-big"><span id="scoreGot">0</span><small> / <span id="scoreMax">0</span> अंक</small></div>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat ok"><div class="sv" id="stCorrect">0</div><div class="sk"><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#2fbf86" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>सही</div></div>
+      <div class="stat no"><div class="sv" id="stWrong">0</div><div class="sk"><svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="#ff5d73" stroke-width="2.4" stroke-linecap="round"/></svg>गलत</div></div>
+      <div class="stat sk0"><div class="sv" id="stSkip">0</div><div class="sk"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="#9db0d0" stroke-width="2"/></svg>अनुत्तरित</div></div>
+      <div class="stat tm"><div class="sv" id="stTime">0:00</div><div class="sk"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="13" r="8" stroke="#f0c75e" stroke-width="2"/><path d="M12 9v4l2.5 2.5" stroke="#f0c75e" stroke-width="2" stroke-linecap="round"/></svg>लगा समय</div></div>
+    </div>
+
+    <div class="result-actions">
+      <button class="btn btn-primary" id="reviewBtn">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg>
+        समाधान देखें
+      </button>
+      <button class="btn btn-ghost" id="retryBtn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 12a9 9 0 1 0 3-6.7M3 4v4h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        पुनः प्रयास करें
+      </button>
+      <a class="btn btn-ghost" href="/" id="homeBtn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 11l9-8 9 8M5 10v9h5v-6h4v6h5v-9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        मुखपृष्ठ पर जाएँ
+      </a>
+    </div>
+
+    <div class="rank-card" style="display:none">
+      <h3>रैंकिंग सेव हो चुकी है</h3>
+      <p class="rk-sub" id="rkSubText">आपका स्कोर सेव किया जा रहा है…</p>
+      <div id="rkDone" style="display:none">
+        <button class="btn btn-primary" id="rkViewBtn" style="width:100%">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 20V10M12 20V4M20 20v-7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+          पूरी रैंकिंग देखें
+        </button>
+      </div>
+      <div class="rk-msg" id="rkMsg"></div>
+    </div>
+
+    <div class="bc-credit">
+      <div class="join-cap">हमसे जुड़ें</div>
+      <div class="social">
+        <a class="soc tg" href="https://t.me/bodhiclassesupsc" target="_blank" rel="noopener" title="Telegram — Bodhi Classes" aria-label="Telegram पर जुड़ें"><svg viewBox="0 0 24 24" fill="none"><path fill="#229ED9" d="M9.417 15.181l-.397 5.584c.568 0 .814-.244 1.109-.537l2.663-2.545 5.518 4.041c1.012.564 1.725.267 1.998-.931l3.622-16.972.001-.001c.321-1.496-.541-2.081-1.527-1.714L1.116 9.85c-1.473.571-1.45 1.394-.25 1.766l5.347 1.665 12.418-7.78c.584-.387 1.115-.173.678.214z"/></svg></a>
+        <a class="soc yt" href="https://youtube.com/@bodhiclasses?si=h7ktDvvJwYedkpKg" target="_blank" rel="noopener" title="YouTube — Bodhi Classes" aria-label="YouTube पर जुड़ें"><svg viewBox="0 0 24 24" fill="none"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+      </div>
+      <div class="made">Designed by <b>Aditya Chauhan</b></div>
+      <div class="meta">© Bodhi Classes · <b>@BodhiClasses</b></div>
+    </div>
+  </section>
+
+  <!-- ============================= समीक्षा ============================= -->
+  <section id="screen-review" class="bc-screen" hidden>
+    <div class="review-head">
+      <h2>समाधान एवं समीक्षा</h2>
+      <div class="rfilters" id="rFilters">
+        <button class="rfilter active" data-f="all">सभी</button>
+        <button class="rfilter" data-f="correct">सही</button>
+        <button class="rfilter" data-f="wrong">गलत</button>
+        <button class="rfilter" data-f="skip">अनुत्तरित</button>
+      </div>
+    </div>
+    <div id="reviewList"><!-- JS --></div>
+    <div class="cta-wrap">
+      <button class="btn btn-ghost" id="backToResult">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        परिणाम पर लौटें
+      </button>
+      <button class="btn btn-primary" id="printBtn" type="button">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2M6 14h12v7H6z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        प्रिंट / PDF सेव करें
+      </button>
+    </div>
+    <div class="bc-credit">
+      <div class="join-cap">हमसे जुड़ें</div>
+      <div class="social">
+        <a class="soc tg" href="https://t.me/bodhiclassesupsc" target="_blank" rel="noopener" title="Telegram — Bodhi Classes" aria-label="Telegram पर जुड़ें"><svg viewBox="0 0 24 24" fill="none"><path fill="#229ED9" d="M9.417 15.181l-.397 5.584c.568 0 .814-.244 1.109-.537l2.663-2.545 5.518 4.041c1.012.564 1.725.267 1.998-.931l3.622-16.972.001-.001c.321-1.496-.541-2.081-1.527-1.714L1.116 9.85c-1.473.571-1.45 1.394-.25 1.766l5.347 1.665 12.418-7.78c.584-.387 1.115-.173.678.214z"/></svg></a>
+        <a class="soc yt" href="https://youtube.com/@bodhiclasses?si=h7ktDvvJwYedkpKg" target="_blank" rel="noopener" title="YouTube — Bodhi Classes" aria-label="YouTube पर जुड़ें"><svg viewBox="0 0 24 24" fill="none"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+      </div>
+      <div class="made">Designed by <b>Aditya Chauhan</b></div>
+      <div class="meta">© Bodhi Classes · <b>@BodhiClasses</b></div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+/* =========================================================================
+   ★★★  यहाँ अपने प्रश्न जोड़ें — बस इतना ही करना है  ★★★
+   -------------------------------------------------------------------------
+   • title / subtitle      : परीक्षा का नाम
+   • durationMinutes        : कुल समय (मिनट में)। 0 लिखें तो टाइमर नहीं चलेगा।
+   • marksPerQuestion       : हर सही उत्तर के अंक
+   • negativeMarks          : हर गलत उत्तर पर कटने वाले अंक (0 = कोई कटौती नहीं)
+   • questions[]            : प्रश्नों की सूची
+        q          → प्रश्न
+        options    → विकल्प (4 या जितने हों)
+        answer     → सही विकल्प का अक्षर: "A" / "B" / "C" / "D"
+        explanation→ व्याख्या (समीक्षा में दिखेगी)
+        statement  → (वैकल्पिक) प्रश्न से ऊपर दिखने वाली कथन-पंक्ति
+   नया प्रश्न जोड़ने के लिए { ... } वाला पूरा खंड कॉपी कर के पेस्ट कर दें।
+   ========================================================================= */
+const TEST = {"title":"कक्षा 12 — भारतीय इतिहास के कुछ विषय भाग 2","subtitle":"NCERT · कक्षा 12","tag":"अभ्यास परीक्षा","durationMinutes":0,"marksPerQuestion":2,"negativeMarks":0,"questions":[{"q":"अल-बिरूनी का जन्म 973 ईस्वी में आधुनिक उज्बेकिस्तान के किस स्थान पर हुआ था और उसे किस वर्ष सुल्तान महमूद द्वारा गजनी ले जाया गया था? / Question 1: Where was Al-Biruni born in 973 CE in modern-day Uzbekistan, and in which year was he taken to Ghazni by Sultan Mahmud?","options":["बुखारा, 1011 ईस्वी / Bukhara, 1011 CE","ख्वारिज्म, 1017 ईस्वी / Khwarizm, 1017 CE","समरकंद, 1021 ईस्वी / Samarkand, 1021 CE","ताशकंद, 1015 ईस्वी / Tashkent, 1015 CE"],"answer":"B","explanation":"अल-बिरूनी का जन्म 973 ईस्वी में ख्वारिज्म (उज्बेकिस्तान) में हुआ था और 1017 ईस्वी में सुल्तान महमूद ने ख्वारिज्म पर आक्रमण कर उसे बंधक बना लिया और गजनी ले गया। / Explanation: Al-Biruni was born in 973 CE in Khwarizm (Uzbekistan) and was taken as a hostage to Ghazni by Sultan Mahmud in 1017 CE."},{"q":"अल-बिरूनी के संदर्भ में निम्नलिखित कथनों पर विचार कीजिए: कथन 1: वह सीरियाई, अरबी, फारसी, हिब्रू और संस्कृत भाषाओं का ज्ञाता था। कथन 2: वह ग्रीक (यूनानी) भाषा का भी पूर्ण ज्ञाता था और उसने सीधे प्लेटो के मूल कार्यों को पढ़ा था। / Question 2: Consider the following statements regarding Al-Biruni: Statement 1: He was well-versed in Syriac, Arabic, Persian, Hebrew, and Sanskrit languages. Statement 2: He was also fully well-versed in the Greek language and read Plato's original works directly.","options":["केवल कथन 1 सही है / Only Statement 1 is correct","केवल कथन 2 सही है / Only Statement 2 is correct","कथन 1 और कथन 2 दोनों सही हैं / Both Statement 1 and Statement 2 are correct","कोई भी कथन सही नहीं है / Neither of the statements is correct"],"answer":"A","explanation":"अल-बिरूनी सीरियाई, अरबी, फारसी, हिब्रू और संस्कृत जानता था, लेकिन वह ग्रीक नहीं जानता था; वह अरबी अनुवादों के माध्यम से प्लेटो के कार्यों से परिचित था। / Explanation: Al-Biruni knew Syriac, Arabic, Persian, Hebrew, and Sanskrit, but he did not know Greek; he was familiar with Plato's works through Arabic translations."},{"q":"अल-बिरूनी ने पतंजलि के व्याकरण संबंधी कार्य का किस भाषा में अनुवाद किया था? / Question 3: Into which language did Al-Biruni translate Patanjali's grammatical work?","options":["फारसी भाषा में / Persian language","अरबी भाषा में / Arabic language","हिब्रू भाषा में / Hebrew language","सीरियाई भाषा में / Syriac language"],"answer":"B","explanation":"अल-बिरूनी ने पतंजलि के व्याकरण ग्रंथ सहित कई संस्कृत ग्रंथों का अरबी भाषा में अनुवाद किया था। / Explanation: Al-Biruni translated several Sanskrit works, including Patanjali's grammatical treatise, into Arabic."},{"q":"अल-बिरूनी का प्रसिद्ध ग्रंथ 'किताब-उल-हिन्द' कुल कितने अध्यायों में विभाजित है? / Question 4: In how many chapters is Al-Biruni's famous book 'Kitab-ul-Hind' divided?","options":["75 अध्यायों में / 75 chapters","80 अध्यायों में / 80 chapters","85 अध्यायों में / 85 chapters","90 अध्यायों में / 90 chapters"],"answer":"B","explanation":"अरबी भाषा में रचित किताब-उल-हिन्द एक विस्तृत ग्रंथ है जो धर्म, दर्शन, खगोल विज्ञान, माप विज्ञान आदि विषयों पर 80 अध्यायों में विभाजित है। / Explanation: Written in Arabic, Kitab-ul-Hind is a voluminous text divided into 80 chapters covering subjects like religion, philosophy, astronomy, and metrology."},{"q":"अल-बिरूनी द्वारा प्राचीन फारस में वर्णित चार सामाजिक वर्गों का कौन सा सुमेलन सही है: सूची-I: A. प्रथम वर्ग, B. द्वितीय वर्ग, C. तृतीय वर्ग, D. चतुर्थ वर्ग; सूची-II: 1. भिक्षु, पुरोहित और कानूनविद्, 2. घुड़सवार और शासक वर्ग, 3. कृषक और शिल्पकार, 4. चिकित्सक, खगोलशास्त्री और वैज्ञानिक / Question 5: Which matching of the four social categories described by Al-Biruni in ancient Persia is correct: List-I: A. First category, B. Second category, C. Third category, D. Fourth category; List-II: 1. Monks, fire-priests and lawyers, 2. Knights and princes, 3. Peasants and artisans, 4. Physicians, astronomers and scientists","options":["A-2, B-1, C-4, D-3 / A-2, B-1, C-4, D-3","A-1, B-2, C-3, D-4 / A-1, B-2, C-3, D-4","A-2, B-4, C-1, D-3 / A-2, B-4, C-1, D-3","A-3, B-1, C-4, D-2 / A-3, B-1, C-4, D-2"],"answer":"A","explanation":"अल-बिरूनी ने फारस के चार वर्गों का उल्लेख किया: प्रथम वर्ग में घुड़सवार व शासक; द्वितीय में भिक्षु व पुरोहित; तृतीय में चिकित्सक व खगोलशास्त्री; और चतुर्थ में कृषक व शिल्पकार थे। / Explanation: Al-Biruni cited Persian categories: 1st: knights and princes; 2nd: monks and fire-priests; 3rd: physicians and astronomers; 4th: peasants and artisans."},{"q":"अल-बिरूनी द्वारा वर्णित 'अन्त्यज' श्रेणी के संदर्भ में निम्नलिखित कथनों पर विचार कीजिए: कथन 1: अन्त्यज वे लोग थे जिनका जन्म वर्ण व्यवस्था से बाहर माना जाता था। कथन 2: हालांकि वे सामाजिक उत्पीड़न का शिकार थे, फिर भी उन्हें आर्थिक गतिविधियों में शामिल किया जाता था और वे सस्ते श्रम प्रदान करते थे। / Question 6: Consider the following statements regarding the 'Antyaja' category described by Al-Biruni: Statement 1: Antyaja were people who were considered born outside the varna system. Statement 2: Although subjected to social oppression, they were included within economic networks and expected to provide inexpensive labor.","options":["केवल कथन 1 सही है / Only Statement 1 is correct","केवल कथन 2 सही है / Only Statement 2 is correct","कथन 1 और कथन 2 दोनों सही हैं / Both Statement 1 and Statement 2 are correct","कोई भी कथन सही नहीं है / Neither of the statements is correct"],"answer":"C","explanation":"अन्त्यज वर्ण व्यवस्था से बाहर जन्मे लोग थे, जो सामाजिक उत्पीड़न के बावजूद किसानों और जमींदारों को सस्ता श्रम देकर आर्थिक नेटवर्क का हिस्सा बने हुए थे। / Explanation: Antyaja were born outside the system; despite social oppression, they were integrated into economic networks, providing cheap labor to peasants and zamindars."},{"q":"इब्न बतूता ने अपने गृह नगर तांगियर (मोरक्को) को किस वर्ष और किस उम्र में छोड़ा था? / Question 7: In which year and at what age did Ibn Battuta leave his home city Tangier (Morocco)?","options":["1332-33 ईस्वी में, 22 वर्ष की उम्र में / 1332-33 CE, at the age of 22 years","1325 ईस्वी में, 25 वर्ष की उम्र में / 1325 CE, at the age of 25 years","1335 ईस्वी में, 20 वर्ष की उम्र में / 1335 CE, at the age of 20 years","1340 ईस्वी में, 30 वर्ष की उम्र में / 1340 CE, at the age of 30 years"],"answer":"A","explanation":"इब्न बतूता 1332-33 ईस्वी में 22 वर्ष की आयु में तांगियर से अकेले यात्रा पर निकला था और लगभग 30 वर्षों की यात्रा के बाद 1354 में मोरक्को वापस लौटा। / Explanation: Ibn Battuta left Tangier in 1332-33 CE at the age of 22 years alone, returning home in 1354 after nearly 30 years of travel."},{"q":"इब्न बतूता मध्य एशिया के रास्ते थल मार्ग से यात्रा करते हुए किस वर्ष सिंध पहुंचा था? / Question 8: In which year did Ibn Battuta reach Sind by traveling overland through Central Asia?","options":["1330 ईस्वी में / 1330 CE","1333 ईस्वी में / 1333 CE","1336 ईस्वी में / 1336 CE","1342 ईस्वी में / 1342 CE"],"answer":"B","explanation":"इब्न बतूता मध्य एशिया के रास्ते यात्रा करते हुए वर्ष 1333 ईस्वी में सिंध पहुंचा और वहां से दिल्ली सल्तनत की ओर प्रस्थान किया। / Explanation: Traveling through Central Asia, Ibn Battuta reached Sind in the year 1333 CE and then proceeded toward Delhi."},{"q":"चीन के मिशन पर जाने से पूर्व इब्न बतूता मालदीव में काजी के पद पर कितने समय तक रहा था? / Question 9: For how long did Ibn Battuta stay in the Maldives as a qazi before proceeding on his mission to China?","options":["12 महीने / 12 months","18 महीने / 18 months","24 महीने / 24 months","6 महीने / 6 months"],"answer":"B","explanation":"इब्न बतूता सुल्तान के दूत के रूप में चीन जाते समय मालदीव में रुका और वहां लगभग 18 महीनों तक काजी (न्यायाधीश) के रूप में कार्य किया। / Explanation: En route to China as the Sultan's envoy, Ibn Battuta stayed in the Maldives for eighteen months, officiating as the qazi."},{"q":"इब्न बतूता के अनुसार विभिन्न शहरों से दिल्ली के बीच की दूरी तय करने में लगने वाले यात्रा समय का कौन सा सुमेलन सही है: सूची-I: A. मुल्तान से दिल्ली, B. सिंध से दिल्ली, C. दौलताबाद से दिल्ली, D. ग्वालियर से दिल्ली; सूची-II: 1. 40 दिन, 2. 50 दिन, 3. 40 दिन, 4. 10 दिन / Question 10: According to Ibn Battuta, which matching of the travel time to cover distances between various cities and Delhi is correct: List-I: A. Multan to Delhi, B. Sind to Delhi, C. Daulatabad to Delhi, D. Gwalior to Delhi; List-II: 1. 40 days, 2. 50 days, 3. 40 days, 4. 10 days","options":["A-1, B-2, C-3, D-4 / A-1, B-2, C-3, D-4","A-2, B-1, C-3, D-4 / A-2, B-1, C-3, D-4","A-3, B-4, C-1, D-2 / A-3, B-4, C-1, D-2","A-1, B-3, C-2, D-4 / A-1, B-3, C-2, D-4"],"answer":"A","explanation":"इब्न बतूता के अनुसार, मुल्तान से दिल्ली 40 दिन, सिंध से दिल्ली 50 दिन, दौलताबाद से दिल्ली 40 दिन और ग्वालियर से दिल्ली में 10 दिन लगते थे। / Explanation: According to Ibn Battuta, it took 40 days from Multan to Delhi, 50 days from Sind, 40 days from Daulatabad, and 10 days from Gwalior."},{"q":"इब्न बतूता द्वारा वर्णित दिल्ली सल्तनत की डाक व्यवस्था के संदर्भ में निम्नलिखित कथनों पर विचार कीजिए: कथन 1: अश्व-डाक प्रणाली को 'उलूक' कहा जाता था जो प्रत्येक चार मील की दूरी पर स्थापित राजकीय घोड़ों द्वारा संचालित होती थी। कथन 2: पैदल-डाक प्रणाली को 'दावा' कहा जाता था जो प्रति मील तीन स्टेशनों पर आधारित थी, और यह अश्व-डाक से भी तीव्र थी। / Question 11: Consider the following statements regarding the postal system of the Delhi Sultanate described by Ibn Battuta: Statement 1: The horse-post system was called 'uluq' and run by royal horses stationed at a distance of every four miles. Statement 2: The foot-post system was called 'dawa' and had three stations per mile, and it was quicker than the horse-post.","options":["केवल कथन 1 सही है / Only Statement 1 is correct","केवल कथन 2 सही है / Only Statement 2 is correct","कथन 1 और कथन 2 दोनों सही हैं / Both Statement 1 and Statement 2 are correct","कोई भी कथन सही नहीं है / Neither of the statements is correct"],"answer":"C","explanation":"सल्तनत में दो प्रकार की डाक प्रणालियाँ थीं: घोड़ों द्वारा संचालित उलूक (प्रत्येक 4 मील पर) और पैदल चलने वाली दावा (प्रत्येक 1/3 मील पर), जिसमें दावा अधिक तेज थी। / Explanation: There were two postal systems: uluq run by horses every 4 miles, and dawa on foot every 1/3 mile, with the foot-post (dawa) being quicker."},{"q":"इब्न बतूता के अनुसार दिल्ली (देहली) की विशाल घेराबंदी वाली दीवार की चौड़ाई कितनी थी और इसके कितने द्वार थे? / Question 12: According to Ibn Battuta, what was the breadth of the massive fortification wall around Delhi, and how many gates did it have?","options":["9 हाथ, 25 द्वार / 9 cubits, 25 gates","11 हाथ, 28 द्वार / 11 cubits, 28 gates","13 हाथ, 30 द्वार / 13 cubits, 30 gates","15 हाथ, 24 द्वार / 15 cubits, 24 gates"],"answer":"B","explanation":"दिल्ली की दीवार की चौड़ाई 11 हाथ थी जिसके भीतर रात्रि संतरी रहते थे। इस शहर में 28 द्वार थे, जिनमें बदायूं दरवाजा सबसे बड़ा था। / Explanation: Delhi's wall was 11 cubits broad, housing night sentries inside. The city had 28 gates, of which the Budaun gate was the greatest."},{"q":"इब्न बतूता ने दौलताबाद में पुरुष और महिला गायकों के लिए बने किस प्रसिद्ध और सुंदर बाजार का उल्लेख किया है? / Question 13: Which famous and beautiful market for male and female singers in Daulatabad did Ibn Battuta mention?","options":["शबाब-आबाद / Shabababad","तरबाबाद / Tarababad","गुलशन-आबाद / Gulshanabad","फैजाबाद / Faizabad"],"answer":"B","explanation":"इब्न बतूता ने दौलताबाद में संगीतकारों और गायकों के बाजार को 'तरबाबाद' कहा है, जो उस समय के सबसे सुंदर बाजारों में से एक था। / Explanation: Ibn Battuta described the market for male and female singers in Daulatabad as 'Tarababad', which was one of the most beautiful bazaars."},{"q":"फ्रांसीसी यात्री फ्रांसुआ बर्नियर मुगल साम्राज्य में कितने वर्षों तक रहा और उसका भारत प्रवास काल क्या था? / Question 14: For how many years did the French traveler Francois Bernier stay in the Mughal Empire, and what was the period of his stay?","options":["10 वर्ष, 1650 से 1660 ईस्वी / 10 years, 1650 to 1660 CE","12 वर्ष, 1656 से 1668 ईस्वी / 12 years, 1656 to 1668 CE","15 वर्ष, 1658 से 1673 ईस्वी / 15 years, 1658 to 1673 CE","8 वर्ष, 1660 से 1668 ईस्वी / 8 years, 1660 to 1668 CE"],"answer":"B","explanation":"फ्रांसुआ बर्नियर एक चिकित्सक, राजनीतिक दार्शनिक और इतिहासकार था, जो 1656 से 1668 ईस्वी तक कुल 12 वर्षों के लिए मुगल दरबार में रहा था। / Explanation: Francois Bernier was a physician, political philosopher, and historian who stayed for 12 years in the Mughal Empire, from 1656 to 1668 CE."},{"q":"फ्रांसुआ बर्नियर के मुगल दरबार में संबंधों के संदर्भ में निम्नलिखित कथनों पर विचार कीजिए: कथन 1: वह शाहजहाँ के सबसे बड़े पुत्र राजकुमार दारा शिकोह के चिकित्सक के रूप में जुड़े थे। कथन 2: बाद में वह मुगल दरबार में एक अर्मेनियाई रईस दानिशमंद खान के साथ एक बुद्धिजीवी और वैज्ञानिक के रूप में जुड़े। / Question 15: Consider the following statements regarding Francois Bernier's associations at the Mughal court: Statement 1: He was closely associated as a physician to Prince Dara Shukoh, the eldest son of Shah Jahan. Statement 2: Later, he was associated as an intellectual and scientist with Danishmand Khan, an Armenian noble at the Mughal court.","options":["केवल कथन 1 सही है / Only Statement 1 is correct","केवल कथन 2 सही है / Only Statement 2 is correct","कथन 1 और कथन 2 दोनों सही हैं / Both Statement 1 and Statement 2 are correct","कोई भी कथन सही नहीं है / Neither of the statements is correct"],"answer":"C","explanation":"बर्नियर भारत आगमन पर दारा शिकोह के निजी चिकित्सक बने और दारा की मृत्यु के बाद वे दानिशमंद खान के संरक्षण में विज्ञान और दर्शन के कार्यों से जुड़े रहे। / Explanation: Bernier was associated as a physician to Dara Shukoh, and later as an intellectual and scientist with the Armenian noble Danishmand Khan."},{"q":"फ्रांसुआ बर्नियर ने भारत के अपने अनुभवों पर आधारित प्रमुख यात्रा वृत्तांत 'ट्रेवल्स इन द मुगल एम्पायर' को फ्रांस के किस सम्राट को समर्पित किया था? / Question 16: To which French monarch did Francois Bernier dedicate his major travelogue 'Travels in the Mughal Empire'?","options":["लुई XIII / Louis XIII","लुई XIV / Louis XIV","लुई XV / Louis XV","हेनरी IV / Henry IV"],"answer":"B","explanation":"फ्रांसुआ बर्नियर ने अपनी पुस्तक 'ट्रेवल्स इन द मुगल एम्पायर' को फ्रांस के तत्कालीन राजा लुई चौदहवें (Louis XIV) को समर्पित किया था। / Explanation: Francois Bernier dedicated his major writing, 'Travels in the Mughal Empire', to the King of France, Louis XIV."},{"q":"फ्रांसुआ बर्नियर द्वारा वर्णित मुगल भूमि स्वामित्व के संदर्भ में निम्नलिखित कथनों पर विचार कीजिए: कथन 1: बर्नियर का मानना था कि मुगल साम्राज्य में भूमि पर निजी स्वामित्व का पूर्ण अभाव था और सम्राट ही संपूर्ण भूमि का एकमात्र स्वामी था। कथन 2: भूमि पर राजकीय स्वामित्व के कारण किसान अपनी भूमि अपनी संतानों को हस्तांतरित नहीं कर सकते थे, जिससे कृषि का विनाश हुआ। / Question 17: Consider the following statements regarding the Mughal landownership described by Francois Bernier: Statement 1: Bernier believed that there was a complete lack of private property in land in the Mughal Empire and the emperor owned all the land. Statement 2: Due to state ownership of land, landholders could not pass on their land to their children, which led to the ruination of agriculture.","options":["केवल कथन 1 सही है / Only Statement 1 is correct","केवल कथन 2 सही है / Only Statement 2 is correct","कथन 1 और कथन 2 दोनों सही हैं / Both Statement 1 and Statement 2 are correct","कोई भी कथन सही नहीं है / Neither of the statements is correct"],"answer":"C","explanation":"बर्नियर का दृढ़ विश्वास था कि निजी संपत्ति का न होना कृषि विकास में सबसे बड़ा बाधक था और मुगलों के राजकीय स्वामित्व सिद्धांत ने कृषि को तबाह कर दिया था। / Explanation: Bernier firmly believed that crown ownership of land prevented investment in land, leading to ruination of agriculture and oppression of peasants."},{"q":"मुगल इतिहासकार अबुल फजल ने आईन-ए-अकबरी में भू-राजस्व मांग को राजकीय भूमि का किराया न मानकर किस रूप में परिभाषित किया है? / Question 18: How does the Mughal chronicler Abu'l Fazl define land revenue in the Ain-i Akbari, rather than as rent on state-owned land?","options":["धार्मिक उपहार के रूप में / Gift of religion","संप्रभुता के पारिश्रमिक के रूप में / Remunerations of sovereignty","युद्ध कर के रूप में / War tax","प्रजा द्वारा दिए गए दान के रूप में / Charity by subjects"],"answer":"B","explanation":"अबुल फजल ने भू-राजस्व को 'संप्रभुता का पारिश्रमिक' कहा है, जो राजा द्वारा प्रजा को दी जाने वाली सुरक्षा के बदले किया जाने वाला दावा था, न कि जमीन का किराया। / Explanation: Abu'l Fazl describes land revenue as \"remunerations of sovereignty\", a claim made by the ruler for the protection he provided rather than rent."},{"q":"फ्रांसुआ बर्नियर ने मुगलकालीन शहरों को क्या संज्ञा दी थी, जिससे उसका तात्पर्य था कि ये शहर पूरी तरह राजकीय दरबार के आगमन पर निर्भर थे? / Question 19: What term did Francois Bernier use to describe Mughal cities, implying that they owed their existence and survival entirely to the imperial court?","options":["छावनी नगर / Camp towns","कृत्रिम शहर / Artificial cities","अस्थायी बस्तियां / Temporary settlements","दरबार नगर / Court towns"],"answer":"A","explanation":"बर्नियर ने मुगल शहरों को 'शिविर नगर' या 'छावनी नगर' (Camp towns) कहा है, जो राजकीय शिविर के आगमन के साथ बनते थे और उसके जाने के साथ ही उजड़ जाते थे। / Explanation: Bernier described Mughal cities as \"camp towns\", meaning they depended entirely for their survival and existence on the imperial court camp."},{"q":"मुगलकाल में शहरी क्षेत्रों के व्यापारी समुदाय के सामूहिक प्रतिनिधि को किस नाम से पुकारा जाता था? / Question 20: By what name was the collective representative of the merchant community in urban areas called during the Mughal period?","options":["मुकद्दम / Muqaddam","नगरसेठ / Nagarsheth","पटवारी / Patwari","महतो / Mahto"],"answer":"B","explanation":"मुगलकालीन शहरों में व्यापारिक समुदायों का सामूहिक प्रतिनिधित्व करने वाले उनके प्रमुख को 'नगरसेठ' कहा जाता था, विशेषकर पश्चिमी भारत के व्यापारिक केंद्रों में। / Explanation: In Mughal towns, merchant communities were collectively represented by their chief who was called the 'nagarsheth'."},{"q":"सत्रहवीं शताब्दी के शुरुआती दशकों में भारत का दौरा करने वाले किस डच यात्री ने यहाँ की अत्यधिक गरीबी को 'कठिन घोर अभाव और कड़वे दुख का निवास स्थान' कहा था? / Question 21: Which Dutch traveler who visited India in the early decades of the seventeenth century described the extreme poverty as \"the home of stark want and the dwelling place of bitter woe\"?","options":["जीन-बैप्टिस्ट टैवर्नियर / Jean-Baptiste Tavernier","फ्रांसिस्को पेल्सार्ट / Francisco Pelsaert","पीटर मुंडी / Peter Mundy","मानूची / Manucci"],"answer":"B","explanation":"डच यात्री फ्रांसिस्को पेल्सार्ट ने 17वीं सदी की शुरुआत में भारत में भयंकर गरीबी देखी और लिखा कि लोगों के पास बमुश्किल सूखी रोटी ही खाने को बचती थी। / Explanation: The Dutch traveler Pelsaert, visiting in the early 17th century, wrote that peasants were wrung so heavily that they barely had dry bread to fill their stomachs."},{"q":"सगुण और निर्गुण भक्ति परंपराओं के संदर्भ में निम्नलिखित कथनों पर विचार कीजिए: कथन 1: सगुण भक्ति के अंतर्गत शिव, विष्णु और देवी जैसे विशिष्ट देवताओं की मानव रूपी मूर्त आराधना पर ध्यान केंद्रित किया जाता था। कथन 2: निर्गुण भक्ति परंपरा अमूर्त तथा निराकार ईश्वर की आराधना और उपासना की वकालत करती थी। / Question 22: Consider the following statements regarding Saguna and Nirguna Bhakti traditions: Statement 1: Saguna Bhakti focused on the worship of specific deities like Shiva, Vishnu, and forms of the goddess in anthropomorphic forms. Statement 2: Nirguna Bhakti tradition advocated the worship and adoration of an abstract, formless god.","options":["केवल कथन 1 सही है / Only Statement 1 is correct","केवल कथन 2 सही है / Only Statement 2 is correct","कथन 1 और कथन 2 दोनों सही हैं / Both Statement 1 and Statement 2 are correct","कोई भी कथन सही नहीं है / Neither of the statements is correct"],"answer":"C","explanation":"भक्ति परंपराओं को दो श्रेणियों में बांटा जाता है: सगुण (विशिष्ट अवतारों व मूर्त रूपों की पूजा) और निर्गुण (अमूर्त एवं निराकार ईश्वर की आराधना)। / Explanation: Historians classify Bhakti into two: Saguna (focusing on anthropomorphic forms of Shiva, Vishnu, or Devi) and Nirguna (worship of an abstract, formless god)."},{"q":"आलवार संतों के गीतों के संकलन 'नालयिरा दिव्यप्रबंधम' को किस नाम से जाना जाता है और इसका संकलन किस शताब्दी में किया गया था? / Question 23: By what name is the 'Nalayira Divyaprabandham', the anthology of compositions by the Alvars, frequently described, and in which century was it compiled?","options":["तमिल वेद, दसवीं शताब्दी में / Tamil Veda, in the tenth century","द्रविड़ वेद, आठवीं शताब्दी में / Dravida Veda, in the eighth century","तमिल उपनिषद, बारहवीं शताब्दी में / Tamil Upanishad, in the twelfth century","भक्ति वेद, नौवीं शताब्दी में / Bhakti Veda, in the ninth century"],"answer":"A","explanation":"आलवार संतों के गीतों का मुख्य संकलन 'नालयिरा दिव्यप्रबंधम' 10वीं शताब्दी में हुआ, जिसे अक्सर 'तमिल वेद' के रूप में सम्मानजनक दर्जा दिया जाता है। / Explanation: Compiled in the 10th century, the Nalayira Divyaprabandham contains poems of 12 Alvars and is frequently described as the Tamil Veda."},{"q":"आलवार और नयनार महिला भक्तों के संदर्भ में निम्नलिखित कथनों पर विचार कीजिए: कथन 1: आंडाल एक आलवार महिला संत थीं जो स्वयं को विष्णु की प्रियसी मानती थीं और उनके प्रेम छंद गाती थीं। कथन 2: करैक्काल अम्मैयार शिव की परम भक्त थीं जिन्होंने अपने लक्ष्य की प्राप्ति के लिए घोर तपस्या का मार्ग अपनाया था। / Question 24: Consider the following statements regarding Alvar and Nayanar women devotees: Statement 1: Andal was a woman Alvar saint who saw herself as the beloved of Vishnu and sang verses of her love for the deity. Statement 2: Karaikkal Ammaiyar was a devotee of Shiva who adopted the path of extreme asceticism to attain her goal.","options":["केवल कथन 1 सही है / Only Statement 1 is correct","केवल कथन 2 सही है / Only Statement 2 is correct","कथन 1 और कथन 2 दोनों सही हैं / Both Statement 1 and Statement 2 are correct","कोई भी कथन सही नहीं है / Neither of the statements is correct"],"answer":"C","explanation":"दक्षिण भारत की भक्ति परंपरा में स्त्रियों की भूमिका महत्वपूर्ण थी; आंडाल विष्णु की परम भक्त आलवार थीं और करैक्काल अम्मैयार शिवभक्त नयनार थीं। / Explanation: Both women challenged patriarchal norms; Andal loved Vishnu as her beloved, while Karaikkal Ammaiyar followed an ascetic path of Shiva worship."},{"q":"नयनार कवियों अप्पार, सम्बन्दर और सुन्दरार के गीतों का संकलन 'तेवरम' किस आधार पर वर्गीकृत और संकलित किया गया था? / Question 25: On what basis was the 'Tevaram', the collection of poems by Nayanar saints Appar, Sambandar, and Sundarar, compiled and classified?","options":["अध्यायों के क्रम के आधार पर / Chronology of chapters","गीतों के संगीत (राग) के आधार पर / Music of the songs","वर्णमाला के क्रम के आधार पर / Alphabetical order","छंदों की संख्या के आधार पर / Length of the verses"],"answer":"B","explanation":"नयनार संतों के गीतों का प्रसिद्ध संकलन 'तेवरम' दसवीं शताब्दी में गीतों के संगीत या रागों के आधार पर वर्गीकृत करके तैयार किया गया था। / Explanation: Classified in the 10th century, the Tevaram collection of Appar, Sambandar, and Sundarar poems was arranged on the basis of the music of the songs."},{"q":"लगभग 945 ईस्वी के एक शिलालेख के अनुसार, किस चोल शासक ने शिव मंदिर में अप्पार, सम्बन्दर और सुन्दरार की धातु की मूर्तियां स्थापित करवाई थीं? / Question 26: According to inscriptional evidence from around 945 CE, which Chola ruler had consecrated metal images of Appar, Sambandar, and Sundarar in a Shiva temple?","options":["राजराज चोल I / Rajaraja Chola I","परान्तक I / Parantaka I","राजेन्द्र चोल I / Rajendra Chola I","आदित्य चोल I / Aditya Chola I"],"answer":"B","explanation":"परान्तक प्रथम ने लगभग 945 ईस्वी में इन तीन लोकप्रिय नयनार संतों की कांस्य प्रतिमाएं शिव मंदिर में स्थापित कराईं और उन्हें उत्सवों में जुलूसों में ले जाया जाता था। / Explanation: Around 945 CE, Chola ruler Parantaka I consecrated the metal images of Appar, Sambandar, and Sundarar in a Shiva temple to be carried in processions."},{"q":"कर्नाटक की वीरशैव (लिंगायत) परंपरा के संदर्भ में निम्नलिखित कथनों पर विचार कीजिए: कथन 1: इस आंदोलन का नेतृत्व बासवन्ना (1106-68) नामक एक ब्राह्मण ने किया था जो कलचुरी राजा के दरबार में मंत्री थे। कथन 2: बासवन्ना के अनुयायियों को वीरशैव (शिव के वीर) या लिंगायत (लिंग धारण करने वाले) कहा जाता है। / Question 27: Consider the following statements regarding the Virashaiva (Lingayat) tradition of Karnataka: Statement 1: The movement was led by a Brahmana named Basavanna (1106-68) who was a minister in the court of a Kalachuri ruler. Statement 2: Basavanna's followers were known as Virashaivas (heroes of Shiva) or Lingayats (wearers of the linga).","options":["केवल कथन 1 सही है / Only Statement 1 is correct","केवल कथन 2 सही है / Only Statement 2 is correct","कथन 1 और कथन 2 दोनों सही हैं / Both Statement 1 and Statement 2 are correct","कोई भी कथन सही नहीं है / Neither of the statements is correct"],"answer":"C","explanation":"वीरशैव आंदोलन 12वीं सदी में बासवन्ना के नेतृत्व में उभरा। लिंगायत लोग शिव की आराधना लिंग के रूप में करते हैं और बायीं ओर चांदी के संपुट में छोटा लिंग धारण करते हैं। / Explanation: The 12th-century Virashaiva movement was initiated by Basavanna, a Kalachuri court minister. Followers (Lingayats) wear a small silver-cased linga."},{"q":"लिंगायत समुदाय के लोग मृत शरीर का दाह संस्कार न कर उसे सम्मानपूर्वक दफनाते क्यों हैं? / Question 28: Why do members of the Lingayat community ceremonially bury their dead rather than practicing cremation?","options":["वे अग्नि को अपवित्र मानते हैं / They consider fire as impure","वे मानते हैं कि मृत्यु के बाद भक्त शिव में लीन हो जाता है और इस संसार में दोबारा जन्म नहीं लेता / They believe the devotee is united with Shiva and will not return","धर्मशास्त्रों में लिंगायतों के लिए दाह-संस्कार प्रतिबंधित था / Dharmashastras prohibited cremation specifically for Lingayats","वे केवल जनजातीय दफन प्रथाओं का अनुसरण करते हैं / They only follow ancient tribal burial practices"],"answer":"B","explanation":"लिंगायतों का विश्वास है कि मृत्यु के बाद आत्मा पुनः जन्म नहीं लेती, वह शिव में विलीन हो जाती है, इसलिए वे अंतिम संस्कार की दाह-प्रथा न अपनाकर शवों को दफनाते हैं। / Explanation: Lingayats believe that on death the devotee will be united with Shiva and not return to the world, so they bury their dead instead of cremating them."},{"q":"मुस्लिम शासन के तहत गैर-मुस्लिम प्रजा (यहूदियों, ईसाइयों और बाद में हिंदुओं) को संरक्षित दर्जा देने के बदले कौन सा कर देना पड़ता था? / Question 29: Under Muslim rule, which tax was paid by the non-Muslim subjects (Jews, Christians, and later Hindus) to gain protected (zimmi) status?","options":["खराज / Kharaj","जजिया / Jizya","जकात / Zakat","खुम्स / Khums"],"answer":"B","explanation":"'जिम्मी' वे लोग थे जो इस्लामी संरक्षण प्राप्त करने के लिए 'जजिया' नामक कर देते थे। भारत में हिंदुओं को भी यह दर्जा और सुरक्षा प्रदान की गई थी। / Explanation: Zimmi meant protected people (Jews, Christians, and later Hindus in India) who paid a tax called jizya to gain protection under Muslim rulers."},{"q":"चिश्ती संतों और उनकी साहित्यिक भाषा या अभिव्यक्ति के संदर्भ में कौन सा सुमेलन सही है: सूची-I: A. दिल्ली के चिश्ती संत, B. बाबा फरीद के छंद, C. दक्षिण भारत (बीजापुर) के सूफी, D. मलिक मोहम्मद जायसी; सूची-II: 1. हिन्दवी भाषा, 2. गुरु ग्रंथ साहिब (पंजाबी), 3. दखनी भाषा (उर्दू), 4. पद्मावत (अवधी/प्रेम-आख्यान) / Question 30: Which matching of Chishti saints and their literary language or expression is correct: List-I: A. Chishtis of Delhi, B. Baba Farid's verses, C. Sufis of Bijapur, D. Malik Muhammad Jayasi; List-II: 1. Hindavi language, 2. Guru Granth Sahib (Punjabi), 3. Dakhani language (Urdu), 4. Padmavat (Awadhi/prem-akhyan)","options":["A-1, B-2, C-3, D-4 / A-1, B-2, C-3, D-4","A-2, B-1, C-4, D-3 / A-2, B-1, C-4, D-3","A-3, B-2, C-1, D-4 / A-3, B-2, C-1, D-4","A-1, B-3, C-2, D-4 / A-1, B-3, C-2, D-4"],"answer":"A","explanation":"दिल्ली के चिश्ती हिन्दवी बोलते थे; बाबा फरीद के गीतों को गुरु ग्रंथ साहिब में शामिल किया गया; बीजापुर के संतों ने दखनी लिखी; और जायसी ने अवधी में पद्मावत लिखी। / Explanation: Delhi Chishtis spoke Hindavi; Baba Farid's verses went to Guru Granth Sahib; Bijapur sufis used Dakhani Urdu; Jayasi wrote Padmavat in Awadhi."},{"q":"अमीर खुसरो (1253-1325) ने कव्वाली के आरंभ या अंत में गाए जाने वाले किस विशेष सूफी भजन की शुरुआत करके चिश्ती समा को एक अनूठा रूप दिया था? / Question 31: Amir Khusrau (1253-1325) gave a unique form to Chishti sama' by introducing which specific sufi hymn sung at the opening or closing of qawwali?","options":["गजल / Ghazal","कौल / Qaul","मसनवी / Masnavi","जिक्रे-जली / Zikr-i jali"],"answer":"B","explanation":"अमीर खुसरो ने 'कौल' (एक अरबी शब्द जिसका अर्थ 'कथन' है) की शुरुआत की। निजामुद्दीन औलिया की दरगाह के कव्वाल हमेशा इसी कौल के साथ अपना गायन शुरू करते हैं। / Explanation: Amir Khusrau introduced the qaul (Arabic word meaning \"saying\"), a hymn sung at the opening or closing of qawwali to initiate Chishti samas."},{"q":"राजपूत कवयित्री मीराबाई के संदर्भ में निम्नलिखित कथनों पर विचार कीजिए: कथन 1: वे मारवाड़ के मेड़ता की एक राजपूत राजकुमारी थीं जिनका विवाह मेवाड़ के सिसोदिया वंश के राजकुमार से हुआ था। कथन 2: कुछ मान्यताओं के अनुसार, उनके आध्यात्मिक गुरु (दीक्षक) रैदास थे, जो चमड़े का काम करते थे। / Question 32: Consider the following statements regarding the beauty and defiance of the Rajput poetess Mirabai: Statement 1: She was a Rajput princess from Merta in Marwar married to a prince of the Sisodia clan of Mewar. Statement 2: According to some traditions, her preceptor was Raidas, a leather worker.","options":["केवल कथन 1 सही है / Only Statement 1 is correct","केवल कथन 2 सही है / Only Statement 2 is correct","कथन 1 और कथन 2 दोनों सही हैं / Both Statement 1 and Statement 2 are correct","कोई भी कथन सही नहीं है / Neither of the statements is correct"],"answer":"C","explanation":"मीराबाई का विवाह उनकी इच्छा के विरुद्ध हुआ था, उन्होंने कृष्ण को अपना एकमात्र प्रेमी माना और चमार जाति के रैदास को गुरु मानकर जाति व्यवस्था को चुनौती दी। / Explanation: Mirabai was married into Mewar's royal family but chose Krishna as her lover; choosing Raidas, a leather worker, as her preceptor challenged caste norms."},{"q":"पंद्रहवीं शताब्दी के अंत में असम में वैष्णव धर्म के प्रमुख प्रचारक शंकरदेव की शिक्षाओं को किस नाम से जाना जाता है और उनके द्वारा रचित मुख्य ग्रंथ कौन सा है? / Question 33: By what name are the teachings of Shankaradeva, the leading late-fifteenth-century Vaishnavism proponent in Assam, known, and what is his major composition?","options":["भगवती धर्म, कीर्तन-घोष / Bhagavati dharma, Kirtana-ghosha","भक्ति धर्म, सूरसागर / Bhakti dharma, Sursagar","शरण धर्म, पदावली / Sharan dharma, Padavali","वैष्णव मत, रामचरितमानस / Vaishnav dharma, Ramcharitmanas"],"answer":"A","explanation":"शंकरदेव की शिक्षाओं को 'भगवती धर्म' कहा जाता है (जो गीता और भागवत पुराण पर आधारित हैं)। उनका मुख्य काव्य संकलन 'कीर्तन-घोष' के नाम से जाना जाता है। / Explanation: Shankaradeva's teachings are known as Bhagavati dharma (based on Gita and Bhagavata Purana), and his major poetic composition is Kirtana-ghosha."},{"q":"निम्नलिखित धार्मिक गुरुओं को उनके कालक्रम (जन्म/सक्रिय अवधि) के अनुसार प्राचीनतम से नवीनतम क्रम में व्यवस्थित कीजिए: 1. अप्पार, 2. बासवन्ना, 3. निजामुद्दीन औलिया, 4. मीराबाई / Question 34: Arrange the following religious teachers in chronological order from earliest to latest based on the approximate period they lived: 1. Appar, 2. Basavanna, 3. Nizamuddin Auliya, 4. Mirabai","options":["1, 2, 3, 4 / 1, 2, 3, 4","2, 1, 3, 4 / 2, 1, 3, 4","1, 3, 2, 4 / 1, 3, 2, 4","3, 1, 2, 4 / 3, 1, 2, 4"],"answer":"A","explanation":"अप्पार (लगभग 500-800 ई.), बासवन्ना (12वीं शताब्दी), निजामुद्दीन औलिया (13-14वीं शताब्दी) और मीराबाई (15-16वीं शताब्दी) में सक्रिय थीं। / Explanation: Appar lived c. 500-800 CE, Basavanna lived c. 1100-1200 CE, Nizamuddin Auliya died in 1325 CE, and Mirabai lived c. 1500-1600 CE."},{"q":"कर्नल कोलिन मैकेंजी ने किस वर्ष हम्पी के खंडहरों की खोज की थी और उन्हें भारत का पहला सर्वेयर जनरल किस वर्ष नियुक्त किया गया था? / Question 35: In which year did Colonel Colin Mackenzie bring the ruins of Hampi to light, and in which year was he appointed as the first Surveyor General of India?","options":["1800 ईस्वी में खोज, 1815 ईस्वी में नियुक्ति / 1800 CE Discovery, 1815 CE Appointment","1795 ईस्वी में खोज, 1810 ईस्वी में नियुक्ति / 1795 CE Discovery, 1810 CE Appointment","1805 ईस्वी में खोज, 1820 ईस्वी में नियुक्ति / 1805 CE Discovery, 1820 CE Appointment","1812 ईस्वी में खोज, 1818 ईस्वी में नियुक्ति / 1812 CE Discovery, 1818 CE Appointment"],"answer":"A","explanation":"मैकेंजी ने वर्ष 1800 में हम्पी का पहला सर्वेक्षण मानचित्र तैयार किया और वह वर्ष 1815 में भारत के पहले सर्वेयर जनरल बने, जिस पद पर वे 1821 तक रहे। / Explanation: Colin Mackenzie brought Hampi's ruins to light in 1800 CE and was appointed the first Surveyor General of India in 1815 CE, serving until his death in 1821."},{"q":"विजयनगर साम्राज्य के शासकों के समकालीन लोगों और अभिलेखों में इस साम्राज्य को मूल रूप से किस नाम से संबोधित किया गया है? / Question 36: By what name did contemporaries and epigraphic records originally describe the empire referred to by historians as the Vijayanagara Empire?","options":["विजयनगर सम्राज्यम / Vijayanagara Samrajyam","कर्नाटक साम्राज्यमु / Karnataka samrajyamu","आंध्र कर्नाटक साम्राज्य / Andhra Karnataka Samrajya","दक्षिणपथा साम्राज्य / Dakshinapatha Samrajya"],"answer":"B","explanation":"यद्यपि इतिहासकार 'विजयनगर साम्राज्य' शब्द का उपयोग करते हैं, परंतु उसके समकालीन शासकों और राजकीय अभिलेखों में उसे 'कर्नाटक साम्राज्यमु' कहा गया है। / Explanation: While modern historians use the term Vijayanagara Empire, contemporary records and people described it as the 'karnataka samrajyamu'."},{"q":"विजयनगर साम्राज्य के जनविश्वास में प्रयुक्त सैन्य-राजकीय उपाधियों का उनके शासकों के साथ सही सुमेलन क्या है: सूची-I: A. गजपति, B. अश्वपति, C. नरपति; सूची-II: 1. उड़ीसा के शासक (हाथियों के स्वामी), 2. दक्कन के सुल्तान (घोड़ों के स्वामी), 3. विजयनगर के राय (मनुष्यों के स्वामी) / Question 37: What is the correct matching of military-political titles in Vijayanagara popular traditions with their respective rulers: List-I: A. Gajapati, B. Ashvapati, C. Narapati; List-II: 1. Rulers of Orissa (lord of elephants), 2. Deccan Sultans (lord of horses), 3. Vijayanagara Rayas (lord of men)","options":["A-1, B-2, C-3 / A-1, B-2, C-3","A-2, B-1, C-3 / A-2, B-1, C-3","A-3, B-2, C-1 / A-3, B-2, C-1","A-1, B-3, C-2 / A-1, B-3, C-2"],"answer":"A","explanation":"लोक परंपराओं के अनुसार गजपति का अर्थ उड़ीसा के शासकों से है, अश्वपति का अर्थ दक्कन के सुल्तानों से है और नरपति का संबंध विजयनगर के शासकों (राय) से है। / Explanation: In local traditions, Gajapati refers to Orissa rulers, Ashvapati to Deccan Sultans, and Narapati to the Rayas of Vijayanagara."},{"q":"विजयनगर के महानतम शासक कृष्णदेव राय (शासनकाल 1509-29) ने तेलुगु भाषा में राज्य कला और शासन व्यवस्था पर किस प्रसिद्ध ग्रंथ की रचना की थी? / Question 38: Which famous treatise on statecraft and governance was composed in the Telugu language by the greatest Vijayanagara ruler Krishnadeva Raya (ruled 1509-29)?","options":["मनुचरितमु / Manucharitamu","अमुक्तमाल्यदा / Amuktamalyada","जामवंती कल्याणम / Jambavati Kalyanam","रायवाचकामु / Rayavachakamu"],"answer":"B","explanation":"कृष्णदेव राय ने तेलुगु भाषा में 'अमुक्तमाल्यदा' की रचना की, जिसमें विदेशी व्यापारियों को संरक्षण देने और बंदरगाहों के विकास की राजकीय नीतियां दी गई हैं। / Explanation: Krishnadeva Raya composed 'Amuktamalyada' in Telugu, which contains detailed insights about statecraft, trade, and economic policies."},{"q":"विजयनगर साम्राज्य की सैन्य ताकत को पूरी तरह ध्वस्त करने वाली 'राक्षसी-तांगड़ी' (तालिकोटा) की प्रसिद्ध लड़ाई किस वर्ष लड़ी गई थी? / Question 39: In which year was the famous Battle of Rakshasi-Tangadi (Talikota) fought, which decisively led to the sack and collapse of the Vijayanagara city?","options":["1556 ईस्वी में / 1556 CE","1565 ईस्वी में / 1565 CE","1570 ईस्वी में / 1570 CE","1529 ईस्वी में / 1529 CE"],"answer":"B","explanation":"वर्ष 1565 ईस्वी में विजयनगर के प्रधानमंत्री राम राय के समय राक्षसी-तांगड़ी की लड़ाई हुई, जहाँ दक्कन के संयुक्त सुल्तानों की सेनाओं ने उसे पराजित किया। / Explanation: In 1565 CE, Rama Raya led Vijayanagara army into the Battle of Rakshasi-Tangadi, where joint Sultanate forces defeated him and sacked the city."},{"q":"विजयनगर साम्राज्य की 'अमर-नायक' प्रणाली के संदर्भ में निम्नलिखित कथनों पर विचार कीजिए: कथन 1: यह प्रणाली दिल्ली सल्तनत की इक्ता (iqta) प्रणाली की कई विशेषताओं से प्रेरित थी। कथन 2: अमर-नायक सैन्य कमांडर थे जिन्हें राय द्वारा शासन के लिए क्षेत्र दिए जाते थे और वे प्रतिवर्ष राजा को व्यक्तिगत रूप से उपहार और कर भेजते थे। / Question 40: Consider the following statements regarding the 'Amara-Nayaka' system of the Vijayanagara Empire: Statement 1: This political innovation derived many of its features from the iqta system of the Delhi Sultanate. Statement 2: The amara-nayakas were military commanders given territories to govern by the raya and they sent tribute and gifts to the king annually.","options":["केवल कथन 1 सही है / Only Statement 1 is correct","केवल कथन 2 सही है / Only Statement 2 is correct","कथन 1 और कथन 2 दोनों सही हैं / Both Statement 1 and Statement 2 are correct","कोई भी कथन सही नहीं है / Neither of the statements is correct"],"answer":"C","explanation":"अमर-नायक प्रणाली इक्ता व्यवस्था जैसी थी, जिसके अंतर्गत सेनापतियों को सैन्य खर्च और मंदिरों तथा सिंचाई प्रणालियों के रखरखाव के लिए भूमि दी जाती थी। / Explanation: The amara-nayaka system was derived from the Delhi Sultanate's iqta system; commanders collected revenue, maintained military contingents, and paid annual tributes."},{"q":"विजयनगर साम्राज्य की जलापूर्ति और नहर प्रणालियों के संदर्भ में निम्नलिखित कथनों पर विचार कीजिए: कथन 1: पंद्रहवीं शताब्दी के शुरुआती वर्षों में निर्मित 'कमलापुरम जलाशय' का पानी खेतों की सिंचाई के साथ-साथ राजकीय केंद्र तक भी ले जाया जाता था। कथन 2: 'हिरिया नहर' तुंगभद्रा नदी पर बने एक बांध से पानी लाती थी और पवित्र केंद्र को शहरी कोर से अलग करने वाली घाटी को सींचती थी। / Question 41: Consider the following statements regarding the water resources and canal systems of the Vijayanagara Empire: Statement 1: Built in the early years of the fifteenth century, water from the 'Kamalapuram tank' was conducted through a channel to the royal centre. Statement 2: The 'Hiriya canal' drew water from a dam across the Tungabhadra river and irrigated the valley separating the sacred centre from the urban core.","options":["केवल कथन 1 सही है / Only Statement 1 is correct","केवल कथन 2 सही है / Only Statement 2 is correct","कथन 1 और कथन 2 दोनों सही हैं / Both Statement 1 and Statement 2 are correct","कोई भी कथन सही नहीं है / Neither of the statements is correct"],"answer":"C","explanation":"विजयनगर के जल संसाधन उत्कृष्ट थे। कमलापुरम जलाशय राजकीय केंद्र को पानी देता था, जबकि हिरिया नहर (संगम वंश द्वारा निर्मित) कृषि घाटी की सिंचाई करती थी। / Explanation: Water supply was sophisticated; the early-15th-century Kamalapuram tank fed the royal centre, and the Hiriya canal irrigated the central agricultural valley."},{"q":"विजयनगर साम्राज्य के दुर्ग पर प्रकाश डालने वाले किस फारसी राजदूत ने इसकी अभूतपूर्व सात दीवारों का उल्लेख किया है जो न केवल शहर बल्कि कृषि क्षेत्र और जंगलों को भी घेरती थीं? / Question 42: Which Persian ambassador who visited Vijayanagara described the unprecedented seven lines of fortifications that enclosed not only the city but also its agricultural lands and forests?","options":["इब्न बतूता / Ibn Battuta","अब्दुर रज्जाक / Abdur Razzaq","डोमिंगो पेस / Domingo Paes","निकोलो कोंटी / Nicolo de Conti"],"answer":"B","explanation":"फारसी सुल्तान के दूत अब्दुर रज्जाक ने 15वीं सदी में विजयनगर का दौरा किया और बताया कि पहले और तीसरे घेरे के बीच खेती वाले खेत, बगीचे और घर मौजूद थे। / Explanation: The Persian ambassador Abdur Razzaq (15th century) noted that the outermost of the seven fortress walls enclosed agricultural tracts, gardens, and houses."},{"q":"सोलहवीं और सत्रहवीं शताब्दी के दौरान भारत की लगभग कितने प्रतिशत आबादी ग्रामीण क्षेत्रों (गांवों) में निवास करती थी? / Question 43: During the sixteenth and seventeenth centuries, approximately what percentage of India's population lived in rural areas (villages)?","options":["75 प्रतिशत / 75 percent","80 प्रतिशत / 80 percent","85 प्रतिशत / 85 percent","90 प्रतिशत / 90 percent"],"answer":"C","explanation":"इस काल के दौरान भारत की कुल जनसंख्या का लगभग 85 प्रतिशत हिस्सा गांवों में रहता था, जिनका मुख्य जीवन कृषि उत्पादन पर ही टिका हुआ था। / Explanation: During the 16th and 17th centuries, about 85 percent of India's population lived in villages, with agriculture as their main economic stay."},{"q":"सत्रहवीं शताब्दी के मुगल दस्तावेजों के अनुसार 'खुद-काश्त' और 'पाही-काश्त' किसान श्रेणियों में क्या मुख्य अंतर था? / Question 44: According to seventeenth-century Mughal documents, what was the primary difference between 'khud-kashta' and 'pahi-kashta' categories of peasants?","options":["खुद-काश्त केवल नगदी फसल उगाते थे, जबकि पाही-काश्त केवल अनाज / Khud-kashta only grew cash crops, while pahi-kashta grew only grains","खुद-काश्त उसी गाँव के निवासी थे जहाँ उनकी ज़मीन थी, जबकि पाही-काश्त दूसरे गाँव से अनुबंध पर खेती करने वाले बाहरी किसान थे / Khud-kashta were residents of the village where they held land, while pahi-kashta were contractual non-resident cultivators from other villages","खुद-काश्त जमींदार वर्ग के थे, जबकि पाही-काश्त भूमिहीन मजदूर / Khud-kashta belonged to the zamindar class, while pahi-kashta were landless laborers","खुद-काश्त राज्य को कर नहीं देते थे, जबकि पाही-काश्त पर दोगुना कर था / Khud-kashta did not pay tax to the state, while pahi-kashta paid double tax"],"answer":"B","explanation":"खुद-काश्त ग्रामीण निवासी किसान थे, जबकि पाही-काश्त दूसरे गाँवों से स्वेच्छा से अथवा अकाल जैसी मजबूरी में अनुबंध के तहत खेती करने आते थे। / Explanation: Khud-kashta were resident cultivators who lived in the same village, whereas pahi-kashta were non-resident contractual farmers from other villages."},{"q":"मुगलकाल के ऐतिहासिक स्रोतों में प्रयुक्त 'जिंस-ए-कामिल' (सर्वोत्तम फसलें) से क्या तात्पर्य है? / Question 45: What is meant by the term 'jins-i kamil' (perfect crops) frequently used in Mughal historical sources?","options":["राज्य द्वारा उपभोग की जाने वाली राजकीय फसलें / Crops consumed only by the royal court","केवल वर्षा ऋतु में उगाई जाने वाली फसलें / Crops grown only during the monsoon season","अधिक राजस्व देने वाली सर्वोत्तम नकदी फसलें जैसे कपास और गन्ना / Cash crops yielding high revenue, such as cotton and sugarcane","वह अनाज जो अकाल के दौरान आरक्षित किया जाता था / Grains stored as buffer stock during famines"],"answer":"C","explanation":"'जिंस-ए-कामिल' का अर्थ 'पूर्ण फसल' या 'सर्वोत्तम फसलें' है। मुगल राज्य बेहतर राजस्व के लिए इनके उत्पादन को बढ़ावा देता था (जैसे मध्य भारत में कपास और बंगाल में गन्ना)। / Explanation: Jins-i kamil literally means \"perfect crops\" or commercial cash crops like cotton and sugarcane, which yielded higher revenue and were promoted by the state."},{"q":"तंबाकू भारत में पहली बार दक्कन में आई और सत्रहवीं शताब्दी की शुरुआत में उत्तर भारत फैली। किस मुगल सम्राट ने इसके अत्यधिक व्यसन से चिंतित होकर इस पर प्रतिबंध लगा दिया था? / Question 46: Tobacco first arrived in the Deccan and spread to northern India in the early seventeenth century. Which Mughal emperor banned it, concerned about its addiction?","options":["अकबर ने / Akbar","जहाँगीर ने / Jahangir","शाहजहाँ ने / Shah Jahan","औरंगज़ेब ने / Aurangzeb"],"answer":"B","explanation":"अकबर और उसके अमीरों ने पहली बार 1604 में तंबाकू देखा था। इसके व्यापक व्यसन को रोकने के लिए जहाँगीर ने प्रतिबंध लगाया, जो पूरी तरह अप्रभावी रहा। / Explanation: Concerned about its widespread addiction, Emperor Jahangir banned tobacco use in the early 17th century, though the ban was completely ineffective."},{"q":"मुगल ग्रामीण समाज में पंचायत के मुखिया (मुकद्दम या मंडल) का चुनाव और सहायता किसके द्वारा की जाती थी? / Question 47: In Mughal rural society, how was the village headman (muqaddam or mandal) chosen, and by whom was he assisted?","options":["जमींदार द्वारा प्रत्यक्ष मनोनीत, गाँव के सबसे वृद्ध व्यक्ति द्वारा सहायता / Direct nomination by the zamindar, assisted by the oldest village member","ग्रामीण बुजुर्गों की सहमति से चुना जाता तथा जमींदार द्वारा अनुमोदित, पंचायत के लेखाकार (पटवारी) द्वारा सहायता / Chosen through consensus of village elders and ratified by the zamindar, assisted by the accountant (patwari)","मुगल प्रशासन द्वारा प्रत्यक्ष नियुक्त, स्थानीय कानूनगो द्वारा सहायता / Direct appointment by the Mughal court, assisted by the local qanungo","जाति पंचायतों द्वारा निर्वाचित, गाँव के पुरोहित द्वारा सहायता / Elected by jati panchayats, assisted by the village priest"],"answer":"B","explanation":"मुकद्दम का चुनाव बुजुर्गों की सहमति से होता था और स्थानीय जमींदार इसे मंजूरी देता था। वह पटवारी (लेखाकार) की सहायता से गाँव के खातों का हिसाब रखता था। / Explanation: The headman was chosen through the consensus of elders, ratified by the zamindar, and assisted by the patwari in preparing village accounts."},{"q":"आईन-ए-अकबरी के अनुसार अकबर द्वारा भू-राजस्व निर्धारण के लिए वर्गीकृत चार प्रकार की श्रेणियों का उनकी परिभाषा के साथ सही सुमेलन क्या है: सूची-I: A. पोलज, B. परौती, C. चाचर, D. बंजर; सूची-II: 1. वार्षिक रूप से खेती की जाने वाली भूमि (कभी खाली नहीं रहती), 2. अपनी शक्ति वापस पाने के लिए कुछ समय के लिए खाली छोड़ी गई भूमि, 3. तीन या चार वर्षों के लिए खाली पड़ी भूमि, 4. पांच या अधिक वर्षों से बिना खेती वाली भूमि / Question 48: According to the Ain-i Akbari, what is the correct matching of the four categories of land classified under Akbar with their definitions: List-I: A. Polaj, B. Parauti, C. Chachar, D. Banjar; List-II: 1. Land annually cultivated (never allowed to lie fallow), 2. Land left out of cultivation for a time to recover strength, 3. Land lying fallow for three or four years, 4. Land uncultivated for five years and more","options":["A-1, B-2, C-3, D-4 / A-1, B-2, C-3, D-4","A-2, B-1, C-4, D-3 / A-2, B-1, C-4, D-3","A-1, B-3, C-2, D-4 / A-1, B-3, C-2, D-4","A-4, B-3, C-2, D-1 / A-4, B-3, C-2, D-1"],"answer":"A","explanation":"आईन के अनुसार भूमि वर्गीकरण: पोलज (वार्षिक खेती), परौती (कुछ समय परती), चाचर (3-4 साल खाली), बंजर (5 या अधिक साल बंजर)। / Explanation: The land classification in the Ain is: Polaj (cultivated annually), Parauti (lies fallow temporarily), Chachar (fallow 3-4 years), and Banjar (fallow 5+ years)."},{"q":"आईन-ए-अकबरी में वर्णित राजस्व निर्धारण और संग्रह की प्रणालियों का उनके अर्थ के साथ सही सुमेलन क्या है: सूची-I: A. कनकूत, B. बटाई (भाओली), C. खेत-बटाई, D. लांग बटाई; सूची-II: 1. खड़े अनाज का अनुमानित मूल्यांकन, 2. कटाई के बाद फसल को आपसी समझौते से बांटना, 3. बुआई के तुरंत बाद खेतों का बंटवारा करना, 4. अनाज को काटकर बड़े ढेरों में बांटना / Question 49: What is the correct matching of the revenue assessment and collection systems described in the Ain-i Akbari with their meanings: List-I: A. Kankut, B. Batai (Bhaoli), C. Khet-batai, D. Lang batai; List-II: 1. Appraisal estimation of standing grain, 2. Reaping and dividing crops by agreement, 3. Dividing fields immediately after they are sown, 4. Dividing cut grain in large heaps after harvest","options":["A-1, B-2, C-3, D-4 / A-1, B-2, C-3, D-4","A-2, B-1, C-4, D-3 / A-2, B-1, C-4, D-3","A-3, B-2, C-1, D-4 / A-3, B-2, C-1, D-4","A-1, B-3, C-2, D-4 / A-1, B-3, C-2, D-4"],"answer":"A","explanation":"आईन के अनुसार प्रणालियां: कनकूत (कन=अनाज, कूत=अनुमान); बटाई (गठजोड़ द्वारा बंटवारा); खेत-बटाई (बुआई के बाद खेतों का विभाजन); लांग बटाई (खलिहान में अनाज का विभाजन)। / Explanation: Systems described are: Kankut (estimating standing grain); Batai (dividing reaped crops); Khet-batai (dividing sown fields); Lang batai (dividing crop heaps after threshing)."},{"q":"अबुल फजल द्वारा रचित 'आईन-ए-अकबरी' की संरचना के संदर्भ में निम्नलिखित कथनों पर विचार कीजिए: कथन 1: आईन-ए-अकबरी सम्राट अकबर के आदेश पर लिखी गई व्यापक ऐतिहासिक परियोजना 'अकबरनामा' की तीसरी पुस्तक (जिल्द) है और इसे पांच बार संशोधित किया गया था। कथन 2: इसकी तीसरी पुस्तक 'मुल्क-आबादी' साम्राज्य के वित्तीय और राजस्व दरों से संबंधित है, जबकि चौथी और पांचवीं पुस्तकें भारत के धार्मिक और सांस्कृतिक रीति-रिवाजों से संबंधित हैं। / Question 50: Consider the following statements regarding the structure of the 'Ain-i Akbari' composed by Abu'l Fazl: Statement 1: The Ain-i Akbari is the third book of the larger historical project 'Akbar Nama' commissioned by Emperor Akbar, and it underwent five revisions. Statement 2: Its third book 'mulk-abadi' deals with the fiscal side and revenue rates of the empire, while the fourth and fifth books (daftars) deal with the religious and cultural traditions of India.","options":["केवल कथन 1 सही है / Only Statement 1 is correct","केवल कथन 2 सही है / Only Statement 2 is correct","कथन 1 और कथन 2 दोनों सही हैं / Both Statement 1 and Statement 2 are correct","कोई भी कथन सही नहीं है / Neither of the statements is correct"],"answer":"C","explanation":"आईन-ए-अकबरी अकबरनामा की तीसरी पुस्तक थी, जो पांच संशोधनों के बाद 1598 में पूरी हुई। मुल्क-आबादी वित्त का हिसाब देती है और चौथी-पांचवीं दफ्तर भारतीय संस्कृति और अकबर की कहावतों पर आधारित है। / Explanation: The Ain is the third book of Akbar Nama, completed in 1598 after 5 revisions. The mulk-abadi deals with fiscal aspects, and books 4-5 deal with culture and traditions."}]};
+/* ====================  प्रश्न यहीं तक — नीचे इंजन है  ==================== */
+
+
+/* ----------------------------- इंजन ----------------------------- */
+const LETTERS = "ABCDEFGH";
+const $ = (id) => document.getElementById(id);
+const Q = TEST.questions;
+const N = Q.length;
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+const state = {
+  idx: 0,
+  answers: new Array(N).fill(null),
+  marked: new Array(N).fill(false),
+  visited: new Array(N).fill(false),
+  timeLeft: (TEST.durationMinutes || 0) * 60,
+  timer: null,
+  startTs: 0,
+  finished: false,
+  started: false,
+  lang: (function(){ try{ return localStorage.getItem("bodhi_lang")||"hi"; }catch(e){ return "hi"; } })()
+};
+
+function answerIndex(qObj){
+  let a = qObj.answer;
+  if (typeof a === "number") return (a >= 1 && a <= qObj.options.length) ? a - 1 : a;
+  if (typeof a === "string"){
+    const up = a.trim().toUpperCase();
+    const i = LETTERS.indexOf(up);
+    if (i !== -1) return i;
+    const n = parseInt(up, 10);
+    if (!isNaN(n)) return n - 1;
+  }
+  return -1;
+}
+
+/* ---------- आवरण भरें ---------- */
+function buildCover(){
+  $("cv-title").textContent = TEST.title || "परीक्षा";
+  $("cv-eyebrow").textContent = TEST.subtitle || "अभ्यास परीक्षा";
+  $("cv-tag").textContent = TEST.tag || "मॉक टेस्ट";
+  if($("coverLang")){ $("coverLang").innerHTML = langSeg(); wireLang($("coverLang")); }
+  $("cv-desc").textContent = "कुल " + N + " प्रश्न · सावधानी से पढ़ें, समय का ध्यान रखें और प्रत्येक प्रश्न का उत्तर सोच-समझकर दें। शुभकामनाएँ!";
+
+  const totalMarks = N * (TEST.marksPerQuestion || 1);
+  const meta = [
+    {k:"प्रश्न", v:N, s:""},
+    {k:"कुल अंक", v:totalMarks, s:""},
+    {k:"समय", v:(TEST.durationMinutes ? TEST.durationMinutes : "∞"), s:(TEST.durationMinutes ? "मिनट" : "")},
+    {k:"ऋणात्मक", v:(TEST.negativeMarks ? ("−"+TEST.negativeMarks) : "0"), s:"प्रति गलत"}
+  ];
+  $("cv-meta").innerHTML = meta.map(m =>
+    `<div class="meta-card"><div class="meta-k">${m.k}</div><div class="meta-v">${m.v}<small>${m.s}</small></div></div>`
+  ).join("");
+
+  const negTxt = TEST.negativeMarks
+    ? `प्रत्येक गलत उत्तर पर <b>${TEST.negativeMarks} अंक</b> की कटौती होगी — अनुमान लगाने से पहले सोचें।`
+    : `इस परीक्षा में ग़लत उत्तर पर कोई ऋणात्मक अंकन नहीं है।`;
+  const timeTxt = TEST.durationMinutes
+    ? `निर्धारित समय <b>${TEST.durationMinutes} मिनट</b> है; समय समाप्त होते ही परीक्षा स्वतः जमा हो जाएगी।`
+    : `इस परीक्षा में कोई समय-सीमा नहीं है, फिर भी अभ्यास हेतु गति बनाए रखें।`;
+  const ins = [
+    `कुल <b>${N} प्रश्न</b> हैं और प्रत्येक के <b>${TEST.marksPerQuestion} अंक</b> निर्धारित हैं।`,
+    timeTxt,
+    negTxt,
+    `किसी प्रश्न पर संदेह हो तो उसे <b>“समीक्षा हेतु चिह्नित”</b> कर आगे बढ़ें और बाद में लौटें।`,
+    `दाईं ओर की <b>प्रश्न सूची</b> से किसी भी प्रश्न पर सीधे जा सकते हैं — हरा अर्थात् उत्तरित।`,
+    `सब हल कर लेने पर <b>“परीक्षा समाप्त करें”</b> दबाएँ; तभी आपका परिणाम और विस्तृत समाधान दिखेगा।`
+  ];
+  $("cv-ins").innerHTML = ins.map(t => `<li>${t}</li>`).join("");
+}
+
+/* ---------- स्क्रीन स्विच ---------- */
+function show(name){
+  ["cover","quiz","result","review"].forEach(s => $("screen-"+s).hidden = (s !== name));
+  window.scrollTo({top:0, behavior: reduced ? "auto" : "smooth"});
+}
+
+/* ---------- परीक्षा आरंभ ---------- */
+function startTest(){
+  const nameVal = ($("studentName").value || "").trim();
+  if (!nameVal){
+    $("nameErr").textContent = "कृपया परीक्षा शुरू करने से पहले अपना नाम लिखें।";
+    $("studentName").focus();
+    return;
+  }
+  $("nameErr").textContent = "";
+  state.studentName = nameVal; state.started = true;
+  try{ localStorage.setItem("bc_name", nameVal); }catch(e){}
+
+  state.startTs = Date.now();
+  state.idx = 0;
+  show("quiz");
+  renderQuestion();
+  buildPalette();
+  if (TEST.durationMinutes > 0){ startTimer(); } else { $("timer").style.display = "none"; }
+}
+
+function startTimer(){
+  updateTimer();
+  state.timer = setInterval(() => {
+    state.timeLeft--;
+    updateTimer();
+    if (state.timeLeft <= 0){ clearInterval(state.timer); doSubmit(true); }
+  }, 1000);
+}
+function fmt(s){
+  s = Math.max(0, s);
+  const m = Math.floor(s/60), ss = s%60;
+  return m + ":" + String(ss).padStart(2,"0");
+}
+function updateTimer(){
+  $("timerText").textContent = fmt(state.timeLeft);
+  $("timer").classList.toggle("warn", state.timeLeft <= 60 && state.timeLeft > 0);
+}
+
+/* ---------- प्रश्न रेंडर ---------- */
+
+/* ===== द्विभाषी + प्रश्न-प्रकार फ़ॉर्मैटर + भाषा टॉगल ===== */
+var RANKING_ENABLED = false; /* Firebase जुड़ने पर true — तब रैंकिंग/लीडरबोर्ड दिखेगा */
+function curLang(){ try{ return (typeof state!=="undefined" && state.lang) ? state.lang : (localStorage.getItem("bodhi_lang")||"hi"); }catch(e){ return "hi"; } }
+function langSeg(){
+  var L=curLang();
+  var o=function(v,t){ return '<button type="button" class="lang-b'+(L===v?" on":"")+'" data-lang="'+v+'">'+t+'</button>'; };
+  return '<div class="lang-seg">'+o("hi","हिंदी")+o("en","English")+o("bi","दोनों")+'</div>';
+}
+function wireLang(root){ if(!root) return; root.querySelectorAll(".lang-b").forEach(function(b){ b.addEventListener("click", function(){ setLang(b.getAttribute("data-lang")); }); }); }
+function setLang(l){
+  try{ state.lang=l; }catch(e){}
+  try{ localStorage.setItem("bodhi_lang", l); }catch(e){}
+  if(typeof state!=="undefined" && state.started){ renderQuestion(); }
+  else { var cl=document.getElementById("coverLang"); if(cl){ cl.innerHTML=langSeg(); wireLang(cl); } }
+}
+function _fmtChunk(t){
+  if(!t) return "";
+  t = String(t).trim();
+  t = t.replace(/\s*(कथन\s*\d+\s*[:：])/g,"<br>$1")
+       .replace(/\s*(Statement\s*\d+\s*[:：])/gi,"<br>$1")
+       .replace(/([।;])\s*(\d+\.\s)/g,"$1<br>$2");
+  t = t.replace(/^(?:<br>)+/,"").replace(/(^|<br>)\s+/g,"$1");
+  return t;
+}
+function _splitItems(seg, re){ return seg.split(re).map(function(s){return s.trim();}).filter(Boolean); }
+function _matchTable(t){
+  var reI=/(सूची|List)[\s\-–—]*I(?!I)\s*(?:\([^)]*\))?\s*[:：]/i;
+  var reII=/(सूची|List)[\s\-–—]*II\s*(?:\([^)]*\))?\s*[:：]/i;
+  var mI=t.match(reI), mII=t.match(reII);
+  if(!mI||!mII||mII.index<=mI.index) return null;
+  var intro=t.slice(0,mI.index).trim();
+  var segI=t.slice(mI.index+mI[0].length,mII.index).trim().replace(/[;।,]\s*$/,"");
+  var rest=t.slice(mII.index+mII[0].length);
+  var mo=rest.match(/(सही\s*मिलान|नीचे\s*दिए|सुमेलित|Choose|Select|Match|कूट)/i);
+  var segII, outro="";
+  if(mo){ segII=rest.slice(0,mo.index).trim(); outro=rest.slice(mo.index).trim(); }
+  else segII=rest.trim();
+  segII=segII.replace(/[;।,]\s*$/,"");
+  var itemsI=_splitItems(segI,/\s*,\s*(?=[A-Z]\.)/);
+  var itemsII=_splitItems(segII,/\s*,\s*(?=\d+\.)/);
+  if(itemsI.length<2||itemsII.length<2) return null;
+  var n=Math.max(itemsI.length,itemsII.length), rows="";
+  for(var k=0;k<n;k++) rows+="<tr><td>"+(itemsI[k]||"")+"</td><td>"+(itemsII[k]||"")+"</td></tr>";
+  var head="<tr><th>"+mI[1]+"-I</th><th>"+mII[1]+"-II</th></tr>";
+  return (intro?'<div class="mt-intro">'+intro+'</div>':"")+
+         '<table class="match-tbl">'+head+rows+'</table>'+
+         (outro?'<div class="mt-outro">'+outro+'</div>':"");
+}
+function _renderChunk(t){ var mt=_matchTable(t); return mt?mt:_fmtChunk(t); }
+function _split(t){
+  t=String(t==null?"":t);
+  var m=t.match(/\s*\/\s*(Question\s*\d+\s*[:：]?)/i);
+  if(m) return {hi:t.slice(0,m.index).trim(), en:t.slice(m.index+m[0].length).trim()};
+  var idx=t.indexOf(" / ");
+  if(idx>=0) return {hi:t.slice(0,idx).trim(), en:t.slice(idx+3).trim()};
+  return {hi:t.trim(), en:""};
+}
+function fmtQuestion(raw){
+  var b=_split(raw), L=curLang();
+  var hi=_renderChunk(b.hi), en=b.en?_renderChunk(b.en):"";
+  if(L==="hi") return '<div class="q-hi">'+hi+'</div>';
+  if(L==="en") return '<div class="q-hi">'+(en||hi)+'</div>';
+  return '<div class="q-hi">'+hi+'</div>'+(en?'<div class="q-en">'+en+'</div>':"");
+}
+function fmtOption(raw){
+  var b=_split(raw), L=curLang(), hi=b.hi.trim(), en=b.en.trim();
+  if(L==="hi") return '<span class="o-hi">'+hi+'</span>';
+  if(L==="en") return '<span class="o-hi">'+(en||hi)+'</span>';
+  if(!en||hi===en) return '<span class="o-hi">'+hi+'</span>';
+  return '<span class="o-hi">'+hi+'</span><span class="o-en">'+en+'</span>';
+}
+
+function renderQuestion(){
+  const i = state.idx, q = Q[i];
+  state.visited[i] = true;
+
+  const pre = q.statement ? `<span class="q-pre">${q.statement}</span>` : "";
+  const opts = q.options.map((o, k) => {
+    const sel = state.answers[i] === k ? " sel" : "";
+    return `<button class="opt${sel}" data-k="${k}" type="button">
+              <span class="key">${LETTERS[k]}</span>
+              <span class="txt">${fmtOption(o)}</span>
+            </button>`;
+  }).join("");
+
+  const neg = TEST.negativeMarks ? `<span class="chip neg">−${TEST.negativeMarks}</span>` : "";
+  $("qCard").innerHTML = `
+    <div class="q-head">
+      <div class="q-no">प्रश्न <b>${i+1}</b> / ${N}</div>
+      <div class="q-marks"><span class="chip pos">+${TEST.marksPerQuestion}</span>${neg}</div>
+    </div>
+    <div class="lang-bar">${langSeg()}</div>
+    <div class="q-text">${pre}${fmtQuestion(q.q)}</div>
+    <div class="options">${opts}</div>
+  `;
+
+  wireLang($("qCard"));
+  $("qCard").querySelectorAll(".opt").forEach(b => {
+    b.addEventListener("click", () => selectOption(parseInt(b.dataset.k,10)));
+  });
+
+  $("prevBtn").disabled = (i === 0);
+  $("nextBtn").innerHTML = (i === N-1)
+    ? `परीक्षा समाप्त करें <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+    : `अगला <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+  updateMarkBtn();
+  updateProgress();
+  refreshPalette();
+}
+
+function selectOption(k){
+  state.answers[state.idx] = (state.answers[state.idx] === k) ? null : k; // दोबारा दबाने पर हटे
+  renderQuestion();
+}
+function updateMarkBtn(){
+  const m = state.marked[state.idx];
+  $("markBtn").textContent = m ? "चिह्न हटाएँ" : "समीक्षा हेतु चिह्नित करें";
+  $("markBtn").style.borderColor = m ? "rgba(157,123,255,.5)" : "";
+  $("markBtn").style.color = m ? "#cdbcff" : "";
+}
+function toggleMark(){ state.marked[state.idx] = !state.marked[state.idx]; updateMarkBtn(); refreshPalette(); }
+
+function updateProgress(){
+  const answered = state.answers.filter(a => a !== null).length;
+  $("progressFill").style.width = (answered / N * 100) + "%";
+}
+
+/* ---------- प्रश्न सूची ---------- */
+function buildPalette(){
+  const grid = $("pGrid");
+  grid.innerHTML = "";
+  for (let i=0;i<N;i++){
+    const b = document.createElement("button");
+    b.className = "pnum"; b.textContent = (i+1);
+    b.addEventListener("click", () => { state.idx = i; renderQuestion(); closeDrawer(); });
+    grid.appendChild(b);
+  }
+  refreshPalette();
+}
+function refreshPalette(){
+  const ans = state.answers.filter(a => a !== null).length;
+  $("pCount").textContent = ans + " / " + N + " उत्तरित";
+  document.querySelectorAll("#pGrid .pnum, #drawerGrid .pnum").forEach((b, n) => {
+    const i = n % N;
+    b.className = "pnum";
+    if (state.answers[i] !== null) b.classList.add("answered");
+    else if (state.visited[i]) b.classList.add("notans");
+    if (state.marked[i]) b.classList.add("marked");
+    if (i === state.idx) b.classList.add("current");
+  });
+}
+
+/* ---------- मोबाइल ड्रॉअर ---------- */
+function openDrawer(){
+  if ($("drawerEl")) return;
+  const d = document.createElement("div");
+  d.className = "overlay"; d.id = "drawerOverlay";
+  d.innerHTML = `<div class="drawer" id="drawerEl" onclick="event.stopPropagation()">
+      <div class="drawer-head">
+        <h4 style="font-family:var(--display);font-weight:400;font-size:21px;color:var(--gold-2);margin:0">प्रश्न सूची</h4>
+        <button class="drawer-close" onclick="closeDrawer()" aria-label="बंद करें" type="button">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="pcount" id="dCount" style="font-size:12px;color:var(--muted-2);margin:2px 0 14px"></div>
+      <div class="pgrid" id="drawerGrid"></div>
+      <button class="btn btn-ghost" style="width:100%;margin-top:6px" onclick="closeDrawer()">बंद करें</button>
+    </div>`;
+  d.addEventListener("click", closeDrawer);
+  document.body.appendChild(d);
+  const g = $("drawerGrid");
+  for (let i=0;i<N;i++){
+    const b = document.createElement("button");
+    b.className="pnum"; b.textContent=(i+1);
+    b.addEventListener("click", ()=>{ state.idx=i; renderQuestion(); closeDrawer(); });
+    g.appendChild(b);
+  }
+  $("dCount").textContent = state.answers.filter(a=>a!==null).length + " / " + N + " उत्तरित";
+  refreshPalette();
+}
+function closeDrawer(){ const o = $("drawerOverlay"); if (o) o.remove(); }
+
+/* ---------- जमा करें (पुष्टि) ---------- */
+function askSubmit(){
+  const answered = state.answers.filter(a => a !== null).length;
+  const left = N - answered;
+  const marked = state.marked.filter(Boolean).length;
+  const ov = document.createElement("div");
+  ov.className = "overlay"; ov.id = "confirmOverlay";
+  ov.innerHTML = `<div class="modal" onclick="event.stopPropagation()">
+      <h3>परीक्षा जमा करें?</h3>
+      <p>जमा करने के बाद उत्तर बदले नहीं जा सकेंगे। एक बार जाँच लें:</p>
+      <div class="modal-stats">
+        <div class="ms a"><div class="v">${answered}</div><div class="k">उत्तरित</div></div>
+        <div class="ms b"><div class="v">${left}</div><div class="k">शेष</div></div>
+        <div class="ms c"><div class="v">${marked}</div><div class="k">चिह्नित</div></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-quiet" onclick="closeConfirm()">वापस जाएँ</button>
+        <button class="btn btn-primary" onclick="closeConfirm(); doSubmit(false)">हाँ, जमा करें</button>
+      </div>
+    </div>`;
+  ov.addEventListener("click", closeConfirm);
+  document.body.appendChild(ov);
+}
+function closeConfirm(){ const o = $("confirmOverlay"); if (o) o.remove(); }
+
+/* ---------- स्कोर गणना ---------- */
+function computeScore(){
+  let correct=0, wrong=0, skipped=0;
+  for (let i=0;i<N;i++){
+    const a = state.answers[i];
+    if (a === null){ skipped++; continue; }
+    if (a === answerIndex(Q[i])) correct++; else wrong++;
+  }
+  const marks = correct * TEST.marksPerQuestion - wrong * (TEST.negativeMarks || 0);
+  const max = N * TEST.marksPerQuestion;
+  const attempted = correct + wrong;
+  const accuracy = attempted ? Math.round(correct / attempted * 100) : 0;
+  return {correct, wrong, skipped, marks, max, accuracy, attempted};
+}
+
+function doSubmit(auto){
+  if (state.finished) return;
+  state.finished = true;
+  if (state.timer) clearInterval(state.timer);
+  closeConfirm(); closeDrawer();
+  const elapsed = TEST.durationMinutes
+    ? (TEST.durationMinutes*60 - Math.max(0,state.timeLeft))
+    : Math.round((Date.now()-state.startTs)/1000);
+  renderResult(computeScore(), elapsed, auto);
+}
+
+/* ---------- परिणाम रेंडर + एनिमेशन ---------- */
+function renderResult(r, elapsed){
+  show("result");
+  state.lastResult = r;
+  state.lastElapsed = elapsed;
+  saveRankAuto();
+  const round2 = (x)=> (Math.round(x*100)/100);
+  $("scoreMax").textContent = round2(r.max);
+  $("stTime").textContent = fmt(elapsed);
+
+  let verdict, sub;
+  if (r.accuracy >= 85){ verdict="उत्कृष्ट प्रदर्शन!"; sub="यही सटीकता आपको चयन की ओर ले जाती है। इसी गति और गहराई को बनाए रखें।"; }
+  else if (r.accuracy >= 60){ verdict="बहुत अच्छा!"; sub="आधार मज़बूत है — अब गलतियाँ कम कर के सटीकता और तेज़ करें।"; }
+  else if (r.accuracy >= 40){ verdict="ठीक-ठाक, और मेहनत चाहिए।"; sub="कमज़ोर क्षेत्रों का revision करें और तथ्यों को बार-बार दोहराएँ।"; }
+  else { verdict="अभी आधार और पक्का करें।"; sub="हार नहीं, अभ्यास। समाधान ध्यान से पढ़ें — हर गलती एक नया सबक है।"; }
+  $("verdict").textContent = verdict;
+  $("verdictSub").textContent = sub;
+
+  // गिनती एनिमेशन
+  animateNum($("ringPctNum"), 0, r.accuracy, 1100, v => Math.round(v));
+  animateNum($("scoreGot"), 0, r.marks, 1100, v => {
+    const t = Math.round(v*100)/100;
+    return Number.isInteger(t) ? t : t.toFixed(2);
+  });
+  animateNum($("stCorrect"), 0, r.correct, 900, v=>Math.round(v));
+  animateNum($("stWrong"), 0, r.wrong, 900, v=>Math.round(v));
+  animateNum($("stSkip"), 0, r.skipped, 900, v=>Math.round(v));
+
+  // वलय (ring) भरना
+  const C = 2 * Math.PI * 100;
+  const fg = $("ringFg");
+  fg.style.strokeDashoffset = C;
+  requestAnimationFrame(()=> requestAnimationFrame(()=>{
+    fg.style.transition = reduced ? "none" : "stroke-dashoffset 1.2s cubic-bezier(.2,.7,.2,1)";
+    fg.style.strokeDashoffset = C * (1 - r.accuracy/100);
+  }));
+
+  if (r.accuracy >= 60 && !reduced) setTimeout(fireConfetti, 350);
+}
+
+function animateNum(el, from, to, dur, fmtFn){
+  if (reduced){ el.textContent = fmtFn(to); return; }
+  const t0 = performance.now();
+  function step(t){
+    const p = Math.min(1, (t - t0)/dur);
+    const e = 1 - Math.pow(1-p, 3);
+    el.textContent = fmtFn(from + (to-from)*e);
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+/* ---------- कन्फ़ेटी (बिना लाइब्रेरी) ---------- */
+function fireConfetti(){
+  const cv = $("confetti");
+  const ctx = cv.getContext("2d");
+  const DPR = Math.min(2, window.devicePixelRatio||1);
+  cv.width = innerWidth*DPR; cv.height = innerHeight*DPR; ctx.scale(DPR,DPR);
+  const colors = ["#f0c75e","#d4af37","#ff8a3d","#ff6b35","#ffe9a8","#2fbf86"];
+  const P = [];
+  const cx = innerWidth/2, cy = innerHeight*0.34;
+  for (let i=0;i<140;i++){
+    const a = Math.random()*Math.PI*2, sp = 4 + Math.random()*9;
+    P.push({x:cx, y:cy, vx:Math.cos(a)*sp, vy:Math.sin(a)*sp - 5,
+      w:5+Math.random()*7, h:8+Math.random()*8, rot:Math.random()*6.28,
+      vr:(Math.random()-.5)*.4, c:colors[i%colors.length], life:0});
+  }
+  let frame=0;
+  (function run(){
+    ctx.clearRect(0,0,innerWidth,innerHeight);
+    let alive=false;
+    P.forEach(p=>{
+      p.vy += 0.22; p.x += p.vx; p.y += p.vy; p.vx *= 0.99; p.rot += p.vr; p.life++;
+      if (p.y < innerHeight+40){ alive=true; }
+      ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot);
+      ctx.globalAlpha = Math.max(0, 1 - p.life/170);
+      ctx.fillStyle = p.c; ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);
+      ctx.restore();
+    });
+    frame++;
+    if (alive && frame < 220) requestAnimationFrame(run);
+    else ctx.clearRect(0,0,innerWidth,innerHeight);
+  })();
+}
+
+/* ---------- समीक्षा रेंडर ---------- */
+let reviewFilter = "all";
+function renderReview(){
+  show("review");
+  const list = $("reviewList");
+  list.innerHTML = "";
+  let shown = 0;
+  for (let i=0;i<N;i++){
+    const q = Q[i], ci = answerIndex(q), ua = state.answers[i];
+    let status; // correct / wrong / skip
+    if (ua === null) status = "skip";
+    else if (ua === ci) status = "correct";
+    else status = "wrong";
+    if (reviewFilter !== "all" && reviewFilter !== status) continue;
+    shown++;
+
+    const badgeTxt = status==="correct" ? "सही उत्तर" : status==="wrong" ? "गलत उत्तर" : "अनुत्तरित";
+    const opts = q.options.map((o,k)=>{
+      let cls="", mark="";
+      if (k === ci){ cls="is-correct"; mark=`<span class="rev-mark">✓ सही उत्तर</span>`; }
+      if (k === ua && ua !== ci){ cls="is-wrong"; mark=`<span class="rev-mark">✗ आपका उत्तर</span>`; }
+      return `<div class="rev-opt ${cls}"><span class="rkey">${LETTERS[k]}</span><span class="rtxt">${fmtOption(o)}</span>${mark}</div>`;
+    }).join("");
+
+    const pre = q.statement ? `<span style="display:block;color:var(--muted);font-size:14px;margin-bottom:8px;font-weight:400">${q.statement}</span>` : "";
+    list.insertAdjacentHTML("beforeend", `
+      <div class="rev-card ${status}">
+        <div class="rev-top">
+          <span class="rev-qno">प्रश्न ${i+1}</span>
+          <span class="rev-badge ${status}">${badgeTxt}</span>
+        </div>
+        <div class="rev-q">${pre}${fmtQuestion(q.q)}</div>
+        <div class="rev-opts">${opts}</div>
+        ${q.explanation ? `<div class="explain"><div class="et"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2ZM9 21h6M10 17v4M14 17v4" stroke="#d4af37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> व्याख्या</div><p>${q.explanation}</p></div>` : ""}
+      </div>
+    `);
+  }
+  if (shown === 0){
+    list.innerHTML = `<div style="text-align:center;color:var(--muted);padding:50px 0;font-size:15px">इस श्रेणी में कोई प्रश्न नहीं।</div>`;
+  }
+}
+
+/* ---------- रीसेट ---------- */
+function retry(){
+  state.idx = 0;
+  state.answers = new Array(N).fill(null);
+  state.marked = new Array(N).fill(false);
+  state.visited = new Array(N).fill(false);
+  state.timeLeft = (TEST.durationMinutes||0)*60;
+  state.finished = false;
+  if (state.timer) clearInterval(state.timer);
+  $("timer").style.display = TEST.durationMinutes ? "" : "none";
+  startTest();
+}
+
+/* ==================== रैंकिंग / लीडरबोर्ड (Firebase) ==================== */
+/* Bodhi Classes — Realtime Database का उपयोग, testId हर टेस्ट के title से अपने-आप बनता है */
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyAfg7Ky-K0BGEJtEAKiD58Gd7D6e9WmvkE",
+  authDomain: "test-7ad3e.firebaseapp.com",
+  databaseURL: "https://test-7ad3e-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "test-7ad3e",
+  storageBucket: "test-7ad3e.firebasestorage.app",
+  messagingSenderId: "1025067934504",
+  appId: "1:1025067934504:web:d1ef23241613001411e61d"
+};
+
+function slugify(s){
+  return (s||"test").trim().toLowerCase()
+    .replace(/[^\u0900-\u097Fa-z0-9]+/g,"-")
+    .replace(/^-+|-+$/g,"")
+    .slice(0,80) || "test";
+}
+const TEST_ID = slugify(TEST.title);
+
+async function loadFirebase(){
+  if (window.__fbApp) return window.__fbApp;
+  const appMod = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js");
+  const dbMod = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js");
+  const app = appMod.initializeApp(FIREBASE_CONFIG);
+  window.__fbApp = app;
+  window.__fbDb = dbMod;
+  return app;
+}
+
+async function saveRankAuto(){
+  var _rc=document.querySelector(".rank-card");
+  if(!RANKING_ENABLED){ if(_rc) _rc.style.display="none"; return; }
+  if(_rc) _rc.style.display="";
+  $("rkSubText").textContent = "आपका स्कोर सेव किया जा रहा है…";
+  $("rkMsg").className = "rk-msg busy";
+  $("rkMsg").textContent = "";
+  try{
+    await loadFirebase();
+    const { getDatabase, ref, push, set } = window.__fbDb;
+    const db = getDatabase(window.__fbApp);
+    const r = state.lastResult;
+    const entryRef = push(ref(db, "results/" + TEST_ID));
+    await set(entryRef, {
+      name: (state.studentName || "—").slice(0,40),
+      marks: Math.round(r.marks*100)/100,
+      max: r.max,
+      correct: r.correct,
+      wrong: r.wrong,
+      skipped: r.skipped,
+      accuracy: r.accuracy,
+      timeTaken: state.lastElapsed || 0,
+      ts: Date.now()
+    });
+    $("rkSubText").textContent = "✓ आपका स्कोर रैंकिंग सूची में सेव हो गया।";
+    $("rkDone").style.display = "block";
+    $("rkMsg").className = "rk-msg ok";
+    $("rkMsg").textContent = "";
+  }catch(err){
+    $("rkSubText").textContent = "स्कोर सेव नहीं हो पाया।";
+    $("rkMsg").className = "rk-msg err";
+    $("rkMsg").textContent = "इंटरनेट जांचकर पेज को दोबारा खोलें, या नीचे बटन से फिर कोशिश करें।";
+    $("rkDone").style.display = "block";
+    $("rkViewBtn").textContent = "";
+    const retryBtn = document.createElement("button");
+    retryBtn.className = "btn btn-ghost";
+    retryBtn.style.width = "100%";
+    retryBtn.textContent = "दोबारा सेव करें";
+    retryBtn.addEventListener("click", saveRankAuto);
+    $("rkDone").innerHTML = "";
+    $("rkDone").appendChild(retryBtn);
+  }
+}
+
+function openRanking(){
+  const url = "rank.html?test=" + encodeURIComponent(TEST_ID) + "&title=" + encodeURIComponent(TEST.title||"");
+  window.open(url, "_blank");
+}
+
+/* कवर पेज पर टॉप 10 स्कोर — इंटरनेट न हो या डेटा न हो तो चुपचाप छिपा रहेगा */
+async function loadTopBoard(){
+  if(!RANKING_ENABLED) return;
+  try{
+    await loadFirebase();
+    const { getDatabase, ref, get } = window.__fbDb;
+    const db = getDatabase(window.__fbApp);
+    const snap = await get(ref(db, "results/" + TEST_ID));
+    const box = $("topBoard"), list = $("tbList"), sub = $("tbSub");
+    if(!snap.exists()){
+      box.hidden = false;
+      sub.textContent = "अभी तक किसी ने यह टेस्ट नहीं दिया — पहला नाम आपका हो सकता है!";
+      list.innerHTML = "";
+      return;
+    }
+    const rows = Object.values(snap.val() || {});
+    rows.sort((a,b)=> (b.marks - a.marks) || ((a.timeTaken||1e9) - (b.timeTaken||1e9)) || ((a.ts||0)-(b.ts||0)));
+    const top = rows.slice(0, 10);
+    list.innerHTML = "";
+    top.forEach((r,i)=>{
+      const li = document.createElement("li");
+      const rk = document.createElement("span"); rk.className="tb-rank"; rk.textContent = i+1;
+      const nm = document.createElement("span"); nm.className="tb-name"; nm.textContent = (r.name||"—").slice(0,40);
+      const mk = document.createElement("span"); mk.className="tb-marks"; mk.textContent = (r.marks!=null?r.marks:"—") + (r.max?(" / "+r.max):"");
+      li.appendChild(rk); li.appendChild(nm); li.appendChild(mk);
+      list.appendChild(li);
+    });
+    sub.textContent = "अब तक " + rows.length + " छात्रों ने यह टेस्ट दिया है";
+    box.hidden = false;
+  }catch(err){ /* ऑफ़लाइन या त्रुटि — बोर्ड नहीं दिखेगा, टेस्ट सामान्य चलेगा */ }
+}
+loadTopBoard();
+
+/* ---------- इवेंट बाइंडिंग ---------- */
+$("startBtn").addEventListener("click", startTest);
+$("prevBtn").addEventListener("click", () => { if (state.idx>0){ state.idx--; renderQuestion(); } });
+$("nextBtn").addEventListener("click", () => {
+  if (state.idx < N-1){ state.idx++; renderQuestion(); } else { askSubmit(); }
+});
+$("markBtn").addEventListener("click", toggleMark);
+$("submitTop").addEventListener("click", askSubmit);
+$("submitSide").addEventListener("click", askSubmit);
+$("paletteFab").addEventListener("click", openDrawer);
+$("reviewBtn").addEventListener("click", renderReview);
+$("retryBtn").addEventListener("click", retry);
+if($("printBtn")) $("printBtn").addEventListener("click", function(){ window.print(); });
+document.addEventListener("click", (e)=>{
+  if (e.target.closest("#rkViewBtn")) openRanking();
+});
+$("backToResult").addEventListener("click", () => show("result"));
+$("rFilters").addEventListener("click", (e) => {
+  const b = e.target.closest(".rfilter"); if (!b) return;
+  document.querySelectorAll(".rfilter").forEach(x => x.classList.remove("active"));
+  b.classList.add("active"); reviewFilter = b.dataset.f; renderReview();
+});
+
+/* कीबोर्ड शॉर्टकट (परीक्षा के दौरान) */
+document.addEventListener("keydown", (e) => {
+  if ($("screen-quiz").hidden) return;
+  if (e.key === "ArrowRight"){ if (state.idx<N-1){ state.idx++; renderQuestion(); } }
+  else if (e.key === "ArrowLeft"){ if (state.idx>0){ state.idx--; renderQuestion(); } }
+  else if (/^[1-9]$/.test(e.key)){
+    const k = parseInt(e.key,10)-1;
+    if (k < Q[state.idx].options.length) selectOption(k);
+  }
+  else if (e.key.toLowerCase() === "m") toggleMark();
+});
+
+/* प्रारंभ */
+buildCover();
+show("cover");
+try{
+  const savedName = localStorage.getItem("bc_name");
+  if (savedName) $("studentName").value = savedName;
+}catch(e){}
+$("studentName").addEventListener("keydown", (e)=>{ if (e.key === "Enter") startTest(); });
+$("studentName").addEventListener("input", ()=>{ $("nameErr").textContent = ""; });
+</script>
+<script defer src="/assets/bodhi-watermark.js"></script>
+</body>
+</html>
