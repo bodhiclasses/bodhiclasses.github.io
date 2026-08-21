@@ -1,5 +1,5 @@
 /* Bodhi Classes — हल्का, बड़ा वॉटरमार्क (स्क्रीन पर टिका रहता है)
-   नियम: बहुत हल्का रंग, बड़ा आकार, पूरे पन्ने पर सिर्फ़ 3 बार — पढ़ने में बाधा न हो।
+   नियम: बहुत हल्का रंग, बड़ा आकार, पूरे पन्ने पर सिर्फ़ 1 बार — पढ़ने में बाधा न हो।
    पृष्ठभूमि हल्की है या गहरी — उसी के अनुसार रंग अपने-आप चुनता है। */
 (function(){
   try{
@@ -32,11 +32,9 @@
         + 'z-index:2147483000;pointer-events:none;overflow:hidden;'
         + 'user-select:none;-webkit-user-select:none;';
 
-      /* पूरे पन्ने को ढँकने के लिए सिर्फ़ तीन बड़े निशान */
+      /* पूरे पन्ने पर सिर्फ़ एक बड़ा निशान */
       var spots = [
-        { top: '14%', left: '-2%'  },
-        { top: '46%', left: '26%'  },
-        { top: '78%', left: '4%'   }
+        { top: '46%', left: '4%' }
       ];
 
       for (var i = 0; i < spots.length; i++){
@@ -47,7 +45,7 @@
           + 'transform:rotate(-24deg);transform-origin:left center;'
           + 'font-family:Mukta,"Noto Sans Devanagari","Segoe UI",Arial,sans-serif;'
           + 'font-weight:700;letter-spacing:4px;'
-          + 'font-size:clamp(42px,8.5vw,132px);line-height:1;'
+          + 'font-size:clamp(52px,10vw,160px);line-height:1;'
           + 'color:' + fill + ';opacity:' + opacity + ';';
         d.appendChild(s);
       }
