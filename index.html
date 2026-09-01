@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bodhi Classes — UPSC / UPPCS</title>
 <meta name="description" content="Bodhi Classes — UPSC एवं UPPCS की व्यवस्थित तैयारी। विषयवार टेस्ट सीरीज़ (करेंट अफेयर्स, सामान्य अध्ययन, CSAT) एवं प्रामाणिक अध्ययन-सामग्री।">
-<meta name="theme-color" content="#060B16">
+<meta name="theme-color" content="#F6F1E4">
 <meta property="og:title" content="Bodhi Classes — UPSC / UPPCS">
 <meta property="og:description" content="अवधारणा की स्पष्टता, अभ्यास की निरंतरता — विषयवार टेस्ट सीरीज़ एवं अध्ययन-सामग्री।">
 <meta property="og:type" content="website">
@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Tiro+Devanagari+Hindi:ital@0;1&family=Mukta:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<script>try{if(localStorage.getItem("bodhi_theme")==="light")document.documentElement.setAttribute("data-theme","light");}catch(e){}</script>
+<script>try{if(localStorage.getItem("bodhi_theme")==="dark"){document.documentElement.removeAttribute("data-theme");}else{document.documentElement.setAttribute("data-theme","light");}}catch(e){document.documentElement.setAttribute("data-theme","light");}</script>
 <style>
 /* ═══════════ मूल टोकन ═══════════ */
 :root{
@@ -49,9 +49,23 @@ html[data-theme="light"]{
   --green:#187A50;
 }
 html[data-theme="light"] ::selection{background:rgba(154,114,35,.3);color:#20180A}
-html[data-theme="light"] .aurora{opacity:.16}
-html[data-theme="light"] #embers{opacity:.3}
+html[data-theme="light"] .aurora{opacity:.55}
+html[data-theme="light"] .aur-1{background:radial-gradient(circle,#C9DBF4 0%,transparent 62%)}
+html[data-theme="light"] .aur-2{background:radial-gradient(circle,#EBD8A9 0%,transparent 65%)}
+html[data-theme="light"] #embers{opacity:.65;filter:brightness(.45) saturate(1.6)}
 html[data-theme="light"] .grain{opacity:.035}
+html[data-theme="light"] .wm{-webkit-text-stroke:1.3px rgba(143,107,38,.17)}
+html[data-theme="light"] .ring{stroke:rgba(122,90,24,.62)}
+html[data-theme="light"] .ring-b{stroke:rgba(122,90,24,.4)}
+html[data-theme="light"] .emblem::before{background:radial-gradient(circle,rgba(176,138,62,.24) 0%,transparent 62%)}
+html[data-theme="light"] .leaf{filter:drop-shadow(0 0 7px rgba(154,114,35,.45))}
+html[data-theme="light"] .vein{stroke:rgba(122,90,24,.62)}
+html[data-theme="light"] .flame{filter:drop-shadow(0 0 12px rgba(176,138,62,.85))}
+html[data-theme="light"] .avatar-ring::before{border-color:rgba(122,90,24,.55)}
+html[data-theme="light"] .btn-gold{color:#FFFDF5;box-shadow:0 12px 34px rgba(154,114,35,.32)}
+html[data-theme="light"] .ttab.active{color:#FFFDF5}
+html[data-theme="light"] .marq{background:rgba(154,114,35,.05)}
+html[data-theme="light"] .scroll-cue{opacity:.9}
 html[data-theme="light"] nav.scrolled{background:rgba(246,241,228,.85)}
 html[data-theme="light"] h1.hero-title{text-shadow:none}
 html[data-theme="light"] .emblem-cap{background:rgba(255,252,243,.9);box-shadow:0 10px 30px rgba(120,90,30,.18)}
@@ -1226,8 +1240,8 @@ navLinks.querySelectorAll("a").forEach(function(a){
     if (m) m.setAttribute("content", (t === "light") ? "#F6F1E4" : "#060B16");
     try { localStorage.setItem("bodhi_theme", t); } catch(e){}
   }
-  var cur = "dark";
-  try { cur = (localStorage.getItem("bodhi_theme") === "light") ? "light" : "dark"; } catch(e){}
+  var cur = "light";
+  try { cur = (localStorage.getItem("bodhi_theme") === "dark") ? "dark" : "light"; } catch(e){}
   applyTheme(cur);
   btn.addEventListener("click", function(){
     cur = (cur === "light") ? "dark" : "light";
