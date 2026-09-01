@@ -13,6 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Tiro+Devanagari+Hindi:ital@0;1&family=Mukta:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>try{if(localStorage.getItem("bodhi_theme")==="light")document.documentElement.setAttribute("data-theme","light");}catch(e){}</script>
 <style>
 /* ═══════════ मूल टोकन ═══════════ */
 :root{
@@ -31,6 +32,48 @@
   --green:#7FD6A4;
   --maxw:1180px;
 }
+/* ═══════════ Light theme (टॉगल से) ═══════════ */
+html[data-theme="light"]{
+  --ink0:#F6F1E4;
+  --ink1:#FFFCF3;
+  --ink2:#FFF7E8;
+  --glass:rgba(111,78,20,.05);
+  --line:rgba(143,107,38,.28);
+  --line-2:rgba(143,107,38,.5);
+  --gold:#9A7223;
+  --gold-hi:#7A5A18;
+  --gold-deep:#B08A3E;
+  --cream:#20180A;
+  --mist:#5A5343;
+  --blue:#1D4ED8;
+  --green:#187A50;
+}
+html[data-theme="light"] ::selection{background:rgba(154,114,35,.3);color:#20180A}
+html[data-theme="light"] .aurora{opacity:.16}
+html[data-theme="light"] #embers{opacity:.3}
+html[data-theme="light"] .grain{opacity:.035}
+html[data-theme="light"] nav.scrolled{background:rgba(246,241,228,.85)}
+html[data-theme="light"] h1.hero-title{text-shadow:none}
+html[data-theme="light"] .emblem-cap{background:rgba(255,252,243,.9);box-shadow:0 10px 30px rgba(120,90,30,.18)}
+html[data-theme="light"] .flame-core{fill:#FFE9B8}
+html[data-theme="light"] .ttab.active{color:#FFFDF5;box-shadow:0 8px 26px rgba(154,114,35,.35)}
+html[data-theme="light"] .ttab.active .cnt{background:rgba(255,253,245,.35);color:#3A2C0E}
+html[data-theme="light"] .tcard:hover{background:rgba(143,107,38,.06);box-shadow:0 24px 54px rgba(120,90,30,.2),0 0 34px rgba(154,114,35,.1)}
+html[data-theme="light"] .subj:hover{box-shadow:0 22px 48px rgba(120,90,30,.18),0 0 30px rgba(154,114,35,.09)}
+html[data-theme="light"] .step:hover{box-shadow:0 20px 44px rgba(120,90,30,.18)}
+html[data-theme="light"] .ncard:hover{box-shadow:0 12px 32px rgba(120,90,30,.16),0 0 24px rgba(154,114,35,.09)}
+html[data-theme="light"] .plat:hover{box-shadow:0 16px 40px rgba(120,90,30,.2),0 0 30px rgba(154,114,35,.14)}
+html[data-theme="light"] footer{background:rgba(246,241,228,.7)}
+html[data-theme="light"] .b-ncert{background:rgba(109,79,194,.12);color:#5B3FB0}
+html[data-theme="light"] .b-upsssc{background:rgba(166,91,20,.12);color:#96520F}
+html[data-theme="light"] .b-upspecial{background:rgba(18,115,184,.12);color:#0F6AA8}
+.theme-btn{
+  background:var(--glass);border:1px solid var(--line-2);color:var(--gold-hi);
+  width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:17px;
+  display:inline-flex;align-items:center;justify-content:center;
+  transition:transform .25s,border-color .25s;flex:0 0 auto;
+}
+.theme-btn:hover{transform:rotate(18deg) scale(1.08);border-color:var(--gold)}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:96px}
 body{
@@ -431,6 +474,7 @@ footer .sh{font-family:'Tiro Devanagari Hindi',serif;font-style:italic;color:var
   .nav-links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;
     background:rgba(6,11,22,.97);backdrop-filter:blur(14px);padding:22px 26px;gap:18px;border-bottom:1px solid var(--line)}
   .nav-links.open{display:flex}
+  html[data-theme="light"] .nav-links{background:rgba(246,241,228,.97)}
   .menu-btn{display:block}
   .nav-cta{display:none}
 }
@@ -463,6 +507,7 @@ footer .sh{font-family:'Tiro Devanagari Hindi',serif;font-style:italic;color:var
       <a href="#about">परिचय</a>
     </div>
     <a href="#tests" class="nav-cta">टेस्ट सीरीज़</a>
+    <button class="theme-btn" id="themeBtn" aria-label="थीम बदलें" title="थीम बदलें">☀️</button>
     <button class="menu-btn" id="menuBtn" aria-label="मेन्यू खोलें">☰</button>
   </div>
 </nav>
@@ -1025,7 +1070,7 @@ tabs.forEach(function(tab){
 function renderAll(){ renderTests(); renderCounts(); renderNotes(); }
 
 function rebuild(paths){
-  DATA = { ca: [], gs: [], csat: [], ncert: [], upsssc: [], notes: [] };
+  DATA = { ca: [], gs: [], csat: [], ncert: [], upsssc: [], upspecial: [], notes: [] };
   var seen = {}, uniq = [];
   paths.forEach(function(it){
     var key = (typeof it === "string") ? it : (it && it.path);
@@ -1167,6 +1212,28 @@ menuBtn.addEventListener("click", function(){ navLinks.classList.toggle("open");
 navLinks.querySelectorAll("a").forEach(function(a){
   a.addEventListener("click", function(){ navLinks.classList.remove("open"); });
 });
+
+/* ---------- Dark / Light थीम टॉगल ---------- */
+(function(){
+  var btn = document.getElementById("themeBtn");
+  if (!btn) return;
+  function applyTheme(t){
+    if (t === "light") document.documentElement.setAttribute("data-theme", "light");
+    else document.documentElement.removeAttribute("data-theme");
+    btn.textContent = (t === "light") ? "🌙" : "☀️";
+    btn.setAttribute("aria-label", (t === "light") ? "डार्क थीम पर जाएँ" : "लाइट थीम पर जाएँ");
+    var m = document.querySelector('meta[name="theme-color"]');
+    if (m) m.setAttribute("content", (t === "light") ? "#F6F1E4" : "#060B16");
+    try { localStorage.setItem("bodhi_theme", t); } catch(e){}
+  }
+  var cur = "dark";
+  try { cur = (localStorage.getItem("bodhi_theme") === "light") ? "light" : "dark"; } catch(e){}
+  applyTheme(cur);
+  btn.addEventListener("click", function(){
+    cur = (cur === "light") ? "dark" : "light";
+    applyTheme(cur);
+  });
+})();
 
 /* ---------- प्रकट-प्रभाव ---------- */
 var io = new IntersectionObserver(function(entries){
