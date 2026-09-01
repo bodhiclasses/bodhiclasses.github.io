@@ -235,6 +235,7 @@ section{position:relative;z-index:3;padding:104px 26px}
 .b-csat{background:rgba(127,214,164,.13);color:var(--green)}
 .b-ncert{background:rgba(179,153,255,.14);color:#c3b0ff}
 .b-upsssc{background:rgba(240,150,90,.15);color:#e8944e}
+.b-upspecial{background:rgba(90,180,240,.15);color:#5ab4f0}
 .tcard h3{font-family:'Mukta',sans-serif;font-weight:700;font-size:18.5px;color:var(--cream);line-height:1.5}
 .tgo{margin-top:auto;padding-top:13px;border-top:1px dashed var(--line);color:var(--gold);font-weight:700;font-size:14.5px;transition:color .25s,letter-spacing .25s}
 .tcard:hover .tgo{color:var(--gold-hi);letter-spacing:.4px}
@@ -529,6 +530,7 @@ footer .sh{font-family:'Tiro Devanagari Hindi',serif;font-style:italic;color:var
       <button class="ttab" data-filter="csat">CSAT <span class="cnt" data-cnt="csat"></span></button>
       <button class="ttab" data-filter="ncert">NCERT <span class="cnt" data-cnt="ncert"></span></button>
       <button class="ttab" data-filter="upsssc">UPSSSC <span class="cnt" data-cnt="upsssc"></span></button>
+      <button class="ttab" data-filter="upspecial">UP SPECIAL <span class="cnt" data-cnt="upspecial"></span></button>
     </div>
 
     <div class="tgrid" id="testGrid">
@@ -708,11 +710,11 @@ var FINE = window.matchMedia("(pointer: fine)").matches;
    repo सही पहचाना जाता है; खाली रहने पर सिर्फ़ *.github.io पर पहचान होती थी। */
 var CONFIG = { user: "bodhiclasses", repo: "bodhiclasses.github.io" };
 
-var SEC_NAME = { ca: "करेंट अफेयर्स", gs: "सामान्य अध्ययन", csat: "CSAT", ncert: "NCERT", upsssc: "UPSSSC" };
-var SEC_HEAD = { ca: "करेंट अफेयर्स", gs: "सामान्य अध्ययन", csat: "CSAT", ncert: "NCERT", upsssc: "UPSSSC SPECIAL CONTENT" };
-var SEC_UNIT = { ca: "टेस्ट", gs: "टेस्ट", csat: "", ncert: "टेस्ट", upsssc: "अध्याय" };
+var SEC_NAME = { ca: "करेंट अफेयर्स", gs: "सामान्य अध्ययन", csat: "CSAT", ncert: "NCERT", upsssc: "UPSSSC", upspecial: "UP SPECIAL" };
+var SEC_HEAD = { ca: "करेंट अफेयर्स", gs: "सामान्य अध्ययन", csat: "CSAT", ncert: "NCERT", upsssc: "UPSSSC SPECIAL CONTENT", upspecial: "UP SPECIAL" };
+var SEC_UNIT = { ca: "टेस्ट", gs: "टेस्ट", csat: "", ncert: "टेस्ट", upsssc: "अध्याय", upspecial: "टेस्ट" };
 var OPEN_SEC = null;
-var DATA = { ca: [], gs: [], csat: [], ncert: [], upsssc: [], notes: [] };
+var DATA = { ca: [], gs: [], csat: [], ncert: [], upsssc: [], upspecial: [], notes: [] };
 /* अध्याय (टेस्ट नहीं) — इनके कार्ड पर "अध्याय खोलें" दिखेगा; बाक़ी पर "टेस्ट प्रारंभ करें"। */
 var CHAPTERS = {
   "tests/csat/content/संचार-एवं-अन्तर्वैयक्तिक-कौशल.html": true,
@@ -840,9 +842,10 @@ function buildData(tree){
     else if (low.indexOf("tests/csat/") === 0 && /\.html?$/.test(low)) DATA.csat.push(p);
     else if (low.indexOf("tests/ncert/") === 0 && /\.html?$/.test(low)) DATA.ncert.push(p);
     else if (low.indexOf("tests/upsssc/") === 0 && /\.html?$/.test(low)) DATA.upsssc.push(p);
+    else if (low.indexOf("tests/upspecial/") === 0 && /\.html?$/.test(low)) DATA.upspecial.push(p);
     else if (low.indexOf("notes/") === 0 && /\.(html?|pdf)$/.test(low)) DATA.notes.push(p);
   });
-  DATA.ca.sort(nsort).reverse(); DATA.gs.sort(nsort).reverse(); DATA.csat.sort(nsort).reverse(); DATA.ncert.sort(nsort).reverse(); DATA.upsssc.sort(nsort).reverse(); DATA.notes.sort(nsort).reverse();
+  DATA.ca.sort(nsort).reverse(); DATA.gs.sort(nsort).reverse(); DATA.csat.sort(nsort).reverse(); DATA.ncert.sort(nsort).reverse(); DATA.upsssc.sort(nsort).reverse(); DATA.upspecial.sort(nsort).reverse(); DATA.notes.sort(nsort).reverse();
 }
 
 function stateEl(msg){
@@ -958,7 +961,7 @@ function renderTests(){
   if (STATE === "loading") { grid.appendChild(stateEl("टेस्ट-सूची तैयार हो रही है…")); return; }
   if (STATE === "offline") { grid.appendChild(stateEl("टेस्ट-सूची साइट के GitHub Pages पर प्रकाशित होते ही यहाँ स्वतः दिखाई देगी।")); return; }
   if (STATE === "error")   { grid.appendChild(stateEl("सूची इस समय लोड नहीं हो सकी — कृपया पृष्ठ पुनः खोलें।")); return; }
-  var secs = (FILTER === "all") ? ["ca", "gs", "csat", "ncert", "upsssc"] : [FILTER];
+  var secs = (FILTER === "all") ? ["ca", "gs", "csat", "ncert", "upsssc", "upspecial"] : [FILTER];
   var any = false;
   secs.forEach(function(s){
     var count = DATA[s] ? DATA[s].length : 0;
@@ -975,14 +978,14 @@ function renderTests(){
 }
 
 function renderCounts(){
-  var total = DATA.ca.length + DATA.gs.length + DATA.csat.length + DATA.ncert.length + DATA.upsssc.length;
+  var total = DATA.ca.length + DATA.gs.length + DATA.csat.length + DATA.ncert.length + DATA.upsssc.length + DATA.upspecial.length;
   var set = function(k, n){
     var el = document.querySelector('[data-cnt="' + k + '"]');
     if (!el) return;
     if (STATE === "ready" && n > 0) { el.textContent = n; el.style.display = "inline-flex"; }
     else { el.style.display = "none"; }
   };
-  set("all", total); set("ca", DATA.ca.length); set("gs", DATA.gs.length); set("csat", DATA.csat.length); set("ncert", DATA.ncert.length); set("upsssc", DATA.upsssc.length);
+  set("all", total); set("ca", DATA.ca.length); set("gs", DATA.gs.length); set("csat", DATA.csat.length); set("ncert", DATA.ncert.length); set("upsssc", DATA.upsssc.length); set("upspecial", DATA.upspecial.length);
 }
 
 function renderNotes(){
