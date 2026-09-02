@@ -406,8 +406,6 @@ const TEST_KEY = String(TEST.testId || "bodhi-test");
 const PROG_KEY = "jaiho_prog_" + TEST_KEY;
 function storeGet(k){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : null; }catch(e){ return null; } }
 function storeSet(k, obj){ try{ localStorage.setItem(k, JSON.stringify(obj)); }catch(e){} }
-/* Bodhi — परिणाम इसी डिवाइस पर (मुखपृष्ठ की "मेरी प्रगति" के लिए) */
-function bodhiSaveResult(r){ try{ var k="bodhi_results", id=String(r.testId||"bodhi-test"); var arr=JSON.parse(localStorage.getItem(k)||"[]"); if(!Array.isArray(arr)) arr=[]; var old=null; arr=arr.filter(function(x){ if(x&&x.id===id){ old=x; return false; } return true; }); var pc=Number(r.percent)||0; arr.unshift({ id:id, title:String(r.testTitle||document.title||""), path:location.pathname, percent:pc, best:Math.max(pc, old&&old.best!=null?Number(old.best)||0:0), score:r.score, max:r.maxMarks, n:(old&&old.n?old.n:0)+1, ts:Date.now() }); localStorage.setItem(k, JSON.stringify(arr.slice(0,80))); }catch(e){} }
 function storeDel(k){ try{ localStorage.removeItem(k); }catch(e){} }
 function saveProgress(){ if(!testActive) return; storeSet(PROG_KEY, {v:1, name:studentName, answers:answers, review:review, current:current, remaining:remaining, startedAt:startedAt, savedAt:Date.now()}); }
 async function tryResume(){
@@ -531,7 +529,7 @@ function calculateResult(auto){
   el("resultMessage").textContent = auto ? `समय समाप्त! ${band}` : band;
   el("studentStrip").innerHTML = `<span>नाम: ${escapeHTML(studentName)}</span><span>लगा समय: ${formatTime(timeTaken)}</span><span>प्रश्न: ${QUESTIONS.length}</span>`;
   el("finalMarks").textContent = `${marks.toFixed(2)} / ${numClean(maxMarks)}`; el("finalAttempted").textContent = attempted; el("finalCorrect").textContent = correct; el("finalWrong").textContent = wrong; el("finalAccuracy").textContent = `${accuracy}%`; el("finalTime").textContent = formatTime(timeTaken); el("scorePercent").textContent = `${percent}%`; el("scoreCircle").style.setProperty("--scoreDeg", `${percent*3.6}deg`);
-  renderReview(); try{ bodhiSaveResult(lastResult); }catch(e){} saveAttemptAndLoadRank(lastResult);
+  renderReview(); saveAttemptAndLoadRank(lastResult);
   el("testScreen").style.display = "none"; el("resultScreen").style.display = "block"; window.scrollTo({top:0, behavior:"smooth"});
 }
 function renderReview(){ el("reviewList").innerHTML = QUESTIONS.map((q,i)=>{
