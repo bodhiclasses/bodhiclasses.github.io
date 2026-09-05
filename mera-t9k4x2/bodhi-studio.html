@@ -1,0 +1,3156 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>बोधि स्टूडियो — PDF व इमेज टूलकिट v9.3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy-950:#070E22;
+  --navy-900:#0A1430;
+  --navy-800:#0E1E44;
+  --navy-700:#14295C;
+  --ink:#F2ECDC;
+  --muted:#93A0BE;
+  --gold:#D8B24A;
+  --gold-deep:#9C7A1F;
+  --gold-soft:rgba(216,178,74,.16);
+  --line:rgba(216,178,74,.28);
+  --card:rgba(255,255,255,.045);
+  --card-2:rgba(255,255,255,.07);
+  --ok:#7BD09A;
+  --bad:#F08A8A;
+  --r:16px;
+  --thw:126px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Noto Sans Devanagari','Segoe UI',sans-serif;
+  background:
+    radial-gradient(1100px 700px at 85% -10%, rgba(216,178,74,.07), transparent 60%),
+    radial-gradient(900px 600px at -10% 110%, rgba(20,60,140,.25), transparent 60%),
+    linear-gradient(170deg, var(--navy-900), var(--navy-950) 70%);
+  color:var(--ink);
+  min-height:100vh;
+  line-height:1.65;
+  overflow-x:hidden;
+}
+::selection{background:var(--gold);color:var(--navy-950)}
+.orb{position:fixed;border-radius:50%;filter:blur(95px);opacity:.5;pointer-events:none;z-index:0}
+.orb.a{width:420px;height:420px;background:rgba(216,178,74,.10);top:-140px;right:-120px;animation:drift 26s ease-in-out infinite alternate}
+.orb.b{width:520px;height:520px;background:rgba(30,70,160,.22);bottom:-200px;left:-160px;animation:drift 34s ease-in-out infinite alternate-reverse}
+@keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(60px,40px) scale(1.12)}}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+}
+
+/* ---------- header ---------- */
+header{
+  position:sticky;top:0;z-index:50;
+  backdrop-filter:blur(14px);
+  background:rgba(8,15,36,.72);
+  border-bottom:1px solid rgba(216,178,74,.14);
+}
+.hwrap{max-width:1120px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;gap:12px}
+.diya{width:30px;height:30px;flex:0 0 auto}
+.brand{font-family:'Rozha One',serif;font-size:1.35rem;color:var(--gold);letter-spacing:.5px;line-height:1.2}
+.brand small{display:block;font-family:'Noto Sans Devanagari',sans-serif;font-size:.62rem;color:var(--muted);letter-spacing:2px;font-weight:600}
+.backbtn{margin-left:auto;display:none;align-items:center;gap:6px;background:transparent;border:1px solid var(--line);color:var(--gold);padding:7px 14px;border-radius:11px;cursor:pointer;font-family:inherit;font-size:.85rem;transition:.2s}
+.backbtn:hover{background:var(--gold-soft)}
+.backbtn.show{display:inline-flex}
+.seam{height:2px;background:linear-gradient(90deg,transparent,var(--gold) 30%,#fff2c9 50%,var(--gold) 70%,transparent);background-size:200% 100%;animation:seam 6s linear infinite;opacity:.85}
+@keyframes seam{from{background-position:200% 0}to{background-position:-200% 0}}
+
+/* ---------- layout ---------- */
+main{max-width:1120px;margin:0 auto;padding:22px 18px 70px;position:relative;z-index:1}
+.view{display:none}
+.view.active{display:block;animation:vin .35s ease both}
+@keyframes vin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+h2.vt{font-family:'Rozha One',serif;color:var(--gold);font-size:1.5rem;font-weight:400;margin-bottom:2px}
+p.vd{color:var(--muted);font-size:.88rem;margin-bottom:18px;max-width:640px}
+
+/* ---------- hero + home ---------- */
+.hero{text-align:center;padding:34px 8px 26px}
+.hero h1{font-family:'Rozha One',serif;font-weight:400;color:var(--ink);font-size:clamp(1.9rem,5.6vw,3.1rem);line-height:1.25}
+.hero h1 em{font-style:normal;color:var(--gold);position:relative;white-space:nowrap}
+.hero h1 em::after{content:"";position:absolute;left:2%;right:2%;bottom:2px;height:9px;background:linear-gradient(90deg,transparent,rgba(216,178,74,.45),transparent);border-radius:50%;filter:blur(1px)}
+.hero p{color:var(--muted);margin-top:10px;font-size:.95rem}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:.76rem;padding:5px 13px;border-radius:999px}
+.chip b{color:var(--gold);font-weight:700}
+.tool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:12px;margin-top:26px}
+.tcard{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:var(--r);padding:18px 15px 16px;cursor:pointer;transition:transform .22s,border-color .22s,box-shadow .22s,background .22s;animation:vin .5s ease both;position:relative;overflow:hidden}
+.tcard:nth-child(1){animation-delay:.02s}.tcard:nth-child(2){animation-delay:.06s}.tcard:nth-child(3){animation-delay:.1s}.tcard:nth-child(4){animation-delay:.14s}.tcard:nth-child(5){animation-delay:.18s}.tcard:nth-child(6){animation-delay:.22s}.tcard:nth-child(7){animation-delay:.26s}.tcard:nth-child(8){animation-delay:.3s}.tcard:nth-child(9){animation-delay:.34s}.tcard:nth-child(10){animation-delay:.38s}
+.tcard:hover{transform:translateY(-4px);border-color:var(--line);box-shadow:0 14px 38px rgba(216,178,74,.13);background:var(--card-2)}
+.tcard svg{width:32px;height:32px;stroke:var(--gold);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;margin-bottom:10px}
+.tcard h3{font-size:.98rem;color:var(--ink);font-weight:700;line-height:1.35}
+.tcard p{font-size:.74rem;color:var(--muted);margin-top:4px;line-height:1.5}
+.tcard .tag{position:absolute;top:10px;right:10px;font-size:.6rem;background:var(--gold);color:var(--navy-950);font-weight:700;padding:2px 8px;border-radius:999px}
+
+/* ---------- shared controls ---------- */
+.panel{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:var(--r);padding:16px}
+.panel + .panel{margin-top:14px}
+.panel h4{color:var(--gold);font-size:.86rem;font-weight:700;margin-bottom:10px;letter-spacing:.3px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.row + .row{margin-top:10px}
+label.f{font-size:.8rem;color:var(--muted)}
+input[type=text],input[type=number],select{
+  background:var(--navy-800);border:1px solid rgba(255,255,255,.14);color:var(--ink);
+  padding:8px 12px;border-radius:10px;font-family:inherit;font-size:.86rem;outline:none;transition:border .2s;
+}
+input[type=text]:focus,input[type=number]:focus,select:focus{border-color:var(--gold)}
+input[type=number]{width:88px}
+input[type=range]{accent-color:var(--gold);cursor:pointer}
+input[type=color]{width:40px;height:32px;border:1px solid var(--line);border-radius:8px;background:transparent;cursor:pointer;padding:2px}
+input[type=checkbox],input[type=radio]{accent-color:var(--gold);width:16px;height:16px;cursor:pointer}
+.radio-line{display:flex;align-items:center;gap:7px;font-size:.85rem;cursor:pointer}
+.btn{
+  display:inline-flex;align-items:center;gap:7px;
+  background:linear-gradient(135deg,#E9C55E,#B8860B);color:var(--navy-950);
+  border:none;padding:10px 20px;border-radius:12px;font-family:inherit;font-weight:700;font-size:.9rem;cursor:pointer;
+  transition:transform .15s, box-shadow .2s, filter .2s;box-shadow:0 6px 18px rgba(216,178,74,.22);
+}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.06)}
+.btn:active{transform:translateY(0)}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+.btn.ghost{background:transparent;color:var(--gold);border:1px solid var(--line);box-shadow:none}
+.btn.ghost:hover{background:var(--gold-soft)}
+.btn.small{padding:6px 13px;font-size:.78rem;border-radius:10px}
+.btn.danger{background:transparent;color:var(--bad);border:1px solid rgba(240,138,138,.4);box-shadow:none}
+.btn.danger:hover{background:rgba(240,138,138,.1)}
+
+.dropzone{
+  border:1.6px dashed var(--line);border-radius:var(--r);padding:30px 18px;text-align:center;cursor:pointer;
+  background:rgba(255,255,255,.02);transition:border-color .2s, background .25s, box-shadow .25s;
+}
+.dropzone svg{width:38px;height:38px;stroke:var(--gold);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;margin-bottom:8px;opacity:.9}
+.dropzone .dz1{font-weight:700;font-size:.95rem}
+.dropzone .dz2{font-size:.76rem;color:var(--muted);margin-top:3px}
+.dropzone.hover{border-color:var(--gold);background:var(--gold-soft);box-shadow:0 0 0 4px rgba(216,178,74,.08),0 14px 40px rgba(216,178,74,.14)}
+
+.fileinfo{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.finfo-chip{background:var(--navy-800);border:1px solid rgba(255,255,255,.1);border-radius:999px;padding:5px 13px;font-size:.76rem;color:var(--ink)}
+.finfo-chip b{color:var(--gold)}
+
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.tab{background:transparent;border:1px solid rgba(255,255,255,.14);color:var(--muted);padding:7px 15px;border-radius:999px;font-family:inherit;font-size:.82rem;cursor:pointer;transition:.2s;font-weight:600}
+.tab.on{background:var(--gold);color:var(--navy-950);border-color:var(--gold);font-weight:700}
+.tabpane{display:none}
+.tabpane.on{display:block;animation:vin .25s ease both}
+.hint{font-size:.74rem;color:var(--muted);line-height:1.6}
+.hint.warn{color:#E8C77A}
+
+/* ---------- thumbnails / studio ---------- */
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:rgba(10,20,48,.85);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:10px 12px;position:sticky;top:64px;z-index:20;backdrop-filter:blur(10px);margin-bottom:14px}
+.toolbar .sep{width:1px;height:22px;background:rgba(255,255,255,.12)}
+.zoomwrap{display:flex;align-items:center;gap:6px;font-size:.74rem;color:var(--muted)}
+.pgrid{display:flex;flex-wrap:wrap;gap:12px;min-height:120px}
+.pcard{
+  width:var(--thw);background:var(--navy-800);border:1px solid rgba(255,255,255,.1);border-radius:12px;
+  padding:7px;position:relative;transition:transform .18s, border-color .18s, box-shadow .18s;animation:vin .3s ease both;
+}
+.pcard:hover{border-color:var(--line)}
+.pcard.sel{border-color:var(--gold);box-shadow:0 0 0 2px rgba(216,178,74,.45)}
+.pcard.drag-src{opacity:.35}
+.pcard .pimg{width:100%;background:#0A1735;border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.pcard .pimg img{width:100%;height:auto;display:block}
+.pcard .pnum{position:absolute;left:10px;bottom:10px;background:rgba(7,14,34,.85);border:1px solid var(--line);color:var(--gold);font-size:.66rem;font-weight:700;padding:1px 7px;border-radius:999px}
+.pcard .srcdot{position:absolute;top:12px;left:12px;width:10px;height:10px;border-radius:50%;border:1.5px solid rgba(255,255,255,.7)}
+.pcard .handle{position:absolute;top:8px;right:8px;background:rgba(7,14,34,.85);border:1px solid rgba(255,255,255,.2);border-radius:8px;color:var(--muted);width:24px;height:24px;display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:none;font-size:.8rem;user-select:none}
+.pcard .handle:active{cursor:grabbing}
+.pacts{display:flex;justify-content:center;gap:5px;margin-top:6px}
+.pico{background:transparent;border:1px solid rgba(255,255,255,.16);color:var(--muted);width:26px;height:26px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.78rem;transition:.15s;font-family:inherit}
+.pico:hover{color:var(--gold);border-color:var(--line)}
+.pico.del:hover{color:var(--bad);border-color:rgba(240,138,138,.5)}
+.pchk{position:absolute;top:-7px;left:-7px;width:20px;height:20px;border-radius:6px;border:1.5px solid var(--line);background:var(--navy-950);cursor:pointer;display:flex;align-items:center;justify-content:center;color:transparent;font-size:.7rem;font-weight:800}
+.pcard.sel .pchk{background:var(--gold);color:var(--navy-950);border-color:var(--gold)}
+.ghost{border-radius:12px;box-shadow:0 18px 50px rgba(0,0,0,.5)}
+.empty{border:1.6px dashed rgba(255,255,255,.14);border-radius:var(--r);padding:34px;text-align:center;color:var(--muted);font-size:.85rem;width:100%}
+
+/* ---------- file list rows (merge) ---------- */
+.flist{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.frow{display:flex;align-items:center;gap:11px;background:var(--navy-800);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:9px 12px}
+.frow .handle{cursor:grab;color:var(--muted);touch-action:none;font-size:1rem;user-select:none;padding:0 2px}
+.frow .fname{flex:1;min-width:0;font-size:.85rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.frow .fmeta{font-size:.7rem;color:var(--muted);white-space:nowrap}
+.frow .ordn{background:var(--gold);color:var(--navy-950);font-weight:800;font-size:.68rem;border-radius:999px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center}
+
+/* ---------- watermark ---------- */
+.wm-layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start}
+@media (max-width:920px){.wm-layout{grid-template-columns:1fr}}
+.wm-stage{position:relative;background:#0A1735;border:1px solid rgba(255,255,255,.1);border-radius:var(--r);padding:14px;display:flex;justify-content:center}
+.wm-stack{position:relative;box-shadow:0 16px 50px rgba(0,0,0,.45);line-height:0}
+.wm-stack canvas{display:block;max-width:100%;height:auto;border-radius:4px}
+.wm-stack canvas.ovl{position:absolute;inset:0;width:100%;height:100%}
+.wm-dim{opacity:.35;pointer-events:none;filter:saturate(.4)}
+#wm-dt-res b.dtok{color:#8fe3ae}#wm-dt-res b.dtbad{color:#ff9d9d}
+@media (max-width:920px){
+  #view-wm .wm-layout>div:first-child{position:sticky;top:62px;z-index:40;background:rgba(9,17,40,.95);backdrop-filter:blur(8px);border-radius:14px;padding:4px 4px 2px}
+  #view-wm .pgnav{margin:6px 0 4px}
+}
+.pgnav{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:10px;font-size:.8rem;color:var(--muted)}
+.posgrid{display:grid;grid-template-columns:repeat(3,34px);gap:5px}
+.posgrid button{width:34px;height:34px;border-radius:9px;border:1px solid rgba(255,255,255,.16);background:transparent;cursor:pointer;transition:.15s;position:relative}
+.posgrid button::after{content:"";position:absolute;inset:0;margin:auto;width:8px;height:8px;border-radius:3px;background:var(--muted)}
+.posgrid button.on{border-color:var(--gold);background:var(--gold-soft)}
+.posgrid button.on::after{background:var(--gold)}
+.slider-line{display:grid;grid-template-columns:86px 1fr 44px;align-items:center;gap:8px;font-size:.78rem;color:var(--muted)}
+.slider-line output{color:var(--gold);font-weight:700;text-align:right;font-size:.76rem}
+.slider-line + .slider-line{margin-top:9px}
+
+/* ---------- image tool cards ---------- */
+.imglist{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin-top:14px}
+.icard{background:var(--navy-800);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:10px;animation:vin .3s ease both}
+.icard .ith{width:100%;height:120px;border-radius:8px;background:#0A1735;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.icard .ith img{max-width:100%;max-height:100%;object-fit:contain}
+.icard .iname{font-size:.76rem;font-weight:700;margin-top:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.icard .imeta{font-size:.68rem;color:var(--muted);margin-top:2px}
+.icard .iresult{font-size:.7rem;margin-top:5px;color:var(--ok);font-weight:700}
+.icard .iresult.bad{color:var(--bad)}
+.preset{background:var(--navy-700);border:1px solid var(--line);color:var(--gold);font-size:.72rem;font-weight:700;padding:4px 11px;border-radius:999px;cursor:pointer;transition:.15s;font-family:inherit}
+.preset:hover{background:var(--gold);color:var(--navy-950)}
+
+/* ---------- scanner ---------- */
+.sc-stage{position:relative;background:#0A1735;border:1px solid rgba(255,255,255,.1);border-radius:var(--r);padding:12px;display:flex;justify-content:center;min-height:200px}
+.sc-wrap{position:relative;line-height:0;touch-action:none}
+.sc-wrap canvas{max-width:100%;height:auto;display:block;border-radius:6px;box-shadow:0 14px 40px rgba(0,0,0,.4)}
+.cropbox{position:absolute;border:1.6px dashed var(--gold);background:rgba(216,178,74,.12);display:none;pointer-events:none;border-radius:2px}
+.filterchips{display:flex;flex-wrap:wrap;gap:7px}
+.fchip{background:transparent;border:1px solid rgba(255,255,255,.16);color:var(--muted);padding:6px 14px;border-radius:999px;font-size:.78rem;cursor:pointer;font-family:inherit;font-weight:600;transition:.15s}
+.fchip.on{background:var(--gold);color:var(--navy-950);border-color:var(--gold);font-weight:700}
+.sc-pages{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+.sc-pg{width:74px;position:relative}
+.sc-pg img{width:100%;border-radius:7px;border:1px solid rgba(255,255,255,.14);display:block}
+.sc-pg .x{position:absolute;top:-7px;right:-7px;width:20px;height:20px;border-radius:50%;background:var(--bad);color:#20090b;border:none;font-weight:800;font-size:.7rem;cursor:pointer;line-height:1}
+.sc-pg .n{position:absolute;left:4px;bottom:4px;background:rgba(7,14,34,.85);color:var(--gold);font-size:.6rem;font-weight:700;padding:0 6px;border-radius:999px}
+
+/* ---------- results / progress / toast ---------- */
+.resultbox{margin-top:14px;background:linear-gradient(135deg,rgba(123,208,154,.1),rgba(216,178,74,.07));border:1px solid rgba(123,208,154,.35);border-radius:var(--r);padding:16px;display:none}
+.resultbox.show{display:block;animation:vin .3s ease both}
+.resultbox h4{color:var(--ok);font-size:.9rem;margin-bottom:8px}
+.resultbox .stat{font-size:.8rem;color:var(--ink);margin-bottom:10px}
+.resultbox .stat b{color:var(--gold)}
+.dlrow{display:flex;flex-wrap:wrap;gap:8px}
+#busy{position:fixed;inset:0;background:rgba(7,14,34,.82);backdrop-filter:blur(8px);z-index:100;display:none;align-items:center;justify-content:center}
+#busy.show{display:flex}
+.busybox{background:var(--navy-800);border:1px solid var(--line);border-radius:20px;padding:30px 36px;text-align:center;min-width:270px;box-shadow:0 30px 90px rgba(0,0,0,.6)}
+.flame{width:52px;height:52px;margin:0 auto 14px;border-radius:50%;background:conic-gradient(from 0deg,var(--gold),#fff3c4,var(--gold-deep),var(--gold));animation:spin 1.1s linear infinite;position:relative}
+.flame::after{content:"";position:absolute;inset:6px;background:var(--navy-800);border-radius:50%}
+@keyframes spin{to{transform:rotate(360deg)}}
+#busy-text{font-size:.88rem;font-weight:700;color:var(--ink)}
+#busy-sub{font-size:.72rem;color:var(--muted);margin-top:3px;min-height:1em}
+.pbar{height:6px;background:rgba(255,255,255,.1);border-radius:99px;margin-top:14px;overflow:hidden}
+.pbar i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--gold),#ffe9a8);border-radius:99px;transition:width .25s}
+#toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(30px);background:var(--navy-800);border:1px solid var(--line);color:var(--ink);padding:11px 20px;border-radius:14px;font-size:.84rem;z-index:120;opacity:0;pointer-events:none;transition:.3s;max-width:88vw;text-align:center;box-shadow:0 16px 44px rgba(0,0,0,.5)}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+#toast.err{border-color:rgba(240,138,138,.55)}
+#toast.ok{border-color:rgba(123,208,154,.55)}
+
+footer{border-top:1px solid rgba(216,178,74,.14);margin-top:40px;padding:22px 18px;text-align:center;color:var(--muted);font-size:.74rem;position:relative;z-index:1}
+footer a{color:var(--gold);text-decoration:none}
+footer .priv{color:var(--ink);font-weight:600;margin-bottom:4px;font-size:.78rem}
+.hidden{display:none !important}
+/* ---- वॉटरमार्क के भीतर पेज संपादन ---- */
+#wm-edit .toolbar{position:static;top:auto}
+#wm-ed-srcs{display:flex;flex-wrap:wrap;gap:8px}
+#wm-ed-srcs .chip{display:inline-flex;align-items:center;gap:7px;font-size:.74rem}
+#wm-ed-srcs .chip .pico{width:20px;height:20px;font-size:.68rem}
+#wm-ed-srcs .dot{width:10px;height:10px;border-radius:50%;border:1.5px solid rgba(255,255,255,.65);display:inline-block;flex:0 0 auto}
+#wm-ed-grid{max-height:58vh;overflow:auto;padding:2px}
+#wm-edit .edhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+#wm-edit.folded #wm-ed-box{display:none}
+#wm-ed-dirty{color:var(--gold);font-weight:700}
+
+@media (max-width:560px){
+  .tool-grid{grid-template-columns:repeat(2,1fr)}
+  .toolbar{top:58px}
+  :root{--thw:104px}
+}
+</style>
+</head>
+<body>
+<div class="orb a"></div><div class="orb b"></div>
+<header>
+  <div class="hwrap">
+    <svg class="diya" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4c2.6 3 2.6 5.6 0 7.6-2.6-2-2.6-4.6 0-7.6z" fill="#D8B24A"/><path d="M5 17c0 5.2 5 9 11 9s11-3.8 11-9H5z" fill="none" stroke="#D8B24A" stroke-width="1.7"/><path d="M9 17c1.5-2.6 4-4 7-4s5.5 1.4 7 4" fill="none" stroke="#D8B24A" stroke-width="1.7" stroke-linecap="round"/></svg>
+    <div class="brand">बोधि स्टूडियो<small>PDF + IMAGE TOOLKIT v9.3 · ब्राउज़र के अंदर</small></div>
+    <button class="backbtn" id="backbtn">← होम</button>
+  </div>
+  <div class="seam"></div>
+</header>
+<main>
+
+<!-- ================= HOME ================= -->
+<section class="view active" id="view-home">
+  <div class="hero">
+    <h1>दस्तावेज़ का पूरा <em>कारख़ाना</em>,<br>एक ही पन्ने पर</h1>
+    <p>PDF जोड़ो-तोड़ो, वॉटरमार्क गाड़ो, फोटो को फ़ॉर्म-लायक KB में उतारो, काग़ज़ स्कैन करो — सब कुछ यहीं।</p>
+    <div class="chips">
+      <span class="chip"><b>100%</b> ब्राउज़र में — कोई फ़ाइल अपलोड नहीं होती</span>
+      <span class="chip"><b>10</b> टूल</span>
+      <span class="chip">मोबाइल + डेस्कटॉप</span>
+    </div>
+  </div>
+  <div class="tool-grid">
+    <div class="tcard" data-view="view-studio"><span class="tag">मुख्य</span><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="9.5" rx="1.2"/><rect x="13.5" y="3" width="7.5" height="9.5" rx="1.2"/><rect x="3" y="16" width="7.5" height="5" rx="1.2"/><rect x="13.5" y="16" width="7.5" height="5" rx="1.2"/></svg><h3>पेज स्टूडियो</h3><p>हर पेज सामने — खींचो, घुमाओ, हटाओ, जोड़ो; एक साथ सब कुछ</p></div>
+    <div class="tcard" data-view="view-merge"><svg viewBox="0 0 24 24"><path d="M7 3v7M17 3v7M7 10c0 3 2.5 4.5 5 4.5S17 13 17 10"/><path d="M12 14.5V21M9 18.3l3 3 3-3"/></svg><h3>PDF जोड़ें</h3><p>बड़ी फ़ाइलें भी; क्रम से, एकांतर, या बिगड़ी/लॉक PDF की मरम्मत</p></div>
+    <div class="tcard" data-view="view-split"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.6"/><circle cx="6" cy="18" r="2.6"/><path d="M8.2 7.7 20 19M8.2 16.3 20 5"/></svg><h3>PDF तोड़ें</h3><p>रेंज, हर N पेज, सम/विषम, या चुन-चुनकर</p></div>
+    <div class="tcard" data-view="view-wm"><span class="tag">स्थायी</span><svg viewBox="0 0 24 24"><path d="M12 3s6 6.4 6 10.3A6 6 0 0 1 6 13.3C6 9.4 12 3 12 3z"/><path d="M9.5 13.5a2.5 2.5 0 0 0 2.5 2.5"/></svg><h3>वॉटरमार्क + फुटर</h3><p>दोनों एक ही बार में — रंग अपने-आप मिलता है</p></div>
+    <div class="tcard" data-view="view-img"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="m4 18 5-5 3 3 4-4 4 4"/></svg><h3>इमेज साइज़ / कंप्रेस</h3><p>लक्ष्य-KB मोड — फ़ॉर्म की फोटो ठीक उतने KB में</p></div>
+    <div class="tcard" data-view="view-i2p"><svg viewBox="0 0 24 24"><rect x="2.5" y="3" width="8.5" height="8.5" rx="1.4"/><path d="M13.5 7.2h5M16.4 4.8l2.4 2.4-2.4 2.4"/><rect x="12.8" y="12.5" width="8.5" height="8.5" rx="1.4"/></svg><h3>इमेज → PDF</h3><p>फोटो सजाओ, पेज-साइज़ चुनो, PDF तैयार</p></div>
+    <div class="tcard" data-view="view-p2i"><svg viewBox="0 0 24 24"><rect x="2.5" y="3" width="8.5" height="10.5" rx="1.4"/><path d="M13.5 8.2h5M16.4 5.8l2.4 2.4-2.4 2.4"/><rect x="12.8" y="13" width="8.5" height="8" rx="1.4"/><circle cx="15.6" cy="16" r="1"/><path d="m13.3 20 2.3-2.2 1.5 1.4 2-2 2.2 2.3"/></svg><h3>PDF → इमेज</h3><p>हर पेज तेज़-धार JPG/PNG में</p></div>
+    <div class="tcard" data-view="view-scan"><svg viewBox="0 0 24 24"><path d="M4 8V5.5A1.5 1.5 0 0 1 5.5 4H8M16 4h2.5A1.5 1.5 0 0 1 20 5.5V8M20 16v2.5a1.5 1.5 0 0 1-1.5 1.5H16M8 20H5.5A1.5 1.5 0 0 1 4 18.5V16"/><path d="M3 12h18"/></svg><h3>स्कैनर</h3><p>कैमरा/फोटो → क्रॉप + श्याम-श्वेत जादू → PDF</p></div>
+    <div class="tcard" data-view="view-cpdf"><svg viewBox="0 0 24 24"><path d="M12 3v5.5M9 5.8l3 3 3-3M12 21v-5.5M9 18.2l3-3 3 3"/><path d="M4 12h16"/></svg><h3>PDF कंप्रेस</h3><p>भारी PDF को बाँटने-लायक हल्का</p></div>
+    <div class="tcard" data-view="view-pnum"><svg viewBox="0 0 24 24"><path d="M9 3 7 21M17 3l-2 18M4 8.5h17M3 15.5h17"/></svg><h3>पेज नंबर + फ़ुटर</h3><p>नंबर कहीं भी, साथ में हर पेज पर अपनी हिंदी लाइन</p></div>
+  </div>
+</section>
+
+<!-- ================= STUDIO ================= -->
+<section class="view" id="view-studio">
+  <h2 class="vt">पेज स्टूडियो</h2>
+  <p class="vd">कई PDF और फोटो एक साथ लाओ — हर पेज सामने दिखेगा। ⠿ पकड़कर क्रम बदलो, घुमाओ, कॉपी करो, हटाओ, और चाहो तो सिर्फ़ चुने हुए पेजों की नई PDF निकाल लो। जोड़ना-हटाना-सजाना, सब एक ही मेज़ पर।</p>
+  <div class="toolbar">
+    <button class="btn small" id="st-add">+ फ़ाइल जोड़ें</button>
+    <span class="sep"></span>
+    <button class="btn ghost small" id="st-selall">सभी चुनें</button>
+    <button class="btn ghost small" id="st-selnone">चयन हटाएँ</button>
+    <button class="btn ghost small" id="st-rotsel">चुने घुमाएँ ↻</button>
+    <button class="btn danger small" id="st-delsel">चुने हटाएँ</button>
+    <span class="sep"></span>
+    <button class="btn ghost small" id="st-rev">क्रम उल्टा</button>
+    <span class="zoomwrap">आकार <input type="range" id="st-zoom" min="90" max="230" value="126"></span>
+  </div>
+  <div class="pgrid" id="st-grid"><div class="empty">ऊपर “+ फ़ाइल जोड़ें” दबाओ या फ़ाइलें यहीं खींचकर छोड़ो — PDF और JPG/PNG दोनों चलेंगे।</div></div>
+  <div class="panel" style="margin-top:16px">
+    <div class="row">
+      <label class="f">फ़ाइल का नाम</label>
+      <input type="text" id="st-name" value="bodhi-document" style="flex:1;min-width:150px">
+      <button class="btn" id="st-saveall">पूरा PDF सहेजो</button>
+      <button class="btn ghost" id="st-savesel">सिर्फ़ चुने पेजों का PDF</button>
+    </div>
+  </div>
+  <input type="file" id="st-file" class="hidden" multiple accept="application/pdf,image/*">
+</section>
+
+<!-- ================= MERGE ================= -->
+<section class="view" id="view-merge">
+  <h2 class="vt">PDF जोड़ें</h2>
+  <p class="vd">फ़ाइलें क्रम से जोड़ो, दो PDF के पेज गूँथो (एकांतर), या बिगड़ी/लॉक PDF अकेली डालकर उसकी मरम्मत-कॉपी बनाओ। बड़ी फ़ाइलों के लिए इंजन अब एक-एक फ़ाइल करके काम करता है, ताकि मेमोरी न फटे।</p>
+  <div class="dropzone" id="mg-drop"><svg viewBox="0 0 24 24"><path d="M12 16V5M7 10l5-5 5 5"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg><div class="dz1">PDF फ़ाइलें यहाँ छोड़ो या टैप करो</div><div class="dz2">एक साथ कई फ़ाइलें — 100+ MB वाली भी</div></div>
+  <input type="file" id="mg-file" class="hidden" multiple accept="application/pdf">
+  <div class="flist" id="mg-list"></div>
+  <div class="row hidden" id="mg-listacts" style="margin:2px 0 10px"><button class="btn ghost small" id="mg-clear">सूची ख़ाली करो</button><span class="hint" id="mg-total"></span></div>
+  <div class="tabs">
+    <button class="tab on" data-t="mg-order">क्रम से जोड़ो</button>
+    <button class="tab" data-t="mg-inter">एकांतर (गूँथकर)</button>
+  </div>
+  <div class="tabpane on" id="mg-order"><p class="hint">ऊपर सूची में ⠿ पकड़कर फ़ाइलों का क्रम बदलो — उसी क्रम में जुड़ेंगी। 1 फ़ाइल भी चलेगी (सिर्फ़ मरम्मत/री-सेव के लिए)।</p></div>
+  <div class="tabpane" id="mg-inter">
+    <p class="hint">ठीक 2 फ़ाइलें चाहिए। पेज ऐसे बुनेंगे: पहली का पेज 1, दूसरी का पेज 1, पहली का पेज 2, दूसरी का पेज 2…</p>
+    <div class="row" style="margin-top:8px"><label class="radio-line"><input type="checkbox" id="mg-rev"> दूसरी फ़ाइल उल्टे क्रम में लो (पीछे की साइड उल्टी स्कैन हुई हो तो)</label></div>
+  </div>
+  <div class="panel">
+    <div class="row"><label class="radio-line"><input type="checkbox" id="mg-fix" checked> बिगड़ी/लॉक फ़ाइल मिले तो अपने-आप मरम्मत करके जोड़ो (पेज तस्वीर बनकर जुड़ेंगे)</label></div>
+    <div class="row" style="margin-top:10px"><label class="f">नाम</label><input type="text" id="mg-name" value="bodhi-merged" style="min-width:150px"><button class="btn" id="mg-go">जोड़कर डाउनलोड करो</button></div>
+  </div>
+</section>
+
+<!-- ================= SPLIT ================= -->
+<section class="view" id="view-split">
+  <h2 class="vt">PDF तोड़ें</h2>
+  <p class="vd">पाँच तरीके — रेंज से, हर N पेज पर, हर पेज अलग, सम/विषम, या थंबनेल देखकर मनचाहे पेज चुनकर।</p>
+  <div class="dropzone" id="sp-drop"><svg viewBox="0 0 24 24"><path d="M12 16V5M7 10l5-5 5 5"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg><div class="dz1">एक PDF यहाँ छोड़ो या टैप करो</div><div class="dz2">फ़ाइल आपके फ़ोन/कंप्यूटर से बाहर नहीं जाएगी</div></div>
+  <input type="file" id="sp-file" class="hidden" accept="application/pdf">
+  <div id="sp-body" class="hidden">
+    <div class="fileinfo" id="sp-info"></div>
+    <div class="tabs">
+      <button class="tab on" data-t="sp-range">रेंज से</button>
+      <button class="tab" data-t="sp-every">हर N पेज</button>
+      <button class="tab" data-t="sp-single">हर पेज अलग</button>
+      <button class="tab" data-t="sp-oe">सम / विषम</button>
+      <button class="tab" data-t="sp-pick">चुनकर निकालो</button>
+    </div>
+    <div class="tabpane on" id="sp-range">
+      <div class="row"><label class="f">रेंज</label><input type="text" id="sp-ranges" placeholder="जैसे: 1-5, 8, 11-13" style="flex:1;min-width:170px"></div>
+      <div class="row" style="margin-top:8px">
+        <label class="radio-line"><input type="radio" name="sp-rm" value="sep" checked> हर रेंज की अलग फ़ाइल (ZIP)</label>
+        <label class="radio-line"><input type="radio" name="sp-rm" value="one"> सबको मिलाकर एक फ़ाइल</label>
+      </div>
+    </div>
+    <div class="tabpane" id="sp-every"><div class="row"><label class="f">हर</label><input type="number" id="sp-n" value="2" min="1"><label class="f">पेज पर नई फ़ाइल बनेगी (सब ZIP में)</label></div></div>
+    <div class="tabpane" id="sp-single"><p class="hint">हर पेज की अलग PDF बनेगी — सब एक ZIP में।</p></div>
+    <div class="tabpane" id="sp-oe"><p class="hint">दो फ़ाइलें बनेंगी — odd में विषम पेज (1, 3, 5…), even में सम (2, 4, 6…)। डबल-साइड स्कैन सुलझाने में काम आता है।</p></div>
+    <div class="tabpane" id="sp-pick">
+      <div class="row" style="margin:4px 0 10px"><button class="btn ghost small" id="sp-pick-all">सभी</button><button class="btn ghost small" id="sp-pick-none">कोई नहीं</button><label class="radio-line"><input type="checkbox" id="sp-rem"> बचे हुए पेजों की भी अलग फ़ाइल बनाओ</label></div>
+      <div class="pgrid" id="sp-grid"></div>
+    </div>
+    <div class="panel"><div class="row"><label class="f">नाम</label><input type="text" id="sp-name" value="bodhi-split" style="min-width:150px"><button class="btn" id="sp-go">तोड़कर डाउनलोड करो</button></div></div>
+  </div>
+</section>
+
+<!-- ================= WATERMARK ================= -->
+<section class="view" id="view-wm">
+  <h2 class="vt">वॉटरमार्क</h2>
+  <p class="vd">लिखो या लोगो लगाओ — हर बदलाव उसी पल पेज पर दिखेगा। “स्थायी” मोड में वॉटरमार्क पिक्सेल में घुल जाता है, और नीचे की “सुरक्षा” उसे ऐसा बना देती है कि AI-remover एक बार में साफ़ न काट पाए — तुम्हारा चुना रूप बदले बिना।</p>
+  <div class="dropzone" id="wm-drop"><svg viewBox="0 0 24 24"><path d="M12 16V5M7 10l5-5 5 5"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg><div class="dz1">PDF यहाँ छोड़ो या टैप करो</div><div class="dz2">प्रीव्यू तुरंत खुल जाएगा</div></div>
+  <input type="file" id="wm-file" class="hidden" multiple accept="application/pdf,image/*">
+  <div id="wm-body" class="hidden">
+    <div class="panel" id="wm-edit" style="margin-bottom:14px">
+      <div class="edhead">
+        <h4 style="margin:0">पेज संपादन — जोड़ो, हटाओ, क्रम बदलो · सब यहीं</h4>
+        <button class="btn ghost small" id="wm-ed-toggle">छिपाओ</button>
+      </div>
+      <div id="wm-ed-box">
+        <p class="hint" style="margin:8px 0 10px">और PDF या फोटो जोड़ो, बेकार पेज हटाओ, क्रम बदलो, घुमाओ — फिर नीचे “बदलाव लागू करो” दबाओ। ऊपर की झलक और वॉटरमार्क-फुटर वाला डाउनलोड उसी बदली हुई फ़ाइल पर चलेगा। दूसरा टूल खोलने की ज़रूरत नहीं।</p>
+        <div id="wm-ed-srcs" style="margin-bottom:10px"></div>
+        <div class="toolbar" style="margin-bottom:10px">
+          <button class="btn small" id="wm-ed-add">+ PDF / फोटो जोड़ें</button>
+          <span class="sep"></span>
+          <button class="btn ghost small" id="wm-ed-selall">सभी चुनें</button>
+          <button class="btn ghost small" id="wm-ed-selnone">चयन हटाएँ</button>
+          <button class="btn ghost small" id="wm-ed-rotsel">चुने घुमाएँ ↻</button>
+          <button class="btn danger small" id="wm-ed-delsel">चुने हटाएँ</button>
+          <span class="sep"></span>
+          <button class="btn ghost small" id="wm-ed-rev">क्रम उल्टा</button>
+          <span class="zoomwrap">आकार <input type="range" id="wm-ed-zoom" min="90" max="230" value="126"></span>
+        </div>
+        <div class="pgrid" id="wm-ed-grid"></div>
+        <div class="row" style="margin-top:12px">
+          <button class="btn" id="wm-ed-apply">बदलाव लागू करो</button>
+          <button class="btn ghost" id="wm-ed-save">बिना वॉटरमार्क के सहेजो</button>
+          <span class="hint" id="wm-ed-info"></span>
+        </div>
+      </div>
+      <input type="file" id="wm-ed-file" class="hidden" multiple accept="application/pdf,image/*">
+    </div>
+    <div class="wm-layout">
+      <div>
+        <div class="wm-stage"><div class="wm-stack"><canvas id="wm-base"></canvas><canvas id="wm-ovl" class="ovl"></canvas></div></div>
+        <div class="pgnav"><button class="btn ghost small" id="wm-prev">◀</button><span id="wm-pglabel">पेज 1</span><button class="btn ghost small" id="wm-next">▶</button></div>
+      </div>
+      <div>
+        <div class="panel">
+          <h4>क्या लगाना है</h4>
+          <div class="row">
+            <label class="radio-line"><input type="radio" name="wm-type" value="text" checked> टेक्स्ट</label>
+            <label class="radio-line"><input type="radio" name="wm-type" value="img"> लोगो / इमेज</label>
+          </div>
+          <div id="wm-textwrap">
+            <div class="row" style="margin-top:10px"><input type="text" id="wm-text" value="BODHI CLASSES" style="flex:1;min-width:150px"></div>
+            <div class="row" style="margin-top:10px">
+              <label class="f">रंग</label>
+              <label class="radio-line"><input type="radio" name="wm-cmode" value="auto" checked> अपने-आप</label>
+              <label class="radio-line"><input type="radio" name="wm-cmode" value="own"> अपना</label>
+              <input type="color" id="wm-color" value="#d8b24a">
+              <label class="radio-line" style="margin-left:6px"><input type="checkbox" id="wm-bold" checked> मोटा</label>
+            </div>
+            <p class="hint">“अपने-आप” में हर जगह का रंग खुद तय होता है — गहरी पृष्ठभूमि पर हल्का, हल्की पर गहरा — इसलिए वॉटरमार्क हर स्लाइड पर दिखता भी है और content भी नहीं ढकता।</p>
+          </div>
+          <div id="wm-imgwrap" class="hidden">
+            <div class="row" style="margin-top:10px"><button class="btn ghost small" id="wm-logobtn">लोगो चुनो</button><span class="hint" id="wm-logoname">अभी कोई फ़ाइल नहीं</span></div>
+            <input type="file" id="wm-logo" class="hidden" accept="image/*">
+          </div>
+        </div>
+        <div class="panel">
+          <h4>रूप</h4>
+          <div class="slider-line"><span>आकार</span><input type="range" id="wm-size" min="4" max="40" value="10"><output id="o-size">10%</output></div>
+          <div class="slider-line"><span>गहरापन</span><input type="range" id="wm-op" min="4" max="100" value="14"><output id="o-op">14%</output></div>
+          <div class="slider-line"><span>घुमाव</span><input type="range" id="wm-rot" min="-90" max="90" value="-30"><output id="o-rot">-30°</output></div>
+        </div>
+        <div class="panel">
+          <h4>दो परतें — दोनों साथ चल सकती हैं</h4>
+
+          <label class="radio-line" style="margin-top:6px"><input type="checkbox" id="wm-use-classic" checked> <b>सामान्य वॉटरमार्क</b> — जैसा सबके notes में होता है (तिरछा / जाल)</label>
+          <div id="wm-classic-box" style="margin:8px 0 4px 22px;padding-left:10px;border-left:2px solid rgba(216,178,74,.3)">
+            <div class="row" style="margin-bottom:8px">
+              <label class="radio-line"><input type="radio" name="wm-place" value="tile"> जाल — पूरे पेज पर</label>
+              <label class="radio-line"><input type="radio" name="wm-place" value="one" checked> एक जगह</label>
+            </div>
+            <div class="row" id="wm-posrow">
+              <div class="posgrid" id="wm-pos">
+                <button data-p="tl" title="ऊपर-बाएँ"></button><button data-p="tc" title="ऊपर-बीच"></button><button data-p="tr" title="ऊपर-दाएँ"></button>
+                <button data-p="ml" title="बीच-बाएँ"></button><button data-p="c" class="on" title="बीचोंबीच"></button><button data-p="mr" title="बीच-दाएँ"></button>
+                <button data-p="bl" title="नीचे-बाएँ"></button><button data-p="bc" title="नीचे-बीच"></button><button data-p="br" title="नीचे-दाएँ"></button>
+              </div>
+              <input type="checkbox" id="wm-tile" class="hidden">
+            </div>
+            <div class="slider-line" style="margin-top:10px"><span>किनारे से दूरी</span><input type="range" id="wm-margin" min="0" max="20" value="13"><output id="o-margin">13%</output></div>
+            <div class="slider-line"><span>जाल में फ़ासला</span><input type="range" id="wm-gap" min="10" max="200" value="66"><output id="o-gap">66%</output></div>
+            <p class="hint">इसका आकार, गहरापन और घुमाव ऊपर “रूप” में हैं।</p>
+          </div>
+
+          <label class="radio-line" style="margin-top:12px"><input type="checkbox" id="wm-use-lock" checked> 🛡️ <b>पाठ-बंध</b> — कुछ छापें सीधे text-लाइनों पर (असली सुरक्षा)</label>
+          <div id="wm-lock-box" style="margin:8px 0 4px 22px;padding-left:10px;border-left:2px solid rgba(216,178,74,.3)">
+            <div class="slider-line"><span>कितनी छापें</span><input type="range" id="wm-lockn" min="2" max="12" value="3"><output id="o-lockn">3</output></div>
+            <div class="slider-line"><span>इसका गहरापन</span><input type="range" id="wm-lockop" min="4" max="60" value="8"><output id="o-lockop">8%</output></div>
+            <div class="slider-line"><span>इसका आकार</span><input type="range" id="wm-locksz" min="6" max="30" value="8"><output id="o-locksz">8</output></div>
+            <p class="hint">कोई AI इन्हें हटाए तो वहीं की पंक्ति धुँधली-टूटी हो जाती है — चोर की copy में तथ्य ही नष्ट। परखा हुआ: गहरापन 6% पर भी 65% text टूटता है, यानी <b>जितना हल्का चाहो कर लो, सुरक्षा नहीं घटती</b>।</p>
+          </div>
+        </div>
+        <div class="panel">
+          <h4>किन पेजों पर</h4>
+          <div class="row">
+            <label class="radio-line"><input type="radio" name="wm-pg" value="all" checked> सभी</label>
+            <label class="radio-line"><input type="radio" name="wm-pg" value="odd"> विषम</label>
+            <label class="radio-line"><input type="radio" name="wm-pg" value="even"> सम</label>
+            <label class="radio-line"><input type="radio" name="wm-pg" value="custom"> रेंज</label>
+            <input type="text" id="wm-range" placeholder="1-3, 7" style="width:110px">
+          </div>
+        </div>
+        <div class="panel">
+          <h4>कैसे लगे</h4>
+          <label class="radio-line"><input type="radio" name="wm-mode" value="perm" checked> स्थायी — वॉटरमार्क पिक्सेल में fuse; नीचे की सुरक्षा भी इसी में चलती है (सिफ़ारिशी)</label>
+          <label class="radio-line" style="margin-top:8px"><input type="radio" name="wm-mode" value="layer"> साधारण — फ़ाइल हल्की, टेक्स्ट select रहेगा (सुरक्षा कम)</label>
+          <div class="row" style="margin-top:10px" id="wm-qualrow"><label class="f">स्थायी गुणवत्ता</label><select id="wm-qual"><option value="2">उच्च (2x)</option><option value="1.5" selected>संतुलित (1.5x)</option><option value="1.2">हल्की फ़ाइल (1.2x)</option></select></div>
+          <p class="hint warn" style="margin-top:8px">स्थायी मोड में पेज फोटो जैसा बन जाता है — टेक्स्ट select/copy नहीं होगा। यही उसकी ताक़त भी है।</p>
+        </div>
+        <div class="panel" id="wm-secure">
+          <h4>छिपी सुरक्षा — असली रखवाली यही है</h4>
+          <label class="radio-line"><input type="checkbox" id="wm-sec-on" checked> चालू रखो — पेज में एक अदृश्य छाप गड़ जाती है (आँख से बिलकुल नहीं दिखती, content पर असर शून्य)। कोई तुम्हारा वॉटरमार्क मिटा भी दे, तो नीचे “चोरी की जाँच” में डालते ही फ़ाइल तुम्हारी साबित हो जाती है।</label>
+          <div class="row" style="margin-top:8px"><label class="f">गुप्त कुंजी</label><input type="text" id="wm-sec-key" value="BODHI" style="width:120px"></div>
+          <p class="hint" style="margin-top:8px">यह “स्थायी” मोड में चलती है और दिखने वाले वॉटरमार्क को ज़रा भी नहीं बदलती — बस साथ में हर पेज को हल्का सा अलग बुनकर सब-पेज-मिलाकर-हटाओ वाली चाल भी तोड़ देती है।</p>
+        </div>
+        <div class="panel" id="wm-footer">
+          <h4>फुटर — उसी बार में लग जाएगा</h4>
+          <label class="radio-line"><input type="checkbox" id="wm-ft-on" checked> हर पेज के नीचे ब्रांडेड फुटर लगाओ (रंग हर slide के निचले हिस्से से हूबहू अपने-आप match होगा — रंगीन slides पर भी; Telegram, YouTube व Gmail पर क्लिक-लिंक)</label>
+          <div id="wm-ft-box" style="margin-top:8px">
+            <div class="row" style="margin-top:6px"><label class="f">ब्रांड</label><input type="text" id="wm-ft-brand" value="BODHI CLASSES" style="flex:1;min-width:130px"></div>
+            <div class="row" style="margin-top:8px"><label class="f">Prepared by</label><input type="text" id="wm-ft-name" value="Aditya Chauhan" style="flex:1;min-width:130px"></div>
+            <div class="row" style="margin-top:8px"><label class="f">Telegram</label><input type="text" id="wm-ft-tg" value="t.me/bodhiclassesupsc" style="flex:1;min-width:130px"></div>
+            <div class="row" style="margin-top:8px"><label class="f">YouTube</label><input type="text" id="wm-ft-yt" value="@BodhiClasses" style="flex:1;min-width:130px"></div>
+            <div class="row" style="margin-top:8px"><label class="f">Gmail</label><input type="text" id="wm-ft-gm" value="aditya31chauhan@gmail.com" style="flex:1;min-width:130px"></div>
+            <div class="slider-line" style="margin-top:10px"><span>फुटर की ऊँचाई</span><input type="range" id="wm-ft-h" min="28" max="90" value="48"><output id="o-ft-h">4.8%</output></div>
+            <div class="slider-line"><span>अक्षर का आकार</span><input type="range" id="wm-ft-t" min="75" max="150" value="100"><output id="o-ft-t">100%</output></div>
+            <label class="radio-line" style="margin-top:8px"><input type="checkbox" id="wm-ft-links" checked> क्लिक-लिंक चालू</label>
+            <p class="hint" style="margin-top:8px">अब दो बार काम नहीं — वॉटरमार्क और फुटर एक ही डाउनलोड में। फुटर वॉटरमार्क के ऊपर बैठता है, इसलिए साफ़ पढ़ा जाता है।</p>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="row"><label class="f">नाम</label><input type="text" id="wm-name" value="bodhi-watermarked" style="flex:1;min-width:130px"></div>
+          <div class="row" style="margin-top:10px"><button class="btn" id="wm-go" style="width:100%;justify-content:center">वॉटरमार्क + फुटर लगाकर डाउनलोड करो</button></div>
+        </div>
+        <div class="panel" id="wm-detect">
+          <h4>चोरी की जाँच</h4>
+          <p class="hint" style="margin-top:2px">तुम्हारी slide कहीं घूमती मिले तो उसकी तस्वीर यहाँ डालो। “जाँचो” गुप्त कुंजी से छिपा कोड परखता है; “छाया दिखाओ” छिपी छाप को जगमगाकर दिखाता है — वॉटरमार्क मिटाया गया हो तो भी। बिना काटी तस्वीर पर सबसे भरोसेमंद।</p>
+          <div class="row" style="margin-top:10px"><button class="btn ghost small" id="wm-dt-pick">तस्वीर चुनो</button><span class="hint" id="wm-dt-name">कोई फ़ाइल नहीं</span></div>
+          <input type="file" id="wm-dt-file" class="hidden" accept="image/*">
+          <div class="row" style="margin-top:8px"><label class="f">गुप्त कुंजी</label><input type="text" id="wm-dt-key" value="BODHI" style="width:120px"><button class="btn small" id="wm-dt-go">जाँचो</button><button class="btn ghost small" id="wm-dt-ghost">छाया दिखाओ</button></div>
+          <div class="hint" id="wm-dt-res" style="margin-top:8px"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= IMAGE ================= -->
+<section class="view" id="view-img">
+  <h2 class="vt">इमेज साइज़ / कंप्रेस</h2>
+  <p class="vd">फोटो छोटी करो, KB घटाओ, फ़ॉर्मैट बदलो — और सबसे काम की चीज़: “लक्ष्य KB” मोड, जो फोटो को ठीक उतने KB में उतार देता है जितना फ़ॉर्म माँगता है।</p>
+  <div class="dropzone" id="im-drop"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="m4 18 5-5 3 3 4-4 4 4"/></svg><div class="dz1">फोटो यहाँ छोड़ो या टैप करो</div><div class="dz2">JPG · PNG · WebP — एक साथ कई</div></div>
+  <input type="file" id="im-file" class="hidden" multiple accept="image/*">
+  <div id="im-body" class="hidden">
+    <div class="panel">
+      <h4>आकार</h4>
+      <div class="row">
+        <label class="radio-line"><input type="radio" name="im-rs" value="none" checked> जैसा है</label>
+        <label class="radio-line"><input type="radio" name="im-rs" value="pct"> प्रतिशत</label>
+        <label class="radio-line"><input type="radio" name="im-rs" value="wh"> चौड़ाई / ऊँचाई</label>
+      </div>
+      <div class="slider-line" id="im-pctrow" style="margin-top:10px;display:none"><span>प्रतिशत</span><input type="range" id="im-pct" min="5" max="100" value="50"><output id="o-impct">50%</output></div>
+      <div class="row" id="im-whrow" style="margin-top:10px;display:none">
+        <label class="f">चौड़ाई px</label><input type="number" id="im-w" min="1" placeholder="जैसे 800">
+        <label class="f">ऊँचाई px</label><input type="number" id="im-h" min="1" placeholder="खाली छोड़ो">
+        <label class="radio-line"><input type="checkbox" id="im-lock" checked> अनुपात बनाए रखो</label>
+      </div>
+    </div>
+    <div class="panel">
+      <h4>कंप्रेशन</h4>
+      <div class="row">
+        <label class="radio-line"><input type="radio" name="im-cm" value="q" checked> गुणवत्ता से</label>
+        <label class="radio-line"><input type="radio" name="im-cm" value="kb"> लक्ष्य KB से</label>
+      </div>
+      <div class="slider-line" id="im-qrow" style="margin-top:10px"><span>गुणवत्ता</span><input type="range" id="im-q" min="10" max="100" value="80"><output id="o-imq">80%</output></div>
+      <div id="im-kbrow" style="margin-top:10px;display:none">
+        <div class="row"><label class="f">लक्ष्य</label><input type="number" id="im-kb" value="50" min="5"><label class="f">KB</label>
+          <button class="preset" data-kb="20">20 KB — हस्ताक्षर</button>
+          <button class="preset" data-kb="50">50 KB — फोटो</button>
+          <button class="preset" data-kb="100">100 KB</button>
+          <button class="preset" data-kb="200">200 KB</button>
+        </div>
+        <p class="hint" style="margin-top:6px">फ़ॉर्म-अपलोड के लिए बना है — गुणवत्ता अपने-आप ऐसी बैठेगी कि साइज़ लक्ष्य के अंदर रहे।</p>
+      </div>
+      <div class="row" style="margin-top:10px"><label class="f">फ़ॉर्मैट</label><select id="im-fmt"><option value="keep">जो है वही</option><option value="jpeg">JPG</option><option value="png">PNG</option><option value="webp">WebP</option></select><span class="hint" id="im-est"></span></div>
+    </div>
+    <div class="row" style="margin-top:14px"><button class="btn" id="im-go">सब पर लागू करो</button><button class="btn ghost hidden" id="im-zip">सब ZIP में डाउनलोड</button></div>
+    <div class="imglist" id="im-list"></div>
+  </div>
+</section>
+
+<!-- ================= IMG TO PDF ================= -->
+<section class="view" id="view-i2p">
+  <h2 class="vt">इमेज → PDF</h2>
+  <p class="vd">फोटो चुनो, ⠿ से क्रम सजाओ, पेज-साइज़ तय करो — एक साफ़-सुथरी PDF तैयार।</p>
+  <div class="dropzone" id="ip-drop"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.7"/><path d="m4 18 5-5 3 3 4-4 4 4"/></svg><div class="dz1">फोटो यहाँ छोड़ो या टैप करो</div><div class="dz2">जिस क्रम में सजाओगे, उसी क्रम में पेज बनेंगे</div></div>
+  <input type="file" id="ip-file" class="hidden" multiple accept="image/*">
+  <div id="ip-body" class="hidden">
+    <div class="flist" id="ip-list"></div>
+    <div class="panel">
+      <div class="row">
+        <label class="f">पेज</label><select id="ip-size"><option value="a4" selected>A4</option><option value="letter">Letter</option><option value="img">इमेज के आकार का</option></select>
+        <label class="f">दिशा</label><select id="ip-orient"><option value="auto" selected>अपने-आप</option><option value="p">खड़ा</option><option value="l">लेटा</option></select>
+        <label class="f">हाशिया (mm)</label><input type="number" id="ip-margin" value="10" min="0" max="40">
+      </div>
+      <div class="slider-line" style="margin-top:10px"><span>गुणवत्ता</span><input type="range" id="ip-q" min="40" max="100" value="85"><output id="o-ipq">85%</output></div>
+      <div class="row" style="margin-top:12px"><label class="f">नाम</label><input type="text" id="ip-name" value="bodhi-images" style="min-width:150px"><button class="btn" id="ip-go">PDF बनाओ</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PDF TO IMG ================= -->
+<section class="view" id="view-p2i">
+  <h2 class="vt">PDF → इमेज</h2>
+  <p class="vd">हर पेज साफ़ इमेज में — नोट्स को स्टेटस, पोस्ट या थंबनेल बनाने के लिए बढ़िया।</p>
+  <div class="dropzone" id="pi-drop"><svg viewBox="0 0 24 24"><path d="M12 16V5M7 10l5-5 5 5"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg><div class="dz1">PDF यहाँ छोड़ो या टैप करो</div><div class="dz2">एक से ज़्यादा पेज हों तो ZIP मिलेगी</div></div>
+  <input type="file" id="pi-file" class="hidden" accept="application/pdf">
+  <div id="pi-body" class="hidden">
+    <div class="fileinfo" id="pi-info"></div>
+    <div class="panel"><div class="row">
+      <label class="f">गुणवत्ता</label><select id="pi-scale"><option value="1">सामान्य (1x)</option><option value="2" selected>तेज़-धार (2x)</option><option value="3">प्रिंट (3x)</option></select>
+      <label class="f">फ़ॉर्मैट</label><select id="pi-fmt"><option value="jpeg" selected>JPG</option><option value="png">PNG</option></select>
+      <label class="f">पेज</label><input type="text" id="pi-range" placeholder="खाली = सभी" style="width:130px">
+      <button class="btn" id="pi-go">इमेज बनाओ</button>
+    </div></div>
+  </div>
+</section>
+
+<!-- ================= SCANNER ================= -->
+<section class="view" id="view-scan">
+  <h2 class="vt">स्कैनर</h2>
+  <p class="vd">कैमरे से खींचो या फोटो चुनो — क्रॉप, घुमाव और “श्याम-श्वेत जादू” फ़िल्टर से काग़ज़ स्कैनर-जैसा साफ़। पेज जोड़ते जाओ, अंत में एक PDF।</p>
+  <div class="row">
+    <button class="btn" id="sc-cam">📷 कैमरे से खींचो</button>
+    <button class="btn ghost" id="sc-pick">गैलरी से चुनो</button>
+  </div>
+  <input type="file" id="sc-file-cam" class="hidden" accept="image/*" capture="environment">
+  <input type="file" id="sc-file" class="hidden" accept="image/*">
+  <div id="sc-body" class="hidden" style="margin-top:14px">
+    <div class="sc-stage"><div class="sc-wrap" id="sc-wrap"><canvas id="sc-canvas"></canvas><div class="cropbox" id="sc-crop"></div></div></div>
+    <div class="panel" style="margin-top:12px">
+      <h4>फ़िल्टर</h4>
+      <div class="filterchips" id="sc-filters">
+        <button class="fchip on" data-f="orig">मूल</button>
+        <button class="fchip" data-f="bright">उजला</button>
+        <button class="fchip" data-f="gray">ग्रे</button>
+        <button class="fchip" data-f="bw">श्याम-श्वेत जादू</button>
+      </div>
+      <div class="slider-line" style="margin-top:12px"><span>चमक</span><input type="range" id="sc-br" min="-60" max="60" value="0"><output id="o-scbr">0</output></div>
+      <div class="slider-line"><span>कंट्रास्ट</span><input type="range" id="sc-ct" min="-60" max="60" value="0"><output id="o-scct">0</output></div>
+      <div class="row" style="margin-top:12px">
+        <button class="btn ghost small" id="sc-rot">↻ घुमाओ</button>
+        <button class="btn ghost small" id="sc-cropgo">क्रॉप लागू करो</button>
+        <button class="btn ghost small" id="sc-reset">रीसेट</button>
+      </div>
+      <p class="hint" style="margin-top:8px">क्रॉप: तस्वीर पर उँगली/माउस से डिब्बा खींचो, फिर “क्रॉप लागू करो” दबाओ।</p>
+      <div class="row" style="margin-top:12px"><button class="btn" id="sc-addpg">+ इस पेज को जोड़ो</button></div>
+    </div>
+    <div class="sc-pages" id="sc-pages"></div>
+    <div class="panel" style="margin-top:12px"><div class="row"><label class="f">नाम</label><input type="text" id="sc-name" value="bodhi-scan" style="min-width:150px"><button class="btn" id="sc-pdf">📄 सारे पेजों की PDF</button></div></div>
+  </div>
+</section>
+
+<!-- ================= COMPRESS PDF ================= -->
+<section class="view" id="view-cpdf">
+  <h2 class="vt">PDF कंप्रेस</h2>
+  <p class="vd">भारी PDF को Telegram/WhatsApp पर बाँटने-लायक हल्का करो। पेज इमेज में बदलकर दबाए जाते हैं — नोट्स और स्कैन के लिए एकदम सही।</p>
+  <div class="dropzone" id="cp-drop"><svg viewBox="0 0 24 24"><path d="M12 16V5M7 10l5-5 5 5"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg><div class="dz1">PDF यहाँ छोड़ो या टैप करो</div><div class="dz2">पहले-बाद का साइज़ सामने दिखेगा</div></div>
+  <input type="file" id="cp-file" class="hidden" accept="application/pdf">
+  <div id="cp-body" class="hidden">
+    <div class="fileinfo" id="cp-info"></div>
+    <div class="panel">
+      <label class="radio-line"><input type="radio" name="cp-lv" value="light"> हल्का — गुणवत्ता लगभग जस की तस</label>
+      <label class="radio-line" style="margin-top:8px"><input type="radio" name="cp-lv" value="mid" checked> संतुलित — पढ़ने में साफ़, साइज़ काफ़ी कम</label>
+      <label class="radio-line" style="margin-top:8px"><input type="radio" name="cp-lv" value="max"> अधिकतम — सबसे छोटी फ़ाइल</label>
+      <p class="hint warn" style="margin-top:10px">कंप्रेस के बाद टेक्स्ट select नहीं होगा (पेज फोटो बन जाते हैं)।</p>
+      <div class="row" style="margin-top:12px"><label class="f">नाम</label><input type="text" id="cp-name" value="bodhi-compressed" style="min-width:150px"><button class="btn" id="cp-go">कंप्रेस करो</button></div>
+    </div>
+    <div class="resultbox" id="cp-result"><h4>✔ हो गया</h4><div class="stat"></div></div>
+  </div>
+</section>
+
+<!-- ================= PAGE NUMBERS ================= -->
+<section class="view" id="view-pnum">
+  <h2 class="vt">पेज नंबर + फ़ुटर</h2>
+  <p class="vd">जहाँ चाहो वहाँ नंबर — कोने, बीच, ऊपर, नीचे; कवर वग़ैरह शुरुआती पेज छोड़ने की सुविधा भी। साथ में हर पेज पर अपनी फ़ुटर-लाइन (हिंदी में भी) — चैनल/टेलीग्राम की छाप एक ही बार में।</p>
+  <div class="dropzone" id="pn-drop"><svg viewBox="0 0 24 24"><path d="M12 16V5M7 10l5-5 5 5"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg><div class="dz1">PDF यहाँ छोड़ो या टैप करो</div><div class="dz2">नंबर की जगह, आकार, रंग — सब आपके हाथ</div></div>
+  <input type="file" id="pn-file" class="hidden" accept="application/pdf">
+  <div id="pn-body" class="hidden">
+    <div class="fileinfo" id="pn-info"></div>
+    <div class="panel">
+      <div class="row">
+        <label class="f">जगह</label><select id="pn-pos"><option value="bc" selected>नीचे बीच</option><option value="bl">नीचे बाएँ</option><option value="br">नीचे दाएँ</option><option value="tc">ऊपर बीच</option><option value="tl">ऊपर बाएँ</option><option value="tr">ऊपर दाएँ</option></select>
+        <label class="f">ढंग</label><select id="pn-fmt"><option value="#" selected>1</option><option value="# / N">1 / N</option><option value="- # -">- 1 -</option><option value="Page # of N">Page 1 of N</option></select>
+        <label class="f">आकार</label><input type="number" id="pn-size" value="11" min="6" max="36">
+      </div>
+      <div class="row" style="margin-top:10px">
+        <label class="f">गिनती शुरू</label><input type="number" id="pn-start" value="1" min="0">
+        <label class="f">शुरू के इतने पेज छोड़ो</label><input type="number" id="pn-skip" value="0" min="0">
+        <label class="f">रंग</label><input type="color" id="pn-color" value="#333333">
+      </div>
+      <div class="row" style="margin-top:14px">
+        <label class="f">फ़ुटर-लाइन (हिंदी चलेगी)</label>
+        <input type="text" id="pn-ftext" placeholder="बोधि क्लासेस · t.me/bodhiclassesupsc" style="flex:1;min-width:180px">
+      </div>
+      <div class="row" style="margin-top:10px">
+        <label class="f">फ़ुटर जगह</label><select id="pn-fpos"><option value="bl" selected>नीचे बाएँ</option><option value="bc">नीचे बीच</option><option value="br">नीचे दाएँ</option><option value="tl">ऊपर बाएँ</option><option value="tc">ऊपर बीच</option><option value="tr">ऊपर दाएँ</option></select>
+        <label class="f">आकार</label><input type="number" id="pn-fsize" value="9" min="6" max="24">
+        <label class="f">रंग</label><input type="color" id="pn-fcolor" value="#8f7a3a">
+      </div>
+      <p class="hint" style="margin-top:8px">फ़ुटर उन्हीं पेजों पर छपेगा जिन पर नंबर छपता है (छोड़े गए शुरुआती पेजों पर नहीं)। ख़ाली छोड़ोगे तो सिर्फ़ नंबर लगेंगे। नंबर और फ़ुटर की जगह अलग-अलग रखना, वरना एक-दूसरे पर चढ़ जाएँगे।</p>
+      <div class="row" style="margin-top:12px"><label class="f">नाम</label><input type="text" id="pn-name" value="bodhi-numbered" style="min-width:150px"><button class="btn" id="pn-go">लगाकर डाउनलोड करो</button></div>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer>
+  <div class="priv">🔒 सारा काम आपके ब्राउज़र के अंदर होता है — कोई फ़ाइल किसी सर्वर पर नहीं जाती।</div>
+  <div>बोधि क्लासेस · <a href="https://t.me/bodhiclassesupsc" target="_blank" rel="noopener">Telegram</a> · <a href="https://youtube.com/@BodhiClasses" target="_blank" rel="noopener">YouTube @BodhiClasses</a> · <span style="opacity:.55">इंजन v2 — बड़ी-फ़ाइल + मरम्मत</span></div>
+</footer>
+<div id="busy"><div class="busybox"><div class="flame"></div><div id="busy-text">काम चल रहा है…</div><div id="busy-sub"></div><div class="pbar"><i id="busy-bar"></i></div></div></div>
+<div id="toast"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>
+'use strict';
+pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+var PDFDocument=PDFLib.PDFDocument, StandardFonts=PDFLib.StandardFonts, degrees=PDFLib.degrees, rgb=PDFLib.rgb;
+function $(s){return document.querySelector(s);}
+function $$(s){return Array.from(document.querySelectorAll(s));}
+
+/* ================= toast / busy ================= */
+var toastT=null;
+function toast(msg,type){var t=$('#toast');t.textContent=msg;t.className='show'+(type?' '+type:'');clearTimeout(toastT);toastT=setTimeout(function(){t.className='';},3600);}
+function showBusy(txt){$('#busy-text').textContent=txt||'काम चल रहा है…';$('#busy-sub').textContent='';$('#busy-bar').style.width='0%';$('#busy').classList.add('show');}
+function setBusy(sub,pct){if(sub!=null)$('#busy-sub').textContent=sub;if(pct!=null)$('#busy-bar').style.width=Math.min(100,Math.round(pct))+'%';}
+function hideBusy(){$('#busy').classList.remove('show');}
+function tick(){return new Promise(function(r){setTimeout(r,0);});}
+
+/* ================= utils ================= */
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function fmtBytes(n){if(n<1024)return n+' B';if(n<1048576)return (n/1024).toFixed(1)+' KB';return (n/1048576).toFixed(2)+' MB';}
+function dl(blob,name){var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},40000);}
+function readBytes(file){return file.arrayBuffer().then(function(b){return new Uint8Array(b);});}
+function pdfjsLoad(bytes){return pdfjsLib.getDocument({data:bytes.slice()}).promise;}
+/* transfer-mode: bytes की कॉपी नहीं बनती, सीधे worker को चली जाती हैं — बड़ी फ़ाइलों में मेमोरी आधी */
+function pdfjsLoadT(bytes){return pdfjsLib.getDocument({data:bytes}).promise;}
+function libLoad(bytes){return PDFDocument.load(bytes,{ignoreEncryption:true});}
+/* फ़ाइल को हल्के-से खोलकर पेज-गिनती + लॉक(एन्क्रिप्शन) जाँचो, फिर तुरंत मेमोरी छोड़ दो */
+async function probePdf(file){
+  var bytes=await readBytes(file);
+  var jd=await pdfjsLoadT(bytes);
+  var n=jd.numPages;
+  var perms=null;
+  try{perms=await jd.getPermissions();}catch(_){}
+  try{await jd.destroy();}catch(_){}
+  return {n:n, enc:(perms!==null)};
+}
+/* मरम्मत-मोड: बिगड़ी/लॉक PDF के पेजों को तस्वीर बनाकर नई PDF में जोड़ो (pdf.js सहनशील है, pdf-lib नहीं) */
+async function rasterizeAppend(out,file,label,doneBefore,totalPages){
+  var bytes=await readBytes(file);
+  var jd=await pdfjsLoadT(bytes);
+  var n=jd.numPages;
+  for(var p=1;p<=n;p++){
+    setBusy(label+' (मरम्मत) — पेज '+p+'/'+n, totalPages?(((doneBefore+p)/totalPages)*100):null);
+    var c=await renderPageCanvas(jd,p,1.5);
+    var jb=await canvasBlob(c,'image/jpeg',0.85);
+    var emb=await out.embedJpg(await blobBytes(jb));
+    var pj=await jd.getPage(p);
+    var vp1=pj.getViewport({scale:1});
+    var pg=out.addPage([vp1.width,vp1.height]);
+    pg.drawImage(emb,{x:0,y:0,width:vp1.width,height:vp1.height});
+    c.width=1;c.height=1;
+    await tick();
+  }
+  try{await jd.destroy();}catch(_){}
+  return n;
+}
+function canvasBlob(c,mime,q){return new Promise(function(res){c.toBlob(function(b){res(b);},mime,q);});}
+function blobBytes(b){return b.arrayBuffer().then(function(x){return new Uint8Array(x);});}
+function dataURLBytes(u){var b=atob(u.split(',')[1]);var a=new Uint8Array(b.length);for(var i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a;}
+function saneName(s,fb){s=(s||'').trim();return s?s.replace(/[\\/:*?"<>|]+/g,'-'):fb;}
+function parseRanges(str,n){
+  var out=[];var parts=String(str||'').split(',');
+  for(var k=0;k<parts.length;k++){
+    var t=parts[k].trim();if(!t)continue;
+    var m=t.match(/^(\d+)\s*-\s*(\d+)$/);
+    if(m){var a=+m[1],b=+m[2];if(a>b){var x=a;a=b;b=x;}if(a<1||b>n)throw new Error('range');var arr=[];for(var i=a;i<=b;i++)arr.push(i-1);out.push(arr);}
+    else if(/^\d+$/.test(t)){var v=+t;if(v<1||v>n)throw new Error('range');out.push([v-1]);}
+    else throw new Error('range');
+  }
+  if(!out.length)throw new Error('range');
+  return out;
+}
+function normRot(a){return ((a%360)+360)%360;}
+function viewerSize(page){var r=normRot(page.getRotation().angle);var s=page.getSize();return (r===90||r===270)?{vw:s.height,vh:s.width}:{vw:s.width,vh:s.height};}
+function uprightPlace(page,vx,vy){
+  var r=normRot(page.getRotation().angle);var s=page.getSize();
+  if(r===90)return{x:s.width-vy,y:vx,rotate:degrees(90)};
+  if(r===180)return{x:s.width-vx,y:s.height-vy,rotate:degrees(180)};
+  if(r===270)return{x:vy,y:s.height-vx,rotate:degrees(270)};
+  return{x:vx,y:vy,rotate:degrees(0)};
+}
+function hexToRgb01(h){var v=h.replace('#','');return rgb(parseInt(v.substr(0,2),16)/255,parseInt(v.substr(2,2),16)/255,parseInt(v.substr(4,2),16)/255);}
+async function renderPageCanvas(doc,num,scale){
+  var p=await doc.getPage(num);
+  var vp=p.getViewport({scale:scale});
+  var MAX=16000000;
+  if(vp.width*vp.height>MAX){var kk=Math.sqrt(MAX/(vp.width*vp.height));vp=p.getViewport({scale:scale*kk});}
+  var c=document.createElement('canvas');
+  c.width=Math.max(1,Math.floor(vp.width));c.height=Math.max(1,Math.floor(vp.height));
+  await p.render({canvasContext:c.getContext('2d'),viewport:vp}).promise;
+  return c;
+}
+async function thumbForPdfPage(jd,i){
+  var p=await jd.getPage(i);
+  var vp1=p.getViewport({scale:1});
+  var sc=180/vp1.width;
+  var vp=p.getViewport({scale:sc});
+  var c=document.createElement('canvas');
+  c.width=Math.max(1,Math.floor(vp.width));c.height=Math.max(1,Math.floor(vp.height));
+  await p.render({canvasContext:c.getContext('2d'),viewport:vp}).promise;
+  return c.toDataURL('image/jpeg',0.75);
+}
+function rotateDataUrl(url,rot){
+  return new Promise(function(res){
+    if(!normRot(rot)){res(url);return;}
+    var im=new Image();
+    im.onload=function(){
+      var r=normRot(rot);var c=document.createElement('canvas');
+      if(r===90||r===270){c.width=im.height;c.height=im.width;}else{c.width=im.width;c.height=im.height;}
+      var x=c.getContext('2d');x.translate(c.width/2,c.height/2);x.rotate(r*Math.PI/180);x.drawImage(im,-im.width/2,-im.height/2);
+      res(c.toDataURL('image/jpeg',0.82));
+    };
+    im.src=url;
+  });
+}
+function loadImg(src){return new Promise(function(res,rej){var im=new Image();im.onload=function(){res(im);};im.onerror=rej;im.src=src;});}
+async function imgBytesToJpeg(bytes,mime){
+  var url=URL.createObjectURL(new Blob([bytes],{type:mime||'image/*'}));
+  var im=await loadImg(url);URL.revokeObjectURL(url);
+  var c=document.createElement('canvas');c.width=im.width;c.height=im.height;
+  var x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(im,0,0);
+  var b=await canvasBlob(c,'image/jpeg',0.9);
+  return {bytes:await blobBytes(b),w:im.width,h:im.height};
+}
+function friendlyErr(e){
+  console.error(e);
+  var m=String((e&&e.message)||e);
+  if(/password/i.test(m))return 'यह PDF पासवर्ड माँगती है — पहले पासवर्ड हटाकर लाओ।';
+  if(/encrypt/i.test(m))return 'यह PDF लॉक है — “जोड़ो” टूल में अकेले डालकर मरम्मत-कॉपी बना लो, फिर वह चलेगी।';
+  if(/allocation|out of memory|RangeError|Array buffer|Invalid typed array length/i.test(m))return 'ब्राउज़र की मेमोरी कम पड़ गई — फ़ाइल बहुत बड़ी है। दूसरे टैब बंद करके दोबारा कोशिश करो, या पहले “PDF कंप्रेस” से हल्की बना लो।';
+  if(/Failed to parse|Expected instance|Trying to parse invalid|No PDF header|not a PDF/i.test(m))return 'यह PDF अंदर से बिगड़ी हुई है — “जोड़ो” टूल में मरम्मत-मोड चालू रखकर इसे डालो, वह इसे सुधारकर नई कॉपी बना देगा।';
+  return 'कुछ गड़बड़ हुई: '+m;
+}
+function bindDrop(zoneSel,inputSel,onFiles){
+  var z=$(zoneSel),inp=$(inputSel);
+  z.addEventListener('click',function(){inp.click();});
+  inp.addEventListener('change',function(){if(inp.files.length)onFiles(Array.from(inp.files));inp.value='';});
+  ['dragover','dragenter'].forEach(function(ev){z.addEventListener(ev,function(e){e.preventDefault();z.classList.add('hover');});});
+  ['dragleave','drop'].forEach(function(ev){z.addEventListener(ev,function(e){e.preventDefault();z.classList.remove('hover');});});
+  z.addEventListener('drop',function(e){var fs=Array.from((e.dataTransfer&&e.dataTransfer.files)||[]);if(fs.length)onFiles(fs);});
+}
+function bindOut(id,outId,suf,cb){
+  var el=$(id),o=$(outId);
+  function f(){o.textContent=el.value+(suf||'');}
+  el.addEventListener('input',function(){f();if(cb)cb();});
+  f();
+}
+function makeSortable(container,itemSel,handleSel,horizontal,onDone){
+  container.addEventListener('pointerdown',function(e){
+    var h=e.target.closest(handleSel);if(!h)return;
+    var item=h.closest(itemSel);if(!item||!container.contains(item))return;
+    e.preventDefault();
+    var r=item.getBoundingClientRect();
+    var ghost=item.cloneNode(true);
+    ghost.style.position='fixed';ghost.style.left=r.left+'px';ghost.style.top=r.top+'px';
+    ghost.style.width=r.width+'px';ghost.style.zIndex='999';ghost.style.pointerEvents='none';
+    ghost.style.opacity='.92';ghost.style.margin='0';ghost.style.transform='scale(1.04) rotate(1.5deg)';
+    ghost.style.boxShadow='0 18px 40px rgba(4,10,26,.5)';
+    document.body.appendChild(ghost);
+    item.classList.add('drag-src');
+    var dx=e.clientX-r.left, dy=e.clientY-r.top;
+    function move(ev){
+      ghost.style.left=(ev.clientX-dx)+'px';ghost.style.top=(ev.clientY-dy)+'px';
+      var el=document.elementFromPoint(ev.clientX,ev.clientY);
+      var over=el&&el.closest(itemSel);
+      if(over&&over!==item&&container.contains(over)){
+        var or=over.getBoundingClientRect();
+        var before=horizontal?(ev.clientX<or.left+or.width/2):(ev.clientY<or.top+or.height/2);
+        container.insertBefore(item,before?over:over.nextSibling);
+      }
+    }
+    function up(){
+      document.removeEventListener('pointermove',move);
+      document.removeEventListener('pointerup',up);
+      ghost.remove();item.classList.remove('drag-src');
+      if(onDone)onDone();
+    }
+    document.addEventListener('pointermove',move);
+    document.addEventListener('pointerup',up);
+  });
+}
+function bindTabs(viewId){
+  $$('#'+viewId+' .tab').forEach(function(b){
+    b.addEventListener('click',function(){
+      b.parentElement.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on');});
+      b.classList.add('on');
+      var view=b.closest('.view');
+      view.querySelectorAll('.tabpane').forEach(function(p){p.classList.remove('on');});
+      var pane=view.querySelector('#'+b.dataset.t);
+      if(pane)pane.classList.add('on');
+      if(b.dataset.t==='sp-pick')SP.ensureThumbs();
+    });
+  });
+}
+
+/* ================= router ================= */
+function go(id){
+  $$('.view').forEach(function(v){v.classList.toggle('active',v.id===id);});
+  $('#backbtn').classList.toggle('show',id!=='view-home');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+$$('.tcard').forEach(function(c){c.addEventListener('click',function(){go(c.dataset.view);});});
+$('#backbtn').addEventListener('click',function(){go('view-home');});
+window.addEventListener('dragover',function(e){e.preventDefault();});
+window.addEventListener('drop',function(e){e.preventDefault();});
+
+/* ================= 1. पेज स्टूडियो ================= */
+function newPageState(){return {srcs:[],pages:[],colors:['#D8B24A','#6FA8FF','#7BD09A','#F08A8A','#C79BF0','#FFB86B'],ci:0,dirty:false};}
+var ST=newPageState();
+function stUid(){return 'p'+Math.random().toString(36).slice(2,9);}
+$('#st-add').addEventListener('click',function(){$('#st-file').click();});
+$('#st-file').addEventListener('change',function(e){var fs=Array.from(e.target.files);e.target.value='';if(fs.length)stAdd(fs);});
+(function(){
+  var z=$('#view-studio');
+  ['dragover','dragenter'].forEach(function(ev){z.addEventListener(ev,function(e){e.preventDefault();});});
+  z.addEventListener('drop',function(e){e.preventDefault();var fs=Array.from((e.dataTransfer&&e.dataTransfer.files)||[]);if(fs.length)stAdd(fs);});
+})();
+async function pagesAdd(S,files){
+  showBusy('फ़ाइलें खुल रही हैं…');
+  for(var fi=0;fi<files.length;fi++){
+    var f=files[fi];
+    try{
+      if(f.type==='application/pdf'||/\.pdf$/i.test(f.name)){
+        var bytes=await readBytes(f);
+        var jd=await pdfjsLoadT(bytes); /* bytes सीधे worker को — कॉपी नहीं */
+        bytes=null;
+        var perms=null;try{perms=await jd.getPermissions();}catch(_){}
+        var color=S.colors[S.ci++ % S.colors.length];
+        var sid='s'+S.srcs.length;
+        /* jd/ld पकड़कर नहीं बैठते — सिर्फ़ File का पता रखते हैं, निर्यात पर दोबारा खोलेंगे */
+        S.srcs.push({id:sid,name:f.name,file:f,enc:(perms!==null),color:color});
+        if(perms!==null)toast('🔒 '+f.name+' लॉक है — सेव करते वक़्त पेज तस्वीर बनकर जुड़ेंगे','');
+        var n=jd.numPages;
+        for(var i=1;i<=n;i++){
+          setBusy(f.name+' — पेज '+i+'/'+n,(i/n)*100);
+          var thumb=await thumbForPdfPage(jd,i);
+          S.pages.push({uid:stUid(),type:'pdf',srcId:sid,idx:i-1,rot:0,baseThumb:thumb,thumb:thumb,color:color,sel:false});
+          if(i%4===0)await tick();
+        }
+        try{await jd.destroy();}catch(_){} /* थंबनेल बन गए — worker की मेमोरी छोड़ो */
+      }else if(/^image\//.test(f.type)){
+        var ib=await readBytes(f);
+        var url=URL.createObjectURL(new Blob([ib],{type:f.type}));
+        var im=await loadImg(url);URL.revokeObjectURL(url);
+        var tc=document.createElement('canvas');
+        var sc=Math.min(1,180/im.width);
+        tc.width=Math.max(1,Math.round(im.width*sc));tc.height=Math.max(1,Math.round(im.height*sc));
+        tc.getContext('2d').drawImage(im,0,0,tc.width,tc.height);
+        var th=tc.toDataURL('image/jpeg',0.8);
+        var col2=S.colors[S.ci++ % S.colors.length];
+        S.pages.push({uid:stUid(),type:'img',name:f.name,bytes:ib,mime:f.type,iw:im.width,ih:im.height,rot:0,baseThumb:th,thumb:th,color:col2,sel:false});
+      }else{
+        toast('यह फ़ाइल नहीं चलेगी: '+f.name,'err');
+      }
+    }catch(err){toast(f.name+' — '+friendlyErr(err),'err');}
+    await tick();
+  }
+  hideBusy();
+}
+async function stAdd(files){await pagesAdd(ST,files);stRender();}
+function pagesRender(S,gridSel,onChange,emptyHtml){
+  var g=$(gridSel);g.innerHTML='';
+  if(!S.pages.length){
+    g.innerHTML=emptyHtml;
+    return;
+  }
+  S.pages.forEach(function(p,ix){
+    var d=document.createElement('div');
+    d.className='pcard'+(p.sel?' sel':'');
+    d.dataset.uid=p.uid;
+    d.innerHTML='<div class="pchk">✓</div><span class="srcdot" style="background:'+p.color+'"></span><span class="handle" title="खींचकर क्रम बदलो">⠿</span><div class="pimg"><img src="'+p.thumb+'" alt=""></div><span class="pnum">'+(ix+1)+'</span><div class="pacts"><button class="pico rot" title="घुमाओ">↻</button><button class="pico dup" title="कॉपी">⧉</button><button class="pico del" title="हटाओ">✕</button></div>';
+    d.querySelector('.pchk').addEventListener('click',function(ev){ev.stopPropagation();p.sel=!p.sel;d.classList.toggle('sel',p.sel);});
+    d.querySelector('.pimg').addEventListener('click',function(){p.sel=!p.sel;d.classList.toggle('sel',p.sel);});
+    d.querySelector('.rot').addEventListener('click',async function(ev){
+      ev.stopPropagation();
+      p.rot=(p.rot+90)%360;
+      p.thumb=await rotateDataUrl(p.baseThumb,p.rot);
+      d.querySelector('.pimg img').src=p.thumb;
+    });
+    d.querySelector('.dup').addEventListener('click',function(ev){
+      ev.stopPropagation();
+      var cp=Object.assign({},p,{uid:stUid(),sel:false});
+      S.pages.splice(S.pages.indexOf(p)+1,0,cp);
+      onChange();
+    });
+    d.querySelector('.del').addEventListener('click',function(ev){
+      ev.stopPropagation();
+      S.pages.splice(S.pages.indexOf(p),1);
+      onChange();
+    });
+    g.appendChild(d);
+  });
+}
+var ST_EMPTY='<div class="empty">ऊपर “+ फ़ाइल जोड़ें” दबाओ या फ़ाइलें यहीं खींचकर छोड़ो — PDF और JPG/PNG दोनों चलेंगे।</div>';
+function stRender(){pagesRender(ST,'#st-grid',stRender,ST_EMPTY);}
+makeSortable($('#st-grid'),'.pcard','.handle',true,function(){
+  var order=$$('#st-grid .pcard').map(function(el){return el.dataset.uid;});
+  ST.pages.sort(function(a,b){return order.indexOf(a.uid)-order.indexOf(b.uid);});
+  stRender();
+});
+$('#st-selall').addEventListener('click',function(){ST.pages.forEach(function(p){p.sel=true;});stRender();});
+$('#st-selnone').addEventListener('click',function(){ST.pages.forEach(function(p){p.sel=false;});stRender();});
+$('#st-rev').addEventListener('click',function(){ST.pages.reverse();stRender();});
+$('#st-delsel').addEventListener('click',function(){
+  if(!ST.pages.some(function(p){return p.sel;})){toast('पहले कुछ पेज चुनो');return;}
+  ST.pages=ST.pages.filter(function(p){return !p.sel;});
+  stRender();
+});
+$('#st-rotsel').addEventListener('click',async function(){
+  var sel=ST.pages.filter(function(p){return p.sel;});
+  if(!sel.length){toast('पहले कुछ पेज चुनो');return;}
+  for(var i=0;i<sel.length;i++){
+    sel[i].rot=(sel[i].rot+90)%360;
+    sel[i].thumb=await rotateDataUrl(sel[i].baseThumb,sel[i].rot);
+  }
+  stRender();
+});
+$('#st-zoom').addEventListener('input',function(e){document.documentElement.style.setProperty('--thw',e.target.value+'px');});
+async function buildPagesPdf(srcs,list){
+    var out=await PDFDocument.create();
+    var jobs=list.map(function(p,pos){return {p:p,pos:pos};});
+    var bySrc={};
+    jobs.forEach(function(j){if(j.p.type==='pdf'){(bySrc[j.p.srcId]=bySrc[j.p.srcId]||[]).push(j);}});
+    var fixed=[];
+    for(var sid in bySrc){
+      var src=null;
+      for(var si=0;si<srcs.length;si++)if(srcs[si].id===sid)src=srcs[si];
+      var arr=bySrc[sid];
+      var directOk=false;
+      if(!src.enc){
+        try{
+          setBusy(src.name+' खुल रही है…');
+          var sb=await readBytes(src.file);
+          var ld=await libLoad(sb);
+          sb=null;
+          var copied=await out.copyPages(ld,arr.map(function(j){return j.p.idx;}));
+          arr.forEach(function(j,k){j.copied=copied[k];});
+          ld=null;copied=null; /* स्रोत छोड़ो */
+          directOk=true;
+        }catch(e){console.warn('सीधी कॉपी नहीं बनी, मरम्मत-मोड:',src.name,e);}
+      }
+      if(!directOk){
+        /* लॉक/बिगड़ी फ़ाइल: pdf.js से पेज तस्वीर बनाकर जोड़ेंगे */
+        fixed.push(src.name);
+        var rb=await readBytes(src.file);
+        var rjd=await pdfjsLoadT(rb);rb=null;
+        for(var ri=0;ri<arr.length;ri++){
+          var jj=arr[ri];
+          setBusy(src.name+' (मरम्मत) — पेज '+(ri+1)+'/'+arr.length);
+          var c=await renderPageCanvas(rjd,jj.p.idx+1,1.5);
+          var jb=await canvasBlob(c,'image/jpeg',0.85);
+          var emb=await out.embedJpg(await blobBytes(jb));
+          var pj=await rjd.getPage(jj.p.idx+1);
+          var vp1=pj.getViewport({scale:1});
+          jj.rast={emb:emb,w:vp1.width,h:vp1.height};
+          c.width=1;c.height=1;
+          await tick();
+        }
+        try{await rjd.destroy();}catch(_){}
+      }
+      await tick();
+    }
+    for(var i=0;i<jobs.length;i++){
+      var j=jobs[i];
+      setBusy('पेज '+(i+1)+'/'+jobs.length,((i+1)/jobs.length)*100);
+      if(j.p.type==='pdf'&&j.copied){
+        var pg=j.copied;
+        if(j.p.rot)pg.setRotation(degrees(normRot(pg.getRotation().angle+j.p.rot)));
+        out.addPage(pg);
+      }else if(j.p.type==='pdf'&&j.rast){
+        var pg3=out.addPage([j.rast.w,j.rast.h]);
+        pg3.drawImage(j.rast.emb,{x:0,y:0,width:j.rast.w,height:j.rast.h});
+        if(j.p.rot)pg3.setRotation(degrees(j.p.rot));
+      }else{
+        var bytes=j.p.bytes, iw=j.p.iw, ih=j.p.ih;
+        var isPng=/png/i.test(j.p.mime), isJpg=/jpe?g/i.test(j.p.mime);
+        if(!isPng&&!isJpg){
+          var conv=await imgBytesToJpeg(j.p.bytes,j.p.mime);
+          bytes=conv.bytes;iw=conv.w;ih=conv.h;isPng=false;
+        }
+        var emb=isPng?await out.embedPng(bytes):await out.embedJpg(bytes);
+        var maxPt=792,k=Math.min(1,maxPt/Math.max(iw,ih));
+        var pg2=out.addPage([iw*k,ih*k]);
+        pg2.drawImage(emb,{x:0,y:0,width:iw*k,height:ih*k});
+        if(j.p.rot)pg2.setRotation(degrees(j.p.rot));
+      }
+      if(i%10===0)await tick();
+    }
+    if(fixed.length)toast('🩹 मरम्मत से जुड़ीं: '+fixed.join(', '),'');
+    setBusy('अंतिम फ़ाइल लिखी जा रही है — बड़ी PDF में समय लगता है, रुको…',100);
+    await tick();
+    var outBytes=await out.save();
+    out=null;
+    return {bytes:outBytes,fixed:fixed,count:jobs.length};
+}
+async function stExport(onlySel){
+  var list=onlySel?ST.pages.filter(function(p){return p.sel;}):ST.pages.slice();
+  if(!list.length){toast(onlySel?'कोई पेज चुना ही नहीं':'पहले कुछ फ़ाइलें जोड़ो','err');return;}
+  showBusy('PDF बन रही है…');
+  try{
+    var __r=await buildPagesPdf(ST.srcs,list);
+    var outBytes=__r.bytes, jobs={length:__r.count};
+    dl(new Blob([outBytes],{type:'application/pdf'}),saneName($('#st-name').value,'bodhi-document')+'.pdf');
+    toast('PDF तैयार — '+jobs.length+' पेज ('+fmtBytes(outBytes.length)+')','ok');
+  }catch(e){toast(friendlyErr(e),'err');}
+  hideBusy();
+}
+$('#st-saveall').addEventListener('click',function(){stExport(false);});
+$('#st-savesel').addEventListener('click',function(){stExport(true);});
+
+/* ================= 2. PDF जोड़ें ================= */
+var MG={files:[]};
+bindDrop('#mg-drop','#mg-file',mgAdd);
+async function mgAdd(fs){
+  showBusy('फ़ाइलें जाँची जा रही हैं…');
+  for(var i=0;i<fs.length;i++){
+    var f=fs[i];
+    if(!(f.type==='application/pdf'||/\.pdf$/i.test(f.name))){toast(f.name+' PDF नहीं है','err');continue;}
+    setBusy(f.name,((i+1)/fs.length)*100);
+    try{
+      /* सिर्फ़ पेज-गिनती + लॉक-जाँच — पूरी फ़ाइल मेमोरी में पकड़कर नहीं बैठते */
+      var info=await probePdf(f);
+      MG.files.push({id:'m'+Math.random().toString(36).slice(2,8),name:f.name,file:f,pages:info.n,size:f.size,enc:info.enc});
+      if(info.enc)toast('🔒 '+f.name+' लॉक है — मरम्मत-मोड से जुड़ेगी','');
+    }catch(e){
+      var pw=/password/i.test(String((e&&e.message)||e));
+      if(pw){toast(f.name+' पासवर्ड माँगती है — पहले पासवर्ड हटाओ','err');}
+      else{
+        /* pdf.js भी न खोल पाए तो भी सूची में रखो — मरम्मत की आख़िरी कोशिश merge पर होगी */
+        MG.files.push({id:'m'+Math.random().toString(36).slice(2,8),name:f.name,file:f,pages:0,size:f.size,enc:false,broken:true});
+        toast('⚠ '+f.name+' ठीक से खुली नहीं — जोड़ते वक़्त मरम्मत की कोशिश होगी','');
+      }
+    }
+    await tick();
+  }
+  hideBusy();mgRender();
+}
+function mgRender(){
+  var L=$('#mg-list');L.innerHTML='';
+  MG.files.forEach(function(f,i){
+    var d=document.createElement('div');
+    d.className='frow';d.dataset.id=f.id;
+    var badge=f.enc?' <span title="लॉक PDF — मरम्मत से जुड़ेगी">🔒</span>':(f.broken?' <span title="बिगड़ी PDF — मरम्मत की कोशिश होगी">🩹</span>':'');
+    d.innerHTML='<span class="handle">⠿</span><span class="ordn">'+(i+1)+'</span><span class="fname">'+esc(f.name)+badge+'</span><span class="fmeta">'+(f.pages?f.pages+' पेज · ':'')+fmtBytes(f.size)+'</span><button class="pico del" title="हटाओ">✕</button>';
+    d.querySelector('.del').addEventListener('click',function(){MG.files.splice(MG.files.indexOf(f),1);mgRender();});
+    L.appendChild(d);
+  });
+  var acts=$('#mg-listacts');
+  if(MG.files.length){
+    acts.classList.remove('hidden');
+    var tot=MG.files.reduce(function(a,f){return a+f.size;},0);
+    var pg=MG.files.reduce(function(a,f){return a+f.pages;},0);
+    $('#mg-total').textContent='कुल: '+MG.files.length+' फ़ाइल · '+pg+' पेज · '+fmtBytes(tot);
+  }else acts.classList.add('hidden');
+}
+$('#mg-clear').addEventListener('click',function(){MG.files=[];mgRender();toast('सूची ख़ाली — मेमोरी भी छूट गई','ok');});
+makeSortable($('#mg-list'),'.frow','.handle',false,function(){
+  var order=$$('#mg-list .frow').map(function(el){return el.dataset.id;});
+  MG.files.sort(function(a,b){return order.indexOf(a.id)-order.indexOf(b.id);});
+  mgRender();
+});
+/* एक फ़ाइल के सारे पेज out में जोड़ो — पहले सीधी कॉपी, न बने तो (मरम्मत-मोड on हो) rasterize */
+async function mgAppendFile(out,f,doneBefore,total,allowFix){
+  if(f.enc||f.broken){
+    if(!allowFix)throw new Error(f.name+' लॉक/बिगड़ी है — मरम्मत-मोड (नीचे वाला ✓) चालू करो');
+    return await rasterizeAppend(out,f.file,f.name,doneBefore,total);
+  }
+  try{
+    var bytes=await readBytes(f.file);
+    var ld=await libLoad(bytes);
+    var ps=await out.copyPages(ld,ld.getPageIndices());
+    for(var i=0;i<ps.length;i++){
+      out.addPage(ps[i]);
+      if(i%25===0){setBusy(f.name+' — पेज '+(i+1)+'/'+ps.length,total?(((doneBefore+i+1)/total)*100):null);await tick();}
+    }
+    var k=ps.length;
+    ld=null;bytes=null;ps=null; /* स्रोत छोड़ो — अगली फ़ाइल के लिए मेमोरी ख़ाली */
+    return k;
+  }catch(e){
+    if(!allowFix)throw new Error(f.name+': '+String((e&&e.message)||e));
+    console.warn('सीधी कॉपी नहीं बनी, मरम्मत-मोड:',f.name,e);
+    return await rasterizeAppend(out,f.file,f.name,doneBefore,total);
+  }
+}
+$('#mg-go').addEventListener('click',async function(){
+  if(!MG.files.length){toast('पहले कम से कम 1 PDF डालो','err');return;}
+  var inter=$('#mg-inter').classList.contains('on');
+  if(inter&&MG.files.length!==2){toast('एकांतर के लिए ठीक 2 फ़ाइलें चाहिए','err');return;}
+  var allowFix=$('#mg-fix').checked;
+  var totSize=MG.files.reduce(function(a,f){return a+f.size;},0);
+  if(totSize>150*1048576)toast('⚠ '+fmtBytes(totSize)+' — बहुत बड़ा काम है, 1-3 मिनट लग सकते हैं; टैब बंद मत करना','');
+  showBusy('जोड़ा जा रहा है…');
+  try{
+    var out=await PDFDocument.create();
+    if(inter){
+      var A=MG.files[0],B=MG.files[1];
+      if(A.enc||A.broken||B.enc||B.broken)throw new Error('एकांतर सिर्फ़ ठीक-ठाक PDF पर चलता है — लॉक/बिगड़ी फ़ाइल पहले अकेले डालकर मरम्मत-कॉपी बना लो');
+      var ba=await readBytes(A.file), la=await libLoad(ba);
+      var pa=await out.copyPages(la,la.getPageIndices());
+      la=null;ba=null;
+      var bb=await readBytes(B.file), lb=await libLoad(bb);
+      var pb=await out.copyPages(lb,lb.getPageIndices());
+      lb=null;bb=null;
+      if($('#mg-rev').checked)pb.reverse();
+      var n=Math.max(pa.length,pb.length);
+      for(var i=0;i<n;i++){if(i<pa.length)out.addPage(pa[i]);if(i<pb.length)out.addPage(pb[i]);}
+    }else{
+      var done=0,total=MG.files.reduce(function(a,f){return a+f.pages;},0)||null;
+      var fixed=[];
+      for(var fi=0;fi<MG.files.length;fi++){
+        var f=MG.files[fi];
+        var before=(f.enc||f.broken);
+        var added=await mgAppendFile(out,f,done,total,allowFix);
+        if(before)fixed.push(f.name);
+        done+=added;
+        await tick();
+      }
+      if(fixed.length)toast('🩹 मरम्मत से जुड़ीं: '+fixed.join(', '),'');
+    }
+    setBusy('अंतिम फ़ाइल लिखी जा रही है — बड़ी PDF में समय लगता है, रुको…',100);
+    await tick();
+    var bytes=await out.save();
+    out=null;
+    dl(new Blob([bytes],{type:'application/pdf'}),saneName($('#mg-name').value,'bodhi-merged')+'.pdf');
+    toast('जुड़ गई — '+fmtBytes(bytes.length)+' की फ़ाइल डाउनलोड में आ गई','ok');
+  }catch(e){toast(friendlyErr(e),'err');}
+  hideBusy();
+});
+
+/* ================= 3. PDF तोड़ें ================= */
+var SP={bytes:null,ld:null,jd:null,n:0,sel:new Set(),thumbsDone:false};
+bindDrop('#sp-drop','#sp-file',async function(fs){
+  var f=fs[0];
+  try{
+    showBusy('PDF खुल रही है…');
+    SP.bytes=await readBytes(f);
+    SP.ld=await libLoad(SP.bytes);
+    SP.jd=null; /* थंबनेल वाली कॉपी तभी बनेगी जब “चुनकर” टैब खोलोगे — बड़ी फ़ाइल में मेमोरी बचती है */
+    SP.n=SP.ld.getPageCount();
+    SP.sel=new Set();SP.thumbsDone=false;
+    $('#sp-grid').innerHTML='';
+    $('#sp-info').innerHTML='<span class="finfo-chip">📄 '+esc(f.name)+'</span><span class="finfo-chip"><b>'+SP.n+'</b> पेज</span><span class="finfo-chip">'+fmtBytes(SP.bytes.length)+'</span>';
+    $('#sp-body').classList.remove('hidden');
+    hideBusy();
+    if(SP.ld.isEncrypted)toast('🔒 यह PDF लॉक है — टूटे हिस्सों में पेज ख़ाली आ सकते हैं। पक्का इलाज: “जोड़ो” टूल में अकेली डालकर मरम्मत-कॉपी बनाओ, फिर उसे तोड़ो।','err');
+    if($('#view-split .tab.on').dataset.t==='sp-pick')SP.ensureThumbs();
+  }catch(e){hideBusy();toast(friendlyErr(e),'err');}
+});
+SP.ensureThumbs=async function(){
+  if(SP.thumbsDone||!SP.bytes)return;
+  if(!SP.jd){showBusy('पेज खुल रहे हैं…');SP.jd=await pdfjsLoad(SP.bytes);}
+  SP.thumbsDone=true;
+  var g=$('#sp-grid');
+  var cap=Math.min(SP.n,300);
+  showBusy('पेज-थंबनेल बन रहे हैं…');
+  for(var i=1;i<=cap;i++){
+    setBusy('पेज '+i+'/'+cap,(i/cap)*100);
+    var t=await thumbForPdfPage(SP.jd,i);
+    (function(i){
+      var d=document.createElement('div');
+      d.className='pcard';
+      d.innerHTML='<div class="pchk">✓</div><div class="pimg"><img src="'+t+'"></div><span class="pnum">'+i+'</span>';
+      d.addEventListener('click',function(){
+        var ix=i-1;
+        if(SP.sel.has(ix)){SP.sel.delete(ix);d.classList.remove('sel');}
+        else{SP.sel.add(ix);d.classList.add('sel');}
+      });
+      d.dataset.i=i-1;
+      g.appendChild(d);
+    })(i);
+    if(i%8===0)await tick();
+  }
+  if(SP.n>cap)g.insertAdjacentHTML('beforeend','<div class="empty" style="width:100%">थंबनेल 300 पेज तक ही दिखते हैं — बाक़ी के लिए “रेंज से” वाला तरीका इस्तेमाल करो।</div>');
+  hideBusy();
+};
+$('#sp-pick-all').addEventListener('click',function(){$$('#sp-grid .pcard').forEach(function(d){SP.sel.add(+d.dataset.i);d.classList.add('sel');});});
+$('#sp-pick-none').addEventListener('click',function(){SP.sel.clear();$$('#sp-grid .pcard').forEach(function(d){d.classList.remove('sel');});});
+async function makePdfFrom(indices){
+  var out=await PDFDocument.create();
+  var ps=await out.copyPages(SP.ld,indices);
+  ps.forEach(function(p){out.addPage(p);});
+  return out.save();
+}
+$('#sp-go').addEventListener('click',async function(){
+  if(!SP.ld){toast('पहले PDF डालो','err');return;}
+  var base=saneName($('#sp-name').value,'bodhi-split');
+  var active=$('#view-split .tab.on').dataset.t;
+  try{
+    if(active==='sp-range'){
+      var groups;
+      try{groups=parseRanges($('#sp-ranges').value,SP.n);}
+      catch(_){toast('रेंज समझ नहीं आई — ऐसे लिखो: 1-5, 8, 11-13','err');return;}
+      showBusy('तोड़ा जा रहा है…');
+      var mode=document.querySelector('input[name="sp-rm"]:checked').value;
+      if(mode==='one'){
+        var flat=[];groups.forEach(function(g){flat=flat.concat(g);});
+        var b1=await makePdfFrom(flat);
+        dl(new Blob([b1],{type:'application/pdf'}),base+'.pdf');
+        toast('तैयार — '+flat.length+' पेज','ok');
+      }else{
+        var zip=new JSZip();
+        for(var i=0;i<groups.length;i++){
+          setBusy('हिस्सा '+(i+1)+'/'+groups.length,((i+1)/groups.length)*100);
+          zip.file(base+'-'+(i+1)+'.pdf',await makePdfFrom(groups[i]));
+        }
+        dl(await zip.generateAsync({type:'blob'}),base+'.zip');
+        toast(groups.length+' फ़ाइलें ZIP में तैयार','ok');
+      }
+    }else if(active==='sp-every'){
+      showBusy('तोड़ा जा रहा है…');
+      var nn=Math.max(1,parseInt($('#sp-n').value)||1);
+      var zip2=new JSZip();var part=0;
+      for(var s=0;s<SP.n;s+=nn){
+        part++;
+        var idx=[];for(var i2=s;i2<Math.min(s+nn,SP.n);i2++)idx.push(i2);
+        setBusy('हिस्सा '+part,(s/SP.n)*100);
+        zip2.file(base+'-'+part+'.pdf',await makePdfFrom(idx));
+        await tick();
+      }
+      dl(await zip2.generateAsync({type:'blob'}),base+'.zip');
+      toast(part+' फ़ाइलें ZIP में तैयार','ok');
+    }else if(active==='sp-single'){
+      showBusy('तोड़ा जा रहा है…');
+      var zip3=new JSZip();
+      for(var i3=0;i3<SP.n;i3++){
+        setBusy('पेज '+(i3+1)+'/'+SP.n,((i3+1)/SP.n)*100);
+        zip3.file(base+'-page-'+(i3+1)+'.pdf',await makePdfFrom([i3]));
+        if(i3%5===0)await tick();
+      }
+      dl(await zip3.generateAsync({type:'blob'}),base+'.zip');
+      toast(SP.n+' फ़ाइलें ZIP में','ok');
+    }else if(active==='sp-oe'){
+      showBusy('तोड़ा जा रहा है…');
+      var odd=[],even=[];
+      for(var i4=0;i4<SP.n;i4++)(i4%2===0?odd:even).push(i4);
+      var zip4=new JSZip();
+      zip4.file(base+'-odd.pdf',await makePdfFrom(odd));
+      if(even.length)zip4.file(base+'-even.pdf',await makePdfFrom(even));
+      dl(await zip4.generateAsync({type:'blob'}),base+'.zip');
+      toast('odd = विषम पेज (1,3,5…), even = सम पेज — ZIP तैयार','ok');
+    }else{
+      if(!SP.sel.size){toast('पहले पेज चुनो — थंबनेल पर टैप करो','err');return;}
+      showBusy('निकाला जा रहा है…');
+      var pick=Array.from(SP.sel).sort(function(a,b){return a-b;});
+      if($('#sp-rem').checked){
+        var rest=[];for(var i5=0;i5<SP.n;i5++)if(!SP.sel.has(i5))rest.push(i5);
+        var zip5=new JSZip();
+        zip5.file(base+'-chune.pdf',await makePdfFrom(pick));
+        if(rest.length)zip5.file(base+'-baaki.pdf',await makePdfFrom(rest));
+        dl(await zip5.generateAsync({type:'blob'}),base+'.zip');
+        toast('चुने + बाक़ी, दोनों फ़ाइलें ZIP में','ok');
+      }else{
+        var b2=await makePdfFrom(pick);
+        dl(new Blob([b2],{type:'application/pdf'}),base+'.pdf');
+        toast(pick.length+' पेज निकाल लिए','ok');
+      }
+    }
+  }catch(e){toast(friendlyErr(e),'err');}
+  hideBusy();
+});
+
+/* ================= 4. वॉटरमार्क ================= */
+var WM={bytes:null,jd:null,n:0,cur:1,logoImg:null,pos:'c',enc:false};
+bindDrop('#wm-drop','#wm-file',async function(fs){
+  try{
+    var fresh=(WED.pages.length===0);
+    await pagesAdd(WED,fs);
+    $('#wm-body').classList.remove('hidden');
+    var one=(fresh&&fs.length===1&&(fs[0].type==='application/pdf'||/\.pdf$/i.test(fs[0].name)));
+    if(!one){ WED.dirty=true; wedRender(); await wedApply(true); toast(WED.pages.length+' पेज तैयार — ऊपर जोड़ो-हटाओ, नीचे वॉटरमार्क','ok'); return; }
+    showBusy('PDF खुल रही है…');
+    var f=fs[0];
+    WM.bytes=await readBytes(f);
+    WM.jd=await pdfjsLoad(WM.bytes);
+    var perms=null;try{perms=await WM.jd.getPermissions();}catch(_){}
+    WM.enc=(perms!==null);
+    WM.n=WM.jd.numPages;WM.cur=1;
+    $('#wm-body').classList.remove('hidden');
+    hideBusy();
+    if(WM.enc)toast('🔒 लॉक PDF — इस पर सिर्फ़ “स्थायी” मोड चलेगा (अपने-आप चुन लिया जाएगा)','');
+    await wmRenderBase();
+    wmDrawOverlay();
+    WED.dirty=false;wedRender();
+  }catch(e){hideBusy();toast(friendlyErr(e),'err');}
+});
+async function wmRenderBase(){
+  var p=await WM.jd.getPage(WM.cur);
+  var vp1=p.getViewport({scale:1});
+  var stage=$('#view-wm .wm-stage');
+  var stageW=Math.min(560,Math.max(240,(stage.clientWidth||560)-28));
+  var sc=stageW/vp1.width;
+  var vp=p.getViewport({scale:sc*2});
+  var c=$('#wm-base');
+  c.width=Math.floor(vp.width);c.height=Math.floor(vp.height);
+  var dispW=stageW;
+  if(window.matchMedia&&window.matchMedia('(max-width:920px)').matches){
+    var maxH=Math.max(170,window.innerHeight*0.30);
+    dispW=Math.min(stageW,Math.round(maxH*(vp1.width/vp1.height)));
+  }
+  c.style.width=dispW+'px';
+  await p.render({canvasContext:c.getContext('2d'),viewport:vp}).promise;
+  var o=$('#wm-ovl');o.width=c.width;o.height=c.height;
+  $('#wm-pglabel').textContent='पेज '+WM.cur+' / '+WM.n;
+}
+
+/* ---- वॉटरमार्क के भीतर पेज संपादन ---- */
+var WED=newPageState();
+var WED_EMPTY='<div class="empty">अभी कोई पेज नहीं — ऊपर “+ PDF / फोटो जोड़ें” दबाओ।</div>';
+function wedTouch(){WED.dirty=true;wedRender();}
+function wedRender(){
+  pagesRender(WED,'#wm-ed-grid',wedTouch,WED_EMPTY);
+  wedSrcRender();
+  $('#wm-ed-info').innerHTML=WED.pages.length+' पेज'+(WED.dirty?' · <span id="wm-ed-dirty">बदलाव अभी लगे नहीं</span>':' · लगे हुए हैं');
+}
+function wedSrcRender(){
+  var box=$('#wm-ed-srcs');box.innerHTML='';
+  WED.srcs.forEach(function(s){
+    var n=WED.pages.filter(function(p){return p.type==='pdf'&&p.srcId===s.id;}).length;
+    if(!n)return;
+    var el=document.createElement('span');
+    el.className='chip';
+    el.innerHTML='<span class="dot" style="background:'+s.color+'"></span><span>'+esc(s.name)+' · '+n+' पेज</span><button class="pico del" title="यह पूरी फ़ाइल हटाओ">✕</button>';
+    el.querySelector('button').addEventListener('click',function(){
+      WED.pages=WED.pages.filter(function(p){return !(p.type==='pdf'&&p.srcId===s.id);});
+      wedTouch();
+    });
+    box.appendChild(el);
+  });
+  var imgs=WED.pages.filter(function(p){return p.type==='img';}).length;
+  if(imgs){
+    var e2=document.createElement('span');e2.className='chip';
+    e2.innerHTML='<span>फोटो · '+imgs+'</span><button class="pico del" title="सारी फोटो हटाओ">✕</button>';
+    e2.querySelector('button').addEventListener('click',function(){
+      WED.pages=WED.pages.filter(function(p){return p.type!=='img';});
+      wedTouch();
+    });
+    box.appendChild(e2);
+  }
+}
+makeSortable($('#wm-ed-grid'),'.pcard','.handle',true,function(){
+  var order=$$('#wm-ed-grid .pcard').map(function(el){return el.dataset.uid;});
+  WED.pages.sort(function(a,b){return order.indexOf(a.uid)-order.indexOf(b.uid);});
+  wedTouch();
+});
+$('#wm-ed-add').addEventListener('click',function(){$('#wm-ed-file').click();});
+$('#wm-ed-file').addEventListener('change',async function(e){
+  var fs=Array.from(e.target.files);e.target.value='';
+  if(!fs.length)return;
+  await pagesAdd(WED,fs);wedTouch();
+});
+$('#wm-ed-selall').addEventListener('click',function(){WED.pages.forEach(function(p){p.sel=true;});wedRender();});
+$('#wm-ed-selnone').addEventListener('click',function(){WED.pages.forEach(function(p){p.sel=false;});wedRender();});
+$('#wm-ed-rev').addEventListener('click',function(){WED.pages.reverse();wedTouch();});
+$('#wm-ed-delsel').addEventListener('click',function(){
+  if(!WED.pages.some(function(p){return p.sel;})){toast('पहले कुछ पेज चुनो');return;}
+  WED.pages=WED.pages.filter(function(p){return !p.sel;});
+  wedTouch();
+});
+$('#wm-ed-rotsel').addEventListener('click',async function(){
+  var sel=WED.pages.filter(function(p){return p.sel;});
+  if(!sel.length){toast('पहले कुछ पेज चुनो');return;}
+  for(var i=0;i<sel.length;i++){
+    sel[i].rot=(sel[i].rot+90)%360;
+    sel[i].thumb=await rotateDataUrl(sel[i].baseThumb,sel[i].rot);
+  }
+  wedTouch();
+});
+$('#wm-ed-zoom').addEventListener('input',function(e){document.documentElement.style.setProperty('--thw',e.target.value+'px');});
+$('#wm-ed-toggle').addEventListener('click',function(){
+  var p=$('#wm-edit');p.classList.toggle('folded');
+  this.textContent=p.classList.contains('folded')?'पेज संपादन खोलो':'छिपाओ';
+});
+async function wedApply(silent){
+  if(!WED.pages.length){toast('कम से कम 1 पेज चाहिए','err');return null;}
+  showBusy('बदलाव लागू हो रहे हैं…');
+  try{
+    var r=await buildPagesPdf(WED.srcs,WED.pages.slice());
+    WM.bytes=r.bytes;
+    WM.jd=await pdfjsLoad(WM.bytes);
+    WM.enc=false;
+    WM.n=WM.jd.numPages;if(WM.cur>WM.n)WM.cur=1;
+    WED.dirty=false;
+    await wmRenderBase();wmDrawOverlay();
+    hideBusy();wedRender();
+    if(!silent)toast('बदलाव लग गए — '+WM.n+' पेज · अब झलक और डाउनलोड इसी पर','ok');
+    return r;
+  }catch(e){hideBusy();toast(friendlyErr(e),'err');return null;}
+}
+$('#wm-ed-apply').addEventListener('click',function(){
+  if(!WED.dirty&&WM.bytes){toast('कुछ बदला ही नहीं — सीधे वॉटरमार्क लगाओ');return;}
+  wedApply(false);
+});
+$('#wm-ed-save').addEventListener('click',async function(){
+  if(!WED.pages.length){toast('कम से कम 1 पेज चाहिए','err');return;}
+  showBusy('PDF बन रही है…');
+  try{
+    var r=await buildPagesPdf(WED.srcs,WED.pages.slice());
+    dl(new Blob([r.bytes],{type:'application/pdf'}),saneName($('#wm-name').value,'document')+'-सादा.pdf');
+    toast('PDF तैयार — '+r.count+' पेज ('+fmtBytes(r.bytes.length)+')','ok');
+  }catch(e){toast(friendlyErr(e),'err');}
+  hideBusy();
+});
+
+function wmState(){
+  return{
+    type:document.querySelector('input[name="wm-type"]:checked').value,
+    text:$('#wm-text').value||'बोधि क्लासेस',
+    color:$('#wm-color').value,
+    bold:$('#wm-bold').checked,
+    size:+$('#wm-size').value,
+    op:(+$('#wm-op').value)/100,
+    rot:+$('#wm-rot').value,
+    tile:((document.querySelector('input[name="wm-place"]:checked')||{value:'tile'}).value==='tile'),
+    useClassic:!(document.getElementById('wm-use-classic'))||$('#wm-use-classic').checked,
+    useLock:!(document.getElementById('wm-use-lock'))||$('#wm-use-lock').checked,
+    lockn:+($('#wm-lockn')?$('#wm-lockn').value:5),
+    lockOp:(+($('#wm-lockop')?$('#wm-lockop').value:16))/100,
+    lockSize:+($('#wm-locksz')?$('#wm-locksz').value:14),
+    footer:wmfState(),
+    pos:WM.pos,
+    margin:+$('#wm-margin').value,
+    gap:+$('#wm-gap').value,
+    logo:WM.logoImg,
+    colorMode:(document.querySelector('input[name="wm-cmode"]:checked')||{value:'auto'}).value,
+    sec:(function(){
+      var on=!!(document.getElementById('wm-sec-on')&&$('#wm-sec-on').checked);
+      return {ai:on,jit:on,inv:on,
+        key:((document.getElementById('wm-sec-key')&&$('#wm-sec-key').value)||'BODHI').trim()||'BODHI'};
+    })()
+  };
+}
+function makeWMCanvas(pxW,pxH,s){
+  var c=document.createElement('canvas');
+  c.width=Math.max(2,Math.round(pxW));c.height=Math.max(2,Math.round(pxH));
+  var x=c.getContext('2d');
+  x.globalAlpha=s.op;
+  var uw,uh,draw;
+  var fontStr='';
+  if(s.type==='img'&&s.logo){
+    uw=pxW*s.size/100;
+    uh=uw*(s.logo.height/s.logo.width);
+    draw=function(cx,cy,er,as){x.save();x.globalAlpha=s.op*(as||1);x.translate(cx,cy);x.rotate((s.rot+(er||0))*Math.PI/180);x.drawImage(s.logo,-uw/2,-uh/2,uw,uh);x.restore();};
+  }else if(s.type==='img'&&!s.logo){
+    return c;
+  }else{
+    var fs=Math.max(6,pxW*s.size/100);
+    fontStr=(s.bold?'700 ':'400 ')+fs+'px '+"'Noto Sans Devanagari','Noto Sans',sans-serif";
+    x.font=fontStr;
+    uw=Math.max(4,x.measureText(s.text).width);
+    uh=fs*1.18;
+    draw=function(cx,cy,er,as){
+      x.save();x.globalAlpha=s.op*(as||1);x.translate(cx,cy);x.rotate((s.rot+(er||0))*Math.PI/180);
+      x.font=fontStr;x.fillStyle=s.color;x.textAlign='center';x.textBaseline='middle';
+      x.fillText(s.text,0,0);x.restore();
+    };
+  }
+  var a=Math.abs(s.rot*Math.PI/180);
+  var bw=uw*Math.cos(a)+uh*Math.sin(a);
+  var bh=uw*Math.sin(a)+uh*Math.cos(a);
+  if(s.tile){
+    var g=Math.max(8,Math.max(bw,bh)*s.gap/100);
+    var stepX=bw+g, stepY=bh+g*0.7;
+    var row=0;
+    for(var yy=-bh;yy<pxH+bh;yy+=stepY){
+      var off=(row++%2)?stepX/2:0;
+      for(var xx=-bw+off;xx<pxW+bw;xx+=stepX){
+        if(s.tj){
+          if(s.tj()<0.04)continue;
+          draw(xx+(s.tj()-0.5)*stepX*0.3,yy+(s.tj()-0.5)*stepY*0.26,(s.tj()-0.5)*8,0.6+s.tj()*0.55);
+        }else draw(xx,yy);
+      }
+    }
+  }else{
+    var m=pxW*s.margin/100;
+    var vch=s.pos[0],hch=s.pos[1]||'c';
+    if(s.pos==='c'){vch='m';hch='c';}
+    var cx=hch==='l'?(m+bw/2):hch==='r'?(pxW-m-bw/2):pxW/2;
+    var cy=vch==='t'?(m+bh/2):vch==='b'?(pxH-m-bh/2):pxH/2;
+    draw(cx,cy);
+  }
+  return c;
+}
+/* ---------- सुरक्षा इंजन: बीज, विश्लेषण, बहती गहराई, अदृश्य परतें ---------- */
+function wmHash(s){s=String(s);var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return h>>>0;}
+function wmRng(seed){var a=seed>>>0;return function(){a|=0;a=(a+0x6D2B79F5)|0;var t=Math.imul(a^(a>>>15),1|a);t=(t+Math.imul(t^(t>>>7),61|t))^t;return((t^(t>>>14))>>>0)/4294967296;};}
+function wmSeedStr(pi){return saneName($('#wm-name').value,'bodhi')+'|p'+pi+'|बोधि';}
+function wmAnalyze(src){
+  var AW=320,AH=Math.max(24,Math.round(src.height*AW/src.width));
+  var c=document.createElement('canvas');c.width=AW;c.height=AH;
+  var x=c.getContext('2d',{willReadFrequently:true});
+  x.drawImage(src,0,0,AW,AH);
+  var d=x.getImageData(0,0,AW,AH).data;
+  var lum=new Float32Array(AW*AH);
+  for(var i=0;i<AW*AH;i++)lum[i]=(d[i*4]*0.299+d[i*4+1]*0.587+d[i*4+2]*0.114)/255;
+  var gw=20,gh=Math.max(6,Math.round(gw*AH/AW));
+  var E=new Float32Array(gw*gh),L=new Float32Array(gw*gh),C=new Float32Array(gw*gh);
+  /* रंग-परिवार: hue को वृत्त पर औसत करो (सीधा औसत ग़लत होता है) */
+  var HX=new Float32Array(gw*gh),HY=new Float32Array(gw*gh),SA=new Float32Array(gw*gh);
+  for(var y=1;y<AH-1;y++){
+    var gy=Math.min(gh-1,(y*gh/AH)|0);
+    for(var xx=1;xx<AW-1;xx++){
+      var p=y*AW+xx;
+      var gx=lum[p+1]-lum[p-1],gv=lum[p+AW]-lum[p-AW];
+      var gi=gy*gw+Math.min(gw-1,(xx*gw/AW)|0);
+      E[gi]+=Math.sqrt(gx*gx+gv*gv);L[gi]+=lum[p];C[gi]++;
+      var hs=wmRgb2Hsl(d[p*4],d[p*4+1],d[p*4+2]);
+      var ang=hs.h*6.283185;
+      HX[gi]+=Math.cos(ang)*hs.s;HY[gi]+=Math.sin(ang)*hs.s;SA[gi]+=hs.s;
+    }
+  }
+  var mx=1e-9;
+  var HU=new Float32Array(gw*gh);
+  for(var k=0;k<gw*gh;k++){
+    if(C[k]){E[k]/=C[k];L[k]/=C[k];SA[k]/=C[k];}
+    if(E[k]>mx)mx=E[k];
+    var ah=Math.atan2(HY[k],HX[k]);if(ah<0)ah+=6.283185;
+    HU[k]=ah/6.283185;
+  }
+  /* पूरे पेज का प्रमुख रंग — जहाँ रंग फीका हो वहाँ यही चलेगा */
+  var tx=0,ty=0,ts=0;
+  for(var k2=0;k2<gw*gh;k2++){var a2=HU[k2]*6.283185;tx+=Math.cos(a2)*SA[k2];ty+=Math.sin(a2)*SA[k2];ts+=SA[k2];}
+  var gh2=Math.atan2(ty,tx);if(gh2<0)gh2+=6.283185;
+  var gHue=gh2/6.283185, gSat=ts/(gw*gh);
+  for(var k3=0;k3<gw*gh;k3++){
+    if(SA[k3]<0.10){HU[k3]=gHue;SA[k3]=Math.max(SA[k3],Math.min(0.30,gSat));}
+  }
+  c.width=1;c.height=1;
+  return{gw:gw,gh:gh,E:E,L:L,mx:mx,HU:HU,SA:SA,gHue:gHue,gSat:gSat};
+}
+/* बहती गहराई का नक्शा: चिकनी लहर × पेज की व्यस्तता — remover की एक-सी पकड़ टूटती है */
+function wmModField(W,H,ana,R){
+  var gw=ana.gw,gh=ana.gh;
+  var sc=document.createElement('canvas');sc.width=gw;sc.height=gh;
+  var sx=sc.getContext('2d');
+  var id=sx.createImageData(gw,gh);
+  var a1=R()*6.28,f1=1.2+R()*1.2,p1=R()*6.28;
+  var a2=R()*6.28,f2=1.8+R()*1.6,p2=R()*6.28;
+  var c1=Math.cos(a1),s1=Math.sin(a1),c2=Math.cos(a2),s2=Math.sin(a2);
+  for(var y=0;y<gh;y++)for(var x=0;x<gw;x++){
+    var u=x/gw,v=y/gh;
+    var n=Math.sin((u*c1+v*s1)*f1*6.28+p1)*0.55+Math.sin((u*c2+v*s2)*f2*6.28+p2)*0.45;
+    var eN=ana.E[y*gw+x]/ana.mx;
+    var m=(0.68+0.32*(n*0.5+0.5))*(0.86+0.3*eN);
+    m=Math.max(0.55,Math.min(1,m));
+    id.data[(y*gw+x)*4+3]=Math.round(m*255);
+  }
+  sx.putImageData(id,0,0);
+  return sc;
+}
+/* मौन छाप: सबसे ख़ाली जगह में अदृश्य पाठ — जिसके ऊपर कुछ दिखता ही नहीं, वह मिटे कैसे */
+function wmGhostStamp(ctx,W,H,ana,R,txt,amp){
+  var best=null;
+  for(var gy=0;gy<ana.gh;gy++)for(var gx=0;gx<ana.gw;gx++){
+    var nx=(gx+0.5)/ana.gw,ny=(gy+0.5)/ana.gh;
+    if(nx<0.22||nx>0.78||ny<0.2||ny>0.88)continue;
+    var e=ana.E[gy*ana.gw+gx];
+    if(!best||e<best.e)best={x:nx,y:ny,e:e};
+  }
+  if(!best)return;
+  var cx=(best.x+(R()-0.5)*0.04)*W,cy=(best.y+(R()-0.5)*0.03)*H;
+  var gw2=Math.round(W*0.5),gh2=Math.round(gw2*0.34);
+  var g=document.createElement('canvas');g.width=gw2;g.height=gh2;
+  var gxx=g.getContext('2d');
+  gxx.font='700 100px '+"'Noto Sans Devanagari','Noto Sans',sans-serif";
+  var mw=Math.max(10,gxx.measureText(txt).width);
+  var gfs=Math.min(gh2*0.85,100*gw2*0.95/mw);
+  gxx.font='700 '+gfs+'px '+"'Noto Sans Devanagari','Noto Sans',sans-serif";
+  gxx.textAlign='center';gxx.textBaseline='middle';
+  gxx.fillStyle='#fff';gxx.fillText(txt,gw2/2,gh2/2);
+  var gm=gxx.getImageData(0,0,gw2,gh2).data;
+  var x0=Math.round(cx-gw2/2),y0=Math.round(cy-gh2/2);
+  var rx=Math.max(0,x0),ry=Math.max(0,y0);
+  var rw=Math.min(W,x0+gw2)-rx,rh=Math.min(H,y0+gh2)-ry;
+  if(rw<4||rh<4)return;
+  var id2=ctx.getImageData(rx,ry,rw,rh),dd=id2.data;
+  for(var yy=0;yy<rh;yy++){
+    var gy3=yy+(ry-y0);
+    for(var xx=0;xx<rw;xx++){
+      var gx3=xx+(rx-x0);
+      if(gm[(gy3*gw2+gx3)*4+3]>120){
+        var sg=((((xx+rx)/3|0)+((yy+ry)/3|0))&1)?amp:-amp;
+        var p2=(yy*rw+xx)*4;
+        dd[p2]+=sg;dd[p2+1]+=sg;dd[p2+2]+=sg;
+      }
+    }
+  }
+  ctx.putImageData(id2,rx,ry);
+}
+function wmForensic(ctx,W,H,key,amp){
+  var G=96,R=wmRng(wmHash('inv|'+key));
+  var sg=new Int8Array(G*G);
+  for(var i=0;i<G*G;i++)sg[i]=R()<0.5?-1:1;
+  var id=ctx.getImageData(0,0,W,H),d=id.data;
+  for(var y=0;y<H;y++){
+    var ro=Math.min(G-1,(y*G/H)|0)*G,b2=y*W;
+    for(var x=0;x<W;x++){
+      var v=sg[ro+Math.min(G-1,(x*G/W)|0)]*amp,p=(b2+x)*4;
+      d[p]+=v;d[p+1]+=v;d[p+2]+=v;
+    }
+  }
+  ctx.putImageData(id,0,0);
+}
+/* मुख्य जोड़: तुम्हारे चुने रूप का वॉटरमार्क + पीछे की सुरक्षा — एक ही जगह से */
+/* ---------- रंग-संगति: पेज के अपने रंग-परिवार से स्याही ---------- */
+function wmRgb2Hsl(r,g,b){
+  r/=255;g/=255;b/=255;
+  var mx=Math.max(r,g,b),mn=Math.min(r,g,b),h=0,s=0,l=(mx+mn)/2;
+  if(mx!==mn){
+    var d=mx-mn;
+    s=l>0.5?d/(2-mx-mn):d/(mx+mn);
+    if(mx===r)h=(g-b)/d+(g<b?6:0);
+    else if(mx===g)h=(b-r)/d+2;
+    else h=(r-g)/d+4;
+    h/=6;
+  }
+  return {h:h,s:s,l:l};
+}
+function wmHsl2Rgb(h,s,l){
+  function f(p,q,t){
+    if(t<0)t+=1;if(t>1)t-=1;
+    if(t<1/6)return p+(q-p)*6*t;
+    if(t<1/2)return q;
+    if(t<2/3)return p+(q-p)*(2/3-t)*6;
+    return p;
+  }
+  var r,g,b;
+  if(s===0){r=g=b=l;}
+  else{
+    var q=l<0.5?l*(1+s):l+s-l*s,p=2*l-q;
+    r=f(p,q,h+1/3);g=f(p,q,h);b=f(p,q,h-1/3);
+  }
+  return {r:Math.round(r*255),g:Math.round(g*255),b:Math.round(b*255)};
+}
+/* पृष्ठभूमि का रंग (h,s,l) → वॉटरमार्क की स्याही।
+   नियम: (क) रंग उसी परिवार का, इसलिए भद्दा नहीं लगता;
+         (ख) गहरे पेज पर हल्की स्याही — पढ़ने में बाधा नहीं;
+         (ग) हल्के पेज पर भी बहुत काली नहीं, बस इतनी कि पढ़ी जाए;
+         (घ) चमक का अंतर तय — इसलिए सबसे कम % पर भी दिखती है। */
+function wmInkFor(h,s,l){
+  var dark=l<0.5;
+  var sat, lum, a;
+  if(dark){
+    /* गहरे पर: हल्की, हल्की-सी रंगत लिए स्याही */
+    lum=Math.min(0.95,l+0.52+0.22*Math.min(1,(0.5-l)/0.42));
+    sat=Math.max(0.06,Math.min(0.30,s*0.55+0.05));
+    a=0.62+0.38*Math.min(1,(0.5-l)/0.42);
+  }else{
+    /* हल्के पर: गहरी पर काली नहीं — रंगत वाली, मध्यम */
+    lum=Math.max(0.16,l-0.44);
+    sat=Math.max(0.08,Math.min(0.34,s*0.6+0.08));
+    a=0.62+0.20*Math.min(1,(l-0.5)/0.45);
+  }
+  var c=wmHsl2Rgb(h,sat,lum);
+  c.a=Math.max(0.5,Math.min(1,a));
+  return c;
+}
+/* रंग अपने-आप: वॉटरमार्क को सफ़ेद मास्क बनाकर, हर जगह की पृष्ठभूमि देखकर भरो */
+function wmColorizeByBg(mask,ana,W,H){
+  var lr=document.createElement('canvas');lr.width=ana.gw;lr.height=ana.gh;
+  var lx=lr.getContext('2d');var id=lx.createImageData(ana.gw,ana.gh);
+  for(var i=0;i<ana.gw*ana.gh;i++){
+    var L=ana.L[i],p=i*4;
+    var ink=wmInkFor(ana.HU?ana.HU[i]:0.12, ana.SA?ana.SA[i]:0.25, L);
+    id.data[p]=ink.r;id.data[p+1]=ink.g;id.data[p+2]=ink.b;
+    id.data[p+3]=Math.round(255*ink.a);
+  }
+  lx.putImageData(id,0,0);
+  var ink=document.createElement('canvas');ink.width=W;ink.height=H;
+  var ix=ink.getContext('2d');
+  ix.imageSmoothingEnabled=true;
+  ix.drawImage(lr,0,0,W,H);
+  ix.globalCompositeOperation='destination-in';
+  ix.drawImage(mask,0,0);
+  return ink;
+}
+/* पाठ-बंध: कुछ छापें text-घने इलाक़ों पर, हर एक अपने-आप हल्की/गहरी, बीज से जगह बदलती */
+function wmDrawTextlock(tctx,W,H,ana,s,R){
+  var n=Math.max(1,Math.min(14,s.lockn||6));
+  var fam="'Noto Sans Devanagari','Noto Sans',sans-serif";
+  var texts=[(s.text||'बोधि क्लासेस'),'bodhiclasses.org','बोधि क्लासेस'];
+  var cells=[];
+  for(var gy=0;gy<ana.gh;gy++)for(var gx=0;gx<ana.gw;gx++){
+    var nx=(gx+0.5)/ana.gw,ny=(gy+0.5)/ana.gh;
+    if(nx<0.08||nx>0.92||ny<0.05||ny>0.95)continue;
+    cells.push({x:nx,y:ny,e:ana.E[gy*ana.gw+gx]});
+  }
+  cells.sort(function(a,b){return b.e-a.e;});     /* सबसे text-घने पहले */
+  var top=cells.slice(0,Math.max(n*3,12));
+  var chosen=[],minD=0.16;
+  while(chosen.length<n&&minD>0.04){
+    for(var i=0;i<top.length&&chosen.length<n;i++){
+      var cd=top[i],ok=true;
+      for(var j=0;j<chosen.length;j++){
+        var dx=cd.x-chosen[j].x,dy=(cd.y-chosen[j].y)*(H/W);
+        if(Math.sqrt(dx*dx+dy*dy)<minD){ok=false;break;}
+      }
+      if(ok)chosen.push(cd);
+    }
+    minD*=0.7;
+  }
+  var own=((s.colorMode||'auto')!=='auto');
+  for(var k=0;k<chosen.length;k++){
+    var ch=chosen[k];
+    var cx=(ch.x+(R()-0.5)*0.04)*W, cy=(ch.y+(R()-0.5)*0.04)*H;
+    var lsz=(s.lockSize||14);
+    var fs=W*(0.03+(lsz-14)*0.0016)*(0.9+R()*0.35);
+    if(fs<W*0.02)fs=W*0.02;
+    var ang=(R()<0.5?-1:1)*(R()*10);
+    var txt=texts[k%texts.length];
+    /* स्थानीय रोशनी → रंग */
+    var gx2=Math.max(0,Math.min(ana.gw-1,(cx/W*ana.gw)|0));
+    var gy2=Math.max(0,Math.min(ana.gh-1,(cy/H*ana.gh)|0));
+    var Lb=ana.L[gy2*ana.gw+gx2];
+    var dark=Lb<0.5;
+    var ic=wmInkFor(ana.HU?ana.HU[gy2*ana.gw+gx2]:0.12, ana.SA?ana.SA[gy2*ana.gw+gx2]:0.25, Lb);
+    var ink=own?s.color:('rgba('+ic.r+','+ic.g+','+ic.b+',');
+    tctx.save();
+    tctx.globalAlpha=Math.min(1,(s.lockOp!=null?s.lockOp:s.op)*(own?1:(ic.a*1.6)));
+    tctx.translate(cx,cy);tctx.rotate(ang*Math.PI/180);
+    tctx.font=(s.bold?'700 ':'600 ')+fs+'px '+fam;
+    tctx.textAlign='center';tctx.textBaseline='middle';
+    if(own){tctx.fillStyle=s.color;}
+    else{tctx.fillStyle=ink+'1)';}
+    tctx.fillText(txt,0,0);
+    tctx.restore();
+  }
+}
+/* ---------- फुटर इंजन (फुटर स्टूडियो v5 से) ---------- */
+var WMF_FONT='"Noto Sans Devanagari","Segoe UI",Roboto,Arial,sans-serif';
+function wmfState(){
+  var on=!!(document.getElementById('wm-ft-on')&&$('#wm-ft-on').checked);
+  return{
+    on:on,
+    brand:(($('#wm-ft-brand')&&$('#wm-ft-brand').value)||'').trim(),
+    name:(($('#wm-ft-name')&&$('#wm-ft-name').value)||'').trim(),
+    tg:(($('#wm-ft-tg')&&$('#wm-ft-tg').value)||'').trim(),
+    yt:(($('#wm-ft-yt')&&$('#wm-ft-yt').value)||'').trim(),
+    gm:(($('#wm-ft-gm')&&$('#wm-ft-gm').value)||'').trim(),
+    fh:(+($('#wm-ft-h')?$('#wm-ft-h').value:48))/1000,
+    tScale:(+($('#wm-ft-t')?$('#wm-ft-t').value:100))/100,
+    links:!!(document.getElementById('wm-ft-links')&&$('#wm-ft-links').checked)
+  };
+}
+function wmfMedianColor(img){
+  var hr=new Uint32Array(256),hg=new Uint32Array(256),hb=new Uint32Array(256),d=img.data,n=d.length/4;
+  for(var i=0;i<d.length;i+=4){hr[d[i]]++;hg[d[i+1]]++;hb[d[i+2]]++;}
+  function med(h){var c=0;for(var v=0;v<256;v++){c+=h[v];if(c>=n/2)return v;}return 128;}
+  return{r:med(hr),g:med(hg),b:med(hb)};
+}
+function wmfLighten(c,amt){
+  return{r:Math.min(255,Math.round(c.r+(255-c.r)*amt)),
+         g:Math.min(255,Math.round(c.g+(255-c.g)*amt)),
+         b:Math.min(255,Math.round(c.b+(255-c.b)*amt))};
+}
+function wmfBgFor(ctx,W,H,bandH){
+  /* v9.2: slide के निचले क्षेत्र का असली BACKGROUND पहचानकर footer उसी रंग का बनता है।
+     तरीक़ा: (1) निचली चौड़ी पट्टी का प्रमुख (mode) रंग = base background;
+     (2) हर column में सिर्फ़ background-जैसे pixels का भारित औसत — नीचे तक लिखा
+         text/highlighter छँट जाता है, धारियाँ-धब्बे नहीं बनते;
+     (3) जिस column का background सचमुच अलग रंग है (split-slide) वहीं उसका अपना रंग;
+     (4) लगभग-एकरंगा निकले तो एकदम solid साफ़ पट्टी। */
+  var sh=Math.round(bandH*1.6);
+  sh=Math.max(10,Math.min(sh,Math.round(H*0.14)));
+  var sy=Math.max(0,H-bandH-sh);
+  var hh=Math.max(1,Math.min(sh,H-sy));
+  var img,d;
+  try{img=ctx.getImageData(0,sy,W,hh);d=img.data;}
+  catch(_){return{bg:{r:15,g:21,b:40},strip:null};}
+  var n=W*hh,i,o;
+  /* 1) प्रमुख background: 8×8×8 quantized mode */
+  var bins=new Uint32Array(512);
+  for(i=0;i<n;i++){o=i*4;bins[((d[o]>>5)<<6)|((d[o+1]>>5)<<3)|(d[o+2]>>5)]++;}
+  var bi=0,bc=0,b2;
+  for(b2=0;b2<512;b2++)if(bins[b2]>bc){bc=bins[b2];bi=b2;}
+  var br=0,bgs=0,bbs=0,bn=0;
+  for(i=0;i<n;i++){
+    o=i*4;
+    if(((( d[o]>>5)<<6)|((d[o+1]>>5)<<3)|(d[o+2]>>5))===bi){br+=d[o];bgs+=d[o+1];bbs+=d[o+2];bn++;}
+  }
+  var base={r:br/bn,g:bgs/bn,b:bbs/bn};
+  /* 2) प्रति-column: base-जैसे pixels का भारित औसत (जोड़ के पास की rows भारी) */
+  var T2=90*90;
+  var cols=new Float32Array(W*3);
+  var fb=new Uint8Array(W);
+  var colHist=new Uint16Array(512);
+  var x,y;
+  for(x=0;x<W;x++){
+    var sr=0,sg2=0,sb=0,swt=0,cnt=0;
+    for(y=0;y<hh;y++){
+      o=(y*W+x)*4;
+      var dr=d[o]-base.r,dg=d[o+1]-base.g,db=d[o+2]-base.b;
+      if(dr*dr+dg*dg+db*db<T2){
+        var wt=y+1;
+        sr+=d[o]*wt;sg2+=d[o+1]*wt;sb+=d[o+2]*wt;swt+=wt;cnt++;
+      }
+    }
+    if(cnt>=hh*0.2){
+      cols[x*3]=sr/swt;cols[x*3+1]=sg2/swt;cols[x*3+2]=sb/swt;
+    }else{
+      /* इस column का background ही अलग है (split-slide जैसा) → column का अपना mode */
+      fb[x]=1;
+      colHist.fill(0);
+      for(y=0;y<hh;y++){o=(y*W+x)*4;colHist[((d[o]>>5)<<6)|((d[o+1]>>5)<<3)|(d[o+2]>>5)]++;}
+      var mbi=0,mbc=0;
+      for(b2=0;b2<512;b2++)if(colHist[b2]>mbc){mbc=colHist[b2];mbi=b2;}
+      var mr=0,mg=0,mb=0,mn=0;
+      for(y=0;y<hh;y++){
+        o=(y*W+x)*4;
+        if(((( d[o]>>5)<<6)|((d[o+1]>>5)<<3)|(d[o+2]>>5))===mbi){mr+=d[o];mg+=d[o+1];mb+=d[o+2];mn++;}
+      }
+      cols[x*3]=mr/mn;cols[x*3+1]=mg/mn;cols[x*3+2]=mb/mn;
+    }
+  }
+  /* 3) अकेली-दुकेली अलग-रंग लकीरें (margin-रेखा, border) footer में न टपकें —
+        सिर्फ़ चौड़े block (असली split) ही अपना रंग रखें */
+  var minRun=Math.max(6,Math.round(W*0.02));
+  x=0;
+  while(x<W){
+    if(fb[x]){
+      var x0=x;
+      while(x<W&&fb[x])x++;
+      if(x-x0<minRun)for(var xf=x0;xf<x;xf++){cols[xf*3]=base.r;cols[xf*3+1]=base.g;cols[xf*3+2]=base.b;}
+    }else x++;
+  }
+  /* 4) हल्की horizontal smoothing */
+  var rad=Math.max(2,Math.round(W/260)),sm=new Float32Array(W*3);
+  for(var ch2=0;ch2<3;ch2++){
+    var acc=0,cnt2=2*rad+1;
+    for(var x2=-rad;x2<=rad;x2++)acc+=cols[Math.min(W-1,Math.max(0,x2))*3+ch2];
+    sm[ch2]=acc/cnt2;
+    for(var x3=1;x3<W;x3++){
+      acc+=cols[Math.min(W-1,x3+rad)*3+ch2]-cols[Math.max(0,x3-rad-1)*3+ch2];
+      sm[x3*3+ch2]=acc/cnt2;
+    }
+  }
+  var ar=0,ag=0,ab=0;
+  for(x=0;x<W;x++){ar+=sm[x*3];ag+=sm[x*3+1];ab+=sm[x*3+2];}
+  var avg={r:Math.round(ar/W),g:Math.round(ag/W),b:Math.round(ab/W)};
+  /* 5) लगभग-एकरंगा? → solid साफ़ पट्टी (कोई लहर/धब्बा नहीं) */
+  var dev=0;
+  for(x=0;x<W;x++){
+    dev+=Math.abs(sm[x*3]-avg.r)+Math.abs(sm[x*3+1]-avg.g)+Math.abs(sm[x*3+2]-avg.b);
+  }
+  if(dev/W<24)return{bg:avg,strip:null};
+  var strip=document.createElement('canvas');strip.width=W;strip.height=1;
+  var sg=strip.getContext('2d');
+  var si=sg.createImageData(W,1);
+  for(x=0;x<W;x++){
+    si.data[x*4]=Math.round(sm[x*3]);si.data[x*4+1]=Math.round(sm[x*3+1]);
+    si.data[x*4+2]=Math.round(sm[x*3+2]);si.data[x*4+3]=255;
+  }
+  sg.putImageData(si,0,0);
+  return{bg:avg,strip:strip};
+}
+function wmfIconW(kind,s){return (kind==='yt'||kind==='gm')?s*1.32:s;}
+function wmfRR(g,x,y,w,h,r){
+  g.beginPath();
+  g.moveTo(x+r,y);g.lineTo(x+w-r,y);g.arcTo(x+w,y,x+w,y+r,r);
+  g.lineTo(x+w,y+h-r);g.arcTo(x+w,y+h,x+w-r,y+h,r);
+  g.lineTo(x+r,y+h);g.arcTo(x,y+h,x,y+h-r,r);
+  g.lineTo(x,y+r);g.arcTo(x,y,x+r,y,r);g.closePath();
+}
+function wmfIcon(g,kind,x,y,s,accent){
+  if(kind==='pen'){
+    g.save();g.translate(x+s/2,y+s/2);g.rotate(-0.72);g.fillStyle=accent;
+    g.fillRect(-s*0.085,-s*0.42,s*0.17,s*0.60);
+    g.beginPath();g.moveTo(-s*0.14,s*0.18);g.lineTo(s*0.14,s*0.18);g.lineTo(0,s*0.46);g.closePath();g.fill();
+    g.restore();return s;
+  }
+  if(kind==='tg'){
+    var r=s/2;
+    g.fillStyle='#2AABEE';g.beginPath();g.arc(x+r,y+r,r,0,6.3);g.fill();
+    g.fillStyle='#ffffff';g.beginPath();
+    g.moveTo(x+s*0.20,y+s*0.50);g.lineTo(x+s*0.80,y+s*0.24);
+    g.lineTo(x+s*0.62,y+s*0.78);g.lineTo(x+s*0.47,y+s*0.60);
+    g.lineTo(x+s*0.35,y+s*0.71);g.lineTo(x+s*0.39,y+s*0.54);
+    g.closePath();g.fill();return s;
+  }
+  if(kind==='yt'){
+    var w=s*1.32,h2=s*0.92,ry=y+(s-h2)/2,rad=h2*0.3;
+    g.fillStyle='#FF0033';wmfRR(g,x,ry,w,h2,rad);g.fill();
+    g.fillStyle='#ffffff';g.beginPath();
+    g.moveTo(x+w*0.40,ry+h2*0.27);g.lineTo(x+w*0.40,ry+h2*0.73);g.lineTo(x+w*0.73,ry+h2*0.5);
+    g.closePath();g.fill();return w;
+  }
+  if(kind==='gm'){
+    var w2=s*1.32,h3=s*0.98,y0=y+(s-h3)/2,x0=x,rad2=h3*0.16;
+    wmfRR(g,x0,y0,w2,h3,rad2);
+    g.save();
+    g.fillStyle='#ffffff';g.fill();
+    g.lineWidth=Math.max(1,h3*0.05);g.strokeStyle='rgba(60,64,67,0.30)';g.stroke();
+    g.clip();
+    var inset=w2*0.11,Lx=x0+inset,Rx=x0+w2-inset;
+    var Ty=y0+h3*0.10,By=y0+h3*0.92,Cx=x0+w2/2,Vy=y0+h3*0.56;
+    g.lineWidth=w2*0.17;g.lineJoin='round';g.lineCap='round';
+    function seg(ax,ay,bx,by,col){g.strokeStyle=col;g.beginPath();g.moveTo(ax,ay);g.lineTo(bx,by);g.stroke();}
+    seg(Lx,By,Lx,Ty,'#34A853');seg(Lx,Ty,Cx,Vy,'#EA4335');
+    seg(Cx,Vy,Rx,Ty,'#FBBC04');seg(Rx,Ty,Rx,By,'#4285F4');
+    g.restore();return w2;
+  }
+  return 0;
+}
+function wmfPlan(f){
+  var g=[];
+  if(f.brand)g.push({kind:'brand',segs:[{t:f.brand,w:800,role:'v'}]});
+  if(f.name)g.push({kind:'prep',segs:[{icon:'pen'},{t:' Prepared by: ',w:500,role:'l'},{t:f.name,w:700,role:'v'}]});
+  if(f.tg)g.push({kind:'tg',segs:[{icon:'tg'},{t:' Telegram: ',w:500,role:'l'},{t:f.tg,w:700,role:'v'}]});
+  if(f.yt)g.push({kind:'yt',segs:[{icon:'yt'},{t:' YouTube: ',w:500,role:'l'},{t:f.yt,w:700,role:'v'}]});
+  if(f.gm)g.push({kind:'gm',segs:[{icon:'gm'},{t:'  '+f.gm,w:700,role:'v'}]});
+  var plan=[];
+  g.forEach(function(grp,gi){
+    if(gi>0)plan.push({type:'sep',t:(g[0].kind==='brand'&&gi===1)?'   •   ':'   |   '});
+    plan.push({type:'group',kind:grp.kind,segs:grp.segs});
+  });
+  return plan;
+}
+function wmfCanvas(w,h,bgi,f){
+  /* v9.2: bgi={bg:{r,g,b},strip:canvas} — strip में slide के निचले किनारे का
+     प्रति-स्तम्भ रंग है; उसे नीचे तक फैलाने से footer slide का ही हिस्सा दिखता है।
+     (पुराने ढंग का सीधा {r,g,b} भी चल जाएगा) */
+  var bg=(bgi&&bgi.bg)?bgi.bg:(bgi||{r:15,g:21,b:40});
+  var strip=(bgi&&bgi.strip)?bgi.strip:null;
+  var c=document.createElement('canvas');c.width=w;c.height=h;
+  var g=c.getContext('2d');
+  /* 1) आधार — slide की जोड़-पट्टी को नीचे तक उतारो: रंग हूबहू वही, जोड़ अदृश्य */
+  if(strip&&strip.width>0){
+    g.imageSmoothingEnabled=true;
+    g.drawImage(strip,0,0,strip.width,1,0,0,w,h);
+  }else{
+    g.fillStyle='rgb('+bg.r+','+bg.g+','+bg.b+')';g.fillRect(0,0,w,h);
+  }
+  var lum=(0.299*bg.r+0.587*bg.g+0.114*bg.b)/255,light=lum>0.60;
+  /* 2) उसी रंग-परिवार का महीन घूंघट — ऊपर 0 (जोड़ हूबहू मिले), नीचे हल्की गहराई;
+        बीच के (mid-tone) रंगों पर ज़रा घना, ताकि अक्षर हर रंग पर साफ़ पढ़ें */
+  var mid=1-Math.min(1,Math.abs(lum-0.5)/0.5);
+  var vA=0.10+0.30*mid;
+  var veil=g.createLinearGradient(0,0,0,h);
+  if(light){
+    var lt=wmfLighten(bg,0.92);
+    veil.addColorStop(0,'rgba('+lt.r+','+lt.g+','+lt.b+',0)');
+    veil.addColorStop(0.40,'rgba('+lt.r+','+lt.g+','+lt.b+','+(vA*0.9).toFixed(3)+')');
+    veil.addColorStop(1,'rgba('+lt.r+','+lt.g+','+lt.b+','+(vA*0.55).toFixed(3)+')');
+  }else{
+    var dk={r:Math.round(bg.r*0.22),g:Math.round(bg.g*0.22),b:Math.round(bg.b*0.22)};
+    veil.addColorStop(0,'rgba('+dk.r+','+dk.g+','+dk.b+',0)');
+    veil.addColorStop(0.40,'rgba('+dk.r+','+dk.g+','+dk.b+','+(vA*0.9).toFixed(3)+')');
+    veil.addColorStop(1,'rgba('+dk.r+','+dk.g+','+dk.b+','+vA.toFixed(3)+')');
+  }
+  g.fillStyle=veil;g.fillRect(0,0,w,h);
+  /* 3) अक्षर-रंग — सुनहरी ब्रांड-पहचान, पर पीले/नारंगी तल पर सोना घुले नहीं */
+  var hsl=wmRgb2Hsl(bg.r,bg.g,bg.b);
+  var goldClash=(!light&&hsl.s>0.28&&hsl.h>0.055&&hsl.h<0.175);
+  var col={accent:light?'#8a6d1f':'#D8B65B',label:light?'#1c2440':'#EDF1FB',
+           value:light?'#6b4d00':(goldClash?'#FFF4D6':'#F0D689'),
+           dim:light?'rgba(20,28,50,0.50)':'rgba(233,237,248,0.46)'};
+  g.fillStyle=col.accent;g.fillRect(0,0,w,Math.max(1,h*0.055));
+  var plan=wmfPlan(f),hits=[];
+  if(!plan.length)return{canvas:c,hits:hits,w:w};
+  var fs=h*0.46*f.tScale;
+  function widthOf(item,fsz){
+    if(item.type==='sep'){g.font='500 '+fsz+'px '+WMF_FONT;return g.measureText(item.t).width;}
+    var tot=0;
+    item.segs.forEach(function(s2){
+      if(s2.icon)tot+=wmfIconW(s2.icon,fsz*1.12)+fsz*0.22;
+      else{g.font=(s2.w||500)+' '+fsz+'px '+WMF_FONT;tot+=g.measureText(s2.t).width;}
+    });
+    return tot;
+  }
+  function measure(fsz){var t=0;plan.forEach(function(it){t+=widthOf(it,fsz);});return t;}
+  var maxW=w*0.95,tot=measure(fs);
+  if(tot>maxW){fs=Math.max(7,fs*maxW/tot);tot=measure(fs);}
+  var x=(w-tot)/2,midY=h*0.55;
+  g.textBaseline='middle';
+  /* v9.2: महीन काँट्रास्ट-छाया — मिले-जुले/रंगीन तल पर भी अक्षर उभरे रहें */
+  g.shadowColor=light?'rgba(255,255,255,0.40)':'rgba(0,0,0,0.40)';
+  g.shadowBlur=fs*0.16;g.shadowOffsetX=0;g.shadowOffsetY=0;
+  plan.forEach(function(item){
+    if(item.type==='sep'){
+      g.font='500 '+fs+'px '+WMF_FONT;g.fillStyle=col.dim;
+      g.fillText(item.t,x,midY);x+=g.measureText(item.t).width;return;
+    }
+    var gx0=x;
+    item.segs.forEach(function(s2){
+      if(s2.icon){
+        var isz=fs*1.12,iy=midY-isz/2;
+        x+=wmfIcon(g,s2.icon,x,iy,isz,col.accent);x+=fs*0.22;
+      }else{
+        g.font=(s2.w||500)+' '+fs+'px '+WMF_FONT;
+        g.fillStyle=(s2.role==='v')?col.value:col.label;
+        g.fillText(s2.t,x,midY);x+=g.measureText(s2.t).width;
+      }
+    });
+    if(item.kind==='tg'||item.kind==='yt'||item.kind==='gm')
+      hits.push({kind:item.kind,x0:Math.max(0,gx0-fs*0.2),x1:Math.min(w,x+fs*0.2)});
+  });
+  return{canvas:c,hits:hits,w:w};
+}
+function wmfTgUrl(v){v=(v||'').trim();if(!v)return null;if(/^https?:\/\//i.test(v))return v;if(v.charAt(0)==='@')return 'https://t.me/'+v.slice(1);if(/^t\.me\//i.test(v))return 'https://'+v;return 'https://t.me/'+v;}
+function wmfYtUrl(v){v=(v||'').trim();if(!v)return null;if(/^https?:\/\//i.test(v))return v;if(v.charAt(0)==='@')return 'https://www.youtube.com/'+v;if(/^(www\.)?(youtube\.com|youtu\.be)\//i.test(v))return 'https://'+v;return 'https://www.youtube.com/@'+v;}
+function wmfMailUrl(v){v=(v||'').trim();if(!v)return null;if(/^mailto:/i.test(v))return v;return 'mailto:'+v;}
+function wmfAddLink(doc,page,x,y,w,h,url){
+  var L=window.PDFLib;
+  var annot=doc.context.obj({
+    Type:'Annot',Subtype:'Link',
+    Rect:[x,y,x+w,y+h],Border:[0,0,0],
+    A:{Type:'Action',S:'URI',URI:L.PDFString.of(url)}
+  });
+  var ref=doc.context.register(annot);
+  var key=L.PDFName.of('Annots');
+  var ex=page.node.lookup(key);
+  if(ex&&ex instanceof L.PDFArray)ex.push(ref);
+  else page.node.set(key,doc.context.obj([ref]));
+}
+/* प्रीव्यू व आउटपुट दोनों के लिए: canvas पर फुटर चढ़ाओ, hits लौटाओ */
+function wmfPaint(ctx,W,H,f){
+  if(!f||!f.on)return null;
+  var bandH=Math.max(8,Math.round(f.fh*H));
+  var bg=wmfBgFor(ctx,W,H,bandH);
+  var res=wmfCanvas(W,bandH,bg,f);
+  ctx.drawImage(res.canvas,0,H-bandH);
+  return{hits:res.hits,w:res.w,bandH:bandH};
+}
+function wmCompose(tctx,W,H,srcCanvas,s,pageIdx,forOutput){
+  var sec=s.sec||{ai:false,jit:false,inv:false,key:'BODHI'};
+  var useSec=(sec.ai||sec.jit||sec.inv);
+  var R=wmRng(wmHash(wmSeedStr(pageIdx)));
+  var s2=s;
+  if(sec.jit){
+    s2=Object.assign({},s);
+    s2.rot=s.rot+(R()-0.5)*4;
+    s2.size=Math.max(2,s.size*(1+(R()-0.5)*0.1));
+    s2.op=Math.max(0.02,Math.min(1,s.op*(1+(R()-0.5)*0.22)));
+  }
+  var useLock=(s.useLock!==false && s.type!=='img');
+  var useClassic=(s.useClassic!==false);
+  var auto=((s.colorMode||'auto')==='auto' && s.type!=='img');
+  var ana=null;
+  if(auto||sec.ai||sec.inv||useLock)ana=wmAnalyze(srcCanvas);
+  if(!useClassic){
+    if(useLock&&ana)wmDrawTextlock(tctx,W,H,ana,s2,R);
+    if(forOutput&&sec.inv&&ana){
+      wmGhostStamp(tctx,W,H,ana,R,(s.text||'बोधि क्लासेस'),3.2);
+      wmForensic(tctx,W,H,sec.key,2);
+    }
+    WM.lastFooter=wmfPaint(tctx,W,H,s.footer);
+    return true;
+  }
+  if(sec.ai||sec.jit){
+    if(s2===s)s2=Object.assign({},s);
+    s2.tj=R;
+  }
+  var jx=0,jy=0;
+  if(sec.jit){jx=(R()-0.5)*W*0.025;jy=(R()-0.5)*H*0.02;}
+  var drawOp=Math.max(0.02,Math.min(1,s2.op));
+  var wc;
+  if(auto&&ana){
+    var ms=Object.assign({},s2);ms.color='#ffffff';ms.op=1;
+    var mask=makeWMCanvas(W,H,ms);
+    if(sec.ai){
+      var mf0=wmModField(W,H,ana,R);
+      var mx0=mask.getContext('2d');
+      mx0.globalCompositeOperation='destination-in';mx0.imageSmoothingEnabled=true;
+      mx0.drawImage(mf0,0,0,W,H);mx0.globalCompositeOperation='source-over';
+    }
+    wc=wmColorizeByBg(mask,ana,W,H);
+    mask.width=1;mask.height=1;
+    tctx.save();tctx.globalAlpha=Math.min(1,drawOp*1.6);tctx.drawImage(wc,jx,jy);tctx.restore();
+  }else{
+    wc=makeWMCanvas(W,H,s2);
+    if(sec.ai&&ana){
+      var mf=wmModField(W,H,ana,R);
+      var wx=wc.getContext('2d');
+      wx.globalCompositeOperation='destination-in';wx.imageSmoothingEnabled=true;
+      wx.drawImage(mf,0,0,W,H);wx.globalCompositeOperation='source-over';
+    }
+    tctx.drawImage(wc,jx,jy);
+  }
+  if(useLock&&ana)wmDrawTextlock(tctx,W,H,ana,s2,R);
+  if(forOutput&&sec.inv&&ana){
+    wmGhostStamp(tctx,W,H,ana,R,(s.text||'बोधि क्लासेस'),3.2);
+    wmForensic(tctx,W,H,sec.key,2);
+  }
+  wc.width=1;wc.height=1;
+  WM.lastFooter=wmfPaint(tctx,W,H,s.footer);
+  return true;
+}
+function wmBoxH(s,d,W,H,r){
+  for(var y=0;y<H;y++){
+    var o=y*W,acc=0,cnt=2*r+1;
+    for(var x=-r;x<=r;x++)acc+=s[o+Math.min(W-1,Math.max(0,x))];
+    d[o]=acc/cnt;
+    for(x=1;x<W;x++){acc+=s[o+Math.min(W-1,x+r)]-s[o+Math.max(0,x-r-1)];d[o+x]=acc/cnt;}
+  }
+}
+function wmBoxV(s,d,W,H,r){
+  for(var x=0;x<W;x++){
+    var acc=0,cnt=2*r+1;
+    for(var y=-r;y<=r;y++)acc+=s[Math.min(H-1,Math.max(0,y))*W+x];
+    d[x]=acc/cnt;
+    for(y=1;y<H;y++){acc+=s[Math.min(H-1,y+r)*W+x]-s[Math.max(0,y-r-1)*W+x];d[y*W+x]=acc/cnt;}
+  }
+}
+function wmSignGrid(key,G){var R=wmRng(wmHash('inv|'+key)),sg=new Int8Array(G*G);for(var i=0;i<G*G;i++)sg[i]=R()<0.5?-1:1;return sg;}
+function wmZFor(res,sd,W,H,key,G){
+  var sg=wmSignGrid(key,G),sum=0,N=W*H;
+  for(var y=0;y<H;y++){
+    var ro=Math.min(G-1,(y*G/H)|0)*G,b2=y*W;
+    for(var x2=0;x2<W;x2++)sum+=res[b2+x2]*sg[ro+Math.min(G-1,(x2*G/W)|0)];
+  }
+  return sum/(sd*Math.sqrt(N));
+}
+async function wmDetect(file,key){
+  var url=URL.createObjectURL(file);
+  var img=await loadImg(url);
+  URL.revokeObjectURL(url);
+  var W=img.width,H=img.height,cap=1800;
+  if(Math.max(W,H)>cap){var scl=cap/Math.max(W,H);W=Math.round(W*scl);H=Math.round(H*scl);}
+  var c=document.createElement('canvas');c.width=W;c.height=H;
+  var x=c.getContext('2d',{willReadFrequently:true});
+  x.drawImage(img,0,0,W,H);
+  var d=x.getImageData(0,0,W,H).data;
+  var N=W*H,lu=new Float32Array(N);
+  for(var i=0;i<N;i++)lu[i]=d[i*4]*0.299+d[i*4+1]*0.587+d[i*4+2]*0.114;
+  var G=96,r=Math.max(2,Math.round(Math.min(W,H)/G/2));
+  var tmp=new Float32Array(N),bl=new Float32Array(N);
+  wmBoxH(lu,tmp,W,H,r);wmBoxV(tmp,bl,W,H,r);
+  var res=new Float32Array(N),ss=0;
+  for(i=0;i<N;i++){res[i]=lu[i]-bl[i];ss+=res[i]*res[i];}
+  c.width=1;c.height=1;
+  var sd=Math.sqrt(Math.max(1e-9,ss/N));
+  var zk=wmZFor(res,sd,W,H,key,G);
+  var zs=[];
+  for(var ci=0;ci<12;ci++){zs.push(wmZFor(res,sd,W,H,'ctrl|'+ci,G));await tick();}
+  var mu=0;zs.forEach(function(v){mu+=v;});mu/=zs.length;
+  var vr=0;zs.forEach(function(v){vr+=(v-mu)*(v-mu);});
+  return (zk-mu)/Math.max(1,Math.sqrt(vr/zs.length));
+}
+async function wmReveal(file){
+  var url=URL.createObjectURL(file);
+  var img=await loadImg(url);
+  URL.revokeObjectURL(url);
+  var W=img.width,H=img.height,cap=1600;
+  if(Math.max(W,H)>cap){var scl=cap/Math.max(W,H);W=Math.round(W*scl);H=Math.round(H*scl);}
+  var c=document.createElement('canvas');c.width=W;c.height=H;
+  var x=c.getContext('2d',{willReadFrequently:true});
+  x.drawImage(img,0,0,W,H);
+  var d=x.getImageData(0,0,W,H).data;
+  var N=W*H,lu=new Float32Array(N);
+  for(var i=0;i<N;i++)lu[i]=d[i*4]*0.299+d[i*4+1]*0.587+d[i*4+2]*0.114;
+  var t=new Float32Array(N),b1=new Float32Array(N);
+  wmBoxH(lu,t,W,H,2);wmBoxV(t,b1,W,H,2);
+  var res=new Float32Array(N);
+  for(i=0;i<N;i++){var rv=lu[i]-b1[i];if(rv>4)rv=4;else if(rv<-4)rv=-4;res[i]=rv<0?-rv:rv;}
+  var t2=new Float32Array(N),E=new Float32Array(N);
+  wmBoxH(res,t2,W,H,5);wmBoxV(t2,E,W,H,5);
+  var samp=[];
+  for(i=0;i<N;i+=97)samp.push(E[i]);
+  samp.sort(function(a,b){return a-b;});
+  var lo=samp[(samp.length*0.45)|0]||0,hi=samp[(samp.length*0.995)|0]||1;
+  var out=x.createImageData(W,H),od=out.data;
+  for(i=0;i<N;i++){
+    var v=Math.max(0,Math.min(1,(E[i]-lo)/Math.max(1e-6,hi-lo)));
+    var p=i*4;
+    od[p]=Math.round(18+v*230);od[p+1]=Math.round(15+v*200);od[p+2]=Math.round(30+v*95);od[p+3]=255;
+  }
+  x.putImageData(out,0,0);
+  return c;
+}
+var wmTimer=null;
+function wmDrawOverlay(){
+  clearTimeout(wmTimer);
+  wmTimer=setTimeout(function(){
+    var b=$('#wm-base');
+    if(!b.width||!WM.jd)return;
+    var s=wmState();
+    var o=$('#wm-ovl');
+    o.width=b.width;o.height=b.height;
+    var ox=o.getContext('2d');
+    ox.clearRect(0,0,o.width,o.height);
+    var mr=document.querySelector('input[name="wm-mode"]:checked');
+    var perm=mr&&mr.value==='perm';
+    if(perm){
+      /* v9.2: preview भी असली output जैसा — base समेत compose करो,
+         ताकि footer slide के असली रंग से sample हो (पहले पारदर्शी overlay से
+         sample होकर footer preview में हमेशा गहरा दिखता था) */
+      var fx0=document.createElement('canvas');fx0.width=b.width;fx0.height=b.height;
+      var fxc0=fx0.getContext('2d',{willReadFrequently:true});
+      fxc0.drawImage(b,0,0);
+      wmCompose(fxc0,o.width,o.height,b,s,WM.cur-1,false);
+      ox.drawImage(fx0,0,0);
+      fx0.width=1;fx0.height=1;
+    }else{
+      var wc=makeWMCanvas(b.width,b.height,s);
+      ox.drawImage(wc,0,0);
+      var fx=document.createElement('canvas');fx.width=b.width;fx.height=b.height;
+      var fxc=fx.getContext('2d',{willReadFrequently:true});
+      fxc.drawImage(b,0,0);fxc.drawImage(wc,0,0);
+      var fr=wmfPaint(fxc,b.width,b.height,s.footer);
+      if(fr){
+        var bandH=fr.bandH;
+        ox.drawImage(fx,0,b.height-bandH,b.width,bandH,0,b.height-bandH,b.width,bandH);
+      }
+    }
+  },60);
+}
+function wmTargets(){
+  var mode=document.querySelector('input[name="wm-pg"]:checked').value;
+  var set=new Set();
+  if(mode==='all'){for(var i=0;i<WM.n;i++)set.add(i);}
+  else if(mode==='odd'){for(var i2=0;i2<WM.n;i2+=2)set.add(i2);}
+  else if(mode==='even'){for(var i3=1;i3<WM.n;i3+=2)set.add(i3);}
+  else{
+    var gs=parseRanges($('#wm-range').value,WM.n);
+    gs.forEach(function(g){g.forEach(function(i){set.add(i);});});
+  }
+  return set;
+}
+$('#wm-go').addEventListener('click',async function(){
+  if(!WM.bytes&&WED.pages.length){ if(!await wedApply(true))return; }
+  if(!WM.bytes){toast('पहले PDF डालो','err');return;}
+  if(WED.dirty){ toast('पहले पेज-बदलाव लगाए जा रहे हैं…'); if(!await wedApply(true))return; }
+  var s=wmState();
+  if(s.type==='img'&&!s.logo){toast('पहले लोगो चुनो','err');return;}
+  var targets;
+  try{targets=wmTargets();}
+  catch(_){toast('रेंज समझ नहीं आई — ऐसे लिखो: 1-3, 7','err');return;}
+  var mode=document.querySelector('input[name="wm-mode"]:checked').value;
+  if(WM.enc&&mode==='layer'){mode='perm';toast('🔒 लॉक PDF पर परत-मोड नहीं चलता — “स्थायी” मोड से बना रहा हूँ','');}
+  var base=saneName($('#wm-name').value,'bodhi-watermarked');
+  showBusy(mode==='perm'?'स्थायी वॉटरमार्क पिक्सेल में fuse हो रहा है…':'वॉटरमार्क लग रहा है…');
+  try{
+    var outBytes;
+    if(mode==='layer'){
+      var out=await PDFDocument.load(WM.bytes,{ignoreEncryption:true});
+      var cache={};
+      var pages=out.getPages();
+      for(var i=0;i<pages.length;i++){
+        setBusy('पेज '+(i+1)+'/'+pages.length,((i+1)/pages.length)*100);
+        if(!targets.has(i))continue;
+        var pg=pages[i];
+        var vs=viewerSize(pg);
+        var key=Math.round(vs.vw)+'x'+Math.round(vs.vh);
+        if(!cache[key]){
+          var wc=makeWMCanvas(vs.vw*2,vs.vh*2,s);
+          var blob=await canvasBlob(wc,'image/png');
+          cache[key]=await out.embedPng(await blobBytes(blob));
+        }
+        var place=uprightPlace(pg,0,0);
+        pg.drawImage(cache[key],{x:place.x,y:place.y,width:vs.vw,height:vs.vh,rotate:place.rotate});
+        if(s.footer&&s.footer.on){
+          /* v9.2: footer अब हर पेज के अपने रंग से बनता है — पहले एक ही पेज का footer
+             cache होकर सारे पेजों पर चिपक जाता था, इसलिए रंग match नहीं करता था */
+          var sc0=await renderPageCanvas(WM.jd,i+1,1.2);
+          var fc0=document.createElement('canvas');fc0.width=sc0.width;fc0.height=sc0.height;
+          var fcx=fc0.getContext('2d',{willReadFrequently:true});
+          fcx.drawImage(sc0,0,0);
+          var bandH0=Math.max(8,Math.round(s.footer.fh*fc0.height));
+          var bg0=wmfBgFor(fcx,fc0.width,fc0.height,bandH0);
+          var r0=wmfCanvas(2400,Math.max(20,Math.round(2400*(bandH0/fc0.width))),bg0,s.footer);
+          var fe={img:await out.embedPng(await blobBytes(await canvasBlob(r0.canvas,'image/png'))),
+                  hits:r0.hits.map(function(h2){return{kind:h2.kind,x0f:h2.x0/r0.w,x1f:h2.x1/r0.w};})};
+          sc0.width=1;sc0.height=1;fc0.width=1;fc0.height=1;
+          var bandPts0=s.footer.fh*vs.vh;
+          pg.drawImage(fe.img,{x:0,y:0,width:vs.vw,height:bandPts0});
+          if(s.footer.links){
+            fe.hits.forEach(function(ht){
+              var url=null;
+              if(ht.kind==='tg')url=wmfTgUrl(s.footer.tg);
+              else if(ht.kind==='yt')url=wmfYtUrl(s.footer.yt);
+              else if(ht.kind==='gm')url=wmfMailUrl(s.footer.gm);
+              if(url)wmfAddLink(out,pg,ht.x0f*vs.vw,0,(ht.x1f-ht.x0f)*vs.vw,bandPts0,url);
+            });
+          }
+        }
+        if(i%5===0)await tick();
+      }
+      outBytes=await out.save();
+    }else{
+      var scale=parseFloat($('#wm-qual').value);
+      var out2=await PDFDocument.create();
+      var passDoc=null; /* बिना-वॉटरमार्क पेजों के लिए — पहली ज़रूरत पर ही खुलेगा */
+      for(var p=1;p<=WM.n;p++){
+        setBusy('पेज '+p+'/'+WM.n,(p/WM.n)*100);
+        if(!targets.has(p-1)){
+          if(WM.enc){
+            /* लॉक PDF: सीधी कॉपी काम नहीं करेगी — पेज को वैसे ही (बिना वॉटरमार्क) तस्वीर बनाकर रखो */
+            var c0=await renderPageCanvas(WM.jd,p,scale);
+            var jb0=await canvasBlob(c0,'image/jpeg',0.86);
+            var emb0=await out2.embedJpg(await blobBytes(jb0));
+            var pj0=await WM.jd.getPage(p);
+            var vq=pj0.getViewport({scale:1});
+            var pg0=out2.addPage([vq.width,vq.height]);
+            pg0.drawImage(emb0,{x:0,y:0,width:vq.width,height:vq.height});
+            c0.width=1;c0.height=1;
+            await tick();
+          }else{
+            if(!passDoc)passDoc=await libLoad(WM.bytes);
+            var cp=await out2.copyPages(passDoc,[p-1]);
+            out2.addPage(cp[0]);
+          }
+          continue;
+        }
+        var c=await renderPageCanvas(WM.jd,p,scale);
+        var cctx=c.getContext('2d');
+        wmCompose(cctx,c.width,c.height,c,s,p-1,true);
+        var jb=await canvasBlob(c,'image/jpeg',0.88);
+        c.width=1;c.height=1;
+        var emb=await out2.embedJpg(await blobBytes(jb));
+        var pj=await WM.jd.getPage(p);
+        var vp1=pj.getViewport({scale:1});
+        var pg2=out2.addPage([vp1.width,vp1.height]);
+        pg2.drawImage(emb,{x:0,y:0,width:vp1.width,height:vp1.height});
+        if(s.footer&&s.footer.on&&s.footer.links&&WM.lastFooter){
+          var bandPts=s.footer.fh*vp1.height;
+          WM.lastFooter.hits.forEach(function(ht){
+            var url=null;
+            if(ht.kind==='tg')url=wmfTgUrl(s.footer.tg);
+            else if(ht.kind==='yt')url=wmfYtUrl(s.footer.yt);
+            else if(ht.kind==='gm')url=wmfMailUrl(s.footer.gm);
+            if(url)wmfAddLink(out2,pg2,(ht.x0/WM.lastFooter.w)*vp1.width,0,
+                              ((ht.x1-ht.x0)/WM.lastFooter.w)*vp1.width,bandPts,url);
+          });
+        }
+        await tick();
+      }
+      setBusy('अंतिम फ़ाइल लिखी जा रही है — रुको…',100);
+      await tick();
+      outBytes=await out2.save();
+    }
+    dl(new Blob([outBytes],{type:'application/pdf'}),base+'.pdf');
+    toast('वॉटरमार्क लग गया ('+fmtBytes(outBytes.length)+')','ok');
+  }catch(e){toast(friendlyErr(e),'err');}
+  hideBusy();
+});
+
+/* ================= 5. इमेज साइज़ / कंप्रेस ================= */
+var IM={items:[]};
+bindDrop('#im-drop','#im-file',async function(fs){
+  for(var i=0;i<fs.length;i++){
+    var f=fs[i];
+    if(!/^image\//.test(f.type)){toast(f.name+' इमेज नहीं है','err');continue;}
+    try{
+      var url=URL.createObjectURL(f);
+      var img=await loadImg(url);
+      IM.items.push({name:f.name,size:f.size,type:f.type,img:img,url:url,iw:img.width,ih:img.height,out:null,el:null});
+    }catch(_){toast(f.name+' खुल नहीं पाई (HEIC हो तो पहले JPG बनाओ)','err');}
+  }
+  if(IM.items.length){$('#im-body').classList.remove('hidden');imRender();imEstimate();}
+});
+function imRender(){
+  var L=$('#im-list');L.innerHTML='';
+  IM.items.forEach(function(it){
+    var d=document.createElement('div');
+    d.className='icard';
+    d.innerHTML='<div class="ith"><img src="'+it.url+'"></div><div class="iname">'+esc(it.name)+'</div><div class="imeta">'+it.iw+'×'+it.ih+' · '+fmtBytes(it.size)+'</div><div class="iresult"></div><div class="row" style="margin-top:8px"><button class="btn ghost small dlone hidden">डाउनलोड</button><button class="pico del" title="हटाओ">✕</button></div>';
+    d.querySelector('.del').addEventListener('click',function(){
+      try{URL.revokeObjectURL(it.url);}catch(_){}
+      IM.items.splice(IM.items.indexOf(it),1);imRender();
+      if(!IM.items.length)$('#im-body').classList.add('hidden');
+    });
+    d.querySelector('.dlone').addEventListener('click',function(){if(it.out)dl(it.out.blob,it.out.name);});
+    it.el=d;L.appendChild(d);
+  });
+}
+function imDims(it){
+  var rs=document.querySelector('input[name="im-rs"]:checked').value;
+  var w=it.iw,h=it.ih;
+  if(rs==='pct'){
+    var p=(+$('#im-pct').value)/100;
+    w=Math.max(1,Math.round(it.iw*p));h=Math.max(1,Math.round(it.ih*p));
+  }else if(rs==='wh'){
+    var W=parseInt($('#im-w').value)||0, H=parseInt($('#im-h').value)||0, lock=$('#im-lock').checked;
+    if(W&&H&&!lock){w=W;h=H;}
+    else if(W){w=W;h=Math.max(1,Math.round(it.ih*W/it.iw));}
+    else if(H){h=H;w=Math.max(1,Math.round(it.iw*H/it.ih));}
+  }
+  return{w:w,h:h};
+}
+function drawEncode(img,w,h,mime,q){
+  var c=document.createElement('canvas');c.width=w;c.height=h;
+  var x=c.getContext('2d');
+  if(mime!=='image/png'){x.fillStyle='#fff';x.fillRect(0,0,w,h);}
+  x.imageSmoothingQuality='high';
+  x.drawImage(img,0,0,w,h);
+  return canvasBlob(c,mime,q);
+}
+function pickMime(it){
+  var f=$('#im-fmt').value;
+  if(f==='keep'){
+    if(/png/i.test(it.type))return'image/png';
+    if(/webp/i.test(it.type))return'image/webp';
+    return'image/jpeg';
+  }
+  return 'image/'+f;
+}
+function extOf(m){return m==='image/png'?'png':m==='image/webp'?'webp':'jpg';}
+async function encodeTargetKB(img,w,h,kb,mime){
+  if(mime==='image/png')mime='image/jpeg';
+  var lo=0.05,hi=0.95,best=null;
+  for(var i=0;i<8;i++){
+    var q=(lo+hi)/2;
+    var b=await drawEncode(img,w,h,mime,q);
+    if(b.size/1024<=kb){best=b;lo=q;}else hi=q;
+  }
+  if(best)return{blob:best,w:w,h:h,mime:mime};
+  var bw=w,bh=h;
+  for(var t=0;t<7;t++){
+    bw=Math.max(40,Math.round(bw*0.85));bh=Math.max(40,Math.round(bh*0.85));
+    var b2=await drawEncode(img,bw,bh,mime,0.6);
+    if(b2.size/1024<=kb)return{blob:b2,w:bw,h:bh,mime:mime};
+  }
+  var b3=await drawEncode(img,bw,bh,mime,0.35);
+  return{blob:b3,w:bw,h:bh,mime:mime,over:(b3.size/1024>kb)};
+}
+$('#im-go').addEventListener('click',async function(){
+  if(!IM.items.length)return;
+  showBusy('इमेजें बन रही हैं…');
+  try{
+    var cm=document.querySelector('input[name="im-cm"]:checked').value;
+    var q=(+$('#im-q').value)/100;
+    var kb=Math.max(5,parseInt($('#im-kb').value)||50);
+    for(var i=0;i<IM.items.length;i++){
+      var it=IM.items[i];
+      setBusy(it.name,((i+1)/IM.items.length)*100);
+      var dm=imDims(it);
+      var mime=pickMime(it);
+      var res;
+      if(cm==='kb'){res=await encodeTargetKB(it.img,dm.w,dm.h,kb,mime);mime=res.mime;}
+      else{var blob=await drawEncode(it.img,dm.w,dm.h,mime,q);res={blob:blob,w:dm.w,h:dm.h};}
+      var nm=it.name.replace(/\.[^.]+$/,'')+'-bodhi.'+extOf(mime);
+      it.out={blob:res.blob,name:nm};
+      var rEl=it.el.querySelector('.iresult');
+      var pct=Math.round((1-res.blob.size/it.size)*100);
+      rEl.textContent='➜ '+res.w+'×'+res.h+' · '+fmtBytes(res.blob.size)+(pct>0?' ('+pct+'% कम)':'');
+      rEl.className='iresult'+(res.over?' bad':'');
+      if(res.over)rEl.textContent+=' — लक्ष्य से बड़ी रह गई';
+      it.el.querySelector('.dlone').classList.remove('hidden');
+      await tick();
+    }
+    $('#im-zip').classList.toggle('hidden',IM.items.length<2);
+    toast('सब तैयार — हर कार्ड पर डाउनलोड बटन आ गया','ok');
+  }catch(e){toast(friendlyErr(e),'err');}
+  hideBusy();
+});
+$('#im-zip').addEventListener('click',async function(){
+  var zip=new JSZip();var k=0;
+  IM.items.forEach(function(it){if(it.out){zip.file(it.out.name,it.out.blob);k++;}});
+  if(!k)return;
+  showBusy('ZIP बन रही है…');
+  dl(await zip.generateAsync({type:'blob'}),'bodhi-images.zip');
+  hideBusy();
+});
+var estT=null;
+function imEstimate(){
+  clearTimeout(estT);
+  estT=setTimeout(async function(){
+    var it=IM.items[0];
+    if(!it){$('#im-est').textContent='';return;}
+    var cm=document.querySelector('input[name="im-cm"]:checked').value;
+    if(cm!=='q'){$('#im-est').textContent='';return;}
+    try{
+      var dm=imDims(it);
+      var b=await drawEncode(it.img,dm.w,dm.h,pickMime(it),(+$('#im-q').value)/100);
+      $('#im-est').textContent='अनुमान (पहली इमेज): '+fmtBytes(b.size);
+    }catch(_){}
+  },220);
+}
+
+/* ================= 6. इमेज → PDF ================= */
+var IP={items:[]};
+bindDrop('#ip-drop','#ip-file',async function(fs){
+  for(var i=0;i<fs.length;i++){
+    var f=fs[i];
+    if(!/^image\//.test(f.type)){toast(f.name+' इमेज नहीं है','err');continue;}
+    try{
+      var url=URL.createObjectURL(f);
+      var img=await loadImg(url);
+      IP.items.push({id:'i'+Math.random().toString(36).slice(2,8),name:f.name,img:img,url:url});
+    }catch(_){toast(f.name+' खुल नहीं पाई','err');}
+  }
+  if(IP.items.length){$('#ip-body').classList.remove('hidden');ipRender();}
+});
+function ipRender(){
+  var L=$('#ip-list');L.innerHTML='';
+  IP.items.forEach(function(it,i){
+    var d=document.createElement('div');
+    d.className='frow';d.dataset.id=it.id;
+    d.innerHTML='<span class="handle">⠿</span><span class="ordn">'+(i+1)+'</span><img src="'+it.url+'" style="width:34px;height:34px;object-fit:cover;border-radius:6px"><span class="fname">'+esc(it.name)+'</span><span class="fmeta">'+it.img.width+'×'+it.img.height+'</span><button class="pico del" title="हटाओ">✕</button>';
+    d.querySelector('.del').addEventListener('click',function(){try{URL.revokeObjectURL(it.url);}catch(_){}IP.items.splice(IP.items.indexOf(it),1);ipRender();});
+    L.appendChild(d);
+  });
+}
+makeSortable($('#ip-list'),'.frow','.handle',false,function(){
+  var order=$$('#ip-list .frow').map(function(el){return el.dataset.id;});
+  IP.items.sort(function(a,b){return order.indexOf(a.id)-order.indexOf(b.id);});
+  ipRender();
+});
+$('#ip-go').addEventListener('click',async function(){
+  if(!IP.items.length){toast('पहले फोटो डालो','err');return;}
+  showBusy('PDF बन रही है…');
+  try{
+    var sizeSel=$('#ip-size').value, orient=$('#ip-orient').value;
+    var mm=Math.max(0,parseInt($('#ip-margin').value)||0);
+    var mpt=mm*2.8346;
+    var q=(+$('#ip-q').value)/100;
+    var SZ={a4:[595.28,841.89],letter:[612,792]};
+    var out=await PDFDocument.create();
+    for(var i=0;i<IP.items.length;i++){
+      var it=IP.items[i];
+      setBusy(it.name,((i+1)/IP.items.length)*100);
+      var jb=await drawEncode(it.img,it.img.width,it.img.height,'image/jpeg',q);
+      var emb=await out.embedJpg(await blobBytes(jb));
+      var pw,ph;
+      if(sizeSel==='img'){
+        var kk=Math.min(1,792/Math.max(it.img.width,it.img.height));
+        pw=it.img.width*kk+mpt*2;ph=it.img.height*kk+mpt*2;
+      }else{
+        var a=SZ[sizeSel][0], b=SZ[sizeSel][1];
+        var land=(orient==='l')||(orient==='auto'&&it.img.width>it.img.height);
+        pw=land?b:a;ph=land?a:b;
+      }
+      var pg=out.addPage([pw,ph]);
+      var aw=pw-mpt*2, ah=ph-mpt*2;
+      var k2=Math.min(aw/it.img.width,ah/it.img.height);
+      var dw=it.img.width*k2, dh=it.img.height*k2;
+      pg.drawImage(emb,{x:(pw-dw)/2,y:(ph-dh)/2,width:dw,height:dh});
+      await tick();
+    }
+    var bytes=await out.save();
+    dl(new Blob([bytes],{type:'application/pdf'}),saneName($('#ip-name').value,'bodhi-images')+'.pdf');
+    toast(IP.items.length+' फोटो की PDF तैयार ('+fmtBytes(bytes.length)+')','ok');
+  }catch(e){toast(friendlyErr(e),'err');}
+  hideBusy();
+});
+
+/* ================= 7. PDF → इमेज ================= */
+var PI={jd:null,n:0,base:''};
+bindDrop('#pi-drop','#pi-file',async function(fs){
+  try{
+    showBusy('PDF खुल रही है…');
+    var f=fs[0];
+    var bytes=await readBytes(f);
+    PI.jd=await pdfjsLoad(bytes);
+    PI.n=PI.jd.numPages;
+    PI.base=f.name.replace(/\.pdf$/i,'');
+    $('#pi-info').innerHTML='<span class="finfo-chip">📄 '+esc(f.name)+'</span><span class="finfo-chip"><b>'+PI.n+'</b> पेज</span>';
+    $('#pi-body').classList.remove('hidden');
+    hideBusy();
+  }catch(e){hideBusy();toast(friendlyErr(e),'err');}
+});
+$('#pi-go').addEventListener('click',async function(){
+  if(!PI.jd){toast('पहले PDF डालो','err');return;}
+  var scale=parseFloat($('#pi-scale').value);
+  var fmt=$('#pi-fmt').value;
+  var mime='image/'+fmt;
+  var ext=(fmt==='png')?'png':'jpg';
+  var pagesArr;
+  var rv=$('#pi-range').value.trim();
+  try{
+    if(rv){
+      var gs=parseRanges(rv,PI.n);var flat=[];
+      gs.forEach(function(g){flat=flat.concat(g);});
+      pagesArr=flat;
+    }else{
+      pagesArr=[];for(var i=0;i<PI.n;i++)pagesArr.push(i);
+    }
+  }catch(_){toast('रेंज समझ नहीं आई','err');return;}
+  showBusy('इमेजें बन रही हैं…');
+  try{
+    if(pagesArr.length===1){
+      var c=await renderPageCanvas(PI.jd,pagesArr[0]+1,scale);
+      dl(await canvasBlob(c,mime,0.9),PI.base+'-page-'+(pagesArr[0]+1)+'.'+ext);
+    }else{
+      var zip=new JSZip();
+      for(var k=0;k<pagesArr.length;k++){
+        var pi=pagesArr[k];
+        setBusy('पेज '+(pi+1),((k+1)/pagesArr.length)*100);
+        var c2=await renderPageCanvas(PI.jd,pi+1,scale);
+        zip.file(PI.base+'-page-'+String(pi+1).padStart(2,'0')+'.'+ext,await canvasBlob(c2,mime,0.9));
+        await tick();
+      }
+      dl(await zip.generateAsync({type:'blob'}),PI.base+'-images.zip');
+    }
+    toast(pagesArr.length+' इमेज तैयार','ok');
+  }catch(e){toast(friendlyErr(e),'err');}
+  hideBusy();
+});
+
+/* ================= 8. स्कैनर ================= */
+var SC={orig:null,filter:'orig',br:0,ct:0,crop:null,pendCrop:null,pages:[]};
+$('#sc-cam').addEventListener('click',function(){$('#sc-file-cam').click();});
+$('#sc-pick').addEventListener('click',function(){$('#sc-file').click();});
+['#sc-file-cam','#sc-file'].forEach(function(sel){
+  $(sel).addEventListener('change',async function(e){
+    var f=e.target.files[0];e.target.value='';
+    if(!f)return;
+    try{
+      var url=URL.createObjectURL(f);
+      var img=await loadImg(url);URL.revokeObjectURL(url);
+      var k=Math.min(1,2200/Math.max(img.width,img.height));
+      var c=document.createElement('canvas');
+      c.width=Math.max(1,Math.round(img.width*k));c.height=Math.max(1,Math.round(img.height*k));
+      c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+      SC.orig=c;SC.filter='orig';SC.br=0;SC.ct=0;SC.crop=null;SC.pendCrop=null;
+      $('#sc-br').value=0;$('#sc-ct').value=0;
+      $('#o-scbr').textContent='0';$('#o-scct').textContent='0';
+      $$('#sc-filters .fchip').forEach(function(b){b.classList.toggle('on',b.dataset.f==='orig');});
+      $('#sc-body').classList.remove('hidden');
+      scDraw();
+    }catch(_){toast('फोटो खुल नहीं पाई','err');}
+  });
+});
+function scDraw(){
+  if(!SC.orig)return;
+  var src=SC.orig;
+  var sx=0,sy=0,sw=src.width,sh=src.height;
+  if(SC.crop){sx=SC.crop.x;sy=SC.crop.y;sw=SC.crop.w;sh=SC.crop.h;}
+  var c=$('#sc-canvas');
+  c.width=sw;c.height=sh;
+  var x=c.getContext('2d');
+  x.drawImage(src,sx,sy,sw,sh,0,0,sw,sh);
+  applyFilterPixels(x,sw,sh);
+  $('#sc-crop').style.display='none';
+}
+function applyFilterPixels(x,w,h){
+  var f=SC.filter, br=SC.br, ct=SC.ct;
+  if(f==='bright'){br+=22;ct+=18;}
+  if(f==='bw'){ct+=35;}
+  if(f==='orig'&&!br&&!ct)return;
+  var d=x.getImageData(0,0,w,h);
+  var a=d.data;
+  var cf=(259*(ct+255))/(255*(259-ct));
+  var gray=(f==='gray'||f==='bw');
+  for(var i=0;i<a.length;i+=4){
+    var r=a[i],g=a[i+1],b=a[i+2];
+    if(gray){var v=0.299*r+0.587*g+0.114*b;r=v;g=v;b=v;}
+    r=cf*(r-128)+128+br;g=cf*(g-128)+128+br;b=cf*(b-128)+128+br;
+    if(f==='bw'){var t=(r>170)?255:(r<105)?0:((r-105)*(255/65));r=t;g=t;b=t;}
+    a[i]=r<0?0:r>255?255:r;
+    a[i+1]=g<0?0:g>255?255:g;
+    a[i+2]=b<0?0:b>255?255:b;
+  }
+  x.putImageData(d,0,0);
+}
+var scT=null;
+function scDrawDeb(){clearTimeout(scT);scT=setTimeout(scDraw,50);}
+$$('#sc-filters .fchip').forEach(function(b){
+  b.addEventListener('click',function(){
+    $$('#sc-filters .fchip').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on');SC.filter=b.dataset.f;scDraw();
+  });
+});
+$('#sc-rot').addEventListener('click',function(){
+  if(!SC.orig)return;
+  var s=SC.crop?(function(){var t=document.createElement('canvas');t.width=SC.crop.w;t.height=SC.crop.h;t.getContext('2d').drawImage(SC.orig,SC.crop.x,SC.crop.y,SC.crop.w,SC.crop.h,0,0,SC.crop.w,SC.crop.h);return t;})():SC.orig;
+  var c=document.createElement('canvas');
+  c.width=s.height;c.height=s.width;
+  var x=c.getContext('2d');
+  x.translate(c.width/2,c.height/2);x.rotate(Math.PI/2);
+  x.drawImage(s,-s.width/2,-s.height/2);
+  SC.orig=c;SC.crop=null;SC.pendCrop=null;
+  scDraw();
+});
+$('#sc-reset').addEventListener('click',function(){
+  SC.crop=null;SC.pendCrop=null;SC.filter='orig';SC.br=0;SC.ct=0;
+  $('#sc-br').value=0;$('#sc-ct').value=0;
+  $('#o-scbr').textContent='0';$('#o-scct').textContent='0';
+  $$('#sc-filters .fchip').forEach(function(b){b.classList.toggle('on',b.dataset.f==='orig');});
+  scDraw();
+});
+(function(){
+  var wrap=$('#sc-wrap'), box=$('#sc-crop'), cv=$('#sc-canvas');
+  var start=null, cur=null;
+  wrap.addEventListener('pointerdown',function(e){
+    if(!SC.orig)return;
+    var r=cv.getBoundingClientRect();
+    start={x:e.clientX-r.left,y:e.clientY-r.top,r:r};
+    cur=null;
+    try{wrap.setPointerCapture(e.pointerId);}catch(_){}
+  });
+  wrap.addEventListener('pointermove',function(e){
+    if(!start)return;
+    e.preventDefault();
+    var r=start.r;
+    cur={x:Math.min(Math.max(e.clientX-r.left,0),r.width),y:Math.min(Math.max(e.clientY-r.top,0),r.height)};
+    var x0=Math.min(start.x,cur.x), y0=Math.min(start.y,cur.y);
+    var w=Math.abs(cur.x-start.x), h=Math.abs(cur.y-start.y);
+    box.style.display='block';
+    box.style.left=x0+'px';box.style.top=y0+'px';
+    box.style.width=w+'px';box.style.height=h+'px';
+  });
+  wrap.addEventListener('pointerup',function(){
+    if(start&&cur){
+      var r=start.r;
+      var sc=cv.width/r.width;
+      var x0=Math.min(start.x,cur.x)*sc, y0=Math.min(start.y,cur.y)*sc;
+      var w=Math.abs(cur.x-start.x)*sc, h=Math.abs(cur.y-start.y)*sc;
+      SC.pendCrop=(w>15&&h>15)?{x:x0,y:y0,w:w,h:h}:null;
+    }
+    start=null;
+  });
+})();
+$('#sc-cropgo').addEventListener('click',function(){
+  if(!SC.pendCrop){toast('पहले तस्वीर पर डिब्बा खींचो');return;}
+  var base=SC.crop||{x:0,y:0};
+  SC.crop={x:Math.round(base.x+SC.pendCrop.x),y:Math.round(base.y+SC.pendCrop.y),w:Math.round(SC.pendCrop.w),h:Math.round(SC.pendCrop.h)};
+  SC.pendCrop=null;
+  scDraw();
+});
+$('#sc-addpg').addEventListener('click',function(){
+  if(!SC.orig)return;
+  var c=$('#sc-canvas');
+  var url=c.toDataURL('image/jpeg',0.85);
+  SC.pages.push({url:url,w:c.width,h:c.height});
+  scPagesRender();
+  toast('पेज जुड़ गया — कुल '+SC.pages.length,'ok');
+});
+function scPagesRender(){
+  var L=$('#sc-pages');L.innerHTML='';
+  SC.pages.forEach(function(p,i){
+    var d=document.createElement('div');
+    d.className='sc-pg';
+    d.innerHTML='<img src="'+p.url+'"><span class="n">'+(i+1)+'</span><button class="x" title="हटाओ">✕</button>';
+    d.querySelector('.x').addEventListener('click',function(){SC.pages.splice(i,1);scPagesRender();});
+    L.appendChild(d);
+  });
+}
+$('#sc-pdf').addEventListener('click',async function(){
+  if(!SC.pages.length){toast('पहले कम से कम एक पेज जोड़ो','err');return;}
+  showBusy('स्कैन PDF बन रही है…');
+  try{
+    var out=await PDFDocument.create();
+    for(var i=0;i<SC.pages.length;i++){
+      var p=SC.pages[i];
+      setBusy('पेज '+(i+1)+'/'+SC.pages.length,((i+1)/SC.pages.length)*100);
+      var emb=await out.embedJpg(dataURLBytes(p.url));
+      var k=Math.min(1,595.28/p.w,841.89/p.h);
+      var pg=out.addPage([p.w*k,p.h*k]);
+      pg.drawImage(emb,{x:0,y:0,width:p.w*k,height:p.h*k});
+      await tick();
+    }
+    var bytes=await out.save();
+    dl(new Blob([bytes],{type:'application/pdf'}),saneName($('#sc-name').value,'bodhi-scan')+'.pdf');
+    toast('स्कैन तैयार — '+SC.pages.length+' पेज','ok');
+  }catch(e){toast(friendlyErr(e),'err');}
+  hideBusy();
+});
+
+/* ================= 9. PDF कंप्रेस ================= */
+var CP={size:0,jd:null,n:0};
+bindDrop('#cp-drop','#cp-file',async function(fs){
+  try{
+    showBusy('PDF खुल रही है…');
+    var f=fs[0];
+    var bytes=await readBytes(f);
+    CP.size=bytes.length;
+    CP.jd=await pdfjsLoadT(bytes); /* bytes worker में चली गईं — यहाँ दोहरी कॉपी नहीं रहती */
+    bytes=null;
+    CP.n=CP.jd.numPages;
+    $('#cp-info').innerHTML='<span class="finfo-chip">📄 '+esc(f.name)+'</span><span class="finfo-chip"><b>'+CP.n+'</b> पेज</span><span class="finfo-chip">'+fmtBytes(CP.size)+'</span>';
+    $('#cp-body').classList.remove('hidden');
+    $('#cp-result').classList.remove('show');
+    hideBusy();
+  }catch(e){hideBusy();toast(friendlyErr(e),'err');}
+});
+$('#cp-go').addEventListener('click',async function(){
+  if(!CP.jd){toast('पहले PDF डालो','err');return;}
+  var lv=document.querySelector('input[name="cp-lv"]:checked').value;
+  var cfg={light:{s:1.6,q:0.8},mid:{s:1.25,q:0.62},max:{s:1.0,q:0.45}}[lv];
+  showBusy('कंप्रेस हो रही है…');
+  try{
+    var out=await PDFDocument.create();
+    for(var i=1;i<=CP.n;i++){
+      setBusy('पेज '+i+'/'+CP.n,(i/CP.n)*100);
+      var c=await renderPageCanvas(CP.jd,i,cfg.s);
+      var jb=await canvasBlob(c,'image/jpeg',cfg.q);
+      c.width=1;c.height=1;
+      var emb=await out.embedJpg(await blobBytes(jb));
+      var p=await CP.jd.getPage(i);
+      var vp1=p.getViewport({scale:1});
+      var pg=out.addPage([vp1.width,vp1.height]);
+      pg.drawImage(emb,{x:0,y:0,width:vp1.width,height:vp1.height});
+      await tick();
+    }
+    setBusy('अंतिम फ़ाइल लिखी जा रही है — रुको…',100);
+    await tick();
+    var bytes=await out.save();
+    var pct=Math.round((1-bytes.length/CP.size)*100);
+    dl(new Blob([bytes],{type:'application/pdf'}),saneName($('#cp-name').value,'bodhi-compressed')+'.pdf');
+    var rb=$('#cp-result');
+    rb.classList.add('show');
+    rb.querySelector('.stat').innerHTML='पहले <b>'+fmtBytes(CP.size)+'</b> → अब <b>'+fmtBytes(bytes.length)+'</b>'+(pct>0?' — <b>'+pct+'% हल्की</b>':' (यह PDF पहले से ही काफ़ी दबी हुई थी)');
+    toast('कंप्रेस पूरी','ok');
+  }catch(e){toast(friendlyErr(e),'err');}
+  hideBusy();
+});
+
+/* ================= 10. पेज नंबर ================= */
+var PN={bytes:null,n:0,enc:false};
+bindDrop('#pn-drop','#pn-file',async function(fs){
+  try{
+    showBusy('PDF खुल रही है…');
+    var f=fs[0];
+    PN.bytes=await readBytes(f);
+    var jd=await pdfjsLoad(PN.bytes);
+    PN.n=jd.numPages;
+    var perms=null;try{perms=await jd.getPermissions();}catch(_){}
+    PN.enc=(perms!==null);
+    try{await jd.destroy();}catch(_){}
+    $('#pn-info').innerHTML='<span class="finfo-chip">📄 '+esc(f.name)+'</span><span class="finfo-chip"><b>'+PN.n+'</b> पेज</span>';
+    $('#pn-body').classList.remove('hidden');
+    hideBusy();
+    if(PN.enc)toast('🔒 लॉक PDF पर नंबर बिगड़ सकते हैं — पहले “जोड़ो” टूल में अकेली डालकर मरम्मत-कॉपी बना लो, फिर उस पर नंबर लगाओ','err');
+  }catch(e){hideBusy();toast(friendlyErr(e),'err');}
+});
+$('#pn-go').addEventListener('click',async function(){
+  if(!PN.bytes){toast('पहले PDF डालो','err');return;}
+  showBusy('नंबर लग रहे हैं…');
+  try{
+    var out=await PDFDocument.load(PN.bytes,{ignoreEncryption:true});
+    var font=await out.embedFont(StandardFonts.Helvetica);
+    var size=Math.max(6,parseInt($('#pn-size').value)||11);
+    var st=parseInt($('#pn-start').value);
+    var startN=isNaN(st)?1:st;
+    var skip=Math.max(0,parseInt($('#pn-skip').value)||0);
+    var fmt=$('#pn-fmt').value;
+    var pos=$('#pn-pos').value;
+    var col=hexToRgb01($('#pn-color').value);
+    var pages=out.getPages();
+    var total=pages.length-skip;
+    if(total<1){hideBusy();toast('इतने पेज छोड़ने पर कुछ बचेगा ही नहीं','err');return;}
+    /* फ़ुटर-लाइन: कैनवस पर लिखकर PNG बनाते हैं — इसीलिए हिंदी/देवनागरी बिना किसी फ़ॉन्ट-झंझट के छपती है */
+    var ftext=($('#pn-ftext').value||'').trim();
+    var femb=null,fw=0,fh=0,fpos='bl',ffs=9;
+    if(ftext){
+      if(document.fonts&&document.fonts.ready){try{await document.fonts.ready;}catch(_){}}
+      ffs=Math.max(6,parseInt($('#pn-fsize').value)||9);
+      var scl=4; /* 4x पर बनाकर छोटा रखते हैं — प्रिंट में भी किनारे साफ़ */
+      var mc=document.createElement('canvas');
+      var fontCss='600 '+(ffs*scl)+"px 'Noto Sans Devanagari','Noto Sans',sans-serif";
+      var mx=mc.getContext('2d');mx.font=fontCss;
+      var tw=Math.ceil(mx.measureText(ftext).width)+scl*3;
+      mc.width=Math.max(8,tw);mc.height=Math.ceil(ffs*scl*1.45);
+      mx=mc.getContext('2d');mx.font=fontCss;
+      mx.fillStyle=$('#pn-fcolor').value;mx.textBaseline='alphabetic';
+      mx.fillText(ftext,scl,Math.round(ffs*scl*1.1));
+      femb=await out.embedPng(await blobBytes(await canvasBlob(mc,'image/png')));
+      fw=mc.width/scl;fh=mc.height/scl;
+      fpos=$('#pn-fpos').value;
+    }
+    for(var i=skip;i<pages.length;i++){
+      var pg=pages[i];
+      var vs=viewerSize(pg);
+      var num=startN+(i-skip);
+      var label=fmt.replace('#',String(num)).replace('N',String(startN+total-1));
+      var wd=font.widthOfTextAtSize(label,size);
+      var m=Math.max(18,size*1.6);
+      var vx=(pos.charAt(1)==='l')?m:(pos.charAt(1)==='r')?(vs.vw-m-wd):((vs.vw-wd)/2);
+      var vy=(pos.charAt(0)==='b')?m:(vs.vh-m-size*0.72);
+      var pl=uprightPlace(pg,vx,vy);
+      pg.drawText(label,{x:pl.x,y:pl.y,size:size,font:font,color:col,rotate:pl.rotate});
+      if(femb){
+        var fm=Math.max(12,ffs*1.3);
+        var fvx=(fpos.charAt(1)==='l')?fm:(fpos.charAt(1)==='r')?(vs.vw-fm-fw):((vs.vw-fw)/2);
+        var fvy=(fpos.charAt(0)==='b')?(fm*0.75):(vs.vh-fm*0.75-fh);
+        var fpl=uprightPlace(pg,fvx,fvy);
+        pg.drawImage(femb,{x:fpl.x,y:fpl.y,width:fw,height:fh,rotate:fpl.rotate});
+      }
+      if(i%20===0){setBusy('पेज '+(i+1),((i+1)/pages.length)*100);await tick();}
+    }
+    var bytes=await out.save();
+    dl(new Blob([bytes],{type:'application/pdf'}),saneName($('#pn-name').value,'bodhi-numbered')+'.pdf');
+    toast(ftext?('नंबर + फ़ुटर लग गए ('+total+' पेजों पर)'):('नंबर लग गए ('+total+' पेजों पर)'),'ok');
+  }catch(e){toast(friendlyErr(e),'err');}
+  hideBusy();
+});
+
+/* ================= init / bindings ================= */
+bindTabs('view-merge');
+bindTabs('view-split');
+$$('input[name="wm-type"]').forEach(function(r){
+  r.addEventListener('change',function(){
+    var t=document.querySelector('input[name="wm-type"]:checked').value;
+    $('#wm-textwrap').classList.toggle('hidden',t!=='text');
+    $('#wm-imgwrap').classList.toggle('hidden',t!=='img');
+    wmDrawOverlay();
+  });
+});
+$('#wm-text').addEventListener('input',wmDrawOverlay);
+$('#wm-color').addEventListener('input',wmDrawOverlay);
+$('#wm-bold').addEventListener('change',wmDrawOverlay);
+$('#wm-tile').addEventListener('change',wmDrawOverlay);
+bindOut('#wm-size','#o-size','%',wmDrawOverlay);
+bindOut('#wm-op','#o-op','%',wmDrawOverlay);
+bindOut('#wm-rot','#o-rot','°',wmDrawOverlay);
+bindOut('#wm-margin','#o-margin','%',wmDrawOverlay);
+bindOut('#wm-gap','#o-gap','%',wmDrawOverlay);
+$$('#wm-pos button').forEach(function(b){
+  b.addEventListener('click',function(){
+    $$('#wm-pos button').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on');
+    WM.pos=b.dataset.p;
+    $('#wm-tile').checked=false;
+    wmDrawOverlay();
+  });
+});
+$('#wm-logobtn').addEventListener('click',function(){$('#wm-logo').click();});
+$('#wm-logo').addEventListener('change',async function(e){
+  var f=e.target.files[0];e.target.value='';
+  if(!f)return;
+  try{
+    var url=URL.createObjectURL(f);
+    WM.logoImg=await loadImg(url);
+    $('#wm-logoname').textContent=f.name;
+    wmDrawOverlay();
+  }catch(_){toast('लोगो खुल नहीं पाया','err');}
+});
+$('#wm-prev').addEventListener('click',async function(){if(WM.jd&&WM.cur>1){WM.cur--;await wmRenderBase();wmDrawOverlay();}});
+$('#wm-next').addEventListener('click',async function(){if(WM.jd&&WM.cur<WM.n){WM.cur++;await wmRenderBase();wmDrawOverlay();}});
+/* ---------- सुरक्षा + जाँच बंधन ---------- */
+function wmModeUI(){
+  var mr=document.querySelector('input[name="wm-mode"]:checked');
+  var layer=mr&&mr.value==='layer';
+  var sp=document.getElementById('wm-secure');
+  if(sp)sp.classList.toggle('wm-dim',layer);
+}
+$$('input[name="wm-cmode"]').forEach(function(r){r.addEventListener('change',wmDrawOverlay);});
+function wmLayerUI(){
+  var c=document.getElementById('wm-use-classic'),l=document.getElementById('wm-use-lock');
+  var cb=document.getElementById('wm-classic-box'),lb=document.getElementById('wm-lock-box');
+  if(cb&&c)cb.classList.toggle('wm-dim',!c.checked);
+  if(lb&&l)lb.classList.toggle('wm-dim',!l.checked);
+  var v=(document.querySelector('input[name="wm-place"]:checked')||{}).value;
+  var pr=document.getElementById('wm-posrow');
+  if(pr)pr.style.display=(v==='tile')?'none':'';
+}
+$$('input[name="wm-place"]').forEach(function(r){r.addEventListener('change',function(){wmLayerUI();wmDrawOverlay();});});
+['wm-use-classic','wm-use-lock'].forEach(function(id){
+  var el=document.getElementById(id);
+  if(el)el.addEventListener('change',function(){wmLayerUI();wmDrawOverlay();});
+});
+bindOut('#wm-lockn','#o-lockn','',wmDrawOverlay);
+bindOut('#wm-lockop','#o-lockop','%',wmDrawOverlay);
+bindOut('#wm-locksz','#o-locksz','',wmDrawOverlay);
+wmLayerUI();
+['wm-ft-on','wm-ft-brand','wm-ft-name','wm-ft-tg','wm-ft-yt','wm-ft-gm','wm-ft-links'].forEach(function(id){
+  var el=document.getElementById(id);
+  if(el)el.addEventListener(el.type==='checkbox'?'change':'input',function(){
+    var bx=document.getElementById('wm-ft-box'),on=$('#wm-ft-on').checked;
+    if(bx)bx.classList.toggle('wm-dim',!on);
+    wmDrawOverlay();
+  });
+});
+(function(){
+  var fh=document.getElementById('wm-ft-h');
+  if(fh)fh.addEventListener('input',function(){$('#o-ft-h').textContent=(fh.value/10).toFixed(1)+'%';wmDrawOverlay();});
+  var ft=document.getElementById('wm-ft-t');
+  if(ft)ft.addEventListener('input',function(){$('#o-ft-t').textContent=ft.value+'%';wmDrawOverlay();});
+})();
+$$('input[name="wm-mode"]').forEach(function(r){r.addEventListener('change',function(){wmModeUI();wmDrawOverlay();});});
+['wm-sec-on'].forEach(function(id){
+  var el=document.getElementById(id);
+  if(el)el.addEventListener('change',wmDrawOverlay);
+});
+wmModeUI();
+var WMDT={file:null};
+var dtPick=document.getElementById('wm-dt-pick');
+if(dtPick){
+  dtPick.addEventListener('click',function(){$('#wm-dt-file').click();});
+  $('#wm-dt-file').addEventListener('change',function(e){
+    var f=e.target.files[0];if(!f)return;
+    WMDT.file=f;$('#wm-dt-name').textContent=f.name;
+    $('#wm-dt-res').innerHTML='';
+    e.target.value='';
+  });
+  $('#wm-dt-go').addEventListener('click',async function(){
+    if(!WMDT.file){toast('पहले तस्वीर चुनो','err');return;}
+    var key=($('#wm-dt-key').value||'BODHI').trim()||'BODHI';
+    showBusy('गुप्त छाप खोजी जा रही है…');
+    try{
+      var z=await wmDetect(WMDT.file,key);
+      var el=$('#wm-dt-res');
+      if(z>=8)el.innerHTML='<b class="dtok">छाप मिली — पक्का प्रमाण ✓</b> (score '+z.toFixed(1)+') — यह फ़ाइल इसी कुंजी से बनी थी।';
+      else if(z>=4)el.innerHTML='<b class="dtok">छाप के संकेत मिले</b> (score '+z.toFixed(1)+') — बहुत हद तक तुम्हारी ही फ़ाइल है; बिना-कटी बड़ी तस्वीर से और पक्का होगा।';
+      else el.innerHTML='<b class="dtbad">छाप नहीं मिली</b> (score '+z.toFixed(1)+') — कुंजी अलग हो, तस्वीर कटी/बहुत दबी हो, या यह उस फ़ाइल से नहीं बनी।';
+    }catch(e){toast(friendlyErr(e),'err');}
+    hideBusy();
+  });
+  $('#wm-dt-ghost').addEventListener('click',async function(){
+    if(!WMDT.file){toast('पहले तस्वीर चुनो','err');return;}
+    showBusy('छिपी छाप जगमगाई जा रही है…');
+    try{
+      var rc=await wmReveal(WMDT.file);
+      var el2=$('#wm-dt-res');
+      el2.innerHTML='<b class="dtok">छाया-चित्र तैयार</b> — जहाँ घना चमकता पाठ दिखे, वहीं छिपी छाप है (वॉटरमार्क मिटा हो तो भी):';
+      rc.style.maxWidth='100%';rc.style.borderRadius='8px';rc.style.marginTop='8px';rc.style.display='block';
+      el2.appendChild(rc);
+    }catch(e){toast(friendlyErr(e),'err');}
+    hideBusy();
+  });
+}
+$$('input[name="im-rs"]').forEach(function(r){
+  r.addEventListener('change',function(){
+    var v=document.querySelector('input[name="im-rs"]:checked').value;
+    $('#im-pctrow').style.display=(v==='pct')?'grid':'none';
+    $('#im-whrow').style.display=(v==='wh')?'flex':'none';
+    imEstimate();
+  });
+});
+$$('input[name="im-cm"]').forEach(function(r){
+  r.addEventListener('change',function(){
+    var v=document.querySelector('input[name="im-cm"]:checked').value;
+    $('#im-qrow').style.display=(v==='q')?'grid':'none';
+    $('#im-kbrow').style.display=(v==='kb')?'block':'none';
+    imEstimate();
+  });
+});
+bindOut('#im-pct','#o-impct','%',imEstimate);
+bindOut('#im-q','#o-imq','%',imEstimate);
+bindOut('#ip-q','#o-ipq','%',null);
+$$('.preset').forEach(function(b){b.addEventListener('click',function(){$('#im-kb').value=b.dataset.kb;});});
+$('#im-fmt').addEventListener('change',imEstimate);
+$('#im-w').addEventListener('input',imEstimate);
+$('#im-h').addEventListener('input',imEstimate);
+bindOut('#sc-br','#o-scbr','',function(){SC.br=+$('#sc-br').value;scDrawDeb();});
+bindOut('#sc-ct','#o-scct','',function(){SC.ct=+$('#sc-ct').value;scDrawDeb();});
+if(document.fonts&&document.fonts.ready){document.fonts.ready.then(function(){wmDrawOverlay();});}
+</script>
+</body>
+</html>
