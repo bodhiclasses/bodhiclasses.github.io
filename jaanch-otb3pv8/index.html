@@ -290,6 +290,7 @@ footer{max-width:980px;margin:0 auto;padding:10px 16px 40px;color:var(--muted);f
     <label class="f" for="listTest">टेस्ट चुनें</label>
     <select id="listTest"></select>
     <div class="btns">
+      <button class="btn small primary" id="pdfBtn2">📄 PDF डाउनलोड</button>
       <button class="btn small" id="csvBtn">⬇️ Excel (CSV) डाउनलोड</button>
       <button class="btn small" id="copyListBtn">📋 सूची कॉपी करें (Excel/WhatsApp)</button>
       <button class="btn small danger" id="clearListBtn">🗑️ इस टेस्ट के सब परिणाम हटाएँ</button>
@@ -1200,6 +1201,83 @@ function evaluate(ans,test){
   return out;
 }
 
+
+/* ---------------- परिणाम-सूची की PDF (एक क्लिक) ---------------- */
+function rankedRows(test){
+  const rows=RESULTS.filter(r=>r.testId===test.id).sort((a,b)=>b.score-a.score||b.correct-a.correct||a.wrong-b.wrong);
+  let rank=0,prev=null;return rows.map((r,i)=>{if(r.score!==prev){rank=i+1;prev=r.score;}return Object.assign({rank},r);});
+}
+// कैनवस पन्नों से सीधी PDF (JPEG चित्र) — किसी बाहरी लाइब्रेरी के बिना
+function canvasesToPdf(pages){
+  const enc=new TextEncoder();const parts=[];let len=0;const offs=[];
+  const push=b=>{const u=typeof b==='string'?enc.encode(b):b;parts.push(u);len+=u.length;};
+  const n=pages.length;const W=595.28,H=841.89;
+  push('%PDF-1.4\n%\xE2\xE3\xCF\xD3\n');
+  const obj=(id,body,stream)=>{offs[id]=len;push(id+' 0 obj\n');push(body);if(stream){push('\nstream\n');push(stream);push('\nendstream');}push('\nendobj\n');};
+  obj(1,'<< /Type /Catalog /Pages 2 0 R >>');
+  const kids=[];for(let i=0;i<n;i++)kids.push((3+i*3)+' 0 R');
+  obj(2,'<< /Type /Pages /Kids ['+kids.join(' ')+'] /Count '+n+' >>');
+  pages.forEach((c,i)=>{
+    const b64=c.toDataURL('image/jpeg',0.9).split(',')[1];const bin=atob(b64);const jpg=new Uint8Array(bin.length);for(let k=0;k<bin.length;k++)jpg[k]=bin.charCodeAt(k);
+    const pid=3+i*3,cid=pid+1,iid=pid+2;
+    obj(pid,'<< /Type /Page /Parent 2 0 R /MediaBox [0 0 '+W+' '+H+'] /Resources << /XObject << /Im'+i+' '+iid+' 0 R >> >> /Contents '+cid+' 0 R >>');
+    const cs='q '+W+' 0 0 '+H+' 0 0 cm /Im'+i+' Do Q';
+    obj(cid,'<< /Length '+enc.encode(cs).length+' >>',cs);
+    obj(iid,'<< /Type /XObject /Subtype /Image /Width '+c.width+' /Height '+c.height+' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length '+jpg.length+' >>',jpg);
+  });
+  const total=3+n*3;const xref=len;
+  let x='xref\n0 '+total+'\n0000000000 65535 f \n';for(let i=1;i<total;i++)x+=String(offs[i]).padStart(10,'0')+' 00000 n \n';
+  push(x+'trailer\n<< /Size '+total+' /Root 1 0 R >>\nstartxref\n'+xref+'\n%%EOF');
+  return new Blob(parts,{type:'application/pdf'});
+}
+async function makeResultPdf(test){
+  const rows=rankedRows(test);if(!rows.length){uiAlert('इस टेस्ट का अभी कोई परिणाम नहीं है।');return;}
+  try{if(document.fonts&&document.fonts.ready)await document.fonts.ready;}catch(e){}
+  const PW=1240,PH=1754,M=70,F='"Noto Sans Devanagari", "Nirmala UI", "Mangal", sans-serif';
+  const cols=[{t:'रैंक',w:80,a:'c'},{t:'नाम / मोबाइल',w:360,a:'l'},{t:'रोल नंबर',w:170,a:'l'},{t:'अंक',w:120,a:'r'},{t:'सही',w:80,a:'r'},{t:'ग़लत',w:80,a:'r'},{t:'छोड़े',w:85,a:'r'},{t:'सटीकता',w:0,a:'r'}];
+  const used=cols.slice(0,-1).reduce((a,c)=>a+c.w,0);cols[cols.length-1].w=PW-2*M-used;
+  const scores=rows.map(r=>r.score),avg=scores.reduce((a,b)=>a+b,0)/scores.length;
+  const d=new Date(test.created||Date.now());const ds=d.getDate()+'/'+(d.getMonth()+1)+'/'+d.getFullYear();
+  const rowH=46,headTop=M,firstTable=M+230,otherTable=M+70,bottom=PH-M-40;
+  const pages=[];let i=0,pg=0;
+  while(i<rows.length||pg===0){
+    const c=document.createElement('canvas');c.width=PW;c.height=PH;const x=c.getContext('2d');
+    x.fillStyle='#fff';x.fillRect(0,0,PW,PH);x.textBaseline='middle';
+    let y;
+    if(pg===0){
+      x.fillStyle='#8c1d18';x.fillRect(M,headTop,PW-2*M,8);
+      x.fillStyle='#1f1b16';x.font='700 44px '+F;x.fillText('परिणाम सूची — '+test.name,M,headTop+50);
+      x.font='400 26px '+F;x.fillStyle='#4a433b';
+      x.fillText('दिनांक: '+ds+'   ·   प्रश्न: '+test.n+'   ·   सही +'+fmt(test.plus)+(test.minus?', ग़लत −'+fmt(test.minus):', कोई कटौती नहीं')+'   ·   पूर्णांक: '+fmt(rows[0].max),M,headTop+100);
+      x.fillText('कुल छात्र: '+rows.length+'   ·   सर्वोच्च: '+fmt(scores[0])+'   ·   औसत: '+fmt(avg)+'   ·   न्यूनतम: '+fmt(scores[scores.length-1]),M,headTop+140);
+      x.font='400 21px '+F;x.fillStyle='#6b635a';x.fillText('एक से अधिक गोले भरे प्रश्न “छोड़े” में गिने गए हैं (न सही, न ग़लत)।',M,headTop+178);
+      y=firstTable;
+    }else{x.font='600 26px '+F;x.fillStyle='#4a433b';x.fillText(test.name+' — परिणाम सूची (जारी)',M,M+20);y=otherTable;}
+    // शीर्ष पंक्ति
+    x.fillStyle='#b3261e';x.fillRect(M,y,PW-2*M,rowH+4);x.fillStyle='#fff';x.font='700 24px '+F;
+    let cx=M;cols.forEach(cl=>{const tx=cl.a==='r'?cx+cl.w-14:cl.a==='c'?cx+cl.w/2:cx+14;x.textAlign=cl.a==='r'?'right':cl.a==='c'?'center':'left';x.fillText(cl.t,tx,y+(rowH+4)/2);cx+=cl.w;});
+    y+=rowH+4;
+    while(i<rows.length&&y+rowH<=bottom){
+      const r=rows[i];const acc=(r.correct+r.wrong)?Math.round(r.correct/(r.correct+r.wrong)*100)+'%':'—';
+      if(i%2){x.fillStyle='#f6f1ea';x.fillRect(M,y,PW-2*M,rowH);}
+      if(r.rank<=3){x.fillStyle='#fdf3d7';x.fillRect(M,y,PW-2*M,rowH);}
+      const vals=[String(r.rank),dispNamePlain(r),r.roll||'—',fmt(r.score),String(r.correct),String(r.wrong),String(r.blank),acc];
+      cx=M;cols.forEach((cl,k)=>{let v=vals[k];x.font=(k===1||k===3?'600 ':'400 ')+'24px '+F;x.fillStyle=k===3?(r.score<0?'#c62828':'#8c1d18'):'#1f1b16';
+        const maxw=cl.w-24;while(x.measureText(v).width>maxw&&v.length>2)v=v.slice(0,-2)+'…';
+        const tx=cl.a==='r'?cx+cl.w-14:cl.a==='c'?cx+cl.w/2:cx+14;x.textAlign=cl.a==='r'?'right':cl.a==='c'?'center':'left';x.fillText(v,tx,y+rowH/2);cx+=cl.w;});
+      x.strokeStyle='#e3ddd3';x.lineWidth=1;x.beginPath();x.moveTo(M,y+rowH);x.lineTo(PW-M,y+rowH);x.stroke();
+      y+=rowH;i++;
+    }
+    pages.push(c);pg++;
+    if(pg>60)break;
+  }
+  pages.forEach((c,k)=>{const x=c.getContext('2d');x.textAlign='right';x.font='400 20px '+F;x.fillStyle='#8a8177';x.fillText('पृष्ठ '+(k+1)+' / '+pages.length,PW-M,PH-M+10);x.textAlign='left';x.fillText('OMR जाँचक',M,PH-M+10);});
+  const blob=canvasesToPdf(pages);
+  const name=(test.name||'परिणाम').replace(/[\\\/:*?"<>|]/g,'_')+'_परिणाम.pdf';
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.append(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},4000);
+  return blob;
+}
+
 /* ---------------- भंडारण ---------------- */
 const store={
   get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}},
@@ -1209,6 +1287,10 @@ let TESTS=store.get('omr_tests',[]);
 let RESULTS=store.get('omr_results',[]);
 function saveTests(){store.set('omr_tests',TESTS);}
 function saveResults(){store.set('omr_results',RESULTS);}
+// नाम न हो तो मोबाइल नंबर, वह भी न हो तो रोल नंबर
+function dispName(r){const mob=(r.mobile||'').replace(/[^0-9]/g,'');
+  if(r.name)return r.name;if(mob.length>=6)return '📞 '+r.mobile;if(r.roll&&/[0-9]/.test(r.roll))return 'रोल '+r.roll;return '(नाम नहीं)';}
+function dispNamePlain(r){return dispName(r).replace('📞 ','मो. ');}
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
 function uiMsg(text,opts){opts=opts||{};return new Promise(res=>{
   $('#msgText').textContent=text;const ta=$('#msgCopy');
@@ -1473,7 +1555,7 @@ function renderResultCard(rec,replaceId){
   const card=el('div',{class:'card',id:'rc-'+rec.id});
   const head=el('div',{class:'rhead'});
   const who=el('div',{class:'who'});
-  who.append(el('div',{class:'nm'},rec.name||'(नाम नहीं भरा)'));
+  who.append(el('div',{class:'nm'},dispName(rec)));
   who.append(el('div',{class:'kv',html:'रोल: <b>'+esc(rec.roll||'—')+'</b> · मोबाइल: <b>'+esc(rec.mobile||'—')+'</b>'}));
   who.append(el('div',{class:'kv',html:'श्रृंखला: <b>'+esc(rec.booklet||'—')+'</b> · विषय: <b>'+esc(rec.subject||'—')+'</b> · केंद्र: <b>'+esc(rec.centre||'—')+'</b>'}));
   who.append(el('div',{class:'kv',html:(test?'टेस्ट: <b>'+esc(test.name)+'</b> · ':'')+'फ़ाइल: '+esc(rec.file||'')}));
@@ -1540,13 +1622,14 @@ function renderSummary(){
   const rows=t?RESULTS.filter(r=>r.testId===t.id).sort((a,b)=>b.score-a.score||b.correct-a.correct):[];
   if(!rows.length){box.innerHTML='<div class="card note">अभी कोई शीट नहीं जाँची गई। कदम 1 और 2 पूरे करते ही यहाँ हर छात्र का नाम और अंक रैंक के साथ दिखेंगे।</div>';return;}
   let rank=0,prev=null;const tr=rows.map((r,i)=>{if(r.score!==prev){rank=i+1;prev=r.score;}
-    return '<tr class="click" data-id="'+r.id+'"><td>'+rank+'</td><td><b>'+esc(r.name||'(नाम नहीं)')+'</b>'+(r.roll?'<br><span class="muted" style="font-size:12px">रोल '+esc(r.roll)+'</span>':'')+'</td><td class="num"><b style="font-size:17px;color:var(--brand)">'+fmt(r.score)+'</b><span class="muted" style="font-size:12px"> / '+fmt(r.max)+'</span></td><td class="num">'+r.correct+' / '+r.wrong+' / '+r.blank+'</td></tr>';}).join('');
-  box.innerHTML='<div class="card"><div class="note" style="margin-bottom:6px">'+esc(t.name)+' · '+rows.length+' छात्र</div><div class="tablewrap"><table class="rank"><tr><th>रैंक</th><th>नाम</th><th class="num">अंक</th><th class="num">सही / ग़लत / छोड़े</th></tr>'+tr+'</table></div><div class="note" style="margin-top:6px">किसी नाम पर टैप करें तो उसकी पूरी शीट दिखेगी।</div></div>';
+    return '<tr class="click" data-id="'+r.id+'"><td>'+rank+'</td><td><b>'+esc(dispName(r))+'</b>'+(r.roll?'<br><span class="muted" style="font-size:12px">रोल '+esc(r.roll)+'</span>':'')+'</td><td class="num"><b style="font-size:17px;color:var(--brand)">'+fmt(r.score)+'</b><span class="muted" style="font-size:12px"> / '+fmt(r.max)+'</span></td><td class="num">'+r.correct+' / '+r.wrong+' / '+r.blank+'</td></tr>';}).join('');
+  box.innerHTML='<div class="card"><div class="btns" style="margin:0 0 10px"><button class="btn primary" id="pdfBtn1">📄 पूरी सूची की PDF डाउनलोड करें</button></div><div class="note" style="margin-bottom:6px">'+esc(t.name)+' · '+rows.length+' छात्र</div><div class="tablewrap"><table class="rank"><tr><th>रैंक</th><th>नाम</th><th class="num">अंक</th><th class="num">सही / ग़लत / छोड़े</th></tr>'+tr+'</table></div><div class="note" style="margin-top:6px">किसी नाम पर टैप करें तो उसकी पूरी शीट दिखेगी।</div></div>';
+  const pb=box.querySelector('#pdfBtn1');if(pb)pb.addEventListener('click',()=>makeResultPdf(t).catch(e=>{console.error(e);uiAlert('PDF नहीं बन पाई। दोबारा कोशिश करें।');}));
   box.querySelectorAll('tr[data-id]').forEach(el2=>el2.addEventListener('click',()=>{const r=RESULTS.find(x=>x.id===el2.dataset.id);if(!r)return;renderResultCard(r);const c=document.getElementById('rc-'+r.id);if(c)c.scrollIntoView({behavior:'smooth'});}));
 }
 function copySummary(rec){
   const test=TESTS.find(t=>t.id===rec.testId);
-  let s='नाम: '+(rec.name||'—')+'\nरोल: '+(rec.roll||'—')+'\nमोबाइल: '+(rec.mobile||'—');
+  let s='नाम: '+dispNamePlain(rec)+'\nरोल: '+(rec.roll||'—')+'\nमोबाइल: '+(rec.mobile||'—');
   if(test)s+='\nटेस्ट: '+test.name+'\nअंक: '+fmt(rec.score)+' / '+fmt(rec.max)+'\nसही: '+rec.correct+', ग़लत: '+rec.wrong+', छोड़े: '+rec.blank;
   copyText(s,'परिणाम कॉपी हो गया — अब WhatsApp आदि में पेस्ट करें।');
 }
@@ -1627,7 +1710,7 @@ function renderList(){
   let rank=0,prev=null;
   rows.forEach((r,i)=>{if(r.score!==prev){rank=i+1;prev=r.score;}
     const warn=(r.issues&&r.issues.length)||(r.warnings||[]).some(w=>w.t==='err');
-    const tr=el('tr',{class:'click'});tr.innerHTML='<td>'+rank+'</td><td><b>'+esc(r.name||'(नाम नहीं)')+'</b><br><span class="muted" style="font-size:12px">'+esc(r.roll||'')+(r.mobile?' · '+esc(r.mobile):'')+'</span></td><td class="num"><b>'+fmt(r.score)+'</b></td><td class="num">'+r.correct+'</td><td class="num">'+r.wrong+'</td><td class="num">'+r.blank+'</td><td>'+(warn?'⚠️':'')+'</td>';
+    const tr=el('tr',{class:'click'});tr.innerHTML='<td>'+rank+'</td><td><b>'+esc(dispName(r))+'</b><br><span class="muted" style="font-size:12px">'+esc(r.roll||'')+(r.mobile?' · '+esc(r.mobile):'')+'</span></td><td class="num"><b>'+fmt(r.score)+'</b></td><td class="num">'+r.correct+'</td><td class="num">'+r.wrong+'</td><td class="num">'+r.blank+'</td><td>'+(warn?'⚠️':'')+'</td>';
     tr.addEventListener('click',()=>{showTab('check');renderResultCard(r);const c=document.getElementById('rc-'+r.id);if(c)c.scrollIntoView({behavior:'smooth'});});
     tb.append(tr);});
   // प्रश्न विश्लेषण
@@ -1641,12 +1724,13 @@ function fillTestSelectsListOnly(){const sel=$('#listTest');const cur=sel.value;
   let last=null;try{last=localStorage.getItem('omr_lasttest');}catch(e){}
   if(cur&&TESTS.some(t=>t.id===cur))sel.value=cur;else if(last&&TESTS.some(t=>t.id===last))sel.value=last;}
 $('#listTest').addEventListener('change',renderList);
+$('#pdfBtn2').addEventListener('click',()=>{const test=TESTS.find(t=>t.id===$('#listTest').value);if(!test){uiAlert('पहले टेस्ट चुनें।');return;}makeResultPdf(test).catch(e=>{console.error(e);uiAlert('PDF नहीं बन पाई। दोबारा कोशिश करें।');});});
 $('#copyListBtn').addEventListener('click',()=>{
   const id=$('#listTest').value;const test=TESTS.find(t=>t.id===id);if(!test){uiAlert('पहले टेस्ट चुनें।');return;}
   const rows=RESULTS.filter(r=>r.testId===id).sort((a,b)=>b.score-a.score||b.correct-a.correct);
   if(!rows.length){uiAlert('इस टेस्ट का कोई परिणाम नहीं है।');return;}
   const lines=[['रैंक','नाम','रोल','मोबाइल','अंक','सही','ग़लत','छोड़े'].join('\t')];let rank=0,prev=null;
-  rows.forEach((r,i)=>{if(r.score!==prev){rank=i+1;prev=r.score;}lines.push([rank,r.name||'',r.roll||'',r.mobile||'',fmt(r.score),r.correct,r.wrong,r.blank].join('\t'));});
+  rows.forEach((r,i)=>{if(r.score!==prev){rank=i+1;prev=r.score;}lines.push([rank,dispNamePlain(r),r.roll||'',r.mobile||'',fmt(r.score),r.correct,r.wrong,r.blank].join('\t'));});
   copyText(test.name+'\n'+lines.join('\n'),'सूची कॉपी हो गई — Excel या WhatsApp में पेस्ट करें।');
 });
 $('#clearListBtn').addEventListener('click',async()=>{const id=$('#listTest').value;if(!id)return;const n=RESULTS.filter(r=>r.testId===id).length;if(!n)return;if(!await uiConfirm('इस टेस्ट के सभी '+n+' परिणाम हटाएँ? (पहले CSV डाउनलोड कर लें)','हटाएँ'))return;RESULTS=RESULTS.filter(r=>r.testId!==id);saveResults();renderList();});
@@ -1660,7 +1744,7 @@ $('#csvBtn').addEventListener('click',()=>{
   const lines=[head.map(q).join(',')];let rank=0,prev=null;
   rows.forEach((r,i)=>{if(r.score!==prev){rank=i+1;prev=r.score;}const fa=finalAnswers(r);
     const w=((r.warnings||[]).filter(x=>x.t==='err').length+(r.issues||[]).length)?'हाँ':'';
-    const line=[rank,r.name,r.roll?"'"+r.roll:'',r.mobile?"'"+r.mobile:'',r.booklet,r.score,r.max,r.correct,r.wrong,r.blank,r.multi,w];
+    const line=[rank,dispNamePlain(r),r.roll?"'"+r.roll:'',r.mobile?"'"+r.mobile:'',r.booklet,r.score,r.max,r.correct,r.wrong,r.blank,r.multi,w];
     for(let k=0;k<test.n;k++)line.push(fa[k]?fa[k].sel:'');lines.push(line.map(q).join(','));});
   download((test.name||'omr').replace(/[\\\/:*?"<>|]/g,'_')+'_परिणाम.csv','﻿'+lines.join('\r\n'),'text/csv;charset=utf-8');
 });
@@ -1680,7 +1764,7 @@ loadTestToForm('');fillTestSelects();
 (function(){let t=null;try{t=localStorage.getItem('omr_tab');}catch(e){}if(t&&document.getElementById('tab-'+t))showTab(t);else if(!TESTS.length)updateCheckInfo();})();
 window.addEventListener('error',e=>{console.error(e.error||e.message);});
 // परीक्षण के लिए
-window.__omr={findAnchors,prep,buildInit,snap,ringScore,applyH,localScale,BLOCKS,analyzeCanvas,fileToCanvas,parseKey,evaluate,drawOverlay,TPL};
+window.__omr={makeResultPdf,canvasesToPdf,findAnchors,prep,buildInit,snap,ringScore,applyH,localScale,BLOCKS,analyzeCanvas,fileToCanvas,parseKey,evaluate,drawOverlay,TPL};
 </script>
 </body>
 </html>
