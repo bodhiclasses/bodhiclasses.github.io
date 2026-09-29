@@ -191,10 +191,10 @@ footer{max-width:980px;margin:0 auto;padding:10px 16px 40px;color:var(--muted);f
 <!-- ================= CHECK ================= -->
 <section class="tab on" id="tab-check">
   <div class="card step" id="step1">
-    <div class="stephead"><span class="stepno">1</span><h2>सही उत्तर वाली OMR की फ़ोटो डालें</h2></div>
+    <div class="stephead"><span class="stepno">1</span><h2>उत्तर कुंजी की फ़ोटो डालें</h2></div>
     <div id="keyNeed">
-      <div class="note">एक ख़ाली OMR पर सही उत्तर भरें (या उत्तर-कुंजी वाली OMR लें) और उसकी फ़ोटो डालें। ऐप उसी से सही उत्तर समझ लेगा।</div>
-      <button class="btn primary big" id="keyPhotoBtn" style="margin-top:10px">📷 उत्तर कुंजी वाली OMR की फ़ोटो</button>
+      <div class="note">छपी हुई उत्तर-कुंजी (जैसे <b>1. (b)</b> या <b>1. C</b> वाली तालिका) की फ़ोटो/स्क्रीनशॉट डालें — या सही उत्तर भरी हुई OMR की फ़ोटो। ऐप दोनों पहचान लेता है।</div>
+      <button class="btn primary big" id="keyPhotoBtn" style="margin-top:10px">📷 उत्तर कुंजी की फ़ोटो डालें</button>
       <input type="file" id="keyPhotoInput" accept="image/*" class="hidden">
     </div>
     <div id="keyStatus"></div>
@@ -264,7 +264,7 @@ footer{max-width:980px;margin:0 auto;padding:10px 16px 40px;color:var(--muted);f
       <button class="chip" data-p="100,1,0.33">+1, −⅓</button>
       <button class="chip" data-p="100,1,0">बिना ऋणात्मक (+1, 0)</button>
     </div>
-    <label class="f" style="display:flex;gap:8px;align-items:center;color:var(--ink)"><input type="checkbox" id="tMulti" checked style="width:20px;height:20px"> एक प्रश्न में एक से अधिक गोले भरे हों तो उसे ग़लत मानें (ऋणात्मक अंक लगें)</label>
+    <div class="note" style="margin-top:8px">किसी प्रश्न में एक से अधिक गोले भरे हों तो उसे <b>छोड़ा हुआ</b> माना जाता है — न सही, न ग़लत।</div>
 
     <h3>उत्तर भरने के तीन तरीक़े</h3>
     <div class="note">तरीक़ा 1: नीचे के बॉक्स में उत्तर लिखें/पेस्ट करें। जैसे <b>CACCBDCDAB…</b> या हर पंक्ति में <b>1 C</b>, <b>2-A</b>. हिंदी में क/ख/ग/घ भी चलेगा। रद्द प्रश्न के लिए <b>X</b>, सबको पूरे अंक देने के लिए <b>*</b>, दो सही उत्तर हों तो <b>5 A/C</b>.</div>
@@ -1013,6 +1013,132 @@ function lightCheck(P){
   return null;
 }
 
+
+/* ---------------- छपी उत्तर-कुंजी की फ़ोटो पढ़ना (OCR) ---------------- */
+let tessP=null;
+function loadTess(){
+  if(window.Tesseract)return Promise.resolve();
+  if(!tessP)tessP=new Promise((res,rej)=>{const sc=document.createElement('script');sc.src='https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';
+    sc.onload=()=>res();sc.onerror=()=>{tessP=null;sc.remove();rej(new Error('net'));};document.head.append(sc);});
+  return tessP;
+}
+// काली स्याही अलग करो, तालिका की रेखाएँ मिटाओ
+function keyPrep(src){
+  const S=2000/Math.max(src.width,src.height);
+  const W=Math.round(src.width*S),H=Math.round(src.height*S);
+  const c=document.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d',{willReadFrequently:true});
+  x.fillStyle='#fff';x.fillRect(0,0,W,H);x.drawImage(src,0,0,W,H);
+  const img=x.getImageData(0,0,W,H),d=img.data,N=W*H;
+  const g=new Uint8Array(N);for(let i=0,j=0;i<N;i++,j+=4){const a=d[j],b=d[j+1],e=d[j+2];g[i]=a<b?(a<e?a:e):(b<e?b:e);}
+  const cs=32,cw=Math.ceil(W/cs),ch=Math.ceil(H/cs),cb=new Float32Array(cw*ch),hist=new Uint16Array(256);
+  for(let cy=0;cy<ch;cy++)for(let cx=0;cx<cw;cx++){hist.fill(0);let n=0;for(let y=cy*cs;y<Math.min(H,cy*cs+cs);y++)for(let xx=cx*cs;xx<Math.min(W,cx*cs+cs);xx++){hist[g[y*W+xx]]++;n++;}
+    let a=0,v=255;for(;v>0;v--){a+=hist[v];if(a>=n*0.1)break;}cb[cy*cw+cx]=v;}
+  const sm=new Float32Array(cw*ch);for(let y=0;y<ch;y++)for(let xx=0;xx<cw;xx++){let m=0;for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const yy=y+dy,x2=xx+dx;if(yy<0||x2<0||yy>=ch||x2>=cw)continue;if(cb[yy*cw+x2]>m)m=cb[yy*cw+x2];}sm[y*cw+xx]=m;}
+  const ink=new Uint8Array(N);
+  for(let y=0;y<H;y++){const cy=Math.min(ch-1,(y/cs)|0);for(let xx=0;xx<W;xx++){const bg=sm[cy*cw+Math.min(cw-1,(xx/cs)|0)];if(bg>30&&g[y*W+xx]<0.6*bg)ink[y*W+xx]=1;}}
+  const L=Math.max(20,Math.round(Math.min(W,H)*0.04)),line=new Uint8Array(N);
+  for(let y=0;y<H;y++){let st=-1;for(let xx=0;xx<=W;xx++){const on=xx<W&&ink[y*W+xx];if(on&&st<0)st=xx;if(!on&&st>=0){if(xx-st>=L)for(let k=st;k<xx;k++)line[y*W+k]=1;st=-1;}}}
+  for(let xx=0;xx<W;xx++){let st=-1;for(let y=0;y<=H;y++){const on=y<H&&ink[y*W+xx];if(on&&st<0)st=y;if(!on&&st>=0){if(y-st>=L)for(let k=st;k<y;k++)line[k*W+xx]=1;st=-1;}}}
+  for(let i=0,j=0;i<N;i++,j+=4){let l=line[i];if(!l){const y=(i/W)|0,xx=i-y*W;for(let dy=-1;dy<=1&&!l;dy++)for(let dx=-1;dx<=1&&!l;dx++){const yy=y+dy,x2=xx+dx;if(yy>=0&&x2>=0&&yy<H&&x2<W&&line[yy*W+x2])l=1;}}
+    const v=ink[i]&&!l?0:255;d[j]=d[j+1]=d[j+2]=v;d[j+3]=255;}
+  x.putImageData(img,0,0);return c;
+}
+function clusters1(vals,tol){const s=vals.slice().sort((a,b)=>a-b);const cs=[];for(const v of s){const c=cs[cs.length-1];if(c&&v-c.m<=tol){c.v.push(v);c.m=c.v.reduce((a,b)=>a+b,0)/c.v.length;}else cs.push({v:[v],m:v});}return cs;}
+function parseKeyWords(words){
+  const out=[];
+  for(const w of words){
+    const t=(w.text||'').replace(/[^0-9a-dA-D.()]/g,'');const b=w.bbox;const y=(b.y0+b.y1)/2,h=b.y1-b.y0;
+    let m=t.match(/^(\d{1,3})\.?\(?([a-dA-D])\)?\.?$/);
+    if(m){out.push({q:+m[1],a:m[2].toUpperCase(),x:b.x0,xr:b.x1,y,h,kind:'both'});continue;}
+    m=t.match(/^(\d{1,3})\.?$/);if(m){out.push({q:+m[1],x:b.x0,xr:b.x1,y,h,kind:'num'});continue;}
+    m=t.match(/^\(?([a-dA-D])\)?$/);if(m)out.push({a:m[1].toUpperCase(),x:b.x0,xr:b.x1,y,h,kind:'let'});
+  }
+  return out;
+}
+async function readKeyImage(canvas,onStep){
+  await loadTess();
+  onStep&&onStep('फ़ोटो साफ़ की जा रही है…');
+  const pc=keyPrep(canvas);
+  const worker=await Tesseract.createWorker('eng');
+  try{
+    onStep&&onStep('उत्तर पढ़े जा रहे हैं…');
+    await worker.setParameters({tessedit_pageseg_mode:'11',tessedit_char_whitelist:'0123456789.()abcdABCD'});
+    const {data}=await worker.recognize(pc);
+    const toks=parseKeyWords(data.words||[]);
+    const key=new Array(201).fill('');const unsure=[];
+    let anchors=toks.filter(t=>t.q>=1&&t.q<=200&&t.kind!=='let');
+    toks.filter(t=>t.kind==='both'&&t.q<=200).forEach(t=>{if(!key[t.q])key[t.q]=t.a;});
+    if(anchors.length>=4){
+      const hmed=median(anchors.map(a=>a.h))||20;
+      // स्तंभ: जिनमें कम से कम 3 नंबर हों
+      let cols=clusters1(anchors.map(a=>a.x),hmed*2.5).filter(c=>c.v.length>=3).map(c=>c.m);
+      const ci=x=>{let b=-1,bd=1e9;cols.forEach((c,i)=>{const dd=Math.abs(c-x);if(dd<bd){bd=dd;b=i;}});return bd<hmed*3?b:-1;};
+      anchors=anchors.filter(a=>ci(a.x)>=0);
+      const rows=clusters1(anchors.map(a=>a.y),hmed*0.8).filter(r=>r.v.length>=2).map(r=>r.m);
+      const ri=y=>{let b=-1,bd=1e9;rows.forEach((r,i)=>{const dd=Math.abs(r-y);if(dd<bd){bd=dd;b=i;}});return bd<hmed?b:-1;};
+      const R=rows.length;
+      if(R>=2&&cols.length>=1){
+        // हर स्तंभ का आरंभिक नंबर (ऊपर से नीचे क्रम)
+        let colInfo=cols.map((cx,i)=>{const votes={};anchors.forEach(a=>{if(ci(a.x)!==i)return;const r=ri(a.y);if(r<0)return;const k=a.q-1-r;votes[k]=(votes[k]||0)+1;});
+          const best=Object.entries(votes).sort((a,b)=>b[1]-a[1])[0];return best&&best[1]>=2?{x:cx,base:+best[0]}:null;}).filter(Boolean).sort((a,b)=>a.x-b.x);
+        if(colInfo.length){
+          const dx=colInfo.length>1?median(colInfo.slice(1).map((c,i)=>c.x-colInfo[i].x)):Math.max(hmed*8,canvas.width*0);
+          // छूटे स्तंभ जोड़ो (जैसे 1–10 वाला)
+          const filled=[];
+          for(let i=0;i<colInfo.length;i++){filled.push(colInfo[i]);const nx=colInfo[i+1];if(nx&&dx){const gap=Math.round((nx.base-colInfo[i].base)/R);for(let k=1;k<gap;k++)filled.push({x:colInfo[i].x+k*(nx.x-colInfo[i].x)/gap,base:colInfo[i].base+k*R});}}
+          while(filled[0].base>=R&&dx)filled.unshift({x:filled[0].x-dx,base:filled[0].base-R});
+          const dy=R>1?median(rows.slice(1).map((r,i)=>r-rows[i])):hmed*3;
+          // तिरछी फ़ोटो: हर पंक्ति की ऊँचाई x के साथ, हर स्तंभ का x y के साथ बदलता है
+          const fit=(pts)=>{if(pts.length<2)return null;const mx=pts.reduce((a,p)=>a+p[0],0)/pts.length,my=pts.reduce((a,p)=>a+p[1],0)/pts.length;let sxx=0,sxy=0;pts.forEach(p=>{sxx+=(p[0]-mx)**2;sxy+=(p[0]-mx)*(p[1]-my);});return {mx,my,k:sxx>1e-6?sxy/sxx:0};};
+          const rowFit=rows.map((ry,r)=>fit(anchors.filter(a=>ri(a.y)===r).map(a=>[a.x,a.y])));
+          const allSlope=median(rowFit.filter(Boolean).map(f=>f.k));
+          const rowY=(r,x)=>{const f=rowFit[r];return f?f.my+(Number.isFinite(f.k)?f.k:allSlope)*(x-f.mx):rows[r];};
+          const colSlope=median(colInfo.map(c=>{const f=fit(anchors.filter(a=>Math.abs(a.x-c.x)<hmed*3).map(a=>[a.y,a.x]));return f?f.k:0;}));
+          const colX=(c,y)=>c.x+colSlope*(y-rows[0]);
+          // शीर्षक आदि के भटके टुकड़े हटाओ: सीधा पढ़ा उत्तर तभी मानो जब वह तालिका में अपनी सही जगह पर हो
+          toks.filter(k=>k.kind==='both'&&k.q<=200).forEach(k=>{
+            const ok=filled.some(c=>{const r=k.q-1-c.base;return r>=0&&r<R&&Math.abs(colX(c,rows[r])-k.x)<0.5*dx&&Math.abs(rowY(r,k.x)-k.y)<0.45*dy;});
+            if(!ok&&key[k.q]===k.a)key[k.q]='';});
+          // हर ख़ाली खाने का अक्षर अलग से पढ़ो
+          const todo=[];for(const c of filled)for(let r=0;r<R;r++){const q=c.base+r+1;if(q>=1&&q<=200&&!key[q])todo.push({q,c,r});}
+          // पहले पहले से मिले अक्षर-टुकड़े
+          for(const t of todo){const cx0=colX(t.c,rows[t.r]);const lx0=cx0+0.2*dx,lx1=cx0+0.95*dx,y=rowY(t.r,cx0);
+            let L=null,bd=dy*0.3;toks.forEach(k=>{if(k.kind==='let'&&k.x>=lx0&&k.x<=lx1&&Math.abs(k.y-y)<bd){bd=Math.abs(k.y-y);L=k;}});if(L)key[t.q]=L.a;}
+          if(window.__keyDbg)window.__keyDbg.push({toks:toks.map(k=>[k.kind,k.q||'',k.a||'',Math.round(k.x),Math.round(k.y)]),rows,filled:filled.map(c=>[Math.round(c.x),c.base]),dx,dy,colSlope});
+          const rest=todo.filter(t=>!key[t.q]);let done=0;
+          for(const t of rest){
+            onStep&&onStep('उत्तर पढ़े जा रहे हैं… ('+(++done)+'/'+rest.length+')');
+            const cxx=colX(t.c,rows[t.r]);const y=rowY(t.r,cxx+0.5*dx);const top=Math.max(0,Math.round(y-0.42*dy)),hh=Math.min(pc.height-top,Math.round(0.84*dy));const tc={x:cxx};
+            const tryRect=async(x0,x1,psm,wl)=>{x0=Math.max(0,Math.round(x0));x1=Math.min(pc.width,Math.round(x1));if(x1-x0<5||hh<5)return {t:'',c:0};
+              await worker.setParameters({tessedit_pageseg_mode:psm,tessedit_char_whitelist:wl});
+              const sc=2,pad=24,cv=document.createElement('canvas');cv.width=(x1-x0)*sc+2*pad;cv.height=hh*sc+2*pad;const cx=cv.getContext('2d');
+              cx.fillStyle='#fff';cx.fillRect(0,0,cv.width,cv.height);cx.imageSmoothingQuality='high';cx.drawImage(pc,x0,top,x1-x0,hh,pad,pad,(x1-x0)*sc,hh*sc);
+              const r=await worker.recognize(cv);return {t:(r.data.text||'').trim(),c:r.data.confidence||0};};
+            let r1=await tryRect(tc.x-0.05*dx,tc.x+0.95*dx,'7','0123456789.()abcdABCD');
+            let m=r1.t.replace(/\s/g,'').match(/^(\d{1,3})\.?\(?([a-dA-D])/);
+            // अक्षर वाला खाना दो तरह से पढ़ो; दोनों एक-से हों तभी पक्का
+            const a=await tryRect(tc.x+0.25*dx,tc.x+0.92*dx,'10','ABCDabcd');
+            const b=await tryRect(tc.x+0.18*dx,tc.x+0.97*dx,'7','ABCDabcd()');
+            if(window.__keyDbg)window.__keyDbg.push({q:t.q,x:tc.x,y,top,hh,dx,r1,a,b});
+            const la=(a.t.match(/[a-dA-D]/)||[''])[0].toUpperCase(),lb=(b.t.match(/[a-dA-D]/)||[''])[0].toUpperCase();
+            const lm=m&&+m[1]===t.q?m[2].toUpperCase():'';
+            const votes={};[la,lb,lm].forEach(v=>{if(v)votes[v]=(votes[v]||0)+1;});
+            const best=Object.entries(votes).sort((x,y)=>y[1]-x[1])[0];
+            if(best){key[t.q]=best[0];const conf=best[0]===lm?Math.max(r1.c,a.c,b.c):Math.max(best[0]===la?a.c:0,best[0]===lb?b.c:0);
+              if(best[1]<2||conf<75)unsure.push(t.q);}
+          }
+          let maxQ=0;filled.forEach(c=>{maxQ=Math.max(maxQ,c.base+R);});
+          key.maxQ=maxQ;
+        }
+      }
+    }
+    let n=key.maxQ||0;key.forEach((v,i)=>{if(v&&i>n)n=i;});n=Math.min(100,n);
+    const out=new Array(100).fill('');for(let q=1;q<=n;q++)out[q-1]=key[q]||'';
+    const missing=[];for(let q=1;q<=n;q++)if(!key[q]||unsure.includes(q))missing.push(q);
+    return {key:out,n,missing};
+  }finally{try{await worker.terminate();}catch(e){}}
+}
+
 /* ---------------- ओवरले चित्र ---------------- */
 function drawOverlay(res,test,final){
   const c=res.canvas;const s=Math.min(1,1100/Math.max(c.width,c.height));
@@ -1061,7 +1187,7 @@ function evaluate(ans,test){
     else if(!a.sel){r='b';out.blank++;}
     else if(a.st==='multi'||a.sel.length>1){
       out.multi++;
-      if(test.multiWrong){r='w';out.wrong++;out.score-=test.minus;}else{r='b';out.blank++;}
+      r='b';out.blank++;
     }
     else if(!k){r='u';}
     else if(k.includes(a.sel)){r='c';out.correct++;out.score+=test.plus;}
@@ -1143,7 +1269,14 @@ function updateCheckInfo(){
   box.append(el('b',{class:'big'},'✔ उत्तर कुंजी तैयार — '+t.n+' प्रश्न'));
   box.append(el('div',{style:'font-size:14px'},'सही उत्तर पर +'+fmt(t.plus)+(t.minus?', ग़लत पर −'+fmt(t.minus):', ग़लत पर कोई कटौती नहीं')+(filled<t.n?'। '+(t.n-filled)+' प्रश्नों की कुंजी ख़ाली है (वे गिने नहीं जाएँगे)':'')));
   ks.append(box);
-  if(t.keyIssues&&t.keyIssues.length)ks.append(el('div',{class:'msg warn'},'कुंजी की फ़ोटो में इन प्रश्नों पर गोला साफ़ नहीं था: '+t.keyIssues.join(', ')+'। “कुंजी देखें/बदलें” में इन्हें ठीक कर लें।'));
+  if(t.keyIssues&&t.keyIssues.length)ks.append(el('div',{class:'msg warn'},'इन प्रश्नों का उत्तर साफ़ नहीं पढ़ा गया — नीचे लाल खानों पर टैप करके ठीक कर लें: '+t.keyIssues.join(', ')));
+  const det=el('details',{class:'more'});det.open=!!(t.keyIssues&&t.keyIssues.length)||(Date.now()-t.created<60000);
+  det.append(el('summary',null,'🔍 कुंजी मिलाएँ ('+t.n+' उत्तर) — ग़लत हो तो खाने पर टैप करें'));
+  const kg=el('div',{class:'qgrid'});
+  for(let q=0;q<t.n;q++){const v=t.key[q]||'';const bad=!v||(t.keyIssues||[]).includes(q+1);
+    const cell=el('div',{class:'qc'+(bad?' w':'')},el('div',{class:'n'},(q+1)+''),el('div',{class:'a'},v==='X'?'रद्द':v==='*'?'सब':(v||'?')));
+    cell.addEventListener('click',()=>openKeyEdit(t,q));kg.append(cell);}
+  det.append(kg);ks.append(det);
   ks.append(el('div',{class:'note',style:'margin-top:10px'},'अंक-योजना चुनें:'));
   const chips=el('div',{class:'chips'});
   for(const [pl,mi,lab] of MARKS)chips.append(el('button',{class:'chip'+(t.plus===pl&&t.minus===mi?' on':''),onclick:()=>setMarking(t,pl,mi)},lab));
@@ -1157,10 +1290,10 @@ function setMarking(t,pl,mi){t.plus=pl;t.minus=mi;t.updated=Date.now();saveTests
   RESULTS.forEach(r=>{if(r.testId===t.id)recalcStored(r,t);});saveResults();
   document.querySelectorAll('#results .card[id^="rc-"]').forEach(c=>{const r=RESULTS.find(x=>'rc-'+x.id===c.id);if(r)renderResultCard(r);});
   updateCheckInfo();}
-function makeTestFromKey(key,issues){
-  let last=0;key.forEach((v,i)=>{if(v)last=i+1;});if(!last)return null;
+function makeTestFromKey(key,issues,nOver){
+  let last=0;key.forEach((v,i)=>{if(v)last=i+1;});if(nOver)last=Math.max(last,nOver);if(!last)return null;
   const prev=currentTest();const d=new Date();
-  const obj={id:uid(),name:'टेस्ट '+d.getDate()+'/'+(d.getMonth()+1)+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'),n:last,plus:prev?prev.plus:2,minus:prev?prev.minus:0.66,multiWrong:true,key:key.slice(0,100),keyIssues:issues||[],created:Date.now(),updated:Date.now()};
+  const obj={id:uid(),name:'टेस्ट '+d.getDate()+'/'+(d.getMonth()+1)+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'),n:last,plus:prev?prev.plus:2,minus:prev?prev.minus:0.66,multiWrong:false,key:key.slice(0,100),keyIssues:issues||[],created:Date.now(),updated:Date.now()};
   TESTS.push(obj);saveTests();wantNewKey=false;fillTestSelects();$('#checkTest').value=obj.id;$('#checkTest').dataset.touched='1';try{localStorage.setItem('omr_lasttest',obj.id);}catch(e){}
   $('#results').innerHTML='';updateCheckInfo();return obj;
 }
@@ -1173,16 +1306,30 @@ $('#qkSave').addEventListener('click',()=>{
 });
 $('#keyPhotoBtn').addEventListener('click',()=>$('#keyPhotoInput').click());
 $('#keyPhotoInput').addEventListener('change',async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;
-  const ks=$('#keyStatus');ks.innerHTML='<div class="msg info">उत्तर कुंजी पढ़ी जा रही है…</div>';await new Promise(r=>setTimeout(r,30));
-  try{const c=await fileToCanvas(f);const res=analyzeCanvas(c);
-    if(!res.ok){ks.innerHTML='';ks.append(el('div',{class:'msg err'},res.error+' दोबारा साफ़ फ़ोटो लें।'));return;}
-    const key=new Array(100).fill('');const issues=[];
-    res.answers.forEach((a,q)=>{if(a.st==='multi'){issues.push(q+1);}else if(a.sel){key[q]=a.sel;if(a.st!=='ok')issues.push(q+1);}});
-    if(key.filter(Boolean).length<3){ks.innerHTML='';ks.append(el('div',{class:'msg err'},'इस फ़ोटो में भरे हुए गोले नहीं मिले। जिस OMR पर सही उत्तर भरे हों, उसकी फ़ोटो डालें।'));return;}
-    const t=makeTestFromKey(key,issues);
-    uiAlert('उत्तर कुंजी तैयार — '+t.n+' प्रश्न।'+(issues.length?'\nइन प्रश्नों पर गोला साफ़ नहीं था, एक बार देख लें: '+issues.join(', '):'')+'\nअब कदम 2 में छात्रों की OMR फ़ोटो डालें।');
-  }catch(err){console.error(err);ks.innerHTML='';ks.append(el('div',{class:'msg err'},'यह फ़ोटो खुल नहीं पाई। JPG/PNG फ़ोटो दें।'));}
+  const ks=$('#keyStatus');const say=m=>{ks.innerHTML='';ks.append(el('div',{class:'msg info'},m));};
+  const fail=m=>{ks.innerHTML='';ks.append(el('div',{class:'msg err'},m));};
+  say('फ़ोटो देखी जा रही है…');await new Promise(r=>setTimeout(r,30));
+  let c;try{c=await fileToCanvas(f);}catch(err){fail('यह फ़ोटो खुल नहीं पाई। JPG/PNG फ़ोटो दें।');return;}
+  // 1) क्या यह भरी हुई OMR है?
+  try{const res=analyzeCanvas(c);
+    if(res.ok){const key=new Array(100).fill('');const issues=[];
+      res.answers.forEach((a,q)=>{if(a.st==='multi'){issues.push(q+1);}else if(a.sel){key[q]=a.sel;if(a.st!=='ok')issues.push(q+1);}});
+      if(key.filter(Boolean).length>=3){const t=makeTestFromKey(key,issues);showKeyReady(t,'OMR');return;}}
+  }catch(err){console.error(err);}
+  // 2) छपी हुई उत्तर-कुंजी (1. (b) / 1. C जैसी तालिका)
+  try{
+    say('छपी उत्तर-कुंजी पढ़ी जा रही है… (पहली बार 20–40 सेकंड लग सकते हैं)');
+    const r=await readKeyImage(c,say);
+    const got=r.key.filter(Boolean).length;
+    if(got<3){fail('इस फ़ोटो से उत्तर नहीं पढ़े जा सके। कुंजी की साफ़, सीधी फ़ोटो लें — पूरी तालिका फ़्रेम में हो। या नीचे “उत्तर टाइप करके डालें” इस्तेमाल करें।');return;}
+    const t=makeTestFromKey(r.key,r.missing,r.n);showKeyReady(t,'छपी कुंजी');
+  }catch(err){console.error(err);
+    fail(err&&err.message==='net'?'छपी कुंजी पढ़ने के लिए इंटरनेट चाहिए (पहली बार पढ़ने का औज़ार डाउनलोड होता है)। इंटरनेट चालू करके दोबारा फ़ोटो डालें।':'कुंजी पढ़ते समय गड़बड़ हुई। दोबारा फ़ोटो डालें या उत्तर टाइप करें।');}
 });
+function showKeyReady(t,src){
+  const miss=t.keyIssues||[];
+  uiAlert('उत्तर कुंजी तैयार ('+src+') — '+t.n+' प्रश्न।'+(miss.length?'\nइन प्रश्नों के उत्तर पर ऐप पक्का नहीं है — नीचे लाल खानों को फ़ोटो से मिलाकर ठीक कर लें: '+miss.join(', '):'\nनीचे एक बार कुंजी मिला लें।')+'\nफिर कदम 2 में छात्रों की OMR फ़ोटो डालें।');
+}
 $('#checkTest').addEventListener('change',()=>{$('#checkTest').dataset.touched='1';try{localStorage.setItem('omr_lasttest',$('#checkTest').value);}catch(e){}updateCheckInfo();});
 
 function renderKeyGrid(){
@@ -1223,8 +1370,8 @@ $('#tN').addEventListener('input',renderKeyGrid);
 $('#clearKeyBtn').addEventListener('click',async()=>{if(!await uiConfirm('सारे उत्तर साफ़ करें?','साफ़ करें'))return;editing.key=new Array(100).fill('');renderKeyGrid();syncKeyText();});
 function loadTestToForm(id){
   const t=TESTS.find(x=>x.id===id);
-  if(!t){editing={id:null,key:new Array(100).fill('')};$('#formTitle').textContent='नया टेस्ट';$('#tName').value='';$('#tN').value=100;$('#tPlus').value=2;$('#tMinus').value=0.66;$('#tMulti').checked=true;$('#keyText').value='';}
-  else{editing={id:t.id,key:t.key.slice()};while(editing.key.length<100)editing.key.push('');$('#formTitle').textContent='टेस्ट बदलें: '+t.name;$('#tName').value=t.name;$('#tN').value=t.n;$('#tPlus').value=t.plus;$('#tMinus').value=t.minus;$('#tMulti').checked=t.multiWrong!==false;syncKeyText();}
+  if(!t){editing={id:null,key:new Array(100).fill('')};$('#formTitle').textContent='नया टेस्ट';$('#tName').value='';$('#tN').value=100;$('#tPlus').value=2;$('#tMinus').value=0.66;$('#keyText').value='';}
+  else{editing={id:t.id,key:t.key.slice()};while(editing.key.length<100)editing.key.push('');$('#formTitle').textContent='टेस्ट बदलें: '+t.name;$('#tName').value=t.name;$('#tN').value=t.n;$('#tPlus').value=t.plus;$('#tMinus').value=t.minus;syncKeyText();}
   $('#keyMsg').innerHTML='';$('#saveMsg').innerHTML='';renderKeyGrid();
 }
 $('#keySel').addEventListener('change',()=>loadTestToForm($('#keySel').value));
@@ -1238,7 +1385,7 @@ $('#saveTestBtn').addEventListener('click',()=>{
   const errs=[];if(!name)errs.push('टेस्ट का नाम लिखें');if(!(n>=1&&n<=100))errs.push('प्रश्न संख्या 1 से 100 के बीच हो');if(!(plus>0))errs.push('सही उत्तर के अंक 0 से अधिक हों');if(!(minus>=0))errs.push('कटौती 0 या अधिक हो');
   const filled=editing.key.slice(0,n).filter(Boolean).length;if(!filled)errs.push('कम से कम कुछ उत्तर भरें');
   if(errs.length){$('#saveMsg').innerHTML='<div class="msg err">'+errs.map(esc).join('<br>')+'</div>';return;}
-  const obj={id:editing.id||uid(),name,n,plus,minus,multiWrong:$('#tMulti').checked,key:editing.key.slice(0,100),updated:Date.now()};
+  const obj={id:editing.id||uid(),name,n,plus,minus,multiWrong:false,key:editing.key.slice(0,100),updated:Date.now()};
   const i=TESTS.findIndex(x=>x.id===obj.id);if(i>=0)TESTS[i]=Object.assign(TESTS[i],obj);else{obj.created=Date.now();TESTS.push(obj);}
   // पुराने परिणाम नई कुंजी से दोबारा गिनें
   let re=0;RESULTS.forEach(r=>{if(r.testId===obj.id){recalcStored(r,obj);re++;}});
@@ -1344,7 +1491,7 @@ function renderResultCard(rec,replaceId){
   const iss=fa.map((a,q)=>({a,q})).filter(x=>(!test||x.q<test.n)&&['multi','faint','unclear','ok2'].includes(x.a.st)&&!x.a.ov);
   if(iss.length){
     const groups={multi:[],faint:[],unclear:[],ok2:[]};iss.forEach(x=>groups[x.a.st].push(x.q+1));
-    if(groups.multi.length)W.unshift({t:'err',m:'एक से अधिक गोले भरे (काटा/X किया गोला भी भरा माना जाता है) — प्रश्न: '+groups.multi.join(', ')+(test?(test.multiWrong?' (ग़लत माने गए)':' (छोड़े माने गए)'):'')});
+    if(groups.multi.length)W.unshift({t:'warn',m:'एक से अधिक गोले भरे (काटा/X किया गोला भी भरा माना जाता है) — प्रश्न: '+groups.multi.join(', ')+' (छोड़े माने गए — न सही, न ग़लत)'});
     if(groups.unclear.length)W.unshift({t:'warn',m:'अस्पष्ट (कोई गोला पूरा नहीं भरा) — प्रश्न: '+groups.unclear.join(', ')+' (छोड़े माने गए)'});
     if(groups.faint.length)W.unshift({t:'warn',m:'हल्का भरा गोला (उत्तर मान लिया) — प्रश्न: '+groups.faint.join(', ')});
     if(groups.ok2.length)W.unshift({t:'warn',m:'दूसरे गोले पर भी निशान/कटा हुआ (गहरा वाला उत्तर माना) — प्रश्न: '+groups.ok2.join(', ')});
@@ -1409,7 +1556,13 @@ function printCard(card){const sec=$('#tab-check');const others=[...$('#results'
 
 /* ---------------- उत्तर सुधार ---------------- */
 let editCtx=null;
-function openEdit(rec,q){
+function openKeyEdit(t,q){
+  editCtx={kind:'key',t,q};$('#editTitle').textContent='प्रश्न '+(q+1)+' का सही उत्तर';
+  $('#editInfo').textContent='अभी: '+(t.key[q]||'ख़ाली');$('#editReset').classList.add('hidden');
+  $('#editPick').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v===(t.key[q]||'')));
+  $('#editModal').classList.add('on');
+}
+function openEdit(rec,q){$('#editReset').classList.remove('hidden');
   editCtx={rec,q};const a=finalAnswers(rec)[q];const det=rec.det[q];
   $('#editTitle').textContent='प्रश्न '+(q+1);
   const test=TESTS.find(t=>t.id===rec.testId);
@@ -1417,7 +1570,13 @@ function openEdit(rec,q){
   $('#editPick').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v===(a.sel||'')&&a.st!=='multi'));
   $('#editModal').classList.add('on');
 }
-$('#editPick').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{if(!editCtx)return;const {rec,q}=editCtx;rec.ov=rec.ov||{};rec.ov[q]=b.dataset.v;afterEdit(rec);}));
+$('#editPick').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{if(!editCtx)return;
+  if(editCtx.kind==='key'){const {t,q}=editCtx;t.key[q]=b.dataset.v;t.keyIssues=(t.keyIssues||[]).filter(x=>x!==q+1);t.updated=Date.now();saveTests();
+    RESULTS.forEach(r=>{if(r.testId===t.id)recalcStored(r,t);});saveResults();
+    document.querySelectorAll('#results .card[id^="rc-"]').forEach(c=>{const r=RESULTS.find(x=>'rc-'+x.id===c.id);if(r)renderResultCard(r);});
+    $('#editModal').classList.remove('on');editCtx=null;updateCheckInfo();
+    const d=document.querySelector('#keyStatus details');if(d)d.open=true;return;}
+  const {rec,q}=editCtx;rec.ov=rec.ov||{};rec.ov[q]=b.dataset.v;afterEdit(rec);}));
 $('#editReset').addEventListener('click',()=>{if(!editCtx)return;const {rec,q}=editCtx;if(rec.ov)delete rec.ov[q];afterEdit(rec);});
 $('#editClose').addEventListener('click',()=>{$('#editModal').classList.remove('on');editCtx=null;});
 $('#editModal').addEventListener('click',e=>{if(e.target.id==='editModal'){$('#editModal').classList.remove('on');editCtx=null;}});
