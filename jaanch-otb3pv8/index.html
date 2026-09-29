@@ -1,0 +1,1433 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>OMR जाँचक</title>
+<meta name="description" content="मोबाइल फ़ोटो से OMR शीट की तुरंत जाँच — नाम, रोल, मोबाइल, उत्तर, अंक और त्रुटियाँ।">
+<meta name="theme-color" content="#b3261e">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f3ee; --card:#ffffff; --ink:#1f1b16; --muted:#6b635a; --line:#e3ddd3;
+  --brand:#b3261e; --brand2:#8c1d18; --brand-soft:#fbe9e7;
+  --ok:#1e7d32; --ok-soft:#e6f4e7; --bad:#c62828; --bad-soft:#fdeaea;
+  --warn:#b26a00; --warn-soft:#fff3dc; --info:#1565c0; --info-soft:#e7f0fb;
+  --multi:#6a1b9a; --multi-soft:#f3e5f5; --shadow:0 1px 2px rgba(0,0,0,.06),0 4px 14px rgba(0,0,0,.05);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16130f; --card:#221e19; --ink:#f1ece4; --muted:#a89f93; --line:#3a342c;
+    --brand:#ef6f63; --brand2:#ff8a80; --brand-soft:#3a1d1a;
+    --ok:#66bb6a; --ok-soft:#1c2e1d; --bad:#ef5350; --bad-soft:#3a1c1c;
+    --warn:#ffb74d; --warn-soft:#3a2c14; --info:#64b5f6; --info-soft:#15263a;
+    --multi:#ce93d8; --multi-soft:#2f1d33; --shadow:0 1px 2px rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#16130f; --card:#221e19; --ink:#f1ece4; --muted:#a89f93; --line:#3a342c;
+  --brand:#ef6f63; --brand2:#ff8a80; --brand-soft:#3a1d1a;
+  --ok:#66bb6a; --ok-soft:#1c2e1d; --bad:#ef5350; --bad-soft:#3a1c1c;
+  --warn:#ffb74d; --warn-soft:#3a2c14; --info:#64b5f6; --info-soft:#15263a;
+  --multi:#ce93d8; --multi-soft:#2f1d33; --shadow:0 1px 2px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:"Noto Sans Devanagari",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;line-height:1.55;-webkit-text-size-adjust:100%}
+header.top{background:var(--brand);color:#fff;padding:14px 16px 0;position:sticky;top:0;z-index:20;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+:root[data-theme="dark"] header.top{background:#5a1612}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) header.top{background:#5a1612}}
+.brandrow{display:flex;align-items:center;gap:10px;max-width:980px;margin:0 auto}
+.brandrow h1{font-size:20px;margin:0;font-weight:700;flex:1}
+.brandrow small{opacity:.85;font-size:12px;display:block;font-weight:400}
+.themebtn{background:rgba(255,255,255,.15);border:0;color:#fff;border-radius:10px;padding:6px 10px;font-size:14px;cursor:pointer}
+nav.tabs{display:flex;gap:4px;max-width:980px;margin:10px auto 0;overflow-x:auto;scrollbar-width:none}
+nav.tabs::-webkit-scrollbar{display:none}
+nav.tabs button{flex:1 0 auto;background:transparent;border:0;color:#fff;opacity:.8;padding:10px 12px;font:inherit;font-size:15px;border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap}
+nav.tabs button.on{opacity:1;border-bottom-color:#fff;font-weight:700}
+main{max-width:980px;margin:0 auto;padding:16px}
+section.tab{display:none}
+section.tab.on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.card h2{font-size:18px;margin:0 0 10px}
+.card h3{font-size:16px;margin:14px 0 8px}
+label.f{display:block;font-size:14px;color:var(--muted);margin:10px 0 4px}
+input[type=text],input[type=number],select,textarea{width:100%;font:inherit;font-size:16px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+textarea{min-height:90px;resize:vertical;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:15px}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row>*{flex:1 1 140px;min-width:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;font:inherit;font-size:15px;font-weight:600;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:10px 14px;cursor:pointer;text-decoration:none;min-height:44px}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+.btn.big{font-size:17px;padding:14px 18px;min-height:54px;width:100%}
+.btn.small{font-size:13px;padding:6px 10px;min-height:34px;border-radius:9px}
+.btn.danger{color:var(--bad);border-color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.chip{font-size:13px;border:1px solid var(--line);border-radius:999px;padding:5px 11px;background:var(--bg);cursor:pointer;color:var(--ink);font-family:inherit}
+.chip.on{background:var(--brand);border-color:var(--brand);color:#fff}
+.muted{color:var(--muted)}
+.note{font-size:14px;color:var(--muted)}
+.msg{border-radius:12px;padding:10px 12px;margin:8px 0;font-size:14.5px}
+.msg.err{background:var(--bad-soft);color:var(--bad);border:1px solid var(--bad)}
+.msg.warn{background:var(--warn-soft);color:var(--warn);border:1px solid var(--warn)}
+.msg.ok{background:var(--ok-soft);color:var(--ok);border:1px solid var(--ok)}
+.msg.info{background:var(--info-soft);color:var(--info);border:1px solid var(--info)}
+.msg ul{margin:6px 0 0;padding-left:20px}
+/* key grid */
+.kgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;margin-top:8px}
+.krow{display:flex;align-items:center;gap:4px;background:var(--bg);border-radius:10px;padding:4px 6px}
+.krow b{width:30px;font-size:13px;color:var(--muted);text-align:right;flex:none}
+.krow button{flex:1;min-width:0;height:30px;border-radius:50%;border:1.5px solid var(--brand);background:transparent;color:var(--brand);font-weight:700;font-size:12px;cursor:pointer;padding:0;aspect-ratio:1/1;max-width:30px}
+.krow button.on{background:var(--brand);color:#fff}
+.krow.special{outline:2px dashed var(--warn)}
+/* results */
+.rhead{display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.rhead .who{flex:1 1 220px;min-width:0}
+.rhead .who .nm{font-size:19px;font-weight:700;word-break:break-word}
+.kv{font-size:14px;color:var(--muted)}
+.kv b{color:var(--ink);font-weight:600}
+.scorebox{background:var(--brand-soft);border-radius:14px;padding:10px 16px;text-align:center;min-width:130px}
+.scorebox .s{font-size:30px;font-weight:700;color:var(--brand);line-height:1.1}
+.scorebox .o{font-size:12px;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
+.stat{border-radius:12px;padding:8px;text-align:center;font-size:12px}
+.stat b{display:block;font-size:20px}
+.stat.c{background:var(--ok-soft);color:var(--ok)}
+.stat.w{background:var(--bad-soft);color:var(--bad)}
+.stat.b{background:var(--bg);color:var(--muted)}
+.stat.a{background:var(--info-soft);color:var(--info)}
+.qgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:5px;margin-top:8px}
+.qc{border-radius:9px;padding:4px 2px;text-align:center;font-size:12px;cursor:pointer;border:1px solid var(--line);background:var(--bg);line-height:1.25;user-select:none}
+.qc .n{color:var(--muted);font-size:11px}
+.qc .a{font-weight:700;font-size:14px}
+.qc.c{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.qc.w{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.qc.m{background:var(--multi-soft);border-color:var(--multi);color:var(--multi)}
+.qc.d{box-shadow:0 0 0 2px var(--warn) inset}
+.qc.x{opacity:.45}
+.qc.ov{text-decoration:underline dotted}
+.legend{display:flex;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:8px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:4px}
+.ov-wrap{position:relative;margin-top:10px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#000}
+.ov-wrap img{display:block;width:100%;height:auto}
+details.more{margin-top:10px}
+details.more summary{cursor:pointer;font-weight:600;color:var(--brand);padding:6px 0}
+.progress{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin-top:8px}
+.progress>div{height:100%;width:0;background:var(--brand);transition:width .2s}
+table.rank{width:100%;border-collapse:collapse;font-size:14px}
+table.rank th,table.rank td{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+table.rank th{font-size:12px;color:var(--muted);font-weight:600}
+table.rank tr.click{cursor:pointer}
+table.rank td.num{text-align:right;font-variant-numeric:tabular-nums}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden;min-width:60px}
+.bar>div{height:100%;background:var(--ok)}
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:50;display:none;align-items:flex-end;justify-content:center}
+.modal.on{display:flex}
+.modal .sheet{background:var(--card);color:var(--ink);width:100%;max-width:980px;max-height:94vh;overflow:auto;border-radius:18px 18px 0 0;padding:16px}
+@media (min-width:700px){.modal{align-items:center}.modal .sheet{border-radius:18px}}
+.pick{display:flex;gap:8px;justify-content:center;margin:12px 0}
+.pick button{width:54px;height:54px;border-radius:50%;font-size:20px;font-weight:700;border:2px solid var(--brand);background:transparent;color:var(--brand);cursor:pointer}
+.pick button.on{background:var(--brand);color:#fff}
+.pick button.blank{border-radius:14px;width:auto;padding:0 14px;font-size:15px}
+.mcanvas{width:100%;touch-action:manipulation;display:block;border-radius:10px;background:#000}
+.steps{font-size:14.5px;margin:6px 0 10px;padding-left:20px}
+.steps li.cur{font-weight:700;color:var(--brand)}
+.steps li.done{color:var(--ok);text-decoration:line-through}
+.hidden{display:none!important}
+.drop{border:2px dashed var(--line);border-radius:14px;padding:18px;text-align:center;color:var(--muted);font-size:14px;margin-top:10px}
+.drop.hot{border-color:var(--brand);color:var(--brand)}
+footer{max-width:980px;margin:0 auto;padding:10px 16px 40px;color:var(--muted);font-size:12.5px;text-align:center}
+@media print{
+  header.top,nav,footer,.noprint,.btns,.modal{display:none!important}
+  body{background:#fff;color:#000}
+  .card{box-shadow:none;border:1px solid #bbb;break-inside:avoid}
+  section.tab{display:none!important}
+  section.tab.printing{display:block!important}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brandrow">
+    <div style="font-size:26px">📝</div>
+    <h1>OMR जाँचक<small>फ़ोटो खींचिए — अंक, नाम, रोल और त्रुटियाँ तुरंत</small></h1>
+    <button class="themebtn" id="themeBtn" title="रंग-रूप बदलें">🌓</button>
+  </div>
+  <nav class="tabs" id="tabs">
+    <button data-tab="check" class="on">① शीट जाँचें</button>
+    <button data-tab="key">② उत्तर कुंजी</button>
+    <button data-tab="list">③ परिणाम सूची</button>
+    <button data-tab="help">④ मदद</button>
+  </nav>
+</header>
+
+<main>
+<!-- ================= CHECK ================= -->
+<section class="tab on" id="tab-check">
+  <div class="card">
+    <h2>शीट जाँचें</h2>
+    <label class="f" for="checkTest">कौन-सा टेस्ट? (उत्तर कुंजी)</label>
+    <select id="checkTest"></select>
+    <div id="checkTestInfo" class="note" style="margin-top:6px"></div>
+    <div id="quickKey" class="msg info hidden" style="margin-top:12px">
+      <b style="font-size:16px">पहला कदम: सही उत्तर (उत्तर कुंजी) डालें</b>
+      <div style="margin-top:4px">अंक तभी बनेंगे जब ऐप को सही उत्तर पता हों। नीचे सही उत्तर क्रम से लिखें या चिपकाएँ, जैसे <b>CACCBDCDAB…</b> (प्रश्न 1 से आगे)।</div>
+      <textarea id="qkText" placeholder="CACCBDCDABABADACCBDB…" style="margin-top:8px"></textarea>
+      <div class="chips" id="qkPresets">
+        <button class="chip on" data-p="2,0.66">+2 / −0.66 (GS)</button>
+        <button class="chip" data-p="2.5,0.83">+2.5 / −0.83 (CSAT)</button>
+        <button class="chip" data-p="1,0.33">+1 / −⅓</button>
+        <button class="chip" data-p="1,0">बिना कटौती</button>
+      </div>
+      <div class="btns"><button class="btn primary" id="qkSave">✅ उत्तर कुंजी सहेजें</button></div>
+      <div id="qkMsg"></div>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn primary big" id="camBtn">📷 कैमरा से फ़ोटो</button>
+      <button class="btn big" id="galBtn">🖼️ गैलरी से</button>
+    </div>
+    <input type="file" id="camInput" accept="image/*" capture="environment" class="hidden">
+    <input type="file" id="galInput" accept="image/*" multiple class="hidden">
+    <div class="drop" id="drop">या फ़ोटो यहाँ खींचकर छोड़ें (कंप्यूटर पर)</div>
+    <div id="procBox" class="hidden">
+      <div class="note" id="procText" style="margin-top:10px">जाँच हो रही है…</div>
+      <div class="progress"><div id="procBar"></div></div>
+    </div>
+  </div>
+  <div id="summaryBox"></div>
+  <div id="results"></div>
+</section>
+
+<!-- ================= KEY ================= -->
+<section class="tab" id="tab-key">
+  <div class="card">
+    <h2>उत्तर कुंजी / टेस्ट</h2>
+    <div class="row">
+      <div>
+        <label class="f" for="keySel">सहेजे गए टेस्ट</label>
+        <select id="keySel"></select>
+      </div>
+    </div>
+    <div class="btns">
+      <button class="btn small" id="newTestBtn">➕ नया टेस्ट</button>
+      <button class="btn small danger" id="delTestBtn">🗑️ यह टेस्ट हटाएँ</button>
+    </div>
+  </div>
+
+  <div class="card" id="testForm">
+    <h2 id="formTitle">नया टेस्ट</h2>
+    <label class="f" for="tName">टेस्ट का नाम</label>
+    <input type="text" id="tName" placeholder="जैसे: GS टेस्ट-12 (राजव्यवस्था)">
+    <div class="row">
+      <div><label class="f" for="tN">प्रश्नों की संख्या</label><input type="number" id="tN" min="1" max="100" value="100" inputmode="numeric"></div>
+      <div><label class="f" for="tPlus">सही पर अंक (+)</label><input type="number" id="tPlus" step="0.01" value="2" inputmode="decimal"></div>
+      <div><label class="f" for="tMinus">ग़लत पर कटौती (−)</label><input type="number" id="tMinus" step="0.01" value="0.66" inputmode="decimal"></div>
+    </div>
+    <div class="chips" id="presets">
+      <button class="chip" data-p="100,2,0.66">UPSC GS (100 प्र., +2, −0.66)</button>
+      <button class="chip" data-p="80,2.5,0.83">CSAT (80 प्र., +2.5, −0.83)</button>
+      <button class="chip" data-p="100,1,0.33">+1, −⅓</button>
+      <button class="chip" data-p="100,1,0">बिना ऋणात्मक (+1, 0)</button>
+    </div>
+    <label class="f" style="display:flex;gap:8px;align-items:center;color:var(--ink)"><input type="checkbox" id="tMulti" checked style="width:20px;height:20px"> एक प्रश्न में एक से अधिक गोले भरे हों तो उसे ग़लत मानें (ऋणात्मक अंक लगें)</label>
+
+    <h3>उत्तर भरने के तीन तरीक़े</h3>
+    <div class="note">तरीक़ा 1: नीचे के बॉक्स में उत्तर लिखें/पेस्ट करें। जैसे <b>CACCBDCDAB…</b> या हर पंक्ति में <b>1 C</b>, <b>2-A</b>. हिंदी में क/ख/ग/घ भी चलेगा। रद्द प्रश्न के लिए <b>X</b>, सबको पूरे अंक देने के लिए <b>*</b>, दो सही उत्तर हों तो <b>5 A/C</b>.</div>
+    <textarea id="keyText" placeholder="CACCBDCDABABADACCBDB…"></textarea>
+    <div class="btns"><button class="btn small" id="parseBtn">⬇️ बॉक्स से कुंजी भरें</button>
+      <button class="btn small" id="keyFromOmrBtn">📷 तरीक़ा 3: भरी हुई OMR फ़ोटो से कुंजी पढ़ें</button>
+      <input type="file" id="keyOmrInput" accept="image/*" class="hidden"></div>
+    <div id="keyMsg"></div>
+    <div class="note" style="margin-top:10px">तरीक़ा 2: नीचे सीधे गोले पर टैप करें (दोबारा टैप = हटाएँ)।</div>
+    <div class="kgrid" id="kgrid"></div>
+    <div class="btns">
+      <button class="btn primary" id="saveTestBtn">💾 टेस्ट सहेजें</button>
+      <button class="btn small" id="clearKeyBtn">सब उत्तर साफ़ करें</button>
+    </div>
+    <div id="saveMsg"></div>
+  </div>
+</section>
+
+<!-- ================= LIST ================= -->
+<section class="tab" id="tab-list">
+  <div class="card">
+    <h2>परिणाम सूची (रैंक)</h2>
+    <label class="f" for="listTest">टेस्ट चुनें</label>
+    <select id="listTest"></select>
+    <div class="btns">
+      <button class="btn small" id="csvBtn">⬇️ Excel (CSV) डाउनलोड</button>
+      <button class="btn small" id="copyListBtn">📋 सूची कॉपी करें (Excel/WhatsApp)</button>
+      <button class="btn small danger" id="clearListBtn">🗑️ इस टेस्ट के सब परिणाम हटाएँ</button>
+    </div>
+    <div id="listSummary" class="note" style="margin-top:10px"></div>
+    <div class="tablewrap" style="margin-top:8px"><table class="rank" id="rankTable"></table></div>
+  </div>
+  <div class="card" id="qAnalysisCard">
+    <h2>प्रश्न-वार विश्लेषण</h2>
+    <div class="note">हर प्रश्न को कितने % छात्रों ने सही किया — कठिन प्रश्न पहचानने के लिए।</div>
+    <div class="tablewrap" style="margin-top:8px"><table class="rank" id="qTable"></table></div>
+  </div>
+</section>
+
+<!-- ================= HELP ================= -->
+<section class="tab" id="tab-help">
+  <div class="card">
+    <h2>अच्छी फ़ोटो कैसे लें</h2>
+    <ol>
+      <li>शीट को समतल सतह (मेज़/फ़र्श) पर रखें, मुड़ी या हाथ में झुकी न हो।</li>
+      <li>पूरी शीट फ़्रेम में आए — ऊपर की लाल पट्टी (नाम/रोल/मोबाइल) से लेकर प्रश्न 100 तक।</li>
+      <li>फ़ोन को शीट के ठीक ऊपर सीधा रखें; बहुत तिरछा न हो।</li>
+      <li>रोशनी बराबर हो; फ़ोन की परछाईं या चमक गोलों पर न पड़े। फ़्लैश से बचें।</li>
+      <li>फ़ोटो धुँधली न हो — टैप करके फ़ोकस करें, फिर खींचें।</li>
+    </ol>
+  </div>
+  <div class="card">
+    <h2>ऐप क्या-क्या बताता है</h2>
+    <ol>
+      <li>नाम, रोल नंबर, मोबाइल नंबर, विषय, केंद्र और पुस्तिका श्रृंखला — गोलों से पढ़कर।</li>
+      <li>हर प्रश्न का चुना हुआ उत्तर, सही/ग़लत/छोड़े गए, कुल अंक और सटीकता।</li>
+      <li>त्रुटियाँ: एक से अधिक गोले, हल्का/अधूरा भरा गोला, कटा हुआ निशान, रोल/मोबाइल का कोई अंक न भरा होना, धुँधली या तिरछी फ़ोटो।</li>
+      <li>फ़ोटो पर रंगीन निशान — हरा = सही, लाल = ग़लत, नीला घेरा = सही उत्तर, नारंगी = संदिग्ध, बैंगनी = एक से अधिक।</li>
+      <li>किसी प्रश्न का उत्तर ग़लत पढ़ा गया लगे तो उस प्रश्न के खाने पर टैप करके ख़ुद सुधार सकते हैं; अंक अपने-आप दोबारा बनेंगे।</li>
+    </ol>
+  </div>
+  <div class="card">
+    <h2>अगर शीट न पहचानी जाए</h2>
+    <div class="note">ऊपर दिए नियमों से दोबारा फ़ोटो लें। फिर भी न हो तो परिणाम में “हाथ से 4 कोने चुनें” बटन दबाएँ और बताए गए 4 कोनों पर टैप करें — ऐप बाक़ी काम ख़ुद कर लेगा।</div>
+  </div>
+  <div class="card">
+    <h2>आपका डेटा</h2>
+    <div class="note">सारी जाँच आपके फ़ोन/कंप्यूटर के ब्राउज़र में ही होती है — कोई फ़ोटो कहीं अपलोड नहीं होती। टेस्ट और परिणाम इसी ब्राउज़र में सहेजे जाते हैं; ब्राउज़र का डेटा मिटाने पर ये भी मिट जाएँगे, इसलिए ज़रूरी सूची CSV में डाउनलोड कर लें।</div>
+    <div class="btns">
+      <button class="btn small" id="backupBtn">⬇️ पूरा बैकअप (टेस्ट + परिणाम)</button>
+      <button class="btn small" id="restoreBtn">⬆️ बैकअप वापस लाएँ</button>
+      <input type="file" id="restoreInput" accept=".json,application/json" class="hidden">
+    </div>
+    <div id="backupMsg"></div>
+  </div>
+</section>
+</main>
+
+<footer>OMR जाँचक · यह शीट-प्रारूप: THE STUDY IAS (100 प्रश्न, A–D) · पूरी तरह ऑफ़लाइन भी चलता है</footer>
+
+<!-- message modal -->
+<div class="modal" id="msgModal">
+  <div class="sheet">
+    <div id="msgText" style="font-size:16px;white-space:pre-wrap"></div>
+    <textarea id="msgCopy" class="hidden" readonly style="margin-top:10px;min-height:120px"></textarea>
+    <div class="btns" style="justify-content:flex-end">
+      <button class="btn small" id="msgNo">रद्द</button>
+      <button class="btn primary" id="msgYes">ठीक है</button>
+    </div>
+  </div>
+</div>
+
+<!-- edit modal -->
+<div class="modal" id="editModal">
+  <div class="sheet">
+    <h2 id="editTitle" style="margin:0 0 4px">प्रश्न</h2>
+    <div class="note" id="editInfo"></div>
+    <div class="pick" id="editPick">
+      <button data-v="A">A</button><button data-v="B">B</button><button data-v="C">C</button><button data-v="D">D</button><button data-v="" class="blank">खाली</button>
+    </div>
+    <div class="btns" style="justify-content:center">
+      <button class="btn small" id="editReset">मशीन वाला उत्तर वापस</button>
+      <button class="btn small" id="editClose">बंद करें</button>
+    </div>
+  </div>
+</div>
+
+<!-- manual 4-point modal -->
+<div class="modal" id="manModal">
+  <div class="sheet">
+    <h2 style="margin:0 0 4px">हाथ से 4 कोने चुनें</h2>
+    <div class="note">फ़ोटो पर इसी क्रम में टैप करें (ज़ूम के लिए दो उँगलियों से फैलाएँ):</div>
+    <ol class="steps" id="manSteps">
+      <li>“अभ्यर्थी का नाम” वाली लाल पट्टी का <b>ऊपरी-बायाँ</b> कोना</li>
+      <li>“मोबाइल नंबर” वाली लाल पट्टी का <b>ऊपरी-दायाँ</b> कोना</li>
+      <li>प्रश्न 1–20 वाली “Q. No” लाल पट्टी का <b>ऊपरी-बायाँ</b> कोना</li>
+      <li>प्रश्न 81–100 वाली “ANSWER” लाल पट्टी का <b>ऊपरी-दायाँ</b> कोना</li>
+    </ol>
+    <canvas id="manCanvas" class="mcanvas"></canvas>
+    <div class="btns">
+      <button class="btn small" id="manUndo">↩️ पिछला हटाएँ</button>
+      <button class="btn primary" id="manGo" disabled>✅ जाँचें</button>
+      <button class="btn small" id="manClose">रद्द</button>
+    </div>
+  </div>
+</div>
+
+<script>
+'use strict';
+/* =====================================================================
+   टेम्पलेट — THE STUDY IAS OMR (100 प्रश्न)
+   आदर्श (सीधी) शीट के निर्देशांक; इकाई = उत्तर-गोलों की दूरी।
+   ===================================================================== */
+const TPL = {
+  // उत्तर-क्षेत्र: इकाई = एक विकल्प से अगले विकल्प की दूरी; v = पंक्ति
+  CP: 6.16, k: 1.0116,
+  ansBars: [[-2.111,3.532],[3.928,9.729],[10.175,15.950],[16.411,22.306],[22.743,28.719]], ansYT:-1.281, ansYB:-0.439,
+  // ऊपर के खंड: अपनी लाल पट्टी के सापेक्ष (s = पट्टी की चौड़ाई के अंश में, t = नीचे की ओर उसी इकाई में)
+  name:   {bar:0, nc:29, nr:26, s0:0.01896, s1:0.97627, t0:0.11193, t1:0.93114},
+  roll:   {bar:1, nc:8,  nr:10, s0:0.03609, s1:0.88238, t0:0.38719, t1:1.46672},
+  mobile: {bar:2, nc:10, nr:10, s0:0.00193, s1:0.85604, t0:0.31751, t1:1.19215},
+  singles: {booklet:{bar:2, s:0.47714, t:[1.84512,2.07131,2.28662,2.50714]},
+            subject:{bar:1, s:0.48785, t:[2.02428,2.21315]},
+            centre: {bar:2, s:0.07725, t:[1.62389,1.78369]}},
+  // पट्टियाँ न बँटें तो: पूरी पट्टी के सापेक्ष हर खाने के कोने [tl,tr,bl,br]
+  topBarsS: [[[-0.00121,0.0012],[0.60406,0.01228],[-0.00129,0.0361],[0.60398,0.04839]],[[0.60888,0.01109],[0.78096,0.0091],[0.60879,0.04719],[0.78088,0.0452]],[[0.78458,0.0067],[1.0024,0.00121],[0.78449,0.04401],[1.00231,0.03972]]],
+  ansBarsS: [[[-2e-05,-0.00123],[0.19605,-0.0024],[0.00032,0.02573],[0.19639,0.02578]],[[0.20954,-0.00134],[0.40438,-0.0025],[0.20989,0.02684],[0.40474,0.0269]],[[0.41911,-0.00023],[0.60662,-8e-05],[0.41945,0.02672],[0.60695,0.02688]],[[0.62132,-0.00026],[0.80637,-8e-05],[0.62167,0.02792],[0.8067,0.02688]],[[0.81985,-0.00024],[1.00123,-2e-05],[0.82018,0.02671],[1.00156,0.02694]]],
+  stripR: 0.6418,
+  topBarWH: [[503,29.5],[143,30],[181,31.5]], ansBarWH: [[160,22.5],[159,23],[153,22],[151,22.5],[148,22]],
+  RA: 0.24,  // उत्तर-गोले की त्रिज्या (विकल्प-दूरी के अंश में)
+  RH: 0.38   // ऊपर के गोलों की त्रिज्या (गोलों की दूरी के अंश में)
+};
+const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const OPT = ['A','B','C','D'];
+const SUBJECTS = ['GS पेपर-I (GS)','GS पेपर-II (CSAT)'];
+const CENTRES = ['ओल्ड राजिंदर नगर','मुखर्जी नगर'];
+
+/* ---------------- छोटे गणित-सहायक ---------------- */
+function applyH(H,x,y){const w=H[6]*x+H[7]*y+H[8];return [(H[0]*x+H[1]*y+H[2])/w,(H[3]*x+H[4]*y+H[5])/w];}
+function mulH(A,B){const C=new Array(9);for(let i=0;i<3;i++)for(let j=0;j<3;j++){C[i*3+j]=A[i*3]*B[j]+A[i*3+1]*B[3+j]+A[i*3+2]*B[6+j];}return C;}
+function solveLin(A,b){ // Gaussian elimination, A: n x n (array of arrays)
+  const n=b.length;const M=A.map((r,i)=>r.concat([b[i]]));
+  for(let c=0;c<n;c++){
+    let p=c;for(let r=c+1;r<n;r++)if(Math.abs(M[r][c])>Math.abs(M[p][c]))p=r;
+    if(Math.abs(M[p][c])<1e-12)return null;
+    [M[c],M[p]]=[M[p],M[c]];
+    for(let r=0;r<n;r++){if(r===c)continue;const f=M[r][c]/M[c][c];if(f===0)continue;for(let k=c;k<=n;k++)M[r][k]-=f*M[c][k];}
+  }
+  return M.map((r,i)=>r[n]/r[i]);
+}
+function normT(pts){let mx=0,my=0;for(const p of pts){mx+=p[0];my+=p[1];}mx/=pts.length;my/=pts.length;let d=0;for(const p of pts)d+=Math.hypot(p[0]-mx,p[1]-my);d=d/pts.length||1;const s=Math.SQRT2/d;return {T:[s,0,-s*mx,0,s,-s*my,0,0,1],Ti:[1/s,0,mx,0,1/s,my,0,0,1]};}
+function fitHomography(src,dst,w){
+  const n=src.length;if(n<4)return null;
+  const ns=normT(src),nd=normT(dst);
+  const A=[];for(let i=0;i<8;i++)A.push(new Array(8).fill(0));const b=new Array(8).fill(0);
+  for(let i=0;i<n;i++){
+    const [x,y]=applyH(ns.T,src[i][0],src[i][1]);const [X,Y]=applyH(nd.T,dst[i][0],dst[i][1]);const wt=w?w[i]:1;
+    const r1=[x,y,1,0,0,0,-X*x,-X*y],r2=[0,0,0,x,y,1,-Y*x,-Y*y];
+    for(let a=0;a<8;a++){for(let c=0;c<8;c++)A[a][c]+=wt*(r1[a]*r1[c]+r2[a]*r2[c]);b[a]+=wt*(r1[a]*X+r2[a]*Y);}
+  }
+  const h=solveLin(A,b);if(!h)return null;
+  const Hn=[h[0],h[1],h[2],h[3],h[4],h[5],h[6],h[7],1];
+  const H=mulH(nd.Ti,mulH(Hn,ns.T));const s=H[8];return H.map(v=>v/s);
+}
+function fitAffine(src,dst,w){
+  const n=src.length;if(n<3)return null;
+  const A=[[0,0,0],[0,0,0],[0,0,0]],bx=[0,0,0],by=[0,0,0];
+  for(let i=0;i<n;i++){const r=[src[i][0],src[i][1],1],wt=w?w[i]:1;for(let a=0;a<3;a++){for(let c=0;c<3;c++)A[a][c]+=wt*r[a]*r[c];bx[a]+=wt*r[a]*dst[i][0];by[a]+=wt*r[a]*dst[i][1];}}
+  const px=solveLin(A,bx),py=solveLin(A.map(r=>r.slice()),by);if(!px||!py)return null;
+  return [px[0],px[1],px[2],py[0],py[1],py[2],0,0,1];
+}
+function localScale(H,u,v){const a=applyH(H,u-.5,v),b=applyH(H,u+.5,v),c=applyH(H,u,v-.5),d=applyH(H,u,v+.5);const jx=[b[0]-a[0],b[1]-a[1]],jy=[d[0]-c[0],d[1]-c[1]];return Math.sqrt(Math.abs(jx[0]*jy[1]-jx[1]*jy[0]));}
+function median(a){if(!a.length)return 0;const s=a.slice().sort((x,y)=>x-y);return s[s.length>>1];}
+function clamp(v,a,b){return v<a?a:v>b?b:v;}
+
+/* ---------------- चित्र लोड करना ---------------- */
+const MAXDIM=1700;
+async function fileToCanvas(file){
+  let src=null,w=0,h=0;
+  try{ if(window.createImageBitmap){src=await createImageBitmap(file,{imageOrientation:'from-image'});w=src.width;h=src.height;} }catch(e){src=null;}
+  if(!src){
+    src=await new Promise((res,rej)=>{const url=URL.createObjectURL(file);const im=new Image();im.onload=()=>{res(im);};im.onerror=()=>{URL.revokeObjectURL(url);rej(new Error('decode'));};im.src=url;});
+    w=src.naturalWidth;h=src.naturalHeight;
+  }
+  if(!w||!h)throw new Error('decode');
+  const s=Math.min(1,MAXDIM/Math.max(w,h));
+  const c=document.createElement('canvas');c.width=Math.round(w*s);c.height=Math.round(h*s);
+  const ctx=c.getContext('2d',{willReadFrequently:true});ctx.imageSmoothingQuality='high';ctx.drawImage(src,0,0,c.width,c.height);
+  if(src.close)try{src.close();}catch(e){}
+  return c;
+}
+function rotateCanvas(c,deg){
+  if(!deg)return c;
+  const r=document.createElement('canvas');const sw=deg%180!==0;
+  r.width=sw?c.height:c.width;r.height=sw?c.width:c.height;
+  const x=r.getContext('2d',{willReadFrequently:true});x.translate(r.width/2,r.height/2);x.rotate(deg*Math.PI/180);x.drawImage(c,-c.width/2,-c.height/2);return r;
+}
+
+/* ---------------- पूर्व-प्रसंस्करण ---------------- */
+function prep(canvas){
+  const W=canvas.width,H=canvas.height,N=W*H;
+  const data=canvas.getContext('2d',{willReadFrequently:true}).getImageData(0,0,W,H).data;
+  const G=new Uint8Array(N),M=new Uint8Array(N),RED=new Int16Array(N);
+  for(let i=0,j=0;i<N;i++,j+=4){const r=data[j],g=data[j+1],b=data[j+2];G[i]=g;const mx=r>g?(r>b?r:b):(g>b?g:b);M[i]=mx;RED[i]=r-(g>b?g:b);}
+  // पृष्ठभूमि (कागज़ की चमक) — हर खाने का 85वाँ प्रतिशतक, फिर चिकना
+  const cs=16,cw=Math.ceil(W/cs),ch=Math.ceil(H/cs);
+  const cg=new Float32Array(cw*ch),cm=new Float32Array(cw*ch);
+  const hg=new Uint16Array(256),hm=new Uint16Array(256);
+  for(let cy=0;cy<ch;cy++)for(let cx=0;cx<cw;cx++){
+    hg.fill(0);hm.fill(0);let n=0;
+    const ya=cy*cs,yb=Math.min(H,ya+cs),xa=cx*cs,xb=Math.min(W,xa+cs);
+    for(let y=ya;y<yb;y++){const o=y*W;for(let x=xa;x<xb;x++){hg[G[o+x]]++;hm[M[o+x]]++;n++;}}
+    const lim=n*0.15;let a=0,v=255;for(;v>0;v--){a+=hg[v];if(a>=lim)break;}cg[cy*cw+cx]=v;
+    a=0;v=255;for(;v>0;v--){a+=hm[v];if(a>=lim)break;}cm[cy*cw+cx]=v;
+  }
+  const smooth=(a)=>{let t=a;for(let pass=0;pass<2;pass++){const u=new Float32Array(t.length);for(let y=0;y<ch;y++)for(let x=0;x<cw;x++){let s=0,n=0;for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const yy=y+dy,xx=x+dx;if(yy<0||xx<0||yy>=ch||xx>=cw)continue;s+=t[yy*cw+xx];n++;}u[y*cw+x]=s/n;}t=u;}return t;};
+  const sg=smooth(cg),sm=smooth(cm);
+  const ink=new Float32Array(N),blk=new Float32Array(N),bgm=new Uint8Array(N);
+  let bgSum=0,bgLow=0;
+  for(let y=0;y<H;y++){
+    let fy=(y+.5)/cs-.5;fy=clamp(fy,0,ch-1);const y0=Math.floor(fy),y1=Math.min(ch-1,y0+1),ty=fy-y0;
+    for(let x=0;x<W;x++){
+      let fx=(x+.5)/cs-.5;fx=clamp(fx,0,cw-1);const x0=Math.floor(fx),x1=Math.min(cw-1,x0+1),tx=fx-x0;
+      const bg=(sg[y0*cw+x0]*(1-tx)+sg[y0*cw+x1]*tx)*(1-ty)+(sg[y1*cw+x0]*(1-tx)+sg[y1*cw+x1]*tx)*ty;
+      const bm=(sm[y0*cw+x0]*(1-tx)+sm[y0*cw+x1]*tx)*(1-ty)+(sm[y1*cw+x0]*(1-tx)+sm[y1*cw+x1]*tx)*ty;
+      const i=y*W+x;
+      ink[i]=bg>20?clamp(1-G[i]/bg,0,1):0;
+      blk[i]=bm>20?clamp(1-M[i]/bm,0,1):0;bgm[i]=bm>255?255:bm;
+    }
+  }
+  return {W,H,G,M,RED,ink,blk,bgm,cw,ch,cs,sm};
+}
+
+/* ---------------- लाल पट्टियाँ (एंकर) खोजना ---------------- */
+function rowDilate(src,W,H,k){const out=new Uint8Array(W*H),h=k>>1;for(let y=0;y<H;y++){const o=y*W;let cnt=0;for(let x=-h;x<W+h;x++){const xa=x+h;if(xa<W&&src[o+xa])cnt++;const xr=x-h-1;if(xr>=0&&xr<W&&src[o+xr])cnt--;if(x>=0&&x<W&&cnt>0)out[o+x]=1;}}return out;}
+function rowErode(src,W,H,k){const out=new Uint8Array(W*H),h=k>>1;for(let y=0;y<H;y++){const o=y*W;let cnt=0;for(let x=-h;x<W+h;x++){const xa=x+h;if(xa<W&&src[o+xa])cnt++;const xr=x-h-1;if(xr>=0&&xr<W&&src[o+xr])cnt--;if(x>=0&&x<W&&cnt===2*h+1)out[o+x]=1;}}return out;}
+function colDilate(src,W,H,k){const out=new Uint8Array(W*H),h=k>>1;for(let x=0;x<W;x++){let cnt=0;for(let y=-h;y<H+h;y++){const ya=y+h;if(ya<H&&src[ya*W+x])cnt++;const yr=y-h-1;if(yr>=0&&yr<H&&src[yr*W+x])cnt--;if(y>=0&&y<H&&cnt>0)out[y*W+x]=1;}}return out;}
+function colErode(src,W,H,k){const out=new Uint8Array(W*H),h=k>>1;for(let x=0;x<W;x++){let cnt=0;for(let y=-h;y<H+h;y++){const ya=y+h;if(ya<H&&src[ya*W+x])cnt++;const yr=y-h-1;if(yr>=0&&yr<H&&src[yr*W+x])cnt--;if(y>=0&&y<H&&cnt===2*h+1)out[y*W+x]=1;}}return out;}
+function odd(k){k=Math.max(3,Math.round(k));return k%2?k:k+1;}
+
+function findAnchors(P){
+  const {W,H,RED,M,bgm}=P,N=W*H;
+  // अनुकूली लाल-सीमा (रोशनी से स्वतंत्र: लालिमा ÷ उसी बिंदु की चमक)
+  const hist=new Uint32Array(101);let cnt=0;
+  for(let i=0;i<N;i+=3){const r=RED[i]/(M[i]||1);if(r>0.08){hist[Math.min(100,Math.round(r*100))]++;cnt++;}}
+  let acc=0,p98=0.6;for(let v=100;v>=0;v--){acc+=hist[v];if(acc>=cnt*0.02){p98=v/100;break;}}
+  const thr=clamp(p98*0.5,0.3,0.45);
+  let mask=new Uint8Array(N);for(let i=0;i<N;i++){if(RED[i]>thr*M[i]&&M[i]>0.3*bgm[i]&&M[i]>25)mask[i]=1;}
+  const raw=mask;
+  const S=Math.max(W,H);
+  const kc=odd(S*0.013),ko=odd(S*0.0065);
+  mask=rowErode(rowDilate(mask,W,H,kc),W,H,kc);
+  mask=colDilate(colErode(rowDilate(rowErode(mask,W,H,ko),W,H,ko),W,H,ko),W,H,ko);
+  mask=colErode(colDilate(mask,W,H,odd(ko*0.6)),W,H,odd(ko*0.6));
+  // जुड़े हुए हिस्से
+  const lab=new Int32Array(N);const comps=[];const stack=new Int32Array(N);
+  for(let s=0;s<N;s++){
+    if(!mask[s]||lab[s])continue;
+    const id=comps.length+1;let sp=0;stack[sp++]=s;lab[s]=id;
+    const c={id,area:0,minx:W,maxx:0,miny:H,maxy:0,tl:[0,0,1e9],tr:[0,0,-1e9],bl:[0,0,1e9],br:[0,0,-1e9]};
+    while(sp){const p=stack[--sp];const x=p%W,y=(p/W)|0;c.area++;
+      if(x<c.minx)c.minx=x;if(x>c.maxx)c.maxx=x;if(y<c.miny)c.miny=y;if(y>c.maxy)c.maxy=y;
+      if(x+y<c.tl[2])c.tl=[x,y,x+y];if(x-y>c.tr[2])c.tr=[x,y,x-y];if(x-y<c.bl[2])c.bl=[x,y,x-y];if(x+y>c.br[2])c.br=[x,y,x+y];
+      if(x>0&&mask[p-1]&&!lab[p-1]){lab[p-1]=id;stack[sp++]=p-1;}
+      if(x<W-1&&mask[p+1]&&!lab[p+1]){lab[p+1]=id;stack[sp++]=p+1;}
+      if(y>0&&mask[p-W]&&!lab[p-W]){lab[p-W]=id;stack[sp++]=p-W;}
+      if(y<H-1&&mask[p+W]&&!lab[p+W]){lab[p+W]=id;stack[sp++]=p+W;}
+    }
+    c.w=c.maxx-c.minx+1;c.h=c.maxy-c.miny+1;comps.push(c);
+  }
+  // एक ही पंक्ति के टूटे टुकड़े (चमक/परछाईं से) जोड़ें
+  const pieces=comps.filter(c=>c.w>W*0.03&&c.h<S*0.15&&c.area>c.w*S*0.003).sort((a,b)=>a.minx-b.minx);
+  const rowsM=[];
+  for(const c of pieces){
+    let host=null;
+    for(const r of rowsM){
+      const L=Math.hypot(r.tr[0]-r.tl[0],r.tr[1]-r.tl[1]);if(L<5)continue;
+      const ux=(r.tr[0]-r.tl[0])/L,uy=(r.tr[1]-r.tl[1])/L;
+      const thick=Math.max(4,Math.hypot(r.bl[0]-r.tl[0],r.bl[1]-r.tl[1]));
+      const dx=c.tl[0]-r.tr[0],dy=c.tl[1]-r.tr[1];const along=dx*ux+dy*uy,perp=Math.abs(-dx*uy+dy*ux);
+      const dx2=c.bl[0]-r.br[0],dy2=c.bl[1]-r.br[1];const perp2=Math.abs(-dx2*uy+dy2*ux);
+      if(along>-W*0.02&&along<W*0.08&&perp<0.6*thick&&perp2<0.6*thick){host=r;break;}}
+    if(!host){rowsM.push(Object.assign({},c,{ids:[c.id]}));continue;}
+    host.ids.push(c.id);host.area+=c.area;
+    if(c.minx<host.minx)host.minx=c.minx;if(c.maxx>host.maxx)host.maxx=c.maxx;if(c.miny<host.miny)host.miny=c.miny;if(c.maxy>host.maxy)host.maxy=c.maxy;
+    if(c.tl[2]<host.tl[2])host.tl=c.tl;if(c.tr[2]>host.tr[2])host.tr=c.tr;if(c.bl[2]<host.bl[2])host.bl=c.bl;if(c.br[2]>host.br[2])host.br=c.br;
+    host.w=host.maxx-host.minx+1;host.h=host.maxy-host.miny+1;
+  }
+  const big=rowsM.filter(c=>c.w>W*0.25&&c.area>c.w*S*0.004);
+  if(big.length<2)return null;
+  const maxW=Math.max(...big.map(c=>c.w));
+  const cand=big.filter(c=>c.w>=0.72*maxW).sort((a,b)=>a.miny-b.miny);
+  let best=null;
+  for(let i=0;i<cand.length;i++)for(let j=i+1;j<cand.length;j++){
+    const a=cand[i],b=cand[j];const gap=(b.miny-a.miny)/((a.w+b.w)/2);const wr=a.w/b.w;
+    if(gap<0.35||gap>1.0||wr<0.8||wr>1.25)continue;
+    const sc=-Math.abs(gap-0.63)-Math.abs(wr-1.02);
+    if(!best||sc>best.sc)best={a,b,sc};
+  }
+  if(!best)return null;
+  const res={top:best.a,ans:best.b};
+  res.topBars=splitBars(best.a,lab,raw,W,H,3);
+  res.ansBars=splitBars(best.b,lab,raw,W,H,5);
+  return res;
+}
+// पट्टी को अलग-अलग लाल खानों में बाँटना (बीच की सफ़ेद दरारों से) — पट्टी की अपनी दिशा में
+function splitBars(c,lab,raw,W,H,want){
+  const ids=new Set(c.ids||[c.id]);
+  const L=Math.hypot(c.tr[0]-c.tl[0],c.tr[1]-c.tl[1]);if(L<20)return null;
+  const ux=(c.tr[0]-c.tl[0])/L,uy=(c.tr[1]-c.tl[1])/L,nx=-uy,ny=ux;
+  const T=Math.max(6,Math.hypot(c.bl[0]-c.tl[0],c.bl[1]-c.tl[1]));
+  const s0=-Math.round(T*0.3),s1=Math.round(L+T*0.3),n=s1-s0+1;
+  const top=new Float32Array(n).fill(NaN),bot=new Float32Array(n).fill(NaN),cov=new Float32Array(n);
+  const t0=-Math.round(T*0.8),t1=Math.round(T*1.8);
+  for(let k=0;k<n;k++){const sv=s0+k;let a=NaN,b=NaN,rc=0,tot=0;
+    for(let t=t0;t<=t1;t++){const x=Math.round(c.tl[0]+sv*ux+t*nx),y=Math.round(c.tl[1]+sv*uy+t*ny);if(x<0||y<0||x>=W||y>=H)continue;const i=y*W+x;
+      if(ids.has(lab[i])){if(isNaN(a))a=t;b=t;}}
+    if(isNaN(a))continue;top[k]=a;bot[k]=b;
+    for(let t=a;t<=b;t++){const x=Math.round(c.tl[0]+sv*ux+t*nx),y=Math.round(c.tl[1]+sv*uy+t*ny);if(x<0||y<0||x>=W||y>=H)continue;tot++;if(raw[y*W+x])rc++;}
+    cov[k]=tot?rc/tot:0;}
+  const segs=[];let st=-1;
+  for(let i=0;i<=n;i++){const on=i<n&&!isNaN(top[i])&&cov[i]>0.12;
+    if(on&&st<0)st=i;if(!on&&st>=0){segs.push([st,i-1]);st=-1;}}
+  const minW=L*0.05;let merged=[];
+  for(const sg of segs){if(merged.length&&(sg[0]-merged[merged.length-1][1]<=Math.max(2,L*0.004)||(sg[1]-sg[0]+1)<minW&&sg[0]-merged[merged.length-1][1]<L*0.02))merged[merged.length-1][1]=sg[1];else merged.push(sg.slice());}
+  merged=merged.filter(sg=>sg[1]-sg[0]+1>=minW);
+  if(merged.length!==want)return null;
+  const edge=(arr,i0,i1)=>{const v=[];for(let i=Math.max(0,i0);i<=Math.min(n-1,i1);i++)if(!isNaN(arr[i]))v.push(arr[i]);return median(v);};
+  const P=(sv,t)=>[c.tl[0]+sv*ux+t*nx,c.tl[1]+sv*uy+t*ny];
+  return merged.map(([a,b])=>{const w=b-a+1,d=Math.max(2,Math.round(w*0.06)),d2=Math.max(d+2,Math.round(w*0.12));
+    return {tl:P(s0+a,edge(top,a+d,a+d2)),tr:P(s0+b+1,edge(top,b-d2,b-d)),bl:P(s0+a,edge(bot,a+d,a+d2)+1),br:P(s0+b+1,edge(bot,b-d2,b-d)+1)};});
+}
+function barPt(bar,sv,tv,a){a=a||1;const vx=bar.tr[0]-bar.tl[0],vy=bar.tr[1]-bar.tl[1];return [bar.tl[0]+sv*vx-a*tv*vy,bar.tl[1]+sv*vy+a*tv*vx];}
+// ऊँचाई/चौड़ाई का अनुपात (तिरछी फ़ोटो में ऊपर-नीचे का खिंचाव) — पट्टियों की मोटाई से
+function aniso(bars,tpl){let hm=0,ht=0,wm=0,wt=0;bars.forEach((b,i)=>{const w=Math.hypot(b.tr[0]-b.tl[0],b.tr[1]-b.tl[1]);const h=(Math.hypot(b.bl[0]-b.tl[0],b.bl[1]-b.tl[1])+Math.hypot(b.br[0]-b.tr[0],b.br[1]-b.tr[1]))/2;wm+=w;hm+=h;wt+=tpl[i][0];ht+=tpl[i][1];});
+  if(!wm||!ht)return 1;return clamp((hm/ht)/(wm/wt),0.8,1.3);}
+function synthBars(tl,tr,S){const fr={tl,tr};return S.map(q=>({tl:barPt(fr,q[0][0],q[0][1]),tr:barPt(fr,q[1][0],q[1][1]),bl:barPt(fr,q[2][0],q[2][1]),br:barPt(fr,q[3][0],q[3][1])}));}
+// उत्तर-क्षेत्र का प्रारंभिक अनुमान: 5 पट्टियों से (घुमाव + माप + खिसकाव)
+function ansInit(bars,an){
+  const k=TPL.k*(an||1),A=[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]],b=[0,0,0,0];
+  const add=(r,v)=>{for(let i=0;i<4;i++){for(let j=0;j<4;j++)A[i][j]+=r[i]*r[j];b[i]+=r[i]*v;}};
+  bars.forEach((br,c)=>{const [xL,xR]=TPL.ansBars[c];
+    for(const [u,v,p] of [[xL,TPL.ansYT,br.tl],[xR,TPL.ansYT,br.tr],[xL,TPL.ansYB,br.bl],[xR,TPL.ansYB,br.br]]){
+      add([1,0,u,-k*v],p[0]);add([0,1,k*v,u],p[1]);}});
+  const z=solveLin(A,b);if(!z)return null;const [Ox,Oy,ax,ay]=z;
+  return [ax,-k*ay,Ox,ay,k*ax,Oy,0,0,1];
+}
+function hdrInit(bars,g,a){
+  const bar=bars[g.bar];
+  const pts=[[g.s0,g.t0],[g.s1,g.t0],[g.s0,g.t1],[g.s1,g.t1]].map(q=>barPt(bar,q[0],q[1],a));
+  return fitHomography([[0,0],[g.nc-1,0],[0,g.nr-1],[g.nc-1,g.nr-1]],pts);
+}
+function buildInit(an){
+  let tb=an.topBars,ab=an.ansBars;
+  if(!tb)tb=synthBars(an.top.tl,an.top.tr,TPL.topBarsS);
+  if(!ab)ab=synthBars(an.ans.tl,an.ans.tr,TPL.ansBarsS);
+  // ऊपर-नीचे का खिंचाव: दोनों पट्टियों की दूरी ÷ उनकी चौड़ाई (नमूना शीट से तुलना)
+  const d=(p,q)=>Math.hypot(p[0]-q[0],p[1]-q[1]);
+  const Rm=((d(an.top.tl,an.ans.tl)+d(an.top.tr,an.ans.tr))/2)/((d(an.top.tl,an.top.tr)+d(an.ans.tl,an.ans.tr))/2);
+  const aS=clamp(Rm/TPL.stripR,0.8,1.3);
+  const aT=aS,aA=aS;
+  const Ha=ansInit(ab,aA);if(!Ha)return null;
+  return {an,Ha,tb,ab,aT,aA,name:hdrInit(tb,TPL.name,aT),roll:hdrInit(tb,TPL.roll,aT),mobile:hdrInit(tb,TPL.mobile,aT)};
+}
+
+/* ---------------- गोले का पता (ring score) ---------------- */
+const NA=24,CA=[],SA=[];for(let k=0;k<NA;k++){CA.push(Math.cos(2*Math.PI*k/NA));SA.push(Math.sin(2*Math.PI*k/NA));}
+function ringScore(P,x,y,r,strict){
+  const {W,H,ink}=P;const ro=r*1.3,r1=r*0.9,r2=r*1.05;
+  if(x-ro<1||y-ro<1||x+ro>=W-1||y+ro>=H-1)return -1;
+  let a=0,b=0;
+  for(let k=0;k<NA;k++){const c=CA[k],s=SA[k];
+    const v1=ink[Math.round(y+r1*s)*W+Math.round(x+r1*c)],v2=ink[Math.round(y+r2*s)*W+Math.round(x+r2*c)];
+    a+=v1>v2?v1:v2;b+=ink[Math.round(y+ro*s)*W+Math.round(x+ro*c)];}
+  return (a-(strict?1.6:1)*b)/NA;
+}
+function snap(P,x,y,r,win,strict){
+  // भरे (काले) गोले बहुत तेज़ संकेत देते हैं — सीमा बाँधो और पास वाले को तरजीह दो
+  const cap=0.3,pen=0.12/(win*win+1e-6);
+  const st=Math.max(1,Math.round(win/5));let bx=x,by=y,bs=-9,braw=-9;
+  const ev=(dx,dy)=>{const raw=ringScore(P,x+dx,y+dy,r,strict);const e=Math.min(raw,cap)-pen*(dx*dx+dy*dy)*cap;if(e>bs){bs=e;braw=raw;bx=x+dx;by=y+dy;}};
+  for(let dy=-win;dy<=win+1e-6;dy+=st)for(let dx=-win;dx<=win+1e-6;dx+=st)ev(dx,dy);
+  const cx=bx-x,cy=by-y;
+  for(let dy=-st;dy<=st;dy++)for(let dx=-st;dx<=st;dx++)if(dx||dy)ev(cx+dx,cy+dy);
+  return [bx,by,braw];
+}
+function fillAt(P,x,y,r){
+  const {W,H,blk}=P;const rr=r*0.72,r2=rr*rr;let s=0,n=0;
+  const x0=Math.max(0,Math.floor(x-rr)),x1=Math.min(W-1,Math.ceil(x+rr)),y0=Math.max(0,Math.floor(y-rr)),y1=Math.min(H-1,Math.ceil(y+rr));
+  for(let yy=y0;yy<=y1;yy++)for(let xx=x0;xx<=x1;xx++){const dx=xx-x,dy=yy-y;if(dx*dx+dy*dy<=r2){s+=blk[yy*W+xx];n++;}}
+  if(!n)return 0;
+  // आसपास के कागज़ का स्तर घटाएँ
+  const rb=r*1.2,base=[];
+  for(let k=0;k<NA;k+=2){const xx=Math.round(x+rb*CA[k]),yy=Math.round(y+rb*SA[k]);if(xx>=0&&yy>=0&&xx<W&&yy<H)base.push(blk[yy*W+xx]);}
+  const b=base.length?median(base):0;
+  return clamp((s/n-b)/(1-b+1e-6),0,1);
+}
+/* ---------------- खंड (block) परिभाषाएँ ---------------- */
+function gridBlock(key,label,u0,v0,nc,nr,rr,win){const pts=[];for(let i=0;i<nc;i++)for(let j=0;j<nr;j++)pts.push({i,j,u:u0+i,v:v0+j});
+  return {key,label,u0,v0,nc,nr,pts,rr,win};}
+const BLOCKS=[];
+for(let c=0;c<5;c++)BLOCKS.push(gridBlock('q'+c,'प्रश्न '+(c*20+1)+'–'+(c*20+20),c*TPL.CP,0,4,20,TPL.RA,0.45));
+BLOCKS.push(gridBlock('name','नाम',0,0,29,26,TPL.RH,0.5));
+BLOCKS.push(gridBlock('roll','रोल नंबर',0,0,8,10,TPL.RH,0.5));
+BLOCKS.push(gridBlock('mobile','मोबाइल नंबर',0,0,10,10,TPL.RH,0.5));
+const byKey=k=>BLOCKS.find(b=>b.key===k);
+
+function snapSet(P,items,Hc,winF){
+  const src=[],dst=[],w=[];
+  for(const it of items){const p=it.p;
+    const [x,y]=applyH(Hc,p.u,p.v);const s=localScale(Hc,p.u,p.v);
+    if(!isFinite(x)||!isFinite(s))continue;
+    const r=it.rr*s,win=Math.max(2,it.win*winF*s);
+    const [sx,sy,sc]=snap(P,x,y,r,win);
+    if(sc>0){src.push([p.u,p.v]);dst.push([sx,sy]);w.push(sc);}
+  }
+  const md=median(w);const S=[],D=[],Wt=[];
+  for(let k=0;k<src.length;k++)if(w[k]>0.3*md){S.push(src[k]);D.push(dst[k]);Wt.push(Math.min(w[k],2*md));}
+  return {S,D,Wt};
+}
+function jumpTooBig(Ha,Hb,items){
+  for(const k of [0,items.length>>1,items.length-1]){const p=items[k].p;const a=applyH(Ha,p.u,p.v),b=applyH(Hb,p.u,p.v);
+    if(!isFinite(b[0])||Math.hypot(a[0]-b[0],a[1]-b[1])>4*localScale(Ha,p.u,p.v))return true;}
+  return false;
+}
+// पहले ऊपर की पंक्तियाँ (पट्टी के पास), फिर धीरे-धीरे नीचे तक
+function fitProgressive(P,blocks,H0,vStages,allowH){
+  let Hg=H0.slice();const all=[];
+  for(const b of blocks)for(const p of b.pts)all.push({p,win:b.win,rr:b.rr});
+  for(let k=0;k<vStages.length;k++){
+    const final=k===vStages.length-1;const items=all.filter(it=>it.p.v<vStages[k]);if(!items.length)continue;
+    for(let it=0;it<2;it++){
+      const {S,D,Wt}=snapSet(P,items,Hg,k===0?(it===0?1:0.8):0.75);if(S.length<6)break;
+      let Hn=k>0&&allowH&&S.length>=20?fitHomography(S,D,Wt):null;
+      if(!Hn)Hn=fitAffine(S,D,Wt);
+      if(!Hn||jumpTooBig(Hg,Hn,items))break;
+      Hg=Hn;
+    }
+  }
+  return Hg;
+}
+// छोटा सुधार (affine, चित्र-स्तर पर)
+function refinePass(P,blk,Hb,winF){
+  const items=blk.pts.map(p=>({p,win:blk.win,rr:blk.rr}));
+  for(let it=0;it<2;it++){
+    const {S,D,Wt}=snapSet(P,items,Hb,winF);if(S.length<Math.max(4,items.length*0.25))break;
+    const pred=S.map(q=>applyH(Hb,q[0],q[1]));
+    const A=fitAffine(pred,D,Wt);if(!A)break;const Hn=mulH(A,Hb);
+    if(jumpTooBig(Hb,Hn,items))break;Hb=Hn;}
+  return Hb;
+}
+// पूरा ग्रिड एक पंक्ति/स्तंभ खिसका तो नहीं? — किनारों से बाहर-भीतर की तुलना
+function shiftCheck(P,blk,Hb){
+  for(let round=0;round<2;round++){
+    const lineScore=(pts)=>{let s=0,n=0;for(const q of pts){const [x,y]=applyH(Hb,q[0],q[1]);const sc=localScale(Hb,q[0],q[1]);if(!isFinite(x)||!isFinite(sc))continue;const v=snap(P,x,y,blk.rr*sc,Math.max(1,0.12*sc),true)[2];s+=Math.max(v,0);n++;}return n?s/n:0;};
+    const row=j=>{const a=[];for(let i=0;i<blk.nc;i++)a.push([blk.u0+i,blk.v0+j]);return lineScore(a);};
+    const col=i=>{const a=[];for(let j=0;j<blk.nr;j++)a.push([blk.u0+i,blk.v0+j]);return lineScore(a);};
+    const R={},C={};for(const j of [-1,0,blk.nr-1,blk.nr])R[j]=row(j);for(const i of [-1,0,blk.nc-1,blk.nc])C[i]=col(i);
+    const mR=(R[0]+R[blk.nr-1])/2,mC=(C[0]+C[blk.nc-1])/2;const fC=blk.key[0]==='q'?0.8:0.6;
+    let dj=0,di=0;
+    if(R[-1]-R[blk.nr-1]>0.6*mR&&R[-1]>0.7*mR&&R[-1]>=R[blk.nr])dj=-1;else if(R[blk.nr]-R[0]>0.6*mR&&R[blk.nr]>0.7*mR)dj=1;
+    if(C[-1]-C[blk.nc-1]>fC*mC&&C[-1]>0.75*mC&&C[-1]>=C[blk.nc])di=-1;else if(C[blk.nc]-C[0]>fC*mC&&C[blk.nc]>0.75*mC)di=1;
+    if(window.__omrLog)window.__omrLog.push({k:blk.key,R,C,di,dj});
+    if(!di&&!dj)break;
+    Hb=mulH(Hb,[1,0,di,0,1,dj,0,0,1]);Hb=refinePass(P,blk,Hb,0.6);
+  }
+  return Hb;
+}
+// ऊपर की कुछ पंक्तियों पर माप/खिसकाव की तेज़ खोज (तिरछी फ़ोटो के लिए)
+function scanTop(P,blocks,H0,pu,pv,maxV){
+  const pts=[];for(const b of blocks)for(const p of b.pts)if(p.v<maxV)pts.push({p,rr:b.rr});
+  const pre=pts.map(it=>({u:it.p.u,v:it.p.v,rr:it.rr}));
+  const score=(H)=>{let s=0;for(const q of pre){const [x,y]=applyH(H,q.u,q.v);const sc=localScale(H,q.u,q.v);if(!isFinite(x)||!(sc>2))continue;const v=ringScore(P,x,y,q.rr*sc);if(v>0)s+=v;}return s/pre.length;};
+  const T=(sx,sy,tx,ty)=>[sx,0,pu*(1-sx)+tx,0,sy,pv*(1-sy)+ty,0,0,1];
+  let best={H:H0,s:score(H0),sx:1,sy:1,tx:0,ty:0};
+  for(const axis of ['y','x','y']){
+    const b0=best;
+    for(let k=-7;k<=7;k++){const sc=1+k*0.02;for(let m=-5;m<=5;m++){const t=m*0.1;
+      const M=axis==='y'?T(b0.sx,sc*b0.sy,b0.tx,t+b0.ty*0):T(sc*b0.sx,b0.sy,t,b0.ty);
+      const H=mulH(H0,M);const s2=score(H);
+      if(s2>best.s)best={H,s:s2,sx:axis==='x'?sc*b0.sx:b0.sx,sy:axis==='y'?sc*b0.sy:b0.sy,tx:axis==='x'?t:b0.tx,ty:axis==='y'?t:b0.ty};}}
+  }
+  return best.H;
+}
+// पंक्ति-दर-पंक्ति पीछा: मुड़े/लहरदार कागज़ पर हर पंक्ति का छोटा खिसकाव
+function rowTrack(P,blk,Hb){
+  const off=[];let prev=[0,0];const scores=[];
+  const rows=[];for(let j=0;j<blk.nr;j++){const pts=[];for(let i=0;i<blk.nc;i++){const u=blk.u0+i,v=blk.v0+j;const [x,y]=applyH(Hb,u,v);const sc=localScale(Hb,u,v);pts.push([x,y,blk.rr*sc]);}
+    rows.push({pts,pitch:localScale(Hb,blk.u0+blk.nc/2,blk.v0+j)});}
+  const rowScore=(pts,dx,dy)=>{let s=0;for(const q of pts)s+=Math.max(0,ringScore(P,q[0]+dx,q[1]+dy,q[2]));return s/pts.length;};
+  for(let j=0;j<blk.nr;j++){
+    const {pts,pitch}=rows[j];const win=Math.max(2,Math.round(0.3*pitch));const st=win>6?2:1;
+    let best=[prev[0],prev[1]],bs=rowScore(pts,prev[0],prev[1]);
+    for(let dy=-win;dy<=win;dy+=st)for(let dx=-win;dx<=win;dx+=st){const s2=rowScore(pts,prev[0]+dx,prev[1]+dy);if(s2>bs){bs=s2;best=[prev[0]+dx,prev[1]+dy];}}
+    if(st>1){const b0=best.slice();for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const s2=rowScore(pts,b0[0]+dx,b0[1]+dy);if(s2>bs){bs=s2;best=[b0[0]+dx,b0[1]+dy];}}}
+    off.push(best);scores.push(bs);
+    prev=best;
+  }
+  // कमज़ोर पंक्तियाँ (जैसे फटी/धुँधली) पड़ोसियों से
+  const md=median(scores);
+  for(let j=0;j<blk.nr;j++)if(scores[j]<0.35*md){const a=off[j-1],b=off[j+1];off[j]=a&&b?[(a[0]+b[0])/2,(a[1]+b[1])/2]:(a||b||[0,0]).slice();}
+  return off;
+}
+function fitAll(P,init){
+  const fitted={};const DBG=window.__omrDebug||{};
+  // उत्तर: पाँचों स्तंभ एक साथ, फिर हर स्तंभ अलग से
+  const qs=['q0','q1','q2','q3','q4'].map(byKey);
+  let Ha=init.Ha;
+  if(!DBG.noFit){try{Ha=fitProgressive(P,qs,Ha,[4.5,8.5,13.5,99],true);}catch(e){console.error(e);}}
+  for(const b of qs){let Hb=Ha;if(DBG.shift){try{Hb=shiftCheck(P,b,Hb);}catch(e){console.error(e);}}fitted[b.key]=Hb;}
+  // नाम / रोल / मोबाइल: अपनी-अपनी पट्टी से
+  for(const key of ['name','roll','mobile']){
+    const b=byKey(key);let Hb=init[key];
+    if(!DBG.noFit){try{if(DBG.scan)Hb=scanTop(P,[b],Hb,0,0,7.5);Hb=fitProgressive(P,[b],Hb,[4.5,8.5,13.5,19.5,99],b.nc>=20);if(DBG.shift)Hb=shiftCheck(P,b,Hb);}catch(e){console.error(e);}}
+    fitted[key]=Hb;
+  }
+  // एकल गोले: विषय/केंद्र/श्रृंखला
+  const pitch=Math.max(6,localScale(fitted.mobile,4.5,4.5));const singles=[];
+  for(const g of ['booklet','subject','centre']){const d=TPL.singles[g];const bar=init.tb[d.bar];
+    d.t.forEach((t,j)=>{const [x,y]=barPt(bar,d.s,t,init.aT);const r=TPL.RH*pitch;
+      const [sx,sy,sc]=DBG.noFit?[x,y,0]:snap(P,x,y,r,0.6*pitch);singles.push({g,i:0,j,x:sc>0?sx:x,y:sc>0?sy:y,r});});}
+  fitted.singles=singles;
+  fitted.off={};
+  for(const b of BLOCKS){fitted.off[b.key]=null;if(!DBG.noFit&&!DBG.noTrack){try{fitted.off[b.key]=rowTrack(P,b,fitted[b.key]);}catch(e){console.error(e);}}}
+  return fitted;
+}
+
+/* ---------------- मुख्य विश्लेषण ---------------- */
+// बाईं ओर की काली समय-पट्टी (timing marks — कई छोटी काली धारियाँ) — शीट सीधी है या उलटी
+function timingCue(P,an){
+  const {W,H,blk}=P;const L=Math.hypot(an.top.tr[0]-an.top.tl[0],an.top.tr[1]-an.top.tl[1]);if(!L)return 0;
+  const ux=(an.top.tr[0]-an.top.tl[0])/L,uy=(an.top.tr[1]-an.top.tl[1])/L;
+  const side=(a,b,sign)=>{const len=Math.hypot(b[0]-a[0],b[1]-a[1]);const steps=Math.max(50,Math.round(len));let best=0;
+    for(let o=0.01;o<=0.05;o+=0.005){let runs=0,prev=false;
+      for(let k=0;k<=steps;k++){const f=k/steps;const x=Math.round(a[0]+(b[0]-a[0])*f+sign*o*L*ux),y=Math.round(a[1]+(b[1]-a[1])*f+sign*o*L*uy);
+        if(x<0||y<0||x>=W||y>=H){prev=false;continue;}const d=blk[y*W+x]>0.45;if(d&&!prev)runs++;prev=d;}
+      if(runs>best)best=runs;}
+    return best;};
+  const l=side(an.top.tl,an.ans.bl,-1),r=side(an.top.tr,an.ans.br,1);
+  return (l-r)/Math.max(10,l+r);
+}
+function quickQuality(P,H){
+  let s=0,n=0;
+  for(let c=0;c<5;c++)for(let r=0;r<5;r++)for(let o=0;o<4;o++){
+    const u=c*TPL.CP+o,v=r;const [x,y]=applyH(H,u,v);const sc=localScale(H,u,v);n++;
+    if(!isFinite(x)||!isFinite(sc)||sc<3)continue;
+    s+=Math.max(0,snap(P,x,y,TPL.RA*sc,0.35*sc)[2]);
+  }
+  return n?s/n:0;
+}
+function hSane(H,P){
+  if(!H||H.some(v=>!isFinite(v)))return false;
+  const c=[[-2,-1],[28.7,-1],[28.7,19.5],[-2,19.5]].map(p=>applyH(H,p[0],p[1]));
+  let sgn=0;for(let i=0;i<4;i++){const a=c[i],b=c[(i+1)%4],d=c[(i+2)%4];const cr=(b[0]-a[0])*(d[1]-b[1])-(b[1]-a[1])*(d[0]-b[0]);const s=Math.sign(cr);if(!sgn)sgn=s;else if(s!==sgn)return false;}
+  const sc=localScale(H,12,5);return sc>4&&sc<P.W/10;
+}
+
+function analyzeCanvas(canvas0,manualPts){
+  const warnings=[];
+  let P=null,init=null,canvas=canvas0,rot=0;
+  if(manualPts){
+    P=prep(canvas0);
+    init=buildInit({top:{tl:manualPts[0],tr:manualPts[1]},ans:{tl:manualPts[2],tr:manualPts[3]},topBars:null,ansBars:null});
+    if(!init||!hSane(init.Ha,P))return {ok:false,canvas,error:'चुने गए कोनों से शीट का आकार सही नहीं बना। दोबारा ध्यान से, बताए क्रम में चुनें।'};
+  }else{
+    const land=canvas0.width>canvas0.height*1.08;
+    const sets=land?[[90,270],[0,180]]:[[0,180],[90,270]];
+    let best=null;
+    for(const set of sets){
+      for(const deg of set){
+        const c=rotateCanvas(canvas0,deg);const Pp=prep(c);const an=findAnchors(Pp);
+        if(!an)continue;const ii=buildInit(an);if(!ii||!hSane(ii.Ha,Pp))continue;
+        const q=quickQuality(Pp,ii.Ha);const cue=timingCue(Pp,an);
+        const split=(an.topBars?1:0)+(an.ansBars?1:0);
+        const sc=split+(cue>0.3?1.5:cue<-0.3?-1.5:0)+Math.min(q,0.2)*5;
+        if(window.__omrLog)window.__omrLog.push({deg,split,cue,q,sc});
+        if(!best||sc>best.sc)best={sc,q,P:Pp,init:ii,c,deg};
+        if(split===2&&cue>0.3&&q>0.04)break; // सही दिशा पक्की
+      }
+      if(best&&best.q>=0.01)break;
+    }
+    if(!best||best.q<0.01)return {ok:false,canvas:canvas0,error:'शीट पहचान में नहीं आई। लाल पट्टियाँ (नाम/मोबाइल वाली और Q.No वाली) साफ़ दिखनी चाहिए।'};
+    P=best.P;init=best.init;canvas=best.c;rot=best.deg;
+  }
+  const fitted=fitAll(P,init);
+  if(!manualPts&&init.an){const m=Math.max(3,P.W*0.004);const near=p=>p[0]<m||p[1]<m||p[0]>P.W-1-m||p[1]>P.H-1-m;
+    if([init.an.top.tl,init.an.top.tr,init.an.ans.tl,init.an.ans.tr].some(near))warnings.push({t:'warn',m:'शीट का कोई किनारा फ़ोटो से बाहर/किनारे पर है। पूरी शीट फ़्रेम के अंदर रखकर फ़ोटो लें।'});}
+
+  // हर गोले की भराई
+  const bub={};const allF=[];let ringOK=0,ringN=0;
+  for(const b of BLOCKS){
+    const Hb=fitted[b.key],off=fitted.off[b.key];bub[b.key]=[];
+    for(const p of b.pts){
+      let [x,y]=applyH(Hb,p.u,p.v);if(off){x+=off[p.j][0];y+=off[p.j][1];}const s=localScale(Hb,p.u,p.v);const r=b.rr*s;
+      const f=fillAt(P,x,y,r);const rs=ringScore(P,x,y,r);
+      bub[b.key].push({i:p.i,j:p.j,x,y,r,f,rs});
+      allF.push(f);
+      if(b.key[0]==='q'){ringN++;if(rs>0.02||f>0.25)ringOK++;}
+    }
+  }
+  bub.extra=fitted.singles.map(q=>Object.assign({},q,{f:fillAt(P,q.x,q.y,q.r),rs:ringScore(P,q.x,q.y,q.r)}));
+  const H=fitted.q2;
+  // सीमा (threshold) — Otsu
+  const T=threshold(allF);
+  const mEmpty=median(allF);
+  const weak=Math.max(T*0.55,mEmpty+0.5*(T-mEmpty));
+
+  // उत्तर
+  const answers=[];
+  for(let c=0;c<5;c++){
+    const arr=bub['q'+c];
+    for(let r=0;r<20;r++){
+      const f=[0,1,2,3].map(o=>arr.find(b=>b.i===o&&b.j===r).f);
+      answers.push(classify(f,T,weak));
+    }
+  }
+  // नाम
+  const nameB=bub.name;let name='';const nameIssues=[];
+  for(let i=0;i<29;i++){
+    const col=nameB.filter(b=>b.i===i).sort((a,b)=>a.j-b.j);const fs=col.map(b=>b.f);
+    const idx=fs.map((v,k)=>[v,k]).sort((a,b)=>b[0]-a[0]);
+    if(idx[0][0]>=T){ if(idx[1][0]>=T&&idx[0][0]<1.6*idx[1][0]){name+='?';nameIssues.push(i+1);} else name+=LETTERS[idx[0][1]]; }
+    else if(idx[0][0]>=weak*1.15&&idx[0][0]>2.2*idx[1][0]){name+=LETTERS[idx[0][1]].toLowerCase();}
+    else name+=' ';
+  }
+  name=name.replace(/\s+/g,' ').trim().toUpperCase();
+  const digits=(key,n)=>{const B=bub[key];let s='';const miss=[],multi=[];
+    for(let i=0;i<n;i++){const col=B.filter(b=>b.i===i).sort((a,b)=>a.j-b.j);const idx=col.map((b,k)=>[b.f,k]).sort((a,b)=>b[0]-a[0]);
+      if(idx[0][0]>=T){if(idx[1][0]>=T&&idx[0][0]<1.6*idx[1][0]){s+='?';multi.push(i+1);}else s+=String(idx[0][1]);}
+      else if(idx[0][0]>=weak*1.15&&idx[0][0]>2.2*idx[1][0])s+=String(idx[0][1]);
+      else {s+='_';miss.push(i+1);}}
+    return {s,miss,multi};};
+  const roll=digits('roll',8),mob=digits('mobile',10);
+  const ex=bub.extra;
+  const pickOne=(g,labels)=>{const L=ex.filter(b=>b.g===g).sort((a,b)=>a.j-b.j);const idx=L.map((b,k)=>[b.f,k]).sort((a,b)=>b[0]-a[0]);
+    if(idx[0][0]>=T){if(idx[1]&&idx[1][0]>=T&&idx[0][0]<1.6*idx[1][0])return {v:'?',multi:true};return {v:labels[idx[0][1]]};}
+    if(idx[0][0]>=weak)return {v:labels[idx[0][1]],doubt:true};return {v:''};};
+  const booklet=pickOne('booklet',OPT),subject=pickOne('subject',SUBJECTS),centre=pickOne('centre',CENTRES);
+
+  // चेतावनियाँ
+  const align=ringN?ringOK/ringN:0;
+  if(align<0.7)warnings.push({t:'err',m:'शीट ठीक से संरेखित नहीं हुई ('+Math.round(align*100)+'% गोले मिले)। नीचे फ़ोटो पर निशान देखकर जाँचें; ग़लत लगे तो दोबारा सीधी फ़ोटो लें या “हाथ से 4 कोने चुनें”।'});
+  else if(align<0.88)warnings.push({t:'warn',m:'कुछ हिस्सों में गोले साफ़ नहीं दिखे ('+Math.round(align*100)+'% मिले)। फ़ोटो पर निशान एक बार देख लें।'});
+  const scale=localScale(H,12,10);
+  if(scale<14)warnings.push({t:'warn',m:'फ़ोटो में शीट छोटी है (दूर से ली गई)। पास से, पूरी शीट फ़्रेम में रखकर लें तो ज़्यादा सटीक होगा।'});
+  const sharp=sharpness(P,fitted);if(sharp<0.012)warnings.push({t:'warn',m:'फ़ोटो धुँधली लग रही है। हल्के भरे गोले छूट सकते हैं।'});
+  const light=lightCheck(P);if(light)warnings.push(light);
+  if(!name)warnings.push({t:'warn',m:'नाम के गोले नहीं भरे मिले।'});
+  if(nameIssues.length)warnings.push({t:'warn',m:'नाम के स्तंभ '+nameIssues.join(', ')+' में एक से अधिक अक्षर भरे हैं।'});
+  const rollBlank=roll.miss.length===8,mobBlank=mob.miss.length===10;
+  if(rollBlank)warnings.push({t:'warn',m:'रोल नंबर नहीं भरा गया।'});
+  else{if(roll.miss.length)warnings.push({t:'warn',m:'रोल नंबर के अंक-स्थान '+roll.miss.join(', ')+' ख़ाली हैं।'});if(roll.multi.length)warnings.push({t:'err',m:'रोल नंबर के अंक-स्थान '+roll.multi.join(', ')+' में एक से अधिक गोले भरे हैं।'});}
+  if(mobBlank)warnings.push({t:'warn',m:'मोबाइल नंबर नहीं भरा गया।'});
+  else{if(mob.miss.length)warnings.push({t:'warn',m:'मोबाइल नंबर के अंक-स्थान '+mob.miss.join(', ')+' ख़ाली हैं।'});if(mob.multi.length)warnings.push({t:'err',m:'मोबाइल नंबर के अंक-स्थान '+mob.multi.join(', ')+' में एक से अधिक गोले भरे हैं।'});}
+  if(!booklet.v)warnings.push({t:'info',m:'पुस्तिका श्रृंखला (A/B/C/D) नहीं भरी गई।'});
+  else if(booklet.multi)warnings.push({t:'err',m:'पुस्तिका श्रृंखला में एक से अधिक गोले भरे हैं।'});
+  else if(booklet.doubt)warnings.push({t:'warn',m:'पुस्तिका श्रृंखला का गोला हल्का भरा है ('+booklet.v+')।'});
+  if(subject.doubt||centre.doubt)warnings.push({t:'info',m:'विषय/केंद्र का निशान पूरा भरा हुआ नहीं है (सही का निशान/हल्का) — अनुमान: '+[subject.v,centre.v].filter(Boolean).join(', ')+'।'});
+
+  return {ok:true,canvas,rot,H,fitted,bub,T,answers,name,roll:rollBlank?'':roll.s,mobile:mobBlank?'':mob.s,
+    booklet:booklet.v,subject:subject.v,centre:centre.v,warnings,align};
+}
+function threshold(vals){
+  const mx=Math.max(...vals);
+  if(mx<0.2)return 0.3;
+  const nb=100,h=new Array(nb).fill(0);for(const v of vals)h[Math.min(nb-1,Math.floor(v*nb))]++;
+  const tot=vals.length;let sum=0;for(let i=0;i<nb;i++)sum+=i*h[i];
+  let sB=0,wB=0,best=0,bi=30;
+  for(let i=0;i<nb;i++){wB+=h[i];if(!wB)continue;const wF=tot-wB;if(!wF)break;sB+=i*h[i];const mB=sB/wB,mF=(sum-sB)/wF;const bw=wB*wF*(mB-mF)*(mB-mF);if(bw>best){best=bw;bi=i;}}
+  let T=(bi+1)/nb;
+  // दो समूहों के बीच में
+  const lo=vals.filter(v=>v<T),hi=vals.filter(v=>v>=T);
+  if(lo.length&&hi.length){const mlo=median(lo),mhi=median(hi);T=Math.max(T,mlo+0.45*(mhi-mlo));}
+  return clamp(T,0.16,0.5);
+}
+function classify(f,T,weak){
+  const idx=f.map((v,k)=>[v,k]).sort((a,b)=>b[0]-a[0]);
+  const top=idx[0],sec=idx[1];
+  const res={f:f.map(v=>Math.round(v*100)/100),sel:'',st:'blank'};
+  const marked=idx.filter(x=>x[0]>=T);
+  if(marked.length>=2){
+    if(top[0]>=1.7*sec[0]){res.sel=OPT[top[1]];res.st='ok2';res.other=OPT[sec[1]];}
+    else{res.sel=marked.map(x=>OPT[x[1]]).sort().join('');res.st='multi';}
+  }else if(marked.length===1){
+    res.sel=OPT[top[1]];res.st='ok';
+    if(sec[0]>=weak)res.st='ok2',res.other=OPT[sec[1]];
+  }else if(top[0]>=weak){
+    if(top[0]>=1.8*sec[0]){res.sel=OPT[top[1]];res.st='faint';}
+    else{res.st='unclear';}
+  }
+  return res;
+}
+function sharpness(P,fitted){
+  // उत्तर-क्षेत्र में ग्रेडिएंट की तीव्रता
+  const {W,H,G}=P;const Hb=fitted.q2;const [x0,y0]=applyH(Hb,12,2),[x1,y1]=applyH(Hb,15,17);
+  const xa=Math.max(1,Math.round(Math.min(x0,x1))),xb=Math.min(W-2,Math.round(Math.max(x0,x1))),ya=Math.max(1,Math.round(Math.min(y0,y1))),yb=Math.min(H-2,Math.round(Math.max(y0,y1)));
+  let s=0,n=0;for(let y=ya;y<yb;y+=2)for(let x=xa;x<xb;x+=2){const i=y*W+x;const g=Math.abs(G[i+1]-G[i-1])+Math.abs(G[i+W]-G[i-W]);s+=g*g;n++;}
+  if(!n)return 1;const scale=localScale(Hb,13,10);return Math.sqrt(s/n)/255*(scale/28);
+}
+function lightCheck(P){
+  const {sm,cw,ch}=P;const v=[];for(let y=Math.floor(ch*.15);y<ch*.85;y++)for(let x=Math.floor(cw*.15);x<cw*.85;x++)v.push(sm[y*cw+x]);
+  v.sort((a,b)=>a-b);const lo=v[Math.floor(v.length*.1)],hi=v[Math.floor(v.length*.9)];
+  if(hi<95)return {t:'warn',m:'फ़ोटो बहुत अँधेरी है। अच्छी रोशनी में लें।'};
+  if(lo<hi*0.55)return {t:'info',m:'फ़ोटो पर रोशनी असमान है (परछाईं)। परिणाम ठीक लगे तो कोई बात नहीं।'};
+  return null;
+}
+
+/* ---------------- ओवरले चित्र ---------------- */
+function drawOverlay(res,test,final){
+  const c=res.canvas;const s=Math.min(1,1100/Math.max(c.width,c.height));
+  const o=document.createElement('canvas');o.width=Math.round(c.width*s);o.height=Math.round(c.height*s);
+  const x=o.getContext('2d');x.drawImage(c,0,0,o.width,o.height);
+  const circ=(b,col,fill,lw)=>{x.beginPath();x.arc(b.x*s,b.y*s,Math.max(3,b.r*s*1.15),0,Math.PI*2);if(fill){x.fillStyle=fill;x.fill();}if(col){x.strokeStyle=col;x.lineWidth=lw||2;x.stroke();}};
+  // संरेखण बिंदु
+  x.fillStyle='rgba(0,150,255,.55)';
+  for(const k in res.bub)for(const b of res.bub[k]){x.beginPath();x.arc(b.x*s,b.y*s,1.3,0,Math.PI*2);x.fill();}
+  const N=test?test.n:100;
+  for(let q=0;q<100;q++){
+    const c5=Math.floor(q/20),r=q%20;const arr=res.bub['q'+c5];const bs=OPT.map((_,o)=>arr.find(b=>b.i===o&&b.j===r));
+    const a=final[q];const key=test?test.key[q]:'';
+    if(q>=N){ if(a.sel)for(const L of a.sel)circ(bs[OPT.indexOf(L)],'rgba(120,120,120,.9)',null,2); continue;}
+    const selSet=a.sel?a.sel.split(''):[];
+    const good=key&&key!=='X'&&key!=='*'?key.split(''):[];
+    for(const L of selSet){const b=bs[OPT.indexOf(L)];if(!b)continue;
+      let col='rgba(30,160,60,.95)',fill='rgba(30,160,60,.28)';
+      if(a.st==='multi'){col='rgba(140,40,170,.95)';fill='rgba(140,40,170,.25)';}
+      else if(test&&key&&key!=='X'&&key!=='*'&&!good.includes(L)){col='rgba(220,40,40,.95)';fill='rgba(220,40,40,.25)';}
+      else if(!test){col='rgba(30,120,220,.95)';fill='rgba(30,120,220,.25)';}
+      circ(b,col,fill,2.4);
+      if(a.st==='faint'||a.st==='ok2'||a.ov){x.strokeStyle='rgba(255,150,0,1)';x.lineWidth=2;x.setLineDash([3,3]);x.beginPath();x.arc(b.x*s,b.y*s,Math.max(4,b.r*s*1.6),0,Math.PI*2);x.stroke();x.setLineDash([]);}
+    }
+    if(a.other){const b=bs[OPT.indexOf(a.other)];if(b){x.strokeStyle='rgba(255,150,0,1)';x.lineWidth=2;x.setLineDash([3,3]);x.beginPath();x.arc(b.x*s,b.y*s,Math.max(4,b.r*s*1.3),0,Math.PI*2);x.stroke();x.setLineDash([]);}}
+    if(a.st==='unclear'){for(const b of bs){x.strokeStyle='rgba(255,150,0,1)';x.lineWidth=1.5;x.beginPath();x.arc(b.x*s,b.y*s,Math.max(4,b.r*s*1.2),0,Math.PI*2);x.stroke();}}
+    if(test&&good.length&&!good.every(g=>selSet.includes(g))&&!(selSet.length===1&&good.includes(selSet[0]))){
+      for(const g of good){const b=bs[OPT.indexOf(g)];if(b&&!selSet.includes(g))circ(b,'rgba(30,110,230,1)',null,2.4);}
+    }
+  }
+  // नाम/रोल/मोबाइल के चुने गोले
+  const mark=(key)=>{for(const b of res.bub[key])if(b.f>=res.T)circ(b,'rgba(0,170,200,1)',null,2);};
+  mark('name');mark('roll');mark('mobile');mark('extra');
+  return o.toDataURL('image/jpeg',0.82);
+}
+
+/* ---------------- अंक-गणना ---------------- */
+function evaluate(ans,test){
+  const out={correct:0,wrong:0,blank:0,multi:0,dropped:0,bonus:0,score:0,per:[]};
+  if(!test){out.per=ans.map(a=>a.sel?'?':'');return out;}
+  for(let q=0;q<test.n;q++){
+    const a=ans[q]||{sel:'',st:'blank'};const k=test.key[q]||'';
+    let r='';
+    if(k==='X'){r='x';out.dropped++;}
+    else if(k==='*'){r='c';out.bonus++;out.correct++;out.score+=test.plus;}
+    else if(!a.sel){r='b';out.blank++;}
+    else if(a.st==='multi'||a.sel.length>1){
+      out.multi++;
+      if(test.multiWrong){r='w';out.wrong++;out.score-=test.minus;}else{r='b';out.blank++;}
+    }
+    else if(!k){r='u';}
+    else if(k.includes(a.sel)){r='c';out.correct++;out.score+=test.plus;}
+    else{r='w';out.wrong++;out.score-=test.minus;}
+    out.per.push(r);
+  }
+  out.score=Math.round(out.score*100)/100;
+  out.attempted=out.correct+out.wrong-out.bonus;
+  out.max=Math.round((test.n-out.dropped)*test.plus*100)/100;
+  return out;
+}
+
+/* ---------------- भंडारण ---------------- */
+const store={
+  get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true;}catch(e){toastErr('ब्राउज़र में सहेजने की जगह भर गई। पुराने परिणाम CSV में लेकर हटा दें।');return false;}}
+};
+let TESTS=store.get('omr_tests',[]);
+let RESULTS=store.get('omr_results',[]);
+function saveTests(){store.set('omr_tests',TESTS);}
+function saveResults(){store.set('omr_results',RESULTS);}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
+function uiMsg(text,opts){opts=opts||{};return new Promise(res=>{
+  $('#msgText').textContent=text;const ta=$('#msgCopy');
+  if(opts.copy!=null){ta.value=opts.copy;ta.classList.remove('hidden');setTimeout(()=>{try{ta.focus();ta.select();}catch(e){}},50);}else ta.classList.add('hidden');
+  $('#msgNo').classList.toggle('hidden',!opts.confirm);$('#msgYes').textContent=opts.confirm?(opts.yes||'हाँ'):'ठीक है';
+  const m=$('#msgModal');m.classList.add('on');
+  const done=v=>{m.classList.remove('on');$('#msgYes').onclick=null;$('#msgNo').onclick=null;res(v);};
+  $('#msgYes').onclick=()=>done(true);$('#msgNo').onclick=()=>done(false);});}
+const uiAlert=m=>uiMsg(m);
+const uiConfirm=(m,yes)=>uiMsg(m,{confirm:true,yes});
+function copyText(text,okMsg){
+  const fallback=()=>uiMsg('नीचे का लिखा अपने-आप चुना गया है — इसे कॉपी कर लें:',{copy:text});
+  try{if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(()=>uiAlert(okMsg),fallback);return;}}catch(e){}
+  fallback();
+}
+function toastErr(m){uiAlert(m);}
+
+/* ---------------- DOM सहायक ---------------- */
+const $=s=>document.querySelector(s);
+function el(tag,attrs,...kids){const e=document.createElement(tag);if(attrs)for(const k in attrs){if(k==='class')e.className=attrs[k];else if(k==='html')e.innerHTML=attrs[k];else if(k.startsWith('on'))e.addEventListener(k.slice(2),attrs[k]);else e.setAttribute(k,attrs[k]);}for(const c of kids){if(c==null)continue;e.append(c.nodeType?c:document.createTextNode(c));}return e;}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function fmt(n){return (Math.round(n*100)/100).toString();}
+
+/* ---------------- टैब ---------------- */
+function showTab(t){document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on',b.dataset.tab===t));document.querySelectorAll('section.tab').forEach(s=>s.classList.toggle('on',s.id==='tab-'+t));
+  if(t==='list')renderList();if(t==='check')fillTestSelects();try{localStorage.setItem('omr_tab',t);}catch(e){}window.scrollTo(0,0);}
+document.querySelectorAll('#tabs button').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
+
+/* ---------------- थीम ---------------- */
+(function(){let t=null;try{t=localStorage.getItem('omr_theme');}catch(e){}if(t)document.documentElement.dataset.theme=t;
+  $('#themeBtn').addEventListener('click',()=>{const cur=document.documentElement.dataset.theme||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');const nx=cur==='dark'?'light':'dark';document.documentElement.dataset.theme=nx;try{localStorage.setItem('omr_theme',nx);}catch(e){}});})();
+
+/* =================== उत्तर कुंजी टैब =================== */
+let editing={id:null,key:new Array(100).fill('')};
+function fillTestSelects(){
+  const opts=(sel,withNone)=>{const cur=sel.value;sel.innerHTML='';if(withNone)sel.append(el('option',{value:''},'— बिना कुंजी (सिर्फ़ उत्तर पढ़ें) —'));
+    TESTS.slice().reverse().forEach(t=>sel.append(el('option',{value:t.id},t.name+' ('+t.n+' प्र.)')));
+    if(cur&&[...sel.options].some(o=>o.value===cur))sel.value=cur;};
+  opts($('#checkTest'),true);opts($('#listTest'),false);
+  const ks=$('#keySel');const cur=ks.value;ks.innerHTML='';ks.append(el('option',{value:''},'— नया टेस्ट —'));TESTS.slice().reverse().forEach(t=>ks.append(el('option',{value:t.id},t.name)));ks.value=editing.id||cur||'';
+  let last=null;try{last=localStorage.getItem('omr_lasttest');}catch(e){}
+  if(last&&!$('#checkTest').dataset.touched&&TESTS.some(t=>t.id===last))$('#checkTest').value=last;
+  updateCheckInfo();
+}
+function updateCheckInfo(){setTimeout(renderSummary,0);const t=TESTS.find(x=>x.id===$('#checkTest').value);const info=$('#checkTestInfo');$('#quickKey').classList.toggle('hidden',!!t);
+  if(!t){info.innerHTML=TESTS.length?'कुंजी न चुनने पर केवल उत्तर, नाम, रोल पढ़े जाएँगे; अंक नहीं बनेंगे।':'अभी कोई उत्तर कुंजी नहीं है। अंक पाने के लिए पहले “② उत्तर कुंजी” में टेस्ट बनाएँ — या बिना कुंजी सिर्फ़ शीट पढ़ें।';return;}
+  const filled=t.key.slice(0,t.n).filter(Boolean).length;
+  info.innerHTML='प्रश्न: <b>'+t.n+'</b> · सही: <b>+'+fmt(t.plus)+'</b> · ग़लत: <b>−'+fmt(t.minus)+'</b> · कुंजी भरी: <b>'+filled+'/'+t.n+'</b>'+(filled<t.n?' <span style="color:var(--warn)">(अधूरी कुंजी — ख़ाली कुंजी वाले प्रश्न गिने नहीं जाएँगे)</span>':'');}
+let qkPlus=2,qkMinus=0.66;
+document.querySelectorAll('#qkPresets .chip').forEach(c=>c.addEventListener('click',()=>{const [a,b]=c.dataset.p.split(',');qkPlus=+a;qkMinus=+b;document.querySelectorAll('#qkPresets .chip').forEach(x=>x.classList.toggle('on',x===c));}));
+$('#qkSave').addEventListener('click',()=>{
+  const {key,errs}=parseKey($('#qkText').value);let last=0;key.forEach((v,i)=>{if(v)last=i+1;});
+  if(!last){$('#qkMsg').innerHTML='<div class="msg err">उत्तर समझ नहीं आए। A, B, C, D क्रम से लिखें — जैसे CACCBD…</div>';return;}
+  const d=new Date();const obj={id:uid(),name:'टेस्ट '+d.getDate()+'/'+(d.getMonth()+1),n:last,plus:qkPlus,minus:qkMinus,multiWrong:true,key:key.slice(0,100),created:Date.now(),updated:Date.now()};
+  TESTS.push(obj);saveTests();fillTestSelects();$('#checkTest').value=obj.id;$('#checkTest').dataset.touched='1';try{localStorage.setItem('omr_lasttest',obj.id);}catch(e){}
+  updateCheckInfo();$('#qkText').value='';$('#qkMsg').innerHTML='';
+  uiAlert('उत्तर कुंजी सहेज ली ('+last+' प्रश्न, सही +'+fmt(qkPlus)+', ग़लत −'+fmt(qkMinus)+')।\nअब “कैमरा से फ़ोटो” या “गैलरी से” दबाकर छात्रों की OMR डालें — हर छात्र के अंक तुरंत दिखेंगे।'+(errs.length?'\n('+errs.join('; ')+')':''));
+});
+$('#checkTest').addEventListener('change',()=>{$('#checkTest').dataset.touched='1';try{localStorage.setItem('omr_lasttest',$('#checkTest').value);}catch(e){}updateCheckInfo();});
+
+function renderKeyGrid(){
+  const g=$('#kgrid');g.innerHTML='';const n=clamp(parseInt($('#tN').value)||100,1,100);
+  for(let q=0;q<n;q++){
+    const k=editing.key[q]||'';const row=el('div',{class:'krow'+((k==='X'||k==='*')?' special':'')},el('b',null,(q+1)+'.'));
+    if(k==='X'||k==='*'){row.append(el('span',{style:'font-size:12px;color:var(--warn);flex:1'},k==='X'?'रद्द':'सबको अंक'));
+      row.append(el('button',{title:'हटाएँ',onclick:()=>{editing.key[q]='';renderKeyGrid();syncKeyText();}},'×'));}
+    else for(const L of OPT){row.append(el('button',{class:k.includes(L)?'on':'',onclick:()=>{const cur=editing.key[q]||'';editing.key[q]=cur===L?'':L;renderKeyGrid();syncKeyText();}},L));}
+    g.append(row);
+  }
+}
+function syncKeyText(){const n=clamp(parseInt($('#tN').value)||100,1,100);const k=editing.key.slice(0,n);
+  if(k.every(v=>v.length<=1&&v!=='*'&&v!=='X'))$('#keyText').value=k.map(v=>v||'-').join('').replace(/-+$/,'');
+  else $('#keyText').value=k.map((v,i)=>(i+1)+' '+(v||'-')).join('\n');}
+function parseKey(txt){
+  const map={'क':'A','ख':'B','ग':'C','घ':'D','a':'A','b':'B','c':'C','d':'D','१':'1','२':'2','३':'3','४':'4','५':'5','६':'6','७':'7','८':'8','९':'9','०':'0'};
+  txt=txt.replace(/[कखगघabcd१२३४५६७८९०]/g,m=>map[m]||m).toUpperCase();
+  const key=new Array(100).fill('');const errs=[];
+  if(/\d/.test(txt)){
+    const re=/(\d{1,3})\s*[\.\)\-:=,]?\s*([ABCD](?:\s*[\/,&]\s*[ABCD])*|X|\*|-)/g;let m,found=0;
+    while((m=re.exec(txt))){const q=parseInt(m[1]);if(q<1||q>100){errs.push('प्रश्न '+q+' सीमा से बाहर');continue;}
+      let v=m[2].replace(/[\s\/,&]/g,'');if(v==='-')v='';key[q-1]=v==='*'||v==='X'?v:[...new Set(v.split(''))].sort().join('');found++;}
+    if(!found)errs.push('कोई उत्तर नहीं पहचाना गया');
+  }else{
+    const s=txt.replace(/[^ABCDX\*\-_\.]/g,'');
+    if(!s.length)errs.push('कोई उत्तर नहीं मिला');
+    for(let i=0;i<s.length&&i<100;i++){const ch=s[i];key[i]=(ch==='-'||ch==='_'||ch==='.')?'':ch;}
+    if(s.length>100)errs.push('100 से अधिक उत्तर — बाक़ी छोड़ दिए');
+  }
+  return {key,errs};
+}
+$('#parseBtn').addEventListener('click',()=>{const {key,errs}=parseKey($('#keyText').value);const cnt=key.filter(Boolean).length;
+  if(!cnt){$('#keyMsg').innerHTML='<div class="msg err">'+esc(errs.join('; ')||'कुंजी समझ नहीं आई')+'</div>';return;}
+  editing.key=key;renderKeyGrid();$('#keyMsg').innerHTML='<div class="msg ok">'+cnt+' उत्तर भरे गए।'+(errs.length?' ('+esc(errs.join('; '))+')':'')+' नीचे ग्रिड में जाँच लें।</div>';});
+document.querySelectorAll('#presets .chip').forEach(c=>c.addEventListener('click',()=>{const [n,p,m]=c.dataset.p.split(',');$('#tN').value=n;$('#tPlus').value=p;$('#tMinus').value=m;document.querySelectorAll('#presets .chip').forEach(x=>x.classList.toggle('on',x===c));renderKeyGrid();}));
+$('#tN').addEventListener('input',renderKeyGrid);
+$('#clearKeyBtn').addEventListener('click',async()=>{if(!await uiConfirm('सारे उत्तर साफ़ करें?','साफ़ करें'))return;editing.key=new Array(100).fill('');renderKeyGrid();syncKeyText();});
+function loadTestToForm(id){
+  const t=TESTS.find(x=>x.id===id);
+  if(!t){editing={id:null,key:new Array(100).fill('')};$('#formTitle').textContent='नया टेस्ट';$('#tName').value='';$('#tN').value=100;$('#tPlus').value=2;$('#tMinus').value=0.66;$('#tMulti').checked=true;$('#keyText').value='';}
+  else{editing={id:t.id,key:t.key.slice()};while(editing.key.length<100)editing.key.push('');$('#formTitle').textContent='टेस्ट बदलें: '+t.name;$('#tName').value=t.name;$('#tN').value=t.n;$('#tPlus').value=t.plus;$('#tMinus').value=t.minus;$('#tMulti').checked=t.multiWrong!==false;syncKeyText();}
+  $('#keyMsg').innerHTML='';$('#saveMsg').innerHTML='';renderKeyGrid();
+}
+$('#keySel').addEventListener('change',()=>loadTestToForm($('#keySel').value));
+$('#newTestBtn').addEventListener('click',()=>{$('#keySel').value='';loadTestToForm('');$('#tName').focus();});
+$('#delTestBtn').addEventListener('click',async()=>{const id=$('#keySel').value;if(!id){uiAlert('पहले ऊपर से कोई सहेजा टेस्ट चुनें।');return;}
+  const t=TESTS.find(x=>x.id===id);const nres=RESULTS.filter(r=>r.testId===id).length;
+  if(!await uiConfirm('“'+t.name+'” हटाएँ?'+(nres?' इसके '+nres+' परिणाम भी हट जाएँगे।':''),'हटाएँ'))return;
+  TESTS=TESTS.filter(x=>x.id!==id);RESULTS=RESULTS.filter(r=>r.testId!==id);saveTests();saveResults();loadTestToForm('');fillTestSelects();});
+$('#saveTestBtn').addEventListener('click',()=>{
+  const name=$('#tName').value.trim();const n=parseInt($('#tN').value);const plus=parseFloat($('#tPlus').value);const minus=parseFloat($('#tMinus').value);
+  const errs=[];if(!name)errs.push('टेस्ट का नाम लिखें');if(!(n>=1&&n<=100))errs.push('प्रश्न संख्या 1 से 100 के बीच हो');if(!(plus>0))errs.push('सही उत्तर के अंक 0 से अधिक हों');if(!(minus>=0))errs.push('कटौती 0 या अधिक हो');
+  const filled=editing.key.slice(0,n).filter(Boolean).length;if(!filled)errs.push('कम से कम कुछ उत्तर भरें');
+  if(errs.length){$('#saveMsg').innerHTML='<div class="msg err">'+errs.map(esc).join('<br>')+'</div>';return;}
+  const obj={id:editing.id||uid(),name,n,plus,minus,multiWrong:$('#tMulti').checked,key:editing.key.slice(0,100),updated:Date.now()};
+  const i=TESTS.findIndex(x=>x.id===obj.id);if(i>=0)TESTS[i]=Object.assign(TESTS[i],obj);else{obj.created=Date.now();TESTS.push(obj);}
+  // पुराने परिणाम नई कुंजी से दोबारा गिनें
+  let re=0;RESULTS.forEach(r=>{if(r.testId===obj.id){recalcStored(r,obj);re++;}});
+  saveTests();saveResults();editing.id=obj.id;fillTestSelects();$('#keySel').value=obj.id;
+  try{localStorage.setItem('omr_lasttest',obj.id);}catch(e){}$('#checkTest').value=obj.id;updateCheckInfo();
+  $('#saveMsg').innerHTML='<div class="msg ok">सहेज लिया ✔ ('+filled+'/'+n+' उत्तर)'+(filled<n?' — ख़ाली कुंजी वाले प्रश्न गिने नहीं जाएँगे।':'')+(re?' '+re+' पुराने परिणाम नई कुंजी से दोबारा गिने गए।':'')+'</div>';
+});
+$('#keyFromOmrBtn').addEventListener('click',()=>$('#keyOmrInput').click());
+$('#keyOmrInput').addEventListener('change',async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;
+  $('#keyMsg').innerHTML='<div class="msg info">OMR से कुंजी पढ़ी जा रही है…</div>';await new Promise(r=>setTimeout(r,30));
+  try{const c=await fileToCanvas(f);const res=analyzeCanvas(c);
+    if(!res.ok){$('#keyMsg').innerHTML='<div class="msg err">'+esc(res.error)+'</div>';return;}
+    const key=new Array(100).fill('');const issues=[];
+    res.answers.forEach((a,q)=>{if(a.st==='multi'){key[q]='';issues.push(q+1+' (एकाधिक)');}else if(a.sel){key[q]=a.sel;if(a.st!=='ok')issues.push(q+1+' (हल्का/संदिग्ध)');}});
+    const cnt=key.filter(Boolean).length;let last=0;key.forEach((v,i)=>{if(v)last=i+1;});
+    editing.key=key;if(last&&last<=100&&!(parseInt($('#tN').value)>=last))$('#tN').value=last;renderKeyGrid();syncKeyText();
+    $('#keyMsg').innerHTML='<div class="msg '+(issues.length?'warn':'ok')+'">'+cnt+' उत्तर OMR से भरे गए।'+(issues.length?' इन्हें जाँचें: '+esc(issues.join(', ')):'')+(res.align<0.85?' फ़ोटो साफ़ नहीं थी — ग्रिड ध्यान से देखें।':'')+'</div>';
+  }catch(err){console.error(err);$('#keyMsg').innerHTML='<div class="msg err">यह फ़ोटो खुल नहीं पाई। JPG/PNG फ़ोटो दें।</div>';}
+});
+
+/* =================== जाँच टैब =================== */
+const SESSION={}; // id -> {res, overlay}
+$('#camBtn').addEventListener('click',()=>$('#camInput').click());
+$('#galBtn').addEventListener('click',()=>$('#galInput').click());
+$('#camInput').addEventListener('change',e=>{const fs=[...e.target.files];e.target.value='';processFiles(fs);});
+$('#galInput').addEventListener('change',e=>{const fs=[...e.target.files];e.target.value='';processFiles(fs);});
+const drop=$('#drop');
+['dragenter','dragover'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('hot');}));
+['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('hot');}));
+drop.addEventListener('drop',e=>{const fs=[...(e.dataTransfer?e.dataTransfer.files:[])].filter(f=>/^image\//.test(f.type)||/\.(jpe?g|png|webp|heic|bmp)$/i.test(f.name));if(fs.length)processFiles(fs);});
+
+let busy=false;const queue=[];
+async function processFiles(files){
+  if(!files.length)return;queue.push(...files);if(busy)return;busy=true;
+  $('#procBox').classList.remove('hidden');let done=0,total=queue.length;
+  while(queue.length){
+    total=Math.max(total,done+queue.length);
+    const f=queue.shift();$('#procText').textContent='जाँच हो रही है… ('+(done+1)+'/'+total+') '+(f.name||'');$('#procBar').style.width=Math.round(done/total*100)+'%';
+    await new Promise(r=>setTimeout(r,20));
+    try{await processOne(f);}catch(err){console.error(err);showFail(f.name,'कुछ गड़बड़ हुई: यह फ़ोटो जाँची नहीं जा सकी। कृपया दोबारा फ़ोटो लें।',null);}
+    done++;
+  }
+  $('#procBar').style.width='100%';$('#procText').textContent='पूरा हुआ ✔ ('+done+' शीट)';busy=false;
+  setTimeout(()=>{if(!busy)$('#procBox').classList.add('hidden');},2500);
+}
+async function processOne(file){
+  let canvas;
+  try{canvas=await fileToCanvas(file);}catch(e){showFail(file.name,'यह फ़ोटो खुल नहीं पाई (फ़ॉर्मेट समर्थित नहीं)। कैमरा सेटिंग में JPG चुनें या स्क्रीनशॉट/JPG भेजें।',null);return;}
+  if(Math.min(canvas.width,canvas.height)<500){showFail(file.name,'फ़ोटो बहुत छोटी है ('+canvas.width+'×'+canvas.height+')। पूरी क्वालिटी वाली फ़ोटो दें।',canvas);return;}
+  const res=analyzeCanvas(canvas);
+  if(!res.ok){showFail(file.name,res.error,canvas);return;}
+  addResult(res,file.name);
+}
+function currentTest(){return TESTS.find(t=>t.id===$('#checkTest').value)||null;}
+function addResult(res,fname,replaceId){
+  const test=currentTest();
+  const rec={id:replaceId||uid(),testId:test?test.id:'',file:fname||'',time:Date.now(),name:res.name,roll:res.roll,mobile:res.mobile,booklet:res.booklet,subject:res.subject,centre:res.centre,
+    det:res.answers.map(a=>({sel:a.sel,st:a.st,f:a.f,other:a.other||''})),ov:{},warnings:res.warnings,align:Math.round(res.align*100)};
+  if(replaceId){const old=RESULTS.find(r=>r.id===replaceId);if(old&&old.ov)rec.ov=Object.assign({},old.ov);}
+  recalcStored(rec,test);
+  if(test){const i=RESULTS.findIndex(r=>r.id===rec.id);if(i>=0)RESULTS[i]=rec;else RESULTS.push(rec);saveResults();}
+  SESSION[rec.id]={res,test};
+  renderResultCard(rec,replaceId);renderSummary();
+}
+function finalAnswers(rec){return rec.det.map((a,q)=>{const o=rec.ov&&rec.ov[q];if(o!==undefined)return {sel:o,st:o?'ok':'blank',ov:true,f:a.f};return a;});}
+function recalcStored(rec,test){const fa=finalAnswers(rec);const ev=evaluate(fa,test);rec.score=ev.score;rec.correct=ev.correct;rec.wrong=ev.wrong;rec.blank=ev.blank;rec.multi=ev.multi;rec.max=ev.max;rec.per=ev.per;rec.attempted=ev.attempted;rec.dropped=ev.dropped;
+  rec.issues=fa.slice(0,test?test.n:100).map((a,q)=>({q,st:a.st})).filter(x=>['multi','faint','unclear','ok2'].includes(x.st)).map(x=>x.q);
+  if(test)rec.beyond=fa.slice(test.n).some(a=>a.sel)?fa.slice(test.n).map((a,i)=>a.sel?test.n+i+1:0).filter(Boolean):[];}
+
+function showFail(fname,msg,canvas){
+  const card=el('div',{class:'card'});
+  card.append(el('div',{class:'msg err'},'❌ '+(fname?fname+': ':'')+msg));
+  card.append(el('div',{class:'note'},'सुझाव: शीट समतल रखें, पूरी शीट फ़्रेम में हो, रोशनी बराबर हो, फ़ोन सीधा ऊपर रखें।'));
+  const b=el('div',{class:'btns'});
+  if(canvas)b.append(el('button',{class:'btn primary',onclick:()=>openManual(canvas,fname,null,card)},'✋ हाथ से 4 कोने चुनें'));
+  b.append(el('button',{class:'btn small',onclick:()=>card.remove()},'हटाएँ'));
+  card.append(b);$('#results').prepend(card);
+}
+
+function statusText(st){return {ok:'',ok2:'दूसरे गोले पर भी हल्का निशान',faint:'हल्का भरा गोला',unclear:'अस्पष्ट — कोई गोला ठीक से नहीं भरा',multi:'एक से अधिक गोले',blank:''}[st]||'';}
+function renderResultCard(rec,replaceId){
+  const ses=SESSION[rec.id];const test=TESTS.find(t=>t.id===rec.testId)||null;
+  const fa=finalAnswers(rec);
+  const card=el('div',{class:'card',id:'rc-'+rec.id});
+  const head=el('div',{class:'rhead'});
+  const who=el('div',{class:'who'});
+  who.append(el('div',{class:'nm'},rec.name||'(नाम नहीं भरा)'));
+  who.append(el('div',{class:'kv',html:'रोल: <b>'+esc(rec.roll||'—')+'</b> · मोबाइल: <b>'+esc(rec.mobile||'—')+'</b>'}));
+  who.append(el('div',{class:'kv',html:'श्रृंखला: <b>'+esc(rec.booklet||'—')+'</b> · विषय: <b>'+esc(rec.subject||'—')+'</b> · केंद्र: <b>'+esc(rec.centre||'—')+'</b>'}));
+  who.append(el('div',{class:'kv',html:(test?'टेस्ट: <b>'+esc(test.name)+'</b> · ':'')+'फ़ाइल: '+esc(rec.file||'')}));
+  head.append(who);
+  if(test){head.append(el('div',{class:'scorebox',html:'<div class="s">'+fmt(rec.score)+'</div><div class="o">कुल '+fmt(rec.max)+' में से</div>'}));}
+  card.append(head);
+  if(test){
+    const acc=rec.attempted?Math.round(rec.correct/(rec.correct+rec.wrong)*100):0;
+    card.append(el('div',{class:'stats',html:'<div class="stat c"><b>'+rec.correct+'</b>सही</div><div class="stat w"><b>'+rec.wrong+'</b>ग़लत</div><div class="stat b"><b>'+rec.blank+'</b>छोड़े</div><div class="stat a"><b>'+acc+'%</b>सटीकता</div>'}));
+  }else{
+    card.append(el('div',{class:'msg info'},'कोई उत्तर कुंजी नहीं चुनी गई — केवल पढ़े गए उत्तर दिखाए गए हैं। अंक के लिए ऊपर टेस्ट चुनकर फ़ोटो दोबारा डालें।'));
+  }
+  // चेतावनियाँ
+  const W=(rec.warnings||[]).slice();
+  const iss=fa.map((a,q)=>({a,q})).filter(x=>(!test||x.q<test.n)&&['multi','faint','unclear','ok2'].includes(x.a.st)&&!x.a.ov);
+  if(iss.length){
+    const groups={multi:[],faint:[],unclear:[],ok2:[]};iss.forEach(x=>groups[x.a.st].push(x.q+1));
+    if(groups.multi.length)W.unshift({t:'err',m:'एक से अधिक गोले भरे (काटा/X किया गोला भी भरा माना जाता है) — प्रश्न: '+groups.multi.join(', ')+(test?(test.multiWrong?' (ग़लत माने गए)':' (छोड़े माने गए)'):'')});
+    if(groups.unclear.length)W.unshift({t:'warn',m:'अस्पष्ट (कोई गोला पूरा नहीं भरा) — प्रश्न: '+groups.unclear.join(', ')+' (छोड़े माने गए)'});
+    if(groups.faint.length)W.unshift({t:'warn',m:'हल्का भरा गोला (उत्तर मान लिया) — प्रश्न: '+groups.faint.join(', ')});
+    if(groups.ok2.length)W.unshift({t:'warn',m:'दूसरे गोले पर भी निशान/कटा हुआ (गहरा वाला उत्तर माना) — प्रश्न: '+groups.ok2.join(', ')});
+  }
+  if(rec.beyond&&rec.beyond.length)W.push({t:'info',m:'टेस्ट '+test.n+' प्रश्नों का है, पर इन प्रश्नों पर भी गोले भरे हैं (गिने नहीं गए): '+rec.beyond.join(', ')});
+  const ovc=Object.keys(rec.ov||{}).length;if(ovc)W.push({t:'info',m:ovc+' प्रश्न आपने हाथ से सुधारे हैं (रेखांकित)।'});
+  if(!W.length)card.append(el('div',{class:'msg ok'},'✔ कोई त्रुटि नहीं मिली।'));
+  else{const errs=W.filter(w=>w.t==='err'),warns=W.filter(w=>w.t!=='err');
+    if(errs.length)card.append(el('div',{class:'msg err',html:'<b>त्रुटियाँ</b><ul>'+errs.map(w=>'<li>'+esc(w.m)+'</li>').join('')+'</ul>'}));
+    if(warns.length)card.append(el('div',{class:'msg warn',html:'<b>ध्यान दें</b><ul>'+warns.map(w=>'<li>'+esc(w.m)+'</li>').join('')+'</ul>'}));}
+  // प्रश्न ग्रिड
+  const n=test?test.n:100;const qg=el('div',{class:'qgrid'});
+  for(let q=0;q<n;q++){
+    const a=fa[q];const r=test?rec.per[q]:'';const k=test?test.key[q]:'';
+    let cls='qc';if(r==='c')cls+=' c';else if(r==='w')cls+=a.st==='multi'?' m':' w';else if(r==='x')cls+=' x';else if(a.st==='multi')cls+=' m';
+    if(['faint','unclear','ok2'].includes(a.st)&&!a.ov)cls+=' d';if(a.ov)cls+=' ov';
+    const keyTxt=test&&k&&r!=='c'?(k==='X'?'रद्द':k==='*'?'सबको':'✓'+k):'';
+    const cell=el('div',{class:cls,title:statusText(a.st)},el('div',{class:'n'},(q+1)+''),el('div',{class:'a'},a.sel||'–'),el('div',{class:'n'},keyTxt));
+    cell.addEventListener('click',()=>openEdit(rec,q));qg.append(cell);
+  }
+  card.append(el('h3',null,'प्रश्न-वार उत्तर (सुधारने के लिए खाने पर टैप करें)'));card.append(qg);
+  card.append(el('div',{class:'legend',html:'<span><i style="background:var(--ok)"></i>सही</span><span><i style="background:var(--bad)"></i>ग़लत</span><span><i style="background:var(--multi)"></i>एकाधिक</span><span><i style="background:var(--line)"></i>छोड़ा</span><span><i style="background:transparent;box-shadow:0 0 0 2px var(--warn) inset"></i>संदिग्ध</span><span>✓X = सही उत्तर</span>'}));
+  // फ़ोटो
+  if(ses&&ses.res){
+    const det=el('details',{class:'more'});det.open=!!(rec.align<88||(rec.warnings||[]).some(w=>w.t==='err'));
+    det.append(el('summary',null,'📷 फ़ोटो पर निशान देखें (मशीन ने क्या पढ़ा)'));
+    const wrap=el('div',{class:'ov-wrap'});const img=el('img',{alt:'OMR पर पढ़े गए निशान'});
+    const paint=()=>{try{img.src=drawOverlay(ses.res,test,finalAnswers(rec));}catch(e){console.error(e);}};
+    det.addEventListener('toggle',()=>{if(det.open&&!img.src)paint();});if(det.open)paint();
+    card._paint=()=>{if(img.src)paint();};
+    wrap.append(img);det.append(wrap);
+    det.append(el('div',{class:'note',style:'margin-top:6px',html:'नीले बिंदु = ऐप ने गोले यहाँ माने। हरा = सही, लाल = ग़लत, नीला घेरा = सही उत्तर, बैंगनी = एकाधिक, नारंगी = संदिग्ध। बिंदु गोलों पर न हों तो “हाथ से 4 कोने चुनें”।'}));
+    card.append(det);
+  }
+  const b=el('div',{class:'btns'});
+  b.append(el('button',{class:'btn small',onclick:()=>copySummary(rec)},'📋 परिणाम कॉपी करें'));
+  if(ses&&ses.res)b.append(el('button',{class:'btn small',onclick:()=>openManual(ses.res.canvas,rec.file,rec.id,card)},'✋ हाथ से 4 कोने चुनें'));
+  b.append(el('button',{class:'btn small danger',onclick:async()=>{if(!await uiConfirm('यह परिणाम हटाएँ?','हटाएँ'))return;RESULTS=RESULTS.filter(r=>r.id!==rec.id);saveResults();card.remove();renderSummary();}},'🗑️ हटाएँ'));
+  card.append(b);
+  if(test)card.append(el('div',{class:'note',style:'margin-top:6px'},'✔ यह परिणाम “③ परिणाम सूची” में सहेज दिया गया है।'));
+  const old=document.getElementById('rc-'+rec.id);
+  if(old)old.replaceWith(card);else $('#results').prepend(card);
+}
+function renderSummary(){
+  const box=$('#summaryBox');const t=currentTest();if(!t){box.innerHTML='';return;}
+  const rows=RESULTS.filter(r=>r.testId===t.id).sort((a,b)=>b.score-a.score||b.correct-a.correct);
+  if(!rows.length){box.innerHTML='';return;}
+  let rank=0,prev=null;const tr=rows.map((r,i)=>{if(r.score!==prev){rank=i+1;prev=r.score;}
+    return '<tr class="click" data-id="'+r.id+'"><td>'+rank+'</td><td><b>'+esc(r.name||'(नाम नहीं)')+'</b>'+(r.roll?'<br><span class="muted" style="font-size:12px">रोल '+esc(r.roll)+'</span>':'')+'</td><td class="num"><b style="font-size:17px;color:var(--brand)">'+fmt(r.score)+'</b><span class="muted" style="font-size:12px"> / '+fmt(r.max)+'</span></td><td class="num">'+r.correct+' / '+r.wrong+' / '+r.blank+'</td></tr>';}).join('');
+  box.innerHTML='<div class="card"><h2>किसके कितने अंक — '+esc(t.name)+'</h2><div class="tablewrap"><table class="rank"><tr><th>रैंक</th><th>नाम</th><th class="num">अंक</th><th class="num">सही / ग़लत / छोड़े</th></tr>'+tr+'</table></div><div class="note" style="margin-top:6px">किसी नाम पर टैप करें तो उसकी पूरी शीट दिखेगी।</div></div>';
+  box.querySelectorAll('tr[data-id]').forEach(el2=>el2.addEventListener('click',()=>{const r=RESULTS.find(x=>x.id===el2.dataset.id);if(!r)return;renderResultCard(r);const c=document.getElementById('rc-'+r.id);if(c)c.scrollIntoView({behavior:'smooth'});}));
+}
+function copySummary(rec){
+  const test=TESTS.find(t=>t.id===rec.testId);
+  let s='नाम: '+(rec.name||'—')+'\nरोल: '+(rec.roll||'—')+'\nमोबाइल: '+(rec.mobile||'—');
+  if(test)s+='\nटेस्ट: '+test.name+'\nअंक: '+fmt(rec.score)+' / '+fmt(rec.max)+'\nसही: '+rec.correct+', ग़लत: '+rec.wrong+', छोड़े: '+rec.blank;
+  copyText(s,'परिणाम कॉपी हो गया — अब WhatsApp आदि में पेस्ट करें।');
+}
+function printCard(card){const sec=$('#tab-check');const others=[...$('#results').children].filter(c=>c!==card);others.forEach(c=>c.classList.add('noprint'));const first=sec.querySelector('.card');first.classList.add('noprint');sec.classList.add('printing');
+  const det=card.querySelector('details');const was=det?det.open:false;if(det&&!was){det.open=true;}
+  setTimeout(()=>{window.print();sec.classList.remove('printing');others.forEach(c=>c.classList.remove('noprint'));first.classList.remove('noprint');if(det)det.open=was;},250);}
+
+/* ---------------- उत्तर सुधार ---------------- */
+let editCtx=null;
+function openEdit(rec,q){
+  editCtx={rec,q};const a=finalAnswers(rec)[q];const det=rec.det[q];
+  $('#editTitle').textContent='प्रश्न '+(q+1);
+  const test=TESTS.find(t=>t.id===rec.testId);
+  $('#editInfo').innerHTML='मशीन ने पढ़ा: <b>'+esc(det.sel||'खाली')+'</b>'+(statusText(det.st)?' ('+esc(statusText(det.st))+')':'')+'<br>भराई: '+OPT.map((L,i)=>L+'='+Math.round((det.f[i]||0)*100)+'%').join(', ')+(test&&test.key[q]?'<br>सही उत्तर: <b>'+esc(test.key[q]==='X'?'रद्द':test.key[q]==='*'?'सबको अंक':test.key[q])+'</b>':'');
+  $('#editPick').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v===(a.sel||'')&&a.st!=='multi'));
+  $('#editModal').classList.add('on');
+}
+$('#editPick').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{if(!editCtx)return;const {rec,q}=editCtx;rec.ov=rec.ov||{};rec.ov[q]=b.dataset.v;afterEdit(rec);}));
+$('#editReset').addEventListener('click',()=>{if(!editCtx)return;const {rec,q}=editCtx;if(rec.ov)delete rec.ov[q];afterEdit(rec);});
+$('#editClose').addEventListener('click',()=>{$('#editModal').classList.remove('on');editCtx=null;});
+$('#editModal').addEventListener('click',e=>{if(e.target.id==='editModal'){$('#editModal').classList.remove('on');editCtx=null;}});
+function afterEdit(rec){setTimeout(renderSummary,0);const test=TESTS.find(t=>t.id===rec.testId)||null;recalcStored(rec,test);if(test){const i=RESULTS.findIndex(r=>r.id===rec.id);if(i>=0){RESULTS[i]=rec;saveResults();}}
+  $('#editModal').classList.remove('on');editCtx=null;
+  if(document.getElementById('rc-'+rec.id))renderResultCard(rec);
+  if($('#tab-list').classList.contains('on'))renderList();}
+
+/* ---------------- हाथ से 4 कोने ---------------- */
+let man=null;
+function openManual(canvas,fname,replaceId,card){
+  man={canvas,fname,replaceId,card,pts:[]};
+  const mc=$('#manCanvas');const s=Math.min(1,1400/Math.max(canvas.width,canvas.height));mc.width=Math.round(canvas.width*s);mc.height=Math.round(canvas.height*s);man.s=s;
+  drawMan();$('#manModal').classList.add('on');
+}
+function drawMan(){const mc=$('#manCanvas'),x=mc.getContext('2d');x.drawImage(man.canvas,0,0,mc.width,mc.height);
+  man.pts.forEach((p,i)=>{x.fillStyle='rgba(0,120,255,.9)';x.beginPath();x.arc(p[0]*man.s,p[1]*man.s,Math.max(6,mc.width/140),0,Math.PI*2);x.fill();x.fillStyle='#fff';x.font='bold '+Math.max(12,mc.width/80)+'px sans-serif';x.fillText(String(i+1),p[0]*man.s-4,p[1]*man.s+5);});
+  const lis=$('#manSteps').children;for(let i=0;i<lis.length;i++){lis[i].className=i<man.pts.length?'done':i===man.pts.length?'cur':'';}
+  $('#manGo').disabled=man.pts.length<4;}
+$('#manCanvas').addEventListener('click',e=>{if(!man||man.pts.length>=4)return;const mc=$('#manCanvas');const r=mc.getBoundingClientRect();
+  const x=(e.clientX-r.left)/r.width*mc.width/man.s,y=(e.clientY-r.top)/r.height*mc.height/man.s;man.pts.push([x,y]);drawMan();});
+$('#manUndo').addEventListener('click',()=>{if(man&&man.pts.length){man.pts.pop();drawMan();}});
+$('#manClose').addEventListener('click',()=>{$('#manModal').classList.remove('on');man=null;});
+$('#manGo').addEventListener('click',()=>{
+  if(!man||man.pts.length<4)return;
+  const H=man.pts.map(p=>p.slice());
+  const m=man;$('#manModal').classList.remove('on');man=null;
+  setTimeout(()=>{
+    try{const res=analyzeCanvas(m.canvas,H);
+      if(!res.ok){uiAlert(res.error);return;}
+      if(m.card&&!m.replaceId)m.card.remove();
+      addResult(res,m.fname,m.replaceId||null);
+    }catch(err){console.error(err);uiAlert('जाँच नहीं हो सकी। कोने दोबारा ध्यान से चुनें।');}
+  },30);
+});
+
+/* =================== परिणाम सूची =================== */
+function renderList(){
+  fillTestSelectsListOnly();
+  const id=$('#listTest').value;const test=TESTS.find(t=>t.id===id);
+  const tb=$('#rankTable'),qt=$('#qTable');tb.innerHTML='';qt.innerHTML='';
+  if(!test){$('#listSummary').textContent=TESTS.length?'':'अभी कोई टेस्ट नहीं है।';return;}
+  const rows=RESULTS.filter(r=>r.testId===id).sort((a,b)=>b.score-a.score||b.correct-a.correct||a.wrong-b.wrong);
+  if(!rows.length){$('#listSummary').textContent='इस टेस्ट की अभी कोई शीट नहीं जाँची गई।';return;}
+  const sc=rows.map(r=>r.score);const avg=sc.reduce((a,b)=>a+b,0)/sc.length;
+  $('#listSummary').innerHTML='कुल शीट: <b>'+rows.length+'</b> · सर्वोच्च: <b>'+fmt(sc[0])+'</b> · औसत: <b>'+fmt(avg)+'</b> · न्यूनतम: <b>'+fmt(sc[sc.length-1])+'</b> (कुल '+fmt(rows[0].max)+')';
+  tb.innerHTML='<tr><th>रैंक</th><th>नाम / रोल</th><th class="num">अंक</th><th class="num">सही</th><th class="num">ग़लत</th><th class="num">छोड़े</th><th></th></tr>';
+  let rank=0,prev=null;
+  rows.forEach((r,i)=>{if(r.score!==prev){rank=i+1;prev=r.score;}
+    const warn=(r.issues&&r.issues.length)||(r.warnings||[]).some(w=>w.t==='err');
+    const tr=el('tr',{class:'click'});tr.innerHTML='<td>'+rank+'</td><td><b>'+esc(r.name||'(नाम नहीं)')+'</b><br><span class="muted" style="font-size:12px">'+esc(r.roll||'')+(r.mobile?' · '+esc(r.mobile):'')+'</span></td><td class="num"><b>'+fmt(r.score)+'</b></td><td class="num">'+r.correct+'</td><td class="num">'+r.wrong+'</td><td class="num">'+r.blank+'</td><td>'+(warn?'⚠️':'')+'</td>';
+    tr.addEventListener('click',()=>{showTab('check');renderResultCard(r);const c=document.getElementById('rc-'+r.id);if(c)c.scrollIntoView({behavior:'smooth'});});
+    tb.append(tr);});
+  // प्रश्न विश्लेषण
+  qt.innerHTML='<tr><th>प्रश्न</th><th>कुंजी</th><th>सही %</th><th class="num">सही</th><th class="num">ग़लत</th><th class="num">छोड़े</th><th>सबसे चुना</th></tr>';
+  for(let q=0;q<test.n;q++){let c=0,w=0,b=0;const cnt={A:0,B:0,C:0,D:0};
+    rows.forEach(r=>{const p=r.per[q];if(p==='c')c++;else if(p==='w')w++;else if(p==='b')b++;const fa=finalAnswers(r)[q];if(fa&&fa.sel&&fa.sel.length===1)cnt[fa.sel]++;});
+    const pct=rows.length?Math.round(c/rows.length*100):0;const top=Object.entries(cnt).sort((a,b)=>b[1]-a[1])[0];
+    const tr=el('tr');tr.innerHTML='<td>'+(q+1)+'</td><td><b>'+esc(test.key[q]||'—')+'</b></td><td><div class="bar"><div style="width:'+pct+'%;background:'+(pct<35?'var(--bad)':pct<65?'var(--warn)':'var(--ok)')+'"></div></div><span style="font-size:12px">'+pct+'%</span></td><td class="num">'+c+'</td><td class="num">'+w+'</td><td class="num">'+b+'</td><td>'+(top&&top[1]?top[0]+' ('+top[1]+')':'—')+'</td>';qt.append(tr);}
+}
+function fillTestSelectsListOnly(){const sel=$('#listTest');const cur=sel.value;sel.innerHTML='';TESTS.slice().reverse().forEach(t=>sel.append(el('option',{value:t.id},t.name+' ('+RESULTS.filter(r=>r.testId===t.id).length+' शीट)')));
+  let last=null;try{last=localStorage.getItem('omr_lasttest');}catch(e){}
+  if(cur&&TESTS.some(t=>t.id===cur))sel.value=cur;else if(last&&TESTS.some(t=>t.id===last))sel.value=last;}
+$('#listTest').addEventListener('change',renderList);
+$('#copyListBtn').addEventListener('click',()=>{
+  const id=$('#listTest').value;const test=TESTS.find(t=>t.id===id);if(!test){uiAlert('पहले टेस्ट चुनें।');return;}
+  const rows=RESULTS.filter(r=>r.testId===id).sort((a,b)=>b.score-a.score||b.correct-a.correct);
+  if(!rows.length){uiAlert('इस टेस्ट का कोई परिणाम नहीं है।');return;}
+  const lines=[['रैंक','नाम','रोल','मोबाइल','अंक','सही','ग़लत','छोड़े'].join('\t')];let rank=0,prev=null;
+  rows.forEach((r,i)=>{if(r.score!==prev){rank=i+1;prev=r.score;}lines.push([rank,r.name||'',r.roll||'',r.mobile||'',fmt(r.score),r.correct,r.wrong,r.blank].join('\t'));});
+  copyText(test.name+'\n'+lines.join('\n'),'सूची कॉपी हो गई — Excel या WhatsApp में पेस्ट करें।');
+});
+$('#clearListBtn').addEventListener('click',async()=>{const id=$('#listTest').value;if(!id)return;const n=RESULTS.filter(r=>r.testId===id).length;if(!n)return;if(!await uiConfirm('इस टेस्ट के सभी '+n+' परिणाम हटाएँ? (पहले CSV डाउनलोड कर लें)','हटाएँ'))return;RESULTS=RESULTS.filter(r=>r.testId!==id);saveResults();renderList();});
+function download(name,text,type){const blob=new Blob([text],{type});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.append(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1500);}
+$('#csvBtn').addEventListener('click',()=>{
+  const id=$('#listTest').value;const test=TESTS.find(t=>t.id===id);if(!test){uiAlert('पहले टेस्ट चुनें।');return;}
+  const rows=RESULTS.filter(r=>r.testId===id).sort((a,b)=>b.score-a.score||b.correct-a.correct);
+  if(!rows.length){uiAlert('इस टेस्ट का कोई परिणाम नहीं है।');return;}
+  const q=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"';
+  const head=['रैंक','नाम','रोल नंबर','मोबाइल','श्रृंखला','अंक','कुल अंक','सही','ग़लत','छोड़े','एकाधिक','चेतावनी'];for(let i=1;i<=test.n;i++)head.push('Q'+i);
+  const lines=[head.map(q).join(',')];let rank=0,prev=null;
+  rows.forEach((r,i)=>{if(r.score!==prev){rank=i+1;prev=r.score;}const fa=finalAnswers(r);
+    const w=((r.warnings||[]).filter(x=>x.t==='err').length+(r.issues||[]).length)?'हाँ':'';
+    const line=[rank,r.name,r.roll?"'"+r.roll:'',r.mobile?"'"+r.mobile:'',r.booklet,r.score,r.max,r.correct,r.wrong,r.blank,r.multi,w];
+    for(let k=0;k<test.n;k++)line.push(fa[k]?fa[k].sel:'');lines.push(line.map(q).join(','));});
+  download((test.name||'omr').replace(/[\\\/:*?"<>|]/g,'_')+'_परिणाम.csv','﻿'+lines.join('\r\n'),'text/csv;charset=utf-8');
+});
+
+/* ---------------- बैकअप ---------------- */
+$('#backupBtn').addEventListener('click',()=>{download('omr-backup-'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify({v:1,tests:TESTS,results:RESULTS}),'application/json');});
+$('#restoreBtn').addEventListener('click',()=>$('#restoreInput').click());
+$('#restoreInput').addEventListener('change',async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;
+  try{const d=JSON.parse(await f.text());if(!d||!Array.isArray(d.tests)||!Array.isArray(d.results))throw 0;
+    let nt=0,nr=0;d.tests.forEach(t=>{if(t&&t.id&&Array.isArray(t.key)&&!TESTS.some(x=>x.id===t.id)){TESTS.push(t);nt++;}});
+    d.results.forEach(r=>{if(r&&r.id&&Array.isArray(r.det)&&!RESULTS.some(x=>x.id===r.id)){RESULTS.push(r);nr++;}});
+    saveTests();saveResults();fillTestSelects();$('#backupMsg').innerHTML='<div class="msg ok">बैकअप लौट आया: '+nt+' टेस्ट, '+nr+' परिणाम जोड़े गए।</div>';
+  }catch(err){$('#backupMsg').innerHTML='<div class="msg err">यह सही बैकअप फ़ाइल नहीं है।</div>';}});
+
+/* ---------------- शुरुआत ---------------- */
+loadTestToForm('');fillTestSelects();
+(function(){let t=null;try{t=localStorage.getItem('omr_tab');}catch(e){}if(t&&document.getElementById('tab-'+t))showTab(t);else if(!TESTS.length)updateCheckInfo();})();
+window.addEventListener('error',e=>{console.error(e.error||e.message);});
+// परीक्षण के लिए
+window.__omr={findAnchors,prep,buildInit,snap,ringScore,applyH,localScale,BLOCKS,analyzeCanvas,fileToCanvas,parseKey,evaluate,drawOverlay,TPL};
+</script>
+</body>
+</html>
