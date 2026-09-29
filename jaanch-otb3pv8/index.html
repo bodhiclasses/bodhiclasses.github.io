@@ -148,6 +148,10 @@ table.rank td.num{text-align:right;font-variant-numeric:tabular-nums}
 .keyok b.big{font-size:18px;display:block}
 .drop{border:2px dashed var(--line);border-radius:14px;padding:18px;text-align:center;color:var(--muted);font-size:14px;margin-top:10px}
 .drop.hot{border-color:var(--brand);color:var(--brand)}
+.lock{position:fixed;inset:0;z-index:100;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:16px}
+.lock .box{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px 20px;width:100%;max-width:360px;text-align:center;box-shadow:var(--shadow)}
+.lock input{text-align:center;font-size:22px;letter-spacing:.15em;margin-top:14px}
+html.locked body>header,html.locked body>main,html.locked body>footer{visibility:hidden}
 footer{max-width:980px;margin:0 auto;padding:10px 16px 40px;color:var(--muted);font-size:12.5px;text-align:center}
 @media print{
   header.top,nav,footer,.noprint,.btns,.modal{display:none!important}
@@ -159,6 +163,16 @@ footer{max-width:980px;margin:0 auto;padding:10px 16px 40px;color:var(--muted);f
 </style>
 </head>
 <body>
+<div class="lock hidden" id="lock">
+  <form class="box" id="lockForm" autocomplete="off">
+    <div style="font-size:40px">🔒</div>
+    <h2 style="margin:6px 0 2px">OMR जाँचक</h2>
+    <div class="note">आगे बढ़ने के लिए कोड डालें</div>
+    <input type="password" id="lockCode" placeholder="कोड" autocapitalize="characters" aria-label="कोड">
+    <button class="btn primary big" type="submit" style="margin-top:12px">खोलें</button>
+    <div id="lockMsg" class="note" style="margin-top:8px;color:var(--bad)"></div>
+  </form>
+</div>
 <header class="top">
   <div class="brandrow">
     <div style="font-size:26px">📝</div>
@@ -380,6 +394,27 @@ footer{max-width:980px;margin:0 auto;padding:10px 16px 40px;color:var(--muted);f
 
 <script>
 'use strict';
+/* ---------------- कोड-ताला ---------------- */
+(function(){
+  const H='941dc2f841bf7bba6a448662f207394b663d3635f70a8f2041be987a6d758dbe';
+  let ok=false;try{ok=localStorage.getItem('omr_unlock')===H;}catch(e){}
+  if(ok)return;
+  document.documentElement.classList.add('locked');
+  const lock=document.getElementById('lock');lock.classList.remove('hidden');
+  setTimeout(()=>{try{document.getElementById('lockCode').focus();}catch(e){}},50);
+  async function sha(t){
+    if(window.crypto&&crypto.subtle){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');}
+    return '';
+  }
+  document.getElementById('lockForm').addEventListener('submit',async e=>{
+    e.preventDefault();const v=document.getElementById('lockCode').value.trim().toUpperCase();
+    let h='';try{h=await sha('omr-bodhi:'+v);}catch(err){}
+    if(!h){document.getElementById('lockMsg').textContent='यह ब्राउज़र बहुत पुराना है। Chrome में खोलें।';return;}
+    if(h===H){try{localStorage.setItem('omr_unlock',H);}catch(err){}lock.classList.add('hidden');document.documentElement.classList.remove('locked');}
+    else{document.getElementById('lockMsg').textContent='कोड ग़लत है। दोबारा डालें।';document.getElementById('lockCode').select();}
+  });
+})();
+
 /* =====================================================================
    टेम्पलेट — THE STUDY IAS OMR (100 प्रश्न)
    आदर्श (सीधी) शीट के निर्देशांक; इकाई = उत्तर-गोलों की दूरी।
