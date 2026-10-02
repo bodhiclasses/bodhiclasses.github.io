@@ -139,6 +139,14 @@ table.rank td.num{text-align:right;font-variant-numeric:tabular-nums}
 .steps li.cur{font-weight:700;color:var(--brand)}
 .steps li.done{color:var(--ok);text-decoration:line-through}
 .hidden{display:none!important}
+.rvrow{border:1px solid var(--line);border-radius:12px;padding:8px 10px;margin-bottom:8px;display:grid;grid-template-columns:auto 1fr auto;gap:6px 10px;align-items:center}
+.rvrow.doubt{border-color:var(--warn);background:var(--warn-soft)}
+.rvrow .rk{font-weight:700;color:var(--muted);min-width:26px;text-align:center}
+.rvrow .sc{font-weight:700;color:var(--brand);font-variant-numeric:tabular-nums}
+.rvrow .full{grid-column:1/-1;min-width:0}
+.rvrow img,.cropimg{display:block;max-width:100%;height:auto;border-radius:6px;border:1px solid var(--line);background:#fff}
+.rvrow input{padding:8px 10px}
+.editbtn{border:0;background:transparent;cursor:pointer;font-size:16px;padding:2px 6px}
 .stephead{display:flex;align-items:center;gap:10px;margin-bottom:6px}
 .stephead h2{margin:0}
 .stepno{flex:none;width:34px;height:34px;border-radius:50%;background:var(--brand);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:18px}
@@ -354,6 +362,32 @@ footer{max-width:980px;margin:0 auto;padding:10px 16px 40px;color:var(--muted);f
     <div class="btns" style="justify-content:flex-end">
       <button class="btn small" id="msgNo">रद्द</button>
       <button class="btn primary" id="msgYes">ठीक है</button>
+    </div>
+  </div>
+</div>
+
+<!-- name edit modal -->
+<div class="modal" id="nameModal">
+  <div class="sheet">
+    <h2 style="margin:0 0 6px">नाम सुधारें</h2>
+    <div class="note" id="nmInfo"></div>
+    <div id="nmCrops"></div>
+    <label class="f" for="nmName">नाम</label><input type="text" id="nmName" autocomplete="off">
+    <label class="f" for="nmMob">मोबाइल नंबर</label><input type="text" id="nmMob" inputmode="numeric" autocomplete="off">
+    <label class="f" for="nmRoll">रोल नंबर</label><input type="text" id="nmRoll" inputmode="numeric" autocomplete="off">
+    <div class="btns" style="justify-content:flex-end"><button class="btn small" id="nmCancel">रद्द</button><button class="btn primary" id="nmSave">✅ सहेजें</button></div>
+  </div>
+</div>
+
+<!-- review before pdf -->
+<div class="modal" id="reviewModal">
+  <div class="sheet">
+    <h2 style="margin:0 0 4px">PDF से पहले नाम देख लें</h2>
+    <div class="note">हर छात्र के आगे उसकी OMR पर <b>हाथ से लिखा नाम</b> दिख रहा है। नाम ग़लत हो तो बॉक्स में सही नाम लिख दें — बस इतना। <span style="color:var(--warn)">⚠️ पीले वाले ज़रूर देखें।</span></div>
+    <div id="rvList" style="margin-top:10px"></div>
+    <div class="btns" style="position:sticky;bottom:0;background:var(--card);padding:10px 0 0;justify-content:flex-end">
+      <button class="btn small" id="rvClose">बंद करें</button>
+      <button class="btn primary" id="rvPdf">📄 PDF डाउनलोड करें</button>
     </div>
   </div>
 </div>
@@ -966,7 +1000,17 @@ function analyzeCanvas(canvas0,manualPts){
   else if(booklet.doubt)warnings.push({t:'warn',m:'पुस्तिका श्रृंखला का गोला हल्का भरा है ('+booklet.v+')।'});
   if(subject.doubt||centre.doubt)warnings.push({t:'info',m:'विषय/केंद्र का निशान पूरा भरा हुआ नहीं है (सही का निशान/हल्का) — अनुमान: '+[subject.v,centre.v].filter(Boolean).join(', ')+'।'});
 
-  return {ok:true,canvas,rot,H,fitted,bub,T,answers,name,roll:rollBlank?'':roll.s,mobile:mobBlank?'':mob.s,
+  // हाथ से लिखे नाम/मोबाइल/रोल वाले खानों की छोटी तस्वीर (नाम सुधारते समय दिखाने के लिए)
+  const crop=(Hb,u0,u1,v0,v1,hgt)=>{try{const pts=[[u0,v0],[u1,v0],[u0,v1],[u1,v1]].map(q=>applyH(Hb,q[0],q[1]));
+      const xs=pts.map(q=>q[0]),ys=pts.map(q=>q[1]);let x0=Math.max(0,Math.floor(Math.min(...xs))),x1=Math.min(canvas.width,Math.ceil(Math.max(...xs))),y0=Math.max(0,Math.floor(Math.min(...ys))),y1=Math.min(canvas.height,Math.ceil(Math.max(...ys)));
+      if(x1-x0<10||y1-y0<4)return '';const sc=hgt/(y1-y0);const c=document.createElement('canvas');c.width=Math.round((x1-x0)*sc);c.height=hgt;
+      const cx=c.getContext('2d');cx.filter='grayscale(1) contrast(1.15)';cx.drawImage(canvas,x0,y0,x1-x0,y1-y0,0,0,c.width,c.height);return c.toDataURL('image/jpeg',0.6);}catch(e){return '';}};
+  const crops={name:crop(fitted.name,-0.7,28.7,-1.75,-0.4,36),mobile:crop(fitted.mobile,-0.7,9.7,-1.75,-0.4,36),roll:crop(fitted.roll,-0.7,7.7,-1.75,-0.4,36)};
+  const lettersOnly=name.replace(/[^A-Z]/g,'');const vow=(lettersOnly.match(/[AEIOU]/g)||[]).length;
+  const nameDoubt=nameIssues.length>0||nameLooksOdd(name);
+  const anyMarked=answers.some(a=>a.sel);
+  if(!anyMarked)warnings.unshift({t:'err',m:'इस शीट में एक भी भरा हुआ उत्तर नहीं मिला। फ़ोटो पर निशान देखें — शीट ठीक से न पढ़ी गई हो तो दोबारा फ़ोटो डालें।'});
+  return {ok:true,crops,nameDoubt,anyMarked,canvas,rot,H,fitted,bub,T,answers,name,roll:rollBlank?'':roll.s,mobile:mobBlank?'':mob.s,
     booklet:booklet.v,subject:subject.v,centre:centre.v,warnings,align};
 }
 function threshold(vals){
@@ -1286,8 +1330,14 @@ const store={
 let TESTS=store.get('omr_tests',[]);
 let RESULTS=store.get('omr_results',[]);
 function saveTests(){store.set('omr_tests',TESTS);}
-function saveResults(){store.set('omr_results',RESULTS);}
+function saveResults(){
+  // जगह बचाने के लिए: बहुत पुराने परिणामों की छोटी तस्वीरें हटाओ
+  try{let js=JSON.stringify(RESULTS);if(js.length>3500000){const sorted=RESULTS.filter(r=>r.crops).sort((a,b)=>a.time-b.time);for(const r of sorted){delete r.crops;js=JSON.stringify(RESULTS);if(js.length<3000000)break;}}}catch(e){}
+  store.set('omr_results',RESULTS);}
 // नाम न हो तो मोबाइल नंबर, वह भी न हो तो रोल नंबर
+function nameLooksOdd(n){n=n||'';if(!n)return true;if(/\?/.test(n))return true;const l=n.replace(/[^A-Z]/g,'');const v=(l.match(/[AEIOU]/g)||[]).length;
+  return (l.length>3&&v/l.length<0.2)||/[BCDFGHJKLMNPQRSTVWXZ]{5,}/.test(l.replace(/SHR|CHH|KSH/g,'X'));}
+function isDoubt(r){return !r.nameEdited&&(r.nameDoubt||r.noMarks||nameLooksOdd(r.name));}
 function dispName(r){const mob=(r.mobile||'').replace(/[^0-9]/g,'');
   if(r.name)return r.name;if(mob.length>=6)return '📞 '+r.mobile;if(r.roll&&/[0-9]/.test(r.roll))return 'रोल '+r.roll;return '(नाम नहीं)';}
 function dispNamePlain(r){return dispName(r).replace('📞 ','मो. ');}
@@ -1525,9 +1575,9 @@ async function processOne(file){
 function currentTest(){return TESTS.find(t=>t.id===$('#checkTest').value)||null;}
 function addResult(res,fname,replaceId){
   const test=currentTest();
-  const rec={id:replaceId||uid(),testId:test?test.id:'',file:fname||'',time:Date.now(),name:res.name,roll:res.roll,mobile:res.mobile,booklet:res.booklet,subject:res.subject,centre:res.centre,
+  const rec={id:replaceId||uid(),testId:test?test.id:'',file:fname||'',time:Date.now(),crops:res.crops,nameDoubt:res.nameDoubt,noMarks:!res.anyMarked,nameRead:res.name,mobileRead:res.mobile,name:res.name,roll:res.roll,mobile:res.mobile,booklet:res.booklet,subject:res.subject,centre:res.centre,
     det:res.answers.map(a=>({sel:a.sel,st:a.st,f:a.f,other:a.other||''})),ov:{},warnings:res.warnings,align:Math.round(res.align*100)};
-  if(replaceId){const old=RESULTS.find(r=>r.id===replaceId);if(old&&old.ov)rec.ov=Object.assign({},old.ov);}
+  if(replaceId){const old=RESULTS.find(r=>r.id===replaceId);if(old&&old.ov)rec.ov=Object.assign({},old.ov);if(old&&old.nameEdited){rec.name=old.name;rec.mobile=old.mobile;rec.roll=old.roll;rec.nameEdited=true;rec.nameDoubt=false;}}
   recalcStored(rec,test);
   if(test){const i=RESULTS.findIndex(r=>r.id===rec.id);if(i>=0)RESULTS[i]=rec;else RESULTS.push(rec);saveResults();}
   SESSION[rec.id]={res,test};
@@ -1555,7 +1605,8 @@ function renderResultCard(rec,replaceId){
   const card=el('div',{class:'card',id:'rc-'+rec.id});
   const head=el('div',{class:'rhead'});
   const who=el('div',{class:'who'});
-  who.append(el('div',{class:'nm'},dispName(rec)));
+  const nmRow=el('div',{class:'nm'},dispName(rec)+' ');nmRow.append(el('button',{class:'btn small',style:'vertical-align:middle',onclick:()=>openNameEdit(RESULTS.find(x=>x.id===rec.id)||rec)},'✏️ नाम बदलें'));who.append(nmRow);
+  if(rec.nameDoubt&&rec.crops&&rec.crops.name){const d=el('div',{class:'msg warn',style:'margin-top:6px'},'नाम ठीक से नहीं पढ़ा गया — OMR पर लिखा नाम:');d.append(el('img',{class:'cropimg',src:rec.crops.name,alt:'लिखा नाम',style:'margin-top:6px'}));who.append(d);}
   who.append(el('div',{class:'kv',html:'रोल: <b>'+esc(rec.roll||'—')+'</b> · मोबाइल: <b>'+esc(rec.mobile||'—')+'</b>'}));
   who.append(el('div',{class:'kv',html:'श्रृंखला: <b>'+esc(rec.booklet||'—')+'</b> · विषय: <b>'+esc(rec.subject||'—')+'</b> · केंद्र: <b>'+esc(rec.centre||'—')+'</b>'}));
   who.append(el('div',{class:'kv',html:(test?'टेस्ट: <b>'+esc(test.name)+'</b> · ':'')+'फ़ाइल: '+esc(rec.file||'')}));
@@ -1622,9 +1673,10 @@ function renderSummary(){
   const rows=t?RESULTS.filter(r=>r.testId===t.id).sort((a,b)=>b.score-a.score||b.correct-a.correct):[];
   if(!rows.length){box.innerHTML='<div class="card note">अभी कोई शीट नहीं जाँची गई। कदम 1 और 2 पूरे करते ही यहाँ हर छात्र का नाम और अंक रैंक के साथ दिखेंगे।</div>';return;}
   let rank=0,prev=null;const tr=rows.map((r,i)=>{if(r.score!==prev){rank=i+1;prev=r.score;}
-    return '<tr class="click" data-id="'+r.id+'"><td>'+rank+'</td><td><b>'+esc(dispName(r))+'</b>'+(r.roll?'<br><span class="muted" style="font-size:12px">रोल '+esc(r.roll)+'</span>':'')+'</td><td class="num"><b style="font-size:17px;color:var(--brand)">'+fmt(r.score)+'</b><span class="muted" style="font-size:12px"> / '+fmt(r.max)+'</span></td><td class="num">'+r.correct+' / '+r.wrong+' / '+r.blank+'</td></tr>';}).join('');
-  box.innerHTML='<div class="card"><div class="btns" style="margin:0 0 10px"><button class="btn primary" id="pdfBtn1">📄 पूरी सूची की PDF डाउनलोड करें</button></div><div class="note" style="margin-bottom:6px">'+esc(t.name)+' · '+rows.length+' छात्र</div><div class="tablewrap"><table class="rank"><tr><th>रैंक</th><th>नाम</th><th class="num">अंक</th><th class="num">सही / ग़लत / छोड़े</th></tr>'+tr+'</table></div><div class="note" style="margin-top:6px">किसी नाम पर टैप करें तो उसकी पूरी शीट दिखेगी।</div></div>';
-  const pb=box.querySelector('#pdfBtn1');if(pb)pb.addEventListener('click',()=>makeResultPdf(t).catch(e=>{console.error(e);uiAlert('PDF नहीं बन पाई। दोबारा कोशिश करें।');}));
+    return '<tr class="click" data-id="'+r.id+'"><td>'+rank+'</td><td><b>'+(isDoubt(r)?'⚠️ ':'')+esc(dispName(r))+'</b> <button class="editbtn" data-edit="'+r.id+'" title="नाम बदलें">✏️</button>'+(r.roll?'<br><span class="muted" style="font-size:12px">रोल '+esc(r.roll)+'</span>':'')+'</td><td class="num"><b style="font-size:17px;color:var(--brand)">'+fmt(r.score)+'</b><span class="muted" style="font-size:12px"> / '+fmt(r.max)+'</span></td><td class="num">'+r.correct+' / '+r.wrong+' / '+r.blank+'</td></tr>';}).join('');
+  box.innerHTML='<div class="card"><div class="btns" style="margin:0 0 10px"><button class="btn primary" id="pdfBtn1">📄 नाम जाँचें और PDF डाउनलोड करें</button></div><div class="note" style="margin-bottom:6px">'+esc(t.name)+' · '+rows.length+' छात्र</div><div class="tablewrap"><table class="rank"><tr><th>रैंक</th><th>नाम</th><th class="num">अंक</th><th class="num">सही / ग़लत / छोड़े</th></tr>'+tr+'</table></div><div class="note" style="margin-top:6px">नाम पर टैप = पूरी शीट · ✏️ = नाम बदलें · ⚠️ = नाम संदिग्ध</div></div>';
+  const pb=box.querySelector('#pdfBtn1');if(pb)pb.addEventListener('click',()=>openReview(t));
+  box.querySelectorAll('button[data-edit]').forEach(b=>b.addEventListener('click',ev=>{ev.stopPropagation();const r=RESULTS.find(x=>x.id===b.dataset.edit);if(r)openNameEdit(r);}));
   box.querySelectorAll('tr[data-id]').forEach(el2=>el2.addEventListener('click',()=>{const r=RESULTS.find(x=>x.id===el2.dataset.id);if(!r)return;renderResultCard(r);const c=document.getElementById('rc-'+r.id);if(c)c.scrollIntoView({behavior:'smooth'});}));
 }
 function copySummary(rec){
@@ -1636,6 +1688,53 @@ function copySummary(rec){
 function printCard(card){const sec=$('#tab-check');const others=[...$('#results').children].filter(c=>c!==card);others.forEach(c=>c.classList.add('noprint'));const first=sec.querySelector('.card');first.classList.add('noprint');sec.classList.add('printing');
   const det=card.querySelector('details');const was=det?det.open:false;if(det&&!was){det.open=true;}
   setTimeout(()=>{window.print();sec.classList.remove('printing');others.forEach(c=>c.classList.remove('noprint'));first.classList.remove('noprint');if(det)det.open=was;},250);}
+
+
+/* ---------------- नाम सुधारना ---------------- */
+function applyNameEdit(r,name,mob,roll){
+  const t=TESTS.find(x=>x.id===r.testId);
+  r.name=(name||'').trim().replace(/\s+/g,' ');if(mob!==undefined)r.mobile=(mob||'').trim();if(roll!==undefined)r.roll=(roll||'').trim();
+  r.nameEdited=true;r.nameDoubt=false;
+  const i=RESULTS.findIndex(x=>x.id===r.id);if(i>=0)RESULTS[i]=r;saveResults();
+  if(document.getElementById('rc-'+r.id))renderResultCard(r);
+  renderSummary();if($('#tab-list').classList.contains('on'))renderList();
+}
+function cropsHtml(r){const c=r.crops||{};let h='';
+  if(c.name)h+='<div class="note" style="margin-top:6px">OMR पर लिखा नाम:</div><img class="cropimg" alt="लिखा नाम" src="'+c.name+'">';
+  if(c.mobile)h+='<div class="note" style="margin-top:6px">OMR पर लिखा मोबाइल:</div><img class="cropimg" alt="लिखा मोबाइल" src="'+c.mobile+'" style="max-width:60%">';
+  if(!h)h='<div class="note">(इस शीट की फ़ोटो अब उपलब्ध नहीं — बस सही नाम लिख दें)</div>';return h;}
+let nmRec=null;
+function openNameEdit(r){
+  nmRec=r;$('#nmInfo').textContent='मशीन ने पढ़ा: '+(r.nameRead!==undefined?(r.nameRead||'(कुछ नहीं)'):(r.name||'(कुछ नहीं)'))+(r.mobileRead?' · मोबाइल: '+r.mobileRead:'');
+  $('#nmCrops').innerHTML=cropsHtml(r);$('#nmName').value=r.name||'';$('#nmMob').value=r.mobile||'';$('#nmRoll').value=r.roll||'';
+  $('#nameModal').classList.add('on');setTimeout(()=>{try{$('#nmName').focus();}catch(e){}},80);
+}
+$('#nmCancel').addEventListener('click',()=>{$('#nameModal').classList.remove('on');nmRec=null;});
+$('#nmSave').addEventListener('click',()=>{if(!nmRec)return;applyNameEdit(nmRec,$('#nmName').value,$('#nmMob').value,$('#nmRoll').value);$('#nameModal').classList.remove('on');nmRec=null;});
+$('#nmName').addEventListener('keydown',e=>{if(e.key==='Enter')$('#nmSave').click();});
+// PDF से पहले जाँच-सूची
+let rvTest=null;
+function openReview(test){
+  const rows=rankedRows(test);if(!rows.length){uiAlert('इस टेस्ट का अभी कोई परिणाम नहीं है।');return;}
+  rvTest=test;const list=$('#rvList');list.innerHTML='';
+  const nd=rows.filter(r=>isDoubt(RESULTS.find(x=>x.id===r.id)||r)).length;
+  if(nd)list.append(el('div',{class:'msg warn'},nd+' छात्रों का नाम संदिग्ध या ख़ाली है (पीले वाले)।'));
+  rows.forEach(r0=>{const r=RESULTS.find(x=>x.id===r0.id);if(!r)return;
+    const bad=isDoubt(r);
+    const row=el('div',{class:'rvrow'+(bad?' doubt':'')});
+    row.append(el('div',{class:'rk'},String(r0.rank)));
+    row.append(el('div',{style:'min-width:0;font-size:13px;color:var(--muted)'},(r.noMarks?'⚠️ कोई उत्तर नहीं मिला · ':'')+(r.mobile?'मो. '+r.mobile:'')+(r.roll?' · रोल '+r.roll:'')));
+    row.append(el('div',{class:'sc'},fmt(r.score)));
+    const imgWrap=el('div',{class:'full'});if(r.crops&&r.crops.name){const im=el('img',{alt:'OMR पर लिखा नाम',src:r.crops.name});imgWrap.append(im);}row.append(imgWrap);
+    const inp=el('input',{type:'text',value:r.name||'',placeholder:'नाम लिखें'+(r.mobile?' (अभी मोबाइल '+r.mobile+' दिखेगा)':''),'aria-label':'नाम'});
+    inp.addEventListener('change',()=>{applyNameEdit(r,inp.value);row.classList.remove('doubt');});
+    const wrap=el('div',{class:'full'});wrap.append(inp);row.append(wrap);
+    list.append(row);});
+  $('#reviewModal').classList.add('on');
+}
+$('#rvClose').addEventListener('click',()=>{$('#reviewModal').classList.remove('on');});
+$('#rvPdf').addEventListener('click',()=>{if(document.activeElement&&document.activeElement.tagName==='INPUT')document.activeElement.blur();
+  setTimeout(()=>{if(!rvTest)return;$('#reviewModal').classList.remove('on');makeResultPdf(rvTest).catch(e=>{console.error(e);uiAlert('PDF नहीं बन पाई। दोबारा कोशिश करें।');});},60);});
 
 /* ---------------- उत्तर सुधार ---------------- */
 let editCtx=null;
@@ -1724,7 +1823,7 @@ function fillTestSelectsListOnly(){const sel=$('#listTest');const cur=sel.value;
   let last=null;try{last=localStorage.getItem('omr_lasttest');}catch(e){}
   if(cur&&TESTS.some(t=>t.id===cur))sel.value=cur;else if(last&&TESTS.some(t=>t.id===last))sel.value=last;}
 $('#listTest').addEventListener('change',renderList);
-$('#pdfBtn2').addEventListener('click',()=>{const test=TESTS.find(t=>t.id===$('#listTest').value);if(!test){uiAlert('पहले टेस्ट चुनें।');return;}makeResultPdf(test).catch(e=>{console.error(e);uiAlert('PDF नहीं बन पाई। दोबारा कोशिश करें।');});});
+$('#pdfBtn2').addEventListener('click',()=>{const test=TESTS.find(t=>t.id===$('#listTest').value);if(!test){uiAlert('पहले टेस्ट चुनें।');return;}openReview(test);});
 $('#copyListBtn').addEventListener('click',()=>{
   const id=$('#listTest').value;const test=TESTS.find(t=>t.id===id);if(!test){uiAlert('पहले टेस्ट चुनें।');return;}
   const rows=RESULTS.filter(r=>r.testId===id).sort((a,b)=>b.score-a.score||b.correct-a.correct);
