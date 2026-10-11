@@ -2,294 +2,775 @@
 <html lang="hi">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex">
-<meta name="description" content="आदित्य चौहान — प्रतियोगी परीक्षाओं के लिए हिंदी व English कंटेंट डेवलपर और शिक्षक। काम के नमूने और रिज़्यूमे।">
-<title>आदित्य चौहान पोर्टफ़ोलियो</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Mukta:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<title>आदित्य चौहान | हिंदी कंटेंट राइटर और शिक्षक</title>
+<meta name="description" content="UPSC, UPPCS और दूसरी प्रतियोगी परीक्षाओं के लिए नोट्स, किताबें, टेस्ट सीरीज़ और करेंट अफ़ेयर्स। असली काम के पन्ने, नमूना प्रश्न, पढ़ाने का वीडियो और रिज़्यूमे।">
+<meta property="og:type" content="website">
+<meta property="og:title" content="आदित्य चौहान | हिंदी कंटेंट राइटर और शिक्षक">
+<meta property="og:description" content="नोट्स, किताबें, टेस्ट सीरीज़ और करेंट अफ़ेयर्स के असली नमूने, पन्ना-दर-पन्ना।">
+<meta property="og:url" content="https://bodhiclasses.org/portfolio/">
+<meta property="og:image" content="https://bodhiclasses.org/portfolio/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#13203f">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2313203f'/%3E%3Ctext x='32' y='45' font-size='38' text-anchor='middle' fill='%23f3a83b' font-family='serif'%3E%E0%A4%86%3C/text%3E%3C/svg%3E">
+<link rel="preload" href="fonts/rozha-one-devanagari-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/mukta-devanagari-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-/* Layout: an exam-paper portfolio — OMR-bubble markers, question-paper rules, work shown as real pages */
+@font-face{font-family:"Rozha One";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/rozha-one-devanagari-400-normal.woff2) format("woff2");unicode-range:U+0900-097F,U+1CD0-1CF9,U+200C-200D,U+20A8,U+20B9,U+25CC,U+A830-A839,U+A8E0-A8FF}
+@font-face{font-family:"Rozha One";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/rozha-one-latin-400-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2212}
+@font-face{font-family:"Mukta";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/mukta-devanagari-400-normal.woff2) format("woff2");unicode-range:U+0900-097F,U+1CD0-1CF9,U+200C-200D,U+20A8,U+20B9,U+25CC,U+A830-A839,U+A8E0-A8FF}
+@font-face{font-family:"Mukta";font-style:normal;font-weight:600;font-display:swap;src:url(fonts/mukta-devanagari-600-normal.woff2) format("woff2");unicode-range:U+0900-097F,U+1CD0-1CF9,U+200C-200D,U+20A8,U+20B9,U+25CC,U+A830-A839,U+A8E0-A8FF}
+@font-face{font-family:"Mukta";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/mukta-latin-400-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2212}
+@font-face{font-family:"Mukta";font-style:normal;font-weight:600;font-display:swap;src:url(fonts/mukta-latin-600-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2212}
+
 :root{
-  --paper:#f5f6f9; --sheet:#ffffff; --ink:#18223a; --muted:#59627a; --line:#d9dde8;
-  --omr:#c8324b; --omr-soft:#fbe9ec; --navy:#23407a; --navy-soft:#e8edf7;
-  --f-display:"Tiro Devanagari Hindi", "Noto Serif Devanagari", Georgia, serif;
-  --f-body:"Mukta", "Noto Sans Devanagari", system-ui, sans-serif;
-  --f-mono:"IBM Plex Mono", ui-monospace, monospace;
+  --ink:#13203f; --ink-2:#1c2c55; --ink-3:#273a6b;
+  --gold:#f3a83b; --gold-deep:#a8640a; --gold-soft:#fdf1dc;
+  --paper:#f5f6fa; --sheet:#ffffff; --text:#172036; --muted:#58617c; --line:#dfe3ee;
+  --ok:#17804f; --ok-soft:#e5f5ec; --bad:#c23b33; --bad-soft:#fbe9e7;
+  --f-head:"Rozha One","Noto Serif Devanagari",Georgia,serif;
+  --f-body:"Mukta","Noto Sans Devanagari",system-ui,sans-serif;
+  --r:10px;
   color-scheme:light;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --paper:#11151f; --sheet:#181e2b; --ink:#e7eaf2; --muted:#a3abc0; --line:#2c3446;
-  --omr:#ff7a8e; --omr-soft:#3a1d25; --navy:#9db6ec; --navy-soft:#1f2a42; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --paper:#11151f; --sheet:#181e2b; --ink:#e7eaf2; --muted:#a3abc0; --line:#2c3446;
-  --omr:#ff7a8e; --omr-soft:#3a1d25; --navy:#9db6ec; --navy-soft:#1f2a42; color-scheme:dark}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;margin:0}
-.wrap{max-width:1080px;margin:0 auto;padding-inline:20px;padding-block:28px 56px}
-h1,h2,h3{font-family:var(--f-display);font-weight:400;text-wrap:balance;margin:0}
-a{color:var(--navy)}
-a:focus-visible,button:focus-visible{outline:2px solid var(--omr);outline-offset:3px}
-.eyebrow{font-family:var(--f-mono);font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--omr)}
-.en{display:block;font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;margin-top:2px}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--text);font-family:var(--f-body);font-size:18px;line-height:1.65}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:4px}
+h1,h2,h3{font-family:var(--f-head);font-weight:400;margin:0;line-height:1.2;text-wrap:balance}
+p{margin:0}
+.wrap{max-width:1140px;margin:0 auto;padding-inline:20px}
 
-/* hero */
-.hero{display:grid;grid-template-columns:1.35fr 1fr;gap:28px;align-items:end;border-bottom:2px solid var(--ink);padding-bottom:26px}
-.hero h1{font-size:clamp(40px,7vw,68px);line-height:1.05;margin-top:8px}
-.hero .role{font-size:20px;font-weight:600;margin-top:12px;max-width:34ch}
-.hero p{color:var(--muted);margin:12px 0 0;max-width:58ch}
-.contact{background:var(--sheet);border:1px solid var(--line);padding:18px;display:grid;gap:10px;min-width:0}
-.crow{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
-.crow b{font-family:var(--f-mono);font-size:15px;font-weight:500;user-select:all;word-break:break-all}
-.crow small{color:var(--muted);font-size:13px}
-.copy{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:3px 10px;cursor:pointer}
-.copy:hover{border-color:var(--omr)}
-.avail{font-size:14px;color:var(--muted);border-top:1px dashed var(--line);padding-top:10px}
+/* बटन */
+.btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:600;font-size:17px;line-height:1;padding:15px 22px;border-radius:999px;border:2px solid transparent;cursor:pointer;transition:background .15s,border-color .15s,transform .15s}
+.btn svg{width:20px;height:20px;flex:none}
+.btn-gold{background:var(--gold);color:#1d1404}
+.btn-gold:hover{background:#ffbb55}
+.btn-line{border-color:rgba(255,255,255,.35);color:#fff}
+.btn-line:hover{border-color:#fff}
+.btn-ink{background:var(--ink);color:#fff}
+.btn-ink:hover{background:var(--ink-3)}
+.btn-ghost{border-color:var(--line);background:var(--sheet);color:var(--text)}
+.btn-ghost:hover{border-color:var(--ink)}
+.btn:active{transform:translateY(1px)}
 
-/* OMR stats */
-.omr{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);background:var(--sheet);margin-top:26px}
-.q{padding:14px 16px;border-right:1px solid var(--line);min-width:0}
-.q:last-child{border-right:0}
-.q .num{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
-.bub{display:flex;gap:6px;margin:8px 0 6px}
-.bub i{width:18px;height:18px;border:1.5px solid var(--omr);border-radius:50%;display:inline-block}
-.bub i.on{background:var(--omr)}
-.q strong{font-family:var(--f-display);font-size:30px;font-weight:400;line-height:1.1;display:block}
-.q span{font-size:14px;color:var(--muted);line-height:1.35;display:block}
+/* ऊपर की पट्टी */
+.top{position:sticky;top:0;z-index:30;background:rgba(19,32,63,.94);backdrop-filter:saturate(140%) blur(8px);-webkit-backdrop-filter:saturate(140%) blur(8px);color:#fff;border-bottom:1px solid rgba(255,255,255,.08)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:60px}
+.brand{font-family:var(--f-head);font-size:22px;text-decoration:none;color:#fff;white-space:nowrap}
+.nav{display:flex;gap:26px;font-size:16px}
+.nav a{text-decoration:none;color:rgba(255,255,255,.78)}
+.nav a:hover{color:#fff}
+.top .btn{padding:10px 16px;font-size:15px}
+.cvlink{display:none}
 
-section{margin-top:56px}
-.shead{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:22px}
-.shead h2{font-size:clamp(28px,4vw,38px)}
-.shead p{margin:0;color:var(--muted);max-width:46ch;font-size:15px}
+/* मुख्य भाग */
+.hero{background:var(--ink);color:#fff;position:relative;overflow:hidden;isolation:isolate}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:
+  repeating-linear-gradient(180deg,transparent 0 37px,rgba(255,255,255,.045) 37px 38px),
+  radial-gradient(900px 520px at 85% 40%,rgba(243,168,59,.16),transparent 60%)}
+.hero::after{content:"";position:absolute;left:calc(50% - 584px);top:0;bottom:0;width:2px;background:rgba(214,86,86,.32);z-index:-1}
+@media (max-width:1219px){.hero::after{display:none}}
+.hero .hgrid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:40px;align-items:center;padding-block:64px 40px}
+.hi-name{font-size:19px;color:var(--gold);font-weight:600}
+.hero h1{font-size:clamp(44px,5.4vw,76px);line-height:1.1;margin-top:12px;letter-spacing:-.005em}
+.hero .lead{font-size:20px;color:rgba(255,255,255,.82);margin-top:22px;max-width:36em}
+.hero .acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.hero .direct{margin-top:18px;font-size:16px;color:rgba(255,255,255,.7);display:flex;flex-wrap:wrap;gap:6px 22px}
+.hero .direct a{color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.3)}
+.hero .direct a:hover{border-color:var(--gold)}
 
-/* work */
-.works{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-.work{background:var(--sheet);border:1px solid var(--line);display:flex;flex-direction:column;min-width:0}
-.work button.cover{all:unset;cursor:zoom-in;display:block;background:var(--navy-soft);aspect-ratio:3/4;overflow:hidden;position:relative;max-width:100%}
-.work button.cover.wide{aspect-ratio:4/3}
-.work img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;transition:transform .3s}
-.work button.cover:hover img{transform:scale(1.02)}
-.pages{position:absolute;right:10px;bottom:10px;background:var(--sheet);color:var(--ink);font-family:var(--f-mono);font-size:12px;padding:3px 8px;border:1px solid var(--line)}
-.wbody{padding:14px 16px 16px;display:grid;gap:6px}
-.wbody h3{font-size:21px;line-height:1.3}
-.tags{display:flex;flex-wrap:wrap;gap:6px}
-.tag{font-size:12.5px;border:1px solid var(--line);padding:1px 8px;color:var(--muted)}
-.tag.b{border-color:var(--omr);color:var(--omr)}
-.wbody p{margin:0;font-size:15px;color:var(--muted)}
-.open{font:inherit;font-size:14px;font-weight:600;background:none;border:0;color:var(--navy);padding:0;cursor:pointer;justify-self:start;text-decoration:underline;text-underline-offset:3px}
-.acts{display:flex;gap:18px;flex-wrap:wrap}
-.fullnote{margin-top:22px;background:var(--omr-soft);border-left:3px solid var(--omr);padding:14px 18px;font-size:16px}
+/* किताबों का पंखा */
+.fan{position:relative;height:clamp(380px,44vw,560px);perspective:1400px}
+.fan button{all:unset;position:absolute;left:50%;top:50%;width:clamp(160px,18.5vw,250px);aspect-ratio:560/793;cursor:pointer;border-radius:4px 8px 8px 4px;
+  box-shadow:0 1px 0 rgba(255,255,255,.12) inset,0 24px 50px -12px rgba(0,0,0,.6),0 8px 16px -8px rgba(0,0,0,.5);
+  transform:translate(-50%,-50%) translate(var(--x),var(--y)) rotate(var(--r));transition:transform .55s cubic-bezier(.2,.8,.2,1)}
+.fan button img{width:100%;height:100%;object-fit:cover;border-radius:inherit}
+.fan button::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(90deg,rgba(0,0,0,.28),rgba(255,255,255,.08) 4%,transparent 9%)}
+.fan button:hover,.fan button:focus-visible{transform:translate(-50%,-50%) translate(var(--x),calc(var(--y) - 18px)) rotate(var(--r)) scale(1.04);z-index:9}
+.fan .c1{--x:-46%;--y:18px;--r:-14deg;z-index:1}
+.fan .c2{--x:-24%;--y:-4px;--r:-7deg;z-index:2}
+.fan .c3{--x:0%;--y:-18px;--r:0deg;z-index:5}
+.fan .c4{--x:24%;--y:-4px;--r:7deg;z-index:2}
+.fan .c5{--x:46%;--y:18px;--r:14deg;z-index:1}
+.fan .c1,.fan .c5{--x2:0}
+.fan-note{position:absolute;bottom:0;left:0;right:0;text-align:center;font-size:15px;color:rgba(255,255,255,.6)}
+@media (prefers-reduced-motion:no-preference){
+  .js .fan:not(.open) button{transform:translate(-50%,-50%) rotate(0deg)}
+}
 
-/* live */
-.live{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
-.lk{display:block;background:var(--sheet);border:1px solid var(--line);padding:16px;text-decoration:none;color:var(--ink);min-width:0}
-.lk:hover{border-color:var(--navy)}
-.lk b{font-size:17px;display:block}
-.lk span{font-family:var(--f-mono);font-size:12.5px;color:var(--navy);word-break:break-all}
-.lk p{margin:6px 0 0;font-size:14px;color:var(--muted)}
+/* प्रमाण */
+.proof ul{border-top:1px solid rgba(255,255,255,.12);list-style:none;margin:0;padding:26px 0 34px;display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.proof li{padding:4px 22px;border-left:1px solid rgba(255,255,255,.14)}
+.proof li:first-child{border-left:0;padding-left:0}
+.proof b{display:block;font-family:var(--f-head);font-weight:400;font-size:38px;line-height:1.1;color:var(--gold)}
+.proof span{display:block;font-size:16px;color:rgba(255,255,255,.78);line-height:1.45;margin-top:4px}
 
-/* services */
-.svc{display:grid;grid-template-columns:1fr 1fr;gap:28px}
-.svc ol{margin:0;padding-left:22px}
-.svc li{margin-bottom:6px}
+/* खंड */
+.sec{padding-block:84px 0}
+.sec.alt{background:var(--sheet);margin-top:84px;padding-block:72px}
+.sec.alt+.sec{padding-top:72px}
+.sec.dark{background:var(--ink);color:#fff;margin-top:84px;padding-block:72px}
+.sec.dark+.sec{padding-top:72px}
+.sec.dark .sec-head h2{color:#fff}
+.sec.dark .sec-head p{color:rgba(255,255,255,.75)}
+.sec.dark .links a{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);color:#fff}
+.sec.dark .links a:hover{border-color:var(--gold)}
+.sec.dark .links span{color:rgba(255,255,255,.65)}
+.sec-head{max-width:760px;margin-bottom:30px}
+.sec-head h2{font-size:clamp(32px,4.2vw,50px);color:var(--ink)}
+.sec-head p{font-size:19px;color:var(--muted);margin-top:10px}
+
+/* किताबों की अलमारी और पढ़ने की मेज़ */
+.shelf{display:flex;gap:14px;overflow-x:auto;padding:18px 6px 18px;margin:0 -6px;scroll-snap-type:x proximity;scrollbar-width:thin}
+.shelf button{all:unset;flex:0 0 auto;scroll-snap-align:start;cursor:pointer;width:118px;text-align:center}
+.shelf .cv{display:block;height:156px;display:flex;align-items:flex-end;justify-content:center}
+.shelf img{max-height:156px;width:auto;max-width:118px;border-radius:3px;box-shadow:0 10px 22px -10px rgba(19,32,63,.55);transition:transform .2s}
+.shelf .nm{display:block;font-size:14px;line-height:1.35;color:var(--muted);margin-top:10px;font-weight:600}
+.shelf button[aria-selected="true"] img{transform:translateY(-8px);outline:3px solid var(--gold);outline-offset:3px}
+.shelf button[aria-selected="true"] .nm{color:var(--ink)}
+.shelf button:hover img{transform:translateY(-6px)}
+
+.desk{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:40px;background:var(--sheet);border:1px solid var(--line);border-radius:16px;padding:28px;margin-top:6px;box-shadow:0 30px 60px -40px rgba(19,32,63,.35)}
+.stage{position:relative;min-width:0}
+.track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;border-radius:8px;background:#eef1f7}
+.track::-webkit-scrollbar{display:none}
+.track figure{margin:0;flex:0 0 100%;scroll-snap-align:center;aspect-ratio:1100/1557;display:flex;align-items:center;justify-content:center;padding:14px}
+.desk.wide .track figure{aspect-ratio:16/10}
+.track button{all:unset;cursor:zoom-in;display:block;height:100%;max-width:100%}
+.track img{height:100%;width:auto;max-width:100%;object-fit:contain;background:#fff;box-shadow:0 6px 20px -8px rgba(19,32,63,.4)}
+.desk.wide .track img{height:auto;width:100%}
+.pager{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px}
+.pager .count{font-size:16px;color:var(--muted)}
+.pager .pn{display:flex;gap:8px}
+.round{all:unset;cursor:pointer;width:46px;height:46px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;background:var(--sheet)}
+.round:hover{border-color:var(--ink)}
+.round svg{width:20px;height:20px}
+.track button{position:relative}
+.zoomhint{position:absolute;right:10px;bottom:10px;background:rgba(19,32,63,.88);color:#fff;font-size:13px;font-weight:600;padding:5px 11px;border-radius:999px;pointer-events:none}
+.minis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:auto;padding-top:8px}
+.minis button{all:unset;cursor:pointer;display:block;border-radius:4px;overflow:hidden;border:1px solid var(--line);background:#fff;aspect-ratio:1100/1557}
+.desk.wide .minis button{aspect-ratio:16/9}
+.minis img{width:100%;height:100%;object-fit:cover;object-position:top}
+.minis button[aria-current="true"]{outline:3px solid var(--gold);outline-offset:2px}
+.minis button:hover{border-color:var(--ink)}
+.info{min-width:0;display:flex;flex-direction:column;gap:16px;padding-top:6px}
+.info .kind{font-size:16px;font-weight:600;color:var(--gold-deep)}
+.info h3{font-size:clamp(28px,3vw,38px);color:var(--ink)}
+.info .desc{font-size:19px;color:#2c3550}
+.facts{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;margin:4px 0 0;font-size:17px}
+.facts dt{color:var(--muted)}
+.facts dd{margin:0;font-weight:600}
+.info .acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.info .btn{font-size:16px;padding:13px 18px}
+.more{margin-top:26px;font-size:18px;color:var(--muted);max-width:60em}
+.more a{color:var(--ink);font-weight:600}
+
+/* दो भाषाएँ */
+.duo{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:48px;align-items:center}
+.cmp{position:relative;border-radius:10px;overflow:hidden;background:#fff;box-shadow:0 30px 60px -36px rgba(19,32,63,.55);border:1px solid var(--line);aspect-ratio:1100/1000;--x:52%;touch-action:pan-y;user-select:none}
+.cmp img{position:absolute;inset:0;width:100%;height:auto}
+.cmp .top-img{clip-path:inset(0 calc(100% - var(--x)) 0 0)}
+.cmp .bar{position:absolute;top:0;bottom:0;left:var(--x);width:3px;margin-left:-1.5px;background:var(--gold);pointer-events:none}
+.cmp .knob{position:absolute;top:50%;left:var(--x);width:52px;height:52px;margin:-26px 0 0 -26px;border-radius:50%;background:var(--gold);display:grid;place-items:center;box-shadow:0 6px 16px rgba(0,0,0,.25);pointer-events:none}
+.cmp .knob svg{width:26px;height:26px}
+.cmp input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+.cmp .lbl{position:absolute;bottom:12px;font-size:14px;font-weight:600;padding:4px 10px;border-radius:999px;background:rgba(19,32,63,.88);color:#fff;pointer-events:none}
+.cmp .l1{left:12px}.cmp .l2{right:12px}
+.duo ul{margin:22px 0 0;padding-left:22px;font-size:18px}
+.duo li{margin-bottom:8px}
+
+/* प्रश्न */
+.quiz{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:32px;align-items:start}
+.qcard{background:var(--sheet);border:1px solid var(--line);border-radius:16px;padding:26px 28px;box-shadow:0 30px 60px -44px rgba(19,32,63,.4)}
+.qbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.qtabs,.lang{display:inline-flex;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:3px}
+.qtabs button,.lang button{all:unset;cursor:pointer;padding:10px 16px;border-radius:999px;font-size:15px;font-weight:600;color:var(--muted)}
+.qtabs button[aria-pressed="true"],.lang button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.qtopic{font-size:15px;font-weight:600;color:var(--gold-deep)}
+.qtext{font-size:19px;margin-top:6px}
+.qtext ol{margin:10px 0;padding-left:26px}
+.qtext li{margin-bottom:6px}
+.opts{display:grid;gap:10px;margin-top:16px}
+.opt{all:unset;cursor:pointer;display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:2px solid var(--line);border-radius:12px;font-size:18px;line-height:1.45;background:var(--sheet)}
+.opt:hover{border-color:var(--ink-3)}
+.opt .k{flex:none;width:28px;height:28px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:14px;font-weight:600;color:var(--muted)}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.right .k{background:var(--ok);border-color:var(--ok);color:#fff}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.wrong .k{background:var(--bad);border-color:var(--bad);color:#fff}
+.opts.done .opt{cursor:default}
+.expl{margin-top:16px;border-left:4px solid var(--gold);background:var(--gold-soft);padding:14px 16px;border-radius:0 10px 10px 0;font-size:18px}
+.expl b{display:block;margin-bottom:4px}
+.qside{display:grid;gap:16px}
+.tile{display:block;text-decoration:none;background:var(--ink);color:#fff;border-radius:16px;padding:24px;position:relative;overflow:hidden}
+.tile h3{font-family:var(--f-body);font-weight:600;font-size:24px;line-height:1.3}
+.tile p{color:rgba(255,255,255,.78);margin-top:8px;font-size:17px}
+.tile .go{display:inline-flex;margin-top:16px;font-weight:600;color:var(--gold)}
+.tile:hover .go{text-decoration:underline;text-underline-offset:4px}
+.note{background:var(--sheet);border:1px solid var(--line);border-radius:16px;padding:20px 22px;font-size:17px;color:var(--muted)}
+.note b{color:var(--text)}
+
+/* वीडियो */
+.vid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:36px;align-items:center}
+.player{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:var(--ink) center/cover no-repeat;box-shadow:0 30px 60px -36px rgba(19,32,63,.6)}
+.player button{all:unset;cursor:pointer;position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(180deg,rgba(19,32,63,.1),rgba(19,32,63,.55))}
+.player .play{width:84px;height:84px;border-radius:50%;background:var(--gold);display:grid;place-items:center;box-shadow:0 10px 30px rgba(0,0,0,.35);transition:transform .2s}
+.player button:hover .play{transform:scale(1.06)}
+.player .play svg{width:34px;height:34px;margin-left:5px}
+.player .cap{position:absolute;left:18px;bottom:14px;color:#fff;font-weight:600;font-size:16px;text-shadow:0 1px 6px rgba(0,0,0,.5)}
+.player iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.sec.dark .player{background-color:var(--ink-2);outline:1px solid rgba(255,255,255,.14)}
+.links{display:grid;gap:10px;margin-top:20px}
+.links a{display:flex;justify-content:space-between;align-items:center;gap:12px;text-decoration:none;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--sheet)}
+.links a:hover{border-color:var(--ink)}
+.links b{font-weight:600}
+.links span{color:var(--muted);font-size:15px}
+
+/* सेवाएँ */
+.svc-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.svc-list li{display:grid;grid-template-columns:56px 1fr;gap:16px;align-items:center;background:var(--sheet);border:1px solid var(--line);border-radius:14px;padding:12px 16px 12px 12px}
+.svc-list img{width:56px;height:72px;object-fit:cover;object-position:top;border-radius:3px;box-shadow:0 6px 14px -8px rgba(19,32,63,.6)}
+.svc-list img.w{object-position:left top}
+.svc-list .ic{width:56px;height:72px;border-radius:6px;background:var(--ink);color:var(--gold);display:grid;place-items:center}
+.svc-list .ic svg{width:28px;height:28px}
+.svc-list b{display:block;font-size:18px;line-height:1.4;color:var(--ink)}
+.svc-list span{display:block;color:var(--muted);font-size:16px;line-height:1.45;margin-top:2px}
+.svc-list li:last-child:nth-child(odd){grid-column:1/-1}
+.vow{margin-top:22px;font-size:17px;color:var(--muted);background:var(--gold-soft);border-left:4px solid var(--gold);border-radius:0 12px 12px 0;padding:14px 18px}
+.vow b{color:var(--text)}
+.tags2{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:30px}
+.tags2 h3{font-family:var(--f-body);font-weight:600;font-size:18px;color:var(--ink);margin-bottom:12px}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{border:1px solid var(--line);background:var(--sheet);padding:4px 12px;font-size:15px}
-.svc h3{font-size:22px;margin-bottom:12px}
+.chip{font-size:16px;padding:6px 14px;border-radius:999px;background:var(--sheet);border:1px solid var(--line)}
 
-/* cv */
-.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
-.tab{font:inherit;font-size:15px;border:1px solid var(--line);background:var(--sheet);color:var(--ink);padding:6px 14px;cursor:pointer}
-.tab[aria-selected="true"]{border-color:var(--omr);color:var(--omr);font-weight:600}
-.cvpages{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.cvpages button{all:unset;cursor:zoom-in;border:1px solid var(--line);background:#fff;display:block;max-width:100%}
-.cvpages img{display:block;width:100%}
+.steps{list-style:none;margin:40px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:0;counter-reset:st;position:relative}
+.steps li{counter-increment:st;padding:0 18px 0 0;position:relative}
+.steps li::before{content:counter(st);display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--ink);color:var(--gold);font-family:var(--f-head);font-size:22px;position:relative;z-index:1}
+.steps li::after{content:"";position:absolute;top:22px;left:44px;right:0;height:2px;background:var(--line)}
+.steps li:last-child::after{display:none}
+.steps b{display:block;margin-top:12px;font-size:19px;color:var(--ink)}
+.steps p{color:var(--muted);font-size:16px;margin-top:2px;max-width:22em}
 
-.cvdl{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px}
-.dl{border:1px solid var(--navy);color:var(--navy);padding:6px 14px;text-decoration:none;font-size:15px;background:var(--sheet)}
-.dl:hover{background:var(--navy-soft)}
-/* process */
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);background:var(--sheet)}
-.step{padding:16px;border-right:1px solid var(--line);min-width:0}
-.step:last-child{border-right:0}
-.step .num{font-family:var(--f-mono);font-size:12px;color:var(--omr)}
-.step b{display:block;font-size:17px;margin:4px 0}
-.step p{margin:0;font-size:14.5px;color:var(--muted)}
+/* रिज़्यूमे */
+.cvs{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.cvc{background:var(--sheet);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.cvc .thumb{all:unset;cursor:zoom-in;display:block;border-radius:6px;overflow:hidden;border:1px solid var(--line);aspect-ratio:560/560;background:#fff}
+.cvc .thumb img{width:100%;height:auto}
+.cvc h3{font-family:var(--f-body);font-weight:600;font-size:21px;line-height:1.3;color:var(--ink)}
+.cvc p{font-size:16px;color:var(--muted);margin-top:-6px}
+.cvc .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
+.cvc .btn{font-size:15px;padding:11px 15px}
 
-footer{margin-top:56px;border-top:2px solid var(--ink);padding-top:18px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:15px}
-footer b{font-family:var(--f-mono);font-weight:500}
+/* अंतिम पुकार */
+.cta{margin-top:0;background:var(--ink);color:#fff;position:relative;overflow:hidden;isolation:isolate}
+.cta::before{content:"";position:absolute;inset:0;z-index:-1;background:repeating-linear-gradient(180deg,transparent 0 37px,rgba(255,255,255,.045) 37px 38px),radial-gradient(700px 400px at 15% 100%,rgba(243,168,59,.18),transparent 60%)}
+.cta .wrap{padding-block:72px;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:40px;align-items:center}
+.cta h2{font-size:clamp(32px,4.4vw,54px)}
+.cta p{color:rgba(255,255,255,.8);font-size:19px;margin-top:14px;max-width:34em}
+.cta .acts{display:grid;gap:12px}
+.cta .btn{justify-content:center}
+.foot{background:#0f1a34;color:rgba(255,255,255,.6);font-size:15px}
+.foot .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;padding-block:20px}
+.foot a{color:rgba(255,255,255,.8)}
 
-/* lightbox */
-.lb{position:fixed;inset:0;background:rgba(10,13,20,.92);z-index:50;display:flex;flex-direction:column;padding:calc(12px + env(safe-area-inset-top,0px)) 12px calc(12px + env(safe-area-inset-bottom,0px))}
-.lbbar{display:flex;justify-content:space-between;align-items:center;color:#fff;gap:10px;font-size:15px}
-.lbbar button{font:inherit;background:#fff;color:#18223a;border:0;padding:6px 14px;cursor:pointer}
-.lbimg{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;margin:10px 0;overflow:auto}
-.lbimg img{max-width:100%;max-height:100%;object-fit:contain;background:#fff}
-.lbnav{display:flex;justify-content:center;gap:10px}
-.lbnav button{font:inherit;background:#fff;color:#18223a;border:0;padding:8px 18px;cursor:pointer;min-width:90px}
+/* मोबाइल की निचली पट्टी */
+.dock{display:none}
 
-@media (max-width:860px){
-  .hero{grid-template-columns:1fr}
-  .works{grid-template-columns:1fr 1fr}
-  .omr{grid-template-columns:1fr 1fr}
-  .q:nth-child(2){border-right:0}.q:nth-child(-n+2){border-bottom:1px solid var(--line)}
-  .steps{grid-template-columns:1fr 1fr}
-  .step:nth-child(2){border-right:0}.step:nth-child(-n+2){border-bottom:1px solid var(--line)}
-  .svc{grid-template-columns:1fr}
+/* पूरे पर्दे पर पन्ना */
+.lb{position:fixed;inset:0;z-index:60;background:rgba(9,14,28,.96);display:flex;flex-direction:column;padding:calc(10px + env(safe-area-inset-top,0px)) 10px calc(10px + env(safe-area-inset-bottom,0px))}
+.lbbar{display:flex;justify-content:space-between;align-items:center;gap:10px;color:#fff;font-size:16px;padding:0 4px 8px}
+.lbbar .t{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lbbar .bx{display:flex;gap:8px;flex:none}
+.lbbar button{all:unset;cursor:pointer;background:#fff;color:var(--ink);font-weight:600;font-size:15px;padding:11px 16px;border-radius:999px}
+.lbimg{flex:1;min-height:0;overflow:auto;display:flex;align-items:flex-start;justify-content:center;-webkit-overflow-scrolling:touch}
+.lbimg img{max-width:100%;max-height:100%;object-fit:contain;background:#fff;margin:auto}
+.lb.big .lbimg img{max-width:none;max-height:none;width:min(1600px,190%)}
+.lbnav{display:flex;justify-content:center;gap:10px;padding-top:8px}
+.lbnav button{all:unset;cursor:pointer;background:#fff;color:var(--ink);font-weight:600;padding:10px 20px;border-radius:999px;min-width:84px;text-align:center}
+
+/* आकार के हिसाब से */
+@media (min-width:981px){
+  .shelf{gap:22px;justify-content:space-between;overflow:visible;background:linear-gradient(#d3d9e7,#bfc8da) left 236px/100% 12px no-repeat;padding-bottom:4px}
+  .shelf button{width:150px}
+  .shelf .cv{height:226px}
+  .shelf img{max-height:212px;max-width:150px}
+  .shelf .nm{margin-top:20px}
 }
-@media (max-width:540px){
-  body{font-size:16px}
-  .works,.cvpages{grid-template-columns:1fr}
+@media (max-width:980px){
+  .nav{display:none}
+  .cvlink{display:inline-flex;align-items:center;min-height:42px;padding:0 14px;border:1px solid rgba(255,255,255,.3);border-radius:999px;color:#fff;text-decoration:none;font-weight:600;font-size:15px}
+  .hero .hgrid{grid-template-columns:1fr;padding-top:36px;gap:6px}
+  .fan{order:-1;height:clamp(250px,62vw,400px)}
+  .fan button{width:clamp(118px,30vw,190px)}
+  .proof ul{grid-template-columns:repeat(2,1fr);gap:18px 0}
+  .proof li:nth-child(3){border-left:0;padding-left:0}
+  .desk,.duo,.quiz,.vid,.cta .wrap{grid-template-columns:1fr}
+  .desk{padding:18px;gap:24px}
+  .minis{display:none}
+  .vid>div:last-child{order:-1}
+  .svc-list,.tags2{grid-template-columns:1fr}
+  .cvs{grid-template-columns:1fr 1fr}
+  .steps{grid-template-columns:1fr 1fr;gap:26px 0}
+  .steps li:nth-child(2)::after{display:none}
 }
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:640px){
+  body{font-size:17px}
+  .wrap{padding-inline:16px}
+  .top .wrap{height:56px}
+  .top .btn{display:none}
+  .brand{font-size:20px}
+  .hero .hgrid{padding-top:14px}
+  .hi-name{font-size:16px}
+  .hero h1{font-size:clamp(36px,10.4vw,48px)}
+  .hero .lead{font-size:17px;margin-top:14px}
+  .hero .acts{margin-top:20px}
+  .hero .acts .btn{flex:1 1 100%;justify-content:center}
+  .hero .acts .btn-line,.hero .direct{display:none}
+  .proof ul{padding:18px 0 24px;gap:14px 0}
+  .proof b{font-size:28px}
+  .proof span{font-size:14.5px}
+  .proof li{padding-right:10px}
+  .sec{padding-top:60px}
+  .sec.alt,.sec.dark{margin-top:60px;padding-block:52px}
+  .sec.alt+.sec,.sec.dark+.sec{padding-top:52px}
+  .sec-head{margin-bottom:22px}
+  .sec-head p{font-size:17px}
+  .shelf button{width:96px}
+  .shelf .cv{height:128px}
+  .shelf img{max-height:128px;max-width:96px}
+  .desk{padding:0;background:none;border:0;box-shadow:none;border-radius:0}
+  .track{background:none;gap:10px;border-radius:0;padding-right:6%}
+  .track figure{flex:0 0 88%;padding:0;scroll-snap-align:start}
+  .desk.wide .track figure{flex-basis:92%}
+  .info .desc{font-size:17px}
+  .qcard{padding:18px 16px}
+  .qtext,.opt{font-size:17px}
+  .qtabs button,.lang button{padding:10px 12px}
+  .cvs{grid-template-columns:1fr;gap:12px}
+  .cvc{display:grid;grid-template-columns:84px 1fr;gap:2px 14px;padding:14px;align-items:start}
+  .cvc .thumb{grid-row:span 3;width:84px;aspect-ratio:560/793}
+  .cvc h3{font-size:19px}
+  .cvc p{margin-top:0;font-size:15px}
+  .cvc .acts{margin-top:8px}
+  .steps{grid-template-columns:1fr;gap:18px}
+  .steps li{display:grid;grid-template-columns:44px 1fr;column-gap:14px;padding:0}
+  .steps li::before{grid-row:span 2}
+  .steps li::after{display:none}
+  .steps b{margin-top:6px}
+  .cta{margin-top:0}
+  .cta .wrap{padding-block:52px 60px}
+  .foot .wrap{padding-bottom:86px}
+  .dock{display:grid;grid-template-columns:1fr 1fr;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:40;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));background:rgba(255,255,255,.96);border-top:1px solid var(--line);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transform:translateY(110%);transition:transform .25s}
+  .dock.show{transform:none}
+  .dock .btn{justify-content:center;padding:13px 10px;font-size:16px}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+@media print{.top,.dock,.lb{display:none!important}}
 </style>
+<script>document.documentElement.classList.add("js")</script>
 </head>
 <body>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a9.9 9.9 0 0 0-8.5 15l-1.4 5 5.1-1.3A9.9 9.9 0 1 0 12 2Zm0 18.1c-1.5 0-3-.4-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.1Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1-.7-.3-1.4-.7-2-1.2-.5-.5-1-1.1-1.3-1.7-.1-.2 0-.4.1-.5l.4-.5.3-.4v-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.6.6-.9 1.4-.9 2.2.1 1 .5 1.9 1 2.7 1.1 1.6 2.5 2.9 4.2 3.7.5.2 1 .4 1.4.5.6.2 1.2.1 1.7-.1.6-.3 1-.8 1.1-1.4.1-.3.1-.6 0-.8l-.4-.4Z"/></symbol>
+  <symbol id="i-ph" viewBox="0 0 24 24"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2Z"/></symbol>
+  <symbol id="i-ml" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M3 5h18v14H3z"/><path fill="none" stroke="currentColor" stroke-width="2" d="m3 6 9 7 9-7"/></symbol>
+  <symbol id="i-dl" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></symbol>
+  <symbol id="i-l" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="m15 5-7 7 7 7"/></symbol>
+  <symbol id="i-r" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="m9 5 7 7-7 7"/></symbol>
+</svg>
 
-<div class="wrap">
-  <header class="hero">
-    <div>
-      <div class="eyebrow">पोर्टफ़ोलियो · Portfolio</div>
-      <h1>आदित्य चौहान</h1>
-      <div class="role">कंटेंट डेवलपर, विषय-विशेषज्ञ और शिक्षक — प्रतियोगी परीक्षाओं के लिए</div>
-      <span class="en">Content Developer · SME · Faculty — Hindi, English &amp; Bilingual</span>
-      <p>3 साल से कोचिंग संस्थानों के लिए नोट्स, किताबें, द्विभाषी टेस्ट-सीरीज़, करेंट अफ़ेयर्स और ऑनलाइन टेस्ट बना रहा हूँ — घर से, समय पर, संस्थान की अपनी ब्रांडिंग में। नीचे मेरा असली काम है, पन्ना-दर-पन्ना।</p>
-    </div>
-    <div class="contact" aria-label="संपर्क">
-      <div class="crow"><div><small>मोबाइल / WhatsApp</small><br><b id="ph">6398665410</b></div><button class="copy" data-copy="6398665410" type="button">कॉपी</button></div>
-      <div class="crow"><div><small>ई-मेल</small><br><b id="em">aditya31chauhan@gmail.com</b></div><button class="copy" data-copy="aditya31chauhan@gmail.com" type="button">कॉपी</button></div>
-      <div class="avail">घर से (रिमोट) काम पहली पसंद · उपयुक्त प्रस्ताव पर दिल्ली, नोएडा या लखनऊ में कार्य हेतु तैयार · अनुबंध, फ़्रीलांस या पूर्णकालिक</div>
-    </div>
-  </header>
-
-  <div class="omr" role="list">
-    <div class="q" role="listitem"><div class="num">Q.1</div><div class="bub"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div><strong>4 बार</strong><span>UPPCS मुख्य परीक्षा लिखी (2024 सहित)</span></div>
-    <div class="q" role="listitem"><div class="num">Q.2</div><div class="bub"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div><strong>3 साल</strong><span>कोचिंग संस्थानों के लिए कंटेंट</span></div>
-    <div class="q" role="listitem"><div class="num">Q.3</div><div class="bub"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div><strong>5 साल</strong><span>शिक्षण, सरकारी फ़ैकल्टी सहित</span></div>
-    <div class="q" role="listitem"><div class="num">Q.4</div><div class="bub"><i class="on"></i><i class="on"></i><i></i><i></i></div><strong>2 भाषाएँ</strong><span>हिंदी, English और द्विभाषी</span></div>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#">आदित्य चौहान</a>
+    <nav class="nav" aria-label="पन्ने के हिस्से">
+      <a href="#kitaben">किताबें</a>
+      <a href="#prashn">प्रश्न</a>
+      <a href="#video">वीडियो</a>
+      <a href="#seva">सेवाएँ</a>
+      <a href="#resume">रिज़्यूमे</a>
+    </nav>
+    <a class="cvlink" href="#resume">रिज़्यूमे</a>
+    <a class="btn btn-gold wa" href="#" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>WhatsApp करें</a>
   </div>
+</header>
 
-  <section id="kaam">
-    <div class="shead">
-      <div><h2>काम के नमूने</h2><span class="en">Work samples — tap any cover to read the pages</span></div>
-      <p>हर नमूना मेरा लिखा और डिज़ाइन किया हुआ है। यहाँ हर किताब के शुरुआती पन्ने हैं; पूरी किताब माँगने पर भेज दूँगा।</p>
-    </div>
-    <div class="works" id="works"></div>
-    <div class="fullnote"><b>पूरी किताबें तैयार हैं।</b> यहाँ दिखे सभी नमूनों की पूरी PDF, और कई अन्य विषयों (NCERT आधारित नोट्स, UP विशेष, इतिहास, पर्यावरण, करेंट अफ़ेयर्स) की पूरी किताबें मेरे पास हैं। देखना चाहें तो ई-मेल या WhatsApp पर बताइए।</div>
-  </section>
-
-  <section id="live">
-    <div class="shead"><div><h2>जीवित काम — अभी खोलकर देखिए</h2><span class="en">Live work</span></div></div>
-    <div class="live">
-      <a class="lk" href="https://jahostudy.github.io/test/pcs/2026-angad-day-28.html" target="_blank" rel="noopener"><b>ऑनलाइन टेस्ट</b><span>jahostudy.github.io/test/pcs/…</span><p>मेरे द्वारा डिज़ाइन व संकलित — 25 मिनट टाइमर, भाषा-चयन, हर प्रश्न की व्याख्या, दैनिक रैंक और टॉप-20 लीडरबोर्ड।</p></a>
-      <a class="lk" href="https://youtu.be/R2eaHH3eSEg" target="_blank" rel="noopener"><b>पढ़ाते हुए वीडियो</b><span>youtu.be/R2eaHH3eSEg</span><p>कक्षा की असली रिकॉर्डिंग।</p></a>
-      <a class="lk" href="https://bodhiclasses.org" target="_blank" rel="noopener"><b>बोधि क्लासेस वेबसाइट</b><span>bodhiclasses.org</span><p>विषयवार नोट्स और ऑनलाइन टेस्ट — लेखन और निर्माण मेरा।</p></a>
-      <a class="lk" href="https://t.me/bodhiclassesupsc" target="_blank" rel="noopener"><b>टेलीग्राम चैनल</b><span>t.me/bodhiclassesupsc</span><p>दैनिक PIB, नोट्स और टेस्ट PDF।</p></a>
-      <a class="lk" href="https://www.youtube.com/@BodhiClasses" target="_blank" rel="noopener"><b>YouTube</b><span>@BodhiClasses</span><p>रिकॉर्डेड कक्षाएँ, स्लाइड और नक्शों के साथ।</p></a>
-    </div>
-  </section>
-
-  <section id="seva">
-    <div class="shead"><div><h2>आपके संस्थान के लिए क्या बना सकता हूँ</h2><span class="en">What I can build for your institute</span></div></div>
-    <div class="svc">
-      <div>
-        <h3>कंटेंट</h3>
-        <ol>
-          <li>विषयवार नोट्स और पूरी किताबें — हिंदी, English या द्विभाषी</li>
-          <li>द्विभाषी MCQ टेस्ट-सीरीज़ और प्रश्न-बैंक — 2-कथन, 3-कथन, सुमेलन, कालक्रम जैसे असली पैटर्न</li>
-          <li>दैनिक और मासिक करेंट अफ़ेयर्स (PIB आधारित), तथ्य-जाँच के साथ</li>
-          <li>कक्षा और YouTube के लिए विज़ुअल स्लाइड-डेक — नक्शे, टाइमलाइन, डायग्राम</li>
-          <li>ऑनलाइन टेस्ट वेबसाइट और टेलीग्राम क्विज़-समूहों का संचालन</li>
-          <li>हिंदी ⇄ English अनुवाद और कंटेंट समीक्षा</li>
-          <li>हिंदी और GS की कक्षाएँ — ऑनलाइन या ऑफ़लाइन</li>
-        </ol>
+<main>
+<section class="hero" aria-labelledby="h1">
+  <div class="wrap hgrid">
+    <div>
+      <p class="hi-name">हिंदी कंटेंट डेवलपर और शिक्षक, UPSC और UPPCS के लिए</p>
+      <h1 id="h1">पढ़ने में आसान,<br>परीक्षा में<br>काम की सामग्री।</h1>
+      <p class="lead">मैं आदित्य चौहान हूँ। पिछले तीन साल से कोचिंग संस्थानों के लिए हिंदी और अंग्रेज़ी में नोट्स, किताबें, टेस्ट सीरीज़ और करेंट अफ़ेयर्स तैयार कर रहा हूँ। यहाँ मेरे किए हुए काम के पन्ने रखे हैं, ताकि आप ख़ुद परख सकें।</p>
+      <div class="acts">
+        <a class="btn btn-gold" href="#kitaben">किताबें पलटकर देखें</a>
+        <a class="btn btn-line wa" href="#" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>WhatsApp पर बात करें</a>
       </div>
-      <div>
-        <h3>परीक्षाएँ</h3>
-        <div class="chips"><span class="chip">UPSC</span><span class="chip">सभी राज्य PCS</span><span class="chip">SSC</span><span class="chip">रेलवे</span><span class="chip">बैंकिंग</span><span class="chip">UPSSSC</span><span class="chip">TET / शिक्षक भर्ती</span><span class="chip">पुलिस</span><span class="chip">रक्षा</span></div>
-        <h3 style="margin-top:24px">विषय — विशेष पकड़</h3>
-        <div class="chips"><span class="chip">राजव्यवस्था</span><span class="chip">इतिहास व कला-संस्कृति</span><span class="chip">पर्यावरण</span><span class="chip">भूगोल</span><span class="chip">नीतिशास्त्र व निबंध</span><span class="chip">करेंट अफ़ेयर्स</span><span class="chip">हिंदी भाषा व साहित्य</span><span class="chip">सामान्य विज्ञान</span><span class="chip">UP विशेष</span></div>
-        <p style="color:var(--muted);font-size:15px;margin-top:12px">किसी और विषय या परीक्षा का पाठ्यक्रम और स्रोत दीजिए — उसी स्तर का कंटेंट मिलेगा।</p>
+      <p class="direct"><a href="tel:+916398665410">6398665410</a><a href="mailto:aditya31chauhan@gmail.com">aditya31chauhan@gmail.com</a></p>
+    </div>
+    <div class="fan" id="fan" aria-label="मेरी किताबों के कवर"></div>
+  </div>
+  <div class="wrap proof">
+    <ul>
+      <li><b>4 बार</b><span>UPPCS मुख्य परीक्षा तक पहुँचा, 2024 सहित</span></li>
+      <li><b>5 साल</b><span>पढ़ाने का अनुभव; 2023 से मुख्यमंत्री अभ्युदय योजना में भी</span></li>
+      <li><b>3 साल</b><span>कोचिंग संस्थानों के लिए नियमित कंटेंट</span></li>
+      <li><b>एम.ए.</b><span>हिंदी साहित्य में, 2024</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="sec" id="kitaben" aria-labelledby="h-k">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="h-k">मेरी किताबें, पन्ना-दर-पन्ना</h2>
+      <p>कोई भी किताब चुनिए और उसके पन्ने यहीं पलटिए। हर पन्ना मैंने तैयार किया है, सामग्री से लेकर डिज़ाइन तक। पन्ने पर क्लिक या टैप कीजिए, वह पूरी स्क्रीन पर खुल जाएगा।</p>
+    </div>
+    <div class="shelf" id="shelf" role="tablist" aria-label="किताबें"></div>
+    <div class="desk" id="desk" role="tabpanel">
+      <div class="stage">
+        <div class="track" id="track" tabindex="0" aria-label="पन्ने"></div>
+        <div class="pager">
+          <span class="count" id="count" aria-live="polite"></span>
+          <div class="pn">
+            <button class="round" id="prev" type="button" aria-label="पिछला पन्ना"><svg><use href="#i-l"/></svg></button>
+            <button class="round" id="next" type="button" aria-label="अगला पन्ना"><svg><use href="#i-r"/></svg></button>
+          </div>
+        </div>
+      </div>
+      <div class="info">
+        <span class="kind" id="b-kind"></span>
+        <h3 id="b-title"></h3>
+        <p class="desc" id="b-desc"></p>
+        <dl class="facts" id="b-facts"></dl>
+        <div class="acts">
+          <a class="btn btn-ink" id="b-pdf" href="#" target="_blank" rel="noopener"><svg><use href="#i-dl"/></svg>नमूना PDF</a>
+          <a class="btn btn-ghost wa-book" href="#" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>पूरी किताब माँगें</a>
+        </div>
+        <div class="minis" id="minis" aria-label="सभी नमूना पन्ने"></div>
       </div>
     </div>
-  </section>
+    <p class="more">इनके अलावा राजव्यवस्था, इतिहास, पर्यावरण, उत्तर प्रदेश विशेष और करेंट अफ़ेयर्स पर भी मेरी तैयार सामग्री है। कोई ख़ास विषय देखना हो तो <a class="wa" href="#" target="_blank" rel="noopener">WhatsApp पर बता दीजिए</a>।</p>
+  </div>
+</section>
 
-  <section id="tarika">
-    <div class="shead"><div><h2>साथ काम कैसे शुरू होगा</h2><span class="en">How we start</span></div></div>
-    <div class="steps">
-      <div class="step"><div class="num">01</div><b>ज़रूरत बताइए</b><p>कौन-सी परीक्षा, विषय, भाषा और फ़ॉर्मैट।</p></div>
-      <div class="step"><div class="num">02</div><b>मुफ़्त नमूना</b><p>आपके ब्रांड में 2-3 पन्नों का नमूना, ताकि आप गुणवत्ता परख सकें।</p></div>
-      <div class="step"><div class="num">03</div><b>दर और समय-सीमा</b><p>काम की मात्रा के हिसाब से दर और डिलीवरी तय।</p></div>
-      <div class="step"><div class="num">04</div><b>नियमित डिलीवरी</b><p>तथ्य-जाँच के साथ, तय समय पर, आपके फ़ॉर्मैट में।</p></div>
+<section class="sec alt" id="bhasha" aria-labelledby="h-b">
+  <div class="wrap duo">
+    <div class="cmp" id="cmp" style="--x:52%">
+      <img src="img/timeline_en-2.jpg" alt="Modern India Timeline का अंग्रेज़ी पन्ना" loading="lazy">
+      <img class="top-img" src="img/timeline_hi-2.jpg" alt="आधुनिक भारत की समयरेखा का हिंदी पन्ना" loading="lazy">
+      <span class="lbl l1">हिंदी</span><span class="lbl l2">English</span>
+      <span class="bar"></span>
+      <span class="knob"><svg viewBox="0 0 24 24"><path fill="none" stroke="#1d1404" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="m9 6-5 6 5 6M15 6l5 6-5 6"/></svg></span>
+      <input type="range" min="0" max="100" value="52" aria-label="हिंदी और अंग्रेज़ी पन्ने की तुलना के लिए पट्टी खिसकाएँ">
     </div>
-  </section>
-
-  <section id="cv">
-    <div class="shead"><div><h2>रिज़्यूमे</h2><span class="en">Résumé — Hindi &amp; English</span></div></div>
-    <div class="tabs" role="tablist">
-      <button class="tab" role="tab" aria-selected="true" data-cv="cv_Content_Hindi" type="button">कंटेंट डेवलपर — हिंदी</button>
-      <button class="tab" role="tab" aria-selected="false" data-cv="cv_Content_English" type="button">Content Developer — English</button>
-      <button class="tab" role="tab" aria-selected="false" data-cv="cv_Faculty_Hindi" type="button">फ़ैकल्टी — हिंदी</button>
+    <div>
+      <div class="sec-head" style="margin-bottom:0">
+        <h2 id="h-b">एक किताब, दो भाषाएँ</h2>
+        <p>बीच की पीली पट्टी को दाएँ-बाएँ खिसकाइए। आधुनिक भारत की समयरेखा मैंने हिंदी और अंग्रेज़ी, दोनों में बनाई है।</p>
+      </div>
+      <ul>
+        <li>हर पन्ने की बनावट और तथ्य, दोनों भाषाओं में एक जैसे</li>
+        <li>हिंदी माध्यम और अंग्रेज़ी माध्यम, दोनों बैचों के लिए एक साथ सामग्री</li>
+        <li>शब्दावली वही, जो आयोग के प्रश्नपत्रों में चलती है</li>
+      </ul>
     </div>
-    <div class="cvdl"><a class="dl" href="pdf/Aditya_Chauhan_CV_Content_Hindi.pdf" target="_blank" rel="noopener">कंटेंट डेवलपर रिज़्यूमे (हिंदी) PDF ↓</a><a class="dl" href="pdf/Aditya_Chauhan_CV_Content_English.pdf" target="_blank" rel="noopener">Content Developer CV (English) PDF ↓</a><a class="dl" href="pdf/Aditya_Chauhan_CV_Faculty_Hindi.pdf" target="_blank" rel="noopener">फ़ैकल्टी रिज़्यूमे (हिंदी) PDF ↓</a></div>
-    <div class="cvpages" id="cvpages"></div>
-  </section>
+  </div>
+</section>
 
-  <footer>
-    <span>आदित्य चौहान · मैनपुरी, उत्तर प्रदेश</span>
-    <span><b>6398665410</b> · <b>aditya31chauhan@gmail.com</b></span>
-  </footer>
+<section class="sec" id="prashn" aria-labelledby="h-p">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="h-p">मेरे टेस्ट का एक प्रश्न हल करके देखिए</h2>
+      <p>ये प्रश्न उस UPPCS ऑनलाइन टेस्ट से हैं, जो मैं जय हो स्टडी के लिए बनाता हूँ। विकल्प चुनते ही सही उत्तर दिख जाएगा, साथ में उसकी व्याख्या भी।</p>
+    </div>
+    <div class="quiz">
+      <div class="qcard" id="qcard">
+        <div class="qbar">
+          <div class="qtabs" id="qtabs" aria-label="प्रश्न चुनें"></div>
+          <div class="lang" aria-label="भाषा">
+            <button type="button" data-l="hi" aria-pressed="true">हिंदी</button>
+            <button type="button" data-l="en" aria-pressed="false">English</button>
+          </div>
+        </div>
+        <div class="qtopic" id="qtopic"></div>
+        <div class="qtext" id="qtext"></div>
+        <div class="opts" id="opts"></div>
+        <div class="expl" id="expl" hidden aria-live="polite"></div>
+      </div>
+      <div class="qside">
+        <a class="tile" href="https://jahostudy.github.io/test/pcs/2026-angad-day-28.html" target="_blank" rel="noopener">
+          <h3>पूरा टेस्ट खोलकर देखिए</h3>
+          <p>50 प्रश्न, 25 मिनट का टाइमर, हिंदी-अंग्रेज़ी बदलने का बटन, हर प्रश्न की व्याख्या और रोज़ की रैंक-सूची। टेस्ट का डिज़ाइन और प्रश्न, दोनों मैंने तैयार किए हैं।</p>
+          <span class="go">टेस्ट खोलें</span>
+        </a>
+        <div class="note"><b>प्रश्न बनाने का मेरा तरीक़ा:</b> हर टेस्ट में आयोग के नए पैटर्न वाले प्रश्न होते हैं, जैसे दो या तीन कथन वाले, "कितने सही हैं" वाले, सुमेलन और कालक्रम। ग़लत विकल्प ठीक वहीं फँसाते हैं जहाँ असली परीक्षा फँसाती है, और व्याख्या में बताता हूँ कि जाल कहाँ था।</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec dark" id="video" aria-labelledby="h-v">
+  <div class="wrap vid">
+    <div class="player" id="player" style="background-image:url('https://i.ytimg.com/vi/R2eaHH3eSEg/hqdefault.jpg')">
+      <button type="button" id="play" aria-label="पढ़ाने का वीडियो चलाएँ"><span class="play"><svg viewBox="0 0 24 24"><path fill="#1d1404" d="M7 4.5v15l13-7.5z"/></svg></span><span class="cap">कक्षा की रिकॉर्डिंग</span></button>
+    </div>
+    <div>
+      <div class="sec-head" style="margin-bottom:0">
+        <h2 id="h-v">पढ़ाते हुए देखिए</h2>
+        <p>2023 से मुख्यमंत्री अभ्युदय योजना में मैनपुरी और फ़िरोज़ाबाद के केंद्रों पर पढ़ा रहा हूँ। अपने यूट्यूब और टेलीग्राम चैनल पर भी नियमित रूप से वीडियो और सामग्री डालता हूँ।</p>
+      </div>
+      <div class="links">
+        <a href="https://www.youtube.com/@BodhiClasses" target="_blank" rel="noopener"><b>यूट्यूब चैनल</b><span>@BodhiClasses</span></a>
+        <a href="https://t.me/bodhiclassesupsc" target="_blank" rel="noopener"><b>टेलीग्राम चैनल</b><span>t.me/bodhiclassesupsc</span></a>
+        <a href="https://bodhiclasses.org" target="_blank" rel="noopener"><b>वेबसाइट, नोट्स और टेस्ट</b><span>bodhiclasses.org</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="seva" aria-labelledby="h-s">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="h-s">आपके संस्थान के लिए मैं क्या-क्या बना सकता हूँ</h2>
+      <p>मैनपुरी से ऑनलाइन काम करता हूँ और हर काम तय समय पर भेजता हूँ। ज़रूरत हो तो दिल्ली, नोएडा या लखनऊ में रहकर भी काम कर सकता हूँ।</p>
+    </div>
+    <ul class="svc-list">
+      <li><img src="img/t/bhugol.webp" alt="" loading="lazy"><div><b>विषयवार नोट्स और किताबें</b><span>हिंदी, अंग्रेज़ी या दोनों में, नक़्शों और आरेखों के साथ</span></div></li>
+      <li><img src="img/t/pannon.webp" alt="" loading="lazy"><div><b>टेस्ट सीरीज़ और प्रश्न बैंक</b><span>नए पैटर्न के प्रश्न, हर एक की व्याख्या के साथ</span></div></li>
+      <li><img src="img/t/khabri.webp" alt="" loading="lazy"><div><b>रोज़ का PIB और मासिक करेंट अफ़ेयर्स</b><span>परीक्षा में काम आने वाले तथ्य, मूल स्रोत से मिलाकर</span></div></li>
+      <li><img src="img/t/day28.webp" alt="" loading="lazy" class="w"><div><b>कक्षा, यूट्यूब और टेलीग्राम के लिए स्लाइड</b><span>एक विषय, एक स्लाइड; समयरेखा, नक़्शे और तालिकाएँ</span></div></li>
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M4 5h16v11H4zM9 20h6M12 16v4"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="m8 11 2.5 2L16 8"/></svg></span><div><b>ऑनलाइन टेस्ट वेबसाइट और टेलीग्राम क्विज़</b><span>टाइमर और रैंक-सूची वाले टेस्ट, और रोज़ के क्विज़</span></div></li>
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M4 6h8M8 4v2c0 4-2 7-4 8M6 10c1 2 3 3.5 5 4M13 20l4-10 4 10M14.5 17h5"/></svg></span><div><b>अनुवाद और कंटेंट की जाँच</b><span>हिंदी से अंग्रेज़ी और अंग्रेज़ी से हिंदी अनुवाद, साथ में वर्तनी और तथ्यों की परख</span></div></li>
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M3 5h18v11H3zM8 20h8M7 9h6M7 12h4"/></svg></span><div><b>हिंदी और सामान्य अध्ययन की कक्षाएँ</b><span>ऑनलाइन या ऑफ़लाइन</span></div></li>
+    </ul>
+    <p class="vow"><b>हर काम में तीन बातें पक्की:</b> आपका लोगो, रंग और फ़ॉर्मेट; हर तथ्य PIB, NCERT और आयोग की अधिसूचनाओं जैसे आधिकारिक स्रोतों से मिलाकर; और तय समय पर, चाहे काम रोज़ का हो, हफ़्ते का या महीने का।</p>
+    <div class="tags2">
+      <div><h3>किन परीक्षाओं के लिए</h3>
+        <div class="chips"><span class="chip">UPSC</span><span class="chip">UPPCS</span><span class="chip">दूसरे राज्यों के PCS</span><span class="chip">SSC</span><span class="chip">UPSSSC</span><span class="chip">TET और शिक्षक भर्ती</span><span class="chip">रेलवे</span></div></div>
+      <div><h3>जिन विषयों पर काम करता हूँ</h3>
+        <div class="chips"><span class="chip">राजव्यवस्था</span><span class="chip">इतिहास</span><span class="chip">कला और संस्कृति</span><span class="chip">पर्यावरण</span><span class="chip">भूगोल</span><span class="chip">करेंट अफ़ेयर्स</span><span class="chip">उत्तर प्रदेश विशेष</span><span class="chip">हिंदी भाषा और साहित्य</span></div></div>
+    </div>
+    <ol class="steps" aria-label="काम कैसे शुरू होगा">
+      <li><b>ज़रूरत बताइए</b><p>परीक्षा, विषय, भाषा और फ़ॉर्मेट।</p></li>
+      <li><b>पहले नमूना</b><p>आपके फ़ॉर्मेट में 2-3 पन्ने, ताकि आप काम परख सकें।</p></li>
+      <li><b>दर और समय-सीमा</b><p>काम की मात्रा देखकर, आपसी बातचीत से।</p></li>
+      <li><b>नियमित काम</b><p>तय समय पर, तथ्य-जाँच के साथ।</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="sec alt" id="resume" aria-labelledby="h-r">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="h-r">रिज़्यूमे</h2>
+      <p>पद के हिसाब से तीन रिज़्यूमे हैं। पन्ने पर क्लिक करके पढ़िए या PDF डाउनलोड कर लीजिए; उसमें दिए किताबों और टेस्ट के सारे लिंक चलते हैं।</p>
+    </div>
+    <div class="cvs" id="cvs"></div>
+  </div>
+</section>
+
+<section class="cta" aria-labelledby="h-c">
+  <div class="wrap">
+    <div>
+      <h2 id="h-c">आपके किसी एक विषय पर नमूना बनाकर भेज दूँ?</h2>
+      <p>विषय और फ़ॉर्मेट बता दीजिए, उसी हिसाब से 2-3 पन्ने तैयार कर दूँगा। अच्छा लगे, तो आगे बात करते हैं।</p>
+    </div>
+    <div class="acts">
+      <a class="btn btn-gold wa" href="#" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>WhatsApp पर लिखें</a>
+      <a class="btn btn-line" href="mailto:aditya31chauhan@gmail.com?subject=%E0%A4%A8%E0%A4%AE%E0%A5%82%E0%A4%A8%E0%A5%87%20%E0%A4%95%E0%A5%87%20%E0%A4%AC%E0%A4%BE%E0%A4%B0%E0%A5%87%20%E0%A4%AE%E0%A5%87%E0%A4%82"><svg><use href="#i-ml"/></svg>ई-मेल भेजें</a>
+      <a class="btn btn-line" href="tel:+916398665410"><svg><use href="#i-ph"/></svg>फ़ोन करें: 6398665410</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>आदित्य चौहान, मैनपुरी, उत्तर प्रदेश</span>
+    <span><a href="mailto:aditya31chauhan@gmail.com">aditya31chauhan@gmail.com</a></span>
+  </div>
+</footer>
+
+<div class="dock">
+  <a class="btn btn-gold wa" href="#" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>WhatsApp</a>
+  <a class="btn btn-ink" href="tel:+916398665410"><svg><use href="#i-ph"/></svg>फ़ोन करें</a>
 </div>
 
-<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="पन्ने">
-  <div class="lbbar"><span id="lbt"></span><button id="lbx" type="button">बंद करें</button></div>
-  <div class="lbimg"><img id="lbi" alt=""></div>
-  <div class="lbnav"><button id="lbp" type="button">← पिछला</button><button id="lbn" type="button">अगला →</button></div>
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="पन्ना बड़ा देखें">
+  <div class="lbbar"><span class="t" id="lbt"></span><span class="bx"><button type="button" id="lbz">बड़ा करें</button><button type="button" id="lbx">बंद करें</button></span></div>
+  <div class="lbimg" id="lbimg"><img id="lbi" alt=""></div>
+  <div class="lbnav"><button type="button" id="lbp">पिछला</button><button type="button" id="lbn">अगला</button></div>
 </div>
 
 <script>
-const PDF={"bhugol": "Sample_Bhugol_Jaldharayen", "timeline_hi": "Sample_Adhunik_Bharat_Samayrekha", "timeline_en": "Sample_Modern_India_Timeline_EN", "khabri": "Sample_Pariksha_Khabri_Sep2026", "pannon": "Sample_Pannon_Ki_Bhavishyavani", "day28": "Sample_Visual_Slides_Day28"};
-const W=[
- {id:"bhugol",t:"जलधाराएँ, स्थानीय पवनें एवं घास के मैदान",tags:["भूगोल","हिंदी","नोट्स-पुस्तक"],d:"प्रारंभिक परीक्षा के लिए पूरा अध्याय — नक्शे, आरेख और तुलनात्मक बॉक्स के साथ।",p:[1,2,3,4,5,6],total:24},
- {id:"timeline_hi",t:"आधुनिक भारत की समयरेखा 1707–1947",tags:["इतिहास","हिंदी","विज़ुअल पुस्तक"],d:"240 वर्ष एक घड़ी पर — आठ युग, युद्ध-पट्टी, अधिनियमों की सीढ़ी और गवर्नर-जनरल व वायसराय की पूरी कतार।",p:[1,2,3,4,5],total:17},
- {id:"timeline_en",t:"Modern India Timeline 1707–1947",tags:["History","English","Visual book"],d:"The same book in English — proof of equal-quality bilingual output.",p:[1,2,3,4],total:18},
- {id:"khabri",t:"परीक्षा ख़बरी — सितंबर 2026",tags:["करेंट अफ़ेयर्स","हिंदी","मासिक संकलन"],d:"जय हो स्टडी के लिए तैयार मासिक समसामयिकी पुस्तिका — विषय-सूची से लेकर परीक्षा-उपयोगी तथ्य-स्पष्टीकरण तक।",p:[1,3,4,5,6,7],total:44},
- {id:"pannon",t:"पन्नों की भविष्यवाणी",tags:["UPPCS 2026","हिंदी","पुस्तक-लेखक"],d:"चर्चित किताबें और उनके लेखक — कौन-सी किताब परीक्षा में किस मोड़ से पूछी जा सकती है, और अंत में 20 प्रश्न।",p:[1,2,3,4,5,6],total:13},
- {id:"day28",t:"विज़ुअल स्लाइड — डे 28",tags:["विज्ञान","द्विभाषी","स्लाइड"],d:"कक्षा और टेलीग्राम के लिए एक-विषय-एक-स्लाइड वाले विज़ुअल पन्ने — विटामिन, प्रोटोज़ोआ रोग आदि।",p:[1,2,3,4,5,6],total:26}
+const WA="https://wa.me/916398665410?text=";
+const waMsg=t=>WA+encodeURIComponent(t);
+document.querySelectorAll("a.wa").forEach(a=>a.href=waMsg("नमस्कार आदित्य जी, आपका पोर्टफ़ोलियो देखा। "));
+
+const BOOKS=[
+ {id:"bhugol",short:"भूगोल नोट्स",kind:"भूगोल के नोट्स",t:"जलधाराएँ, स्थानीय पवनें और घास के मैदान",d:"प्रारंभिक परीक्षा के लिए भूगोल का पूरा अध्याय। हर धारा और पवन नक़्शे पर दिखाई गई है, साथ में तुलना की तालिकाएँ और याद रखने की आसान तरकीबें।",lang:"हिंदी",total:"24",for:"बोधि क्लासेस (मेरा अपना चैनल)",p:[1,2,3,4,5,6],pdf:"Sample_Bhugol_Jaldharayen"},
+ {id:"timeline_hi",short:"समयरेखा",kind:"इतिहास की विज़ुअल किताब",t:"आधुनिक भारत की समयरेखा, 1707 से 1947",d:"240 साल, एक घड़ी के डायल पर। आठ युग, युद्धों की पट्टी, अधिनियमों की सीढ़ी और गवर्नर-जनरलों व वायसरायों की पूरी क्रमवार सूची।",lang:"हिंदी",total:"17",for:"बोधि क्लासेस (मेरा अपना चैनल)",p:[1,2,3,4,5],pdf:"Sample_Adhunik_Bharat_Samayrekha"},
+ {id:"timeline_en",short:"Timeline (EN)",kind:"वही किताब, अंग्रेज़ी में",t:"Modern India Timeline, 1707 to 1947",d:"समयरेखा वाली किताब का अंग्रेज़ी संस्करण। अंग्रेज़ी माध्यम के बैच के लिए, हिंदी संस्करण जितनी ही गहराई के साथ।",lang:"English",total:"18",for:"बोधि क्लासेस (मेरा अपना चैनल)",p:[1,2,3,4],pdf:"Sample_Modern_India_Timeline_EN"},
+ {id:"khabri",short:"परीक्षा ख़बरी",kind:"मासिक करेंट अफ़ेयर्स",t:"परीक्षा ख़बरी, सितंबर 2026",d:"करेंट अफ़ेयर्स की वह पुस्तिका, जो मैं हर महीने जय हो स्टडी के लिए तैयार करता हूँ। महीने भर की ख़बरें विषय के हिसाब से, हर ख़बर के साथ परीक्षा में काम आने वाले तथ्य।",lang:"हिंदी",total:"44",for:"जय हो स्टडी, लखनऊ",p:[1,3,4,5,6,7],pdf:"Sample_Pariksha_Khabri_Sep2026"},
+ {id:"pannon",short:"पन्नों की भविष्यवाणी",kind:"UPPCS 2026 की ख़ास पुस्तिका",t:"पन्नों की भविष्यवाणी",d:"चर्चित किताबें और उनके लेखक। हर किताब के साथ बताया है कि वह परीक्षा में किस रूप में पूछी जा सकती है; आख़िर में 20 अभ्यास प्रश्न भी हैं।",lang:"हिंदी",total:"13",for:"बोधि क्लासेस (मेरा अपना चैनल)",p:[1,2,3,4,5,6],pdf:"Sample_Pannon_Ki_Bhavishyavani"},
+ {id:"day28",short:"विज़ुअल स्लाइड",kind:"कक्षा, यूट्यूब और टेलीग्राम के लिए स्लाइड",t:"विज़ुअल स्लाइड, दिन 28",d:"एक विषय, एक स्लाइड। विटामिन, प्रोटोज़ोआ से होने वाले रोग और गति के नियम जैसे विषय, तालिकाओं और चित्रों के साथ।",lang:"हिंदी, अंग्रेज़ी शब्दावली के साथ",total:"26",unit:"स्लाइड",for:"जय हो स्टडी, लखनऊ",p:[1,2,3,4,5,6],pdf:"Sample_Visual_Slides_Day28",wide:true}
 ];
-const box=document.getElementById("works");
-W.forEach((w,i)=>{
-  const el=document.createElement("article");el.className="work";
-  el.innerHTML=`<button class="cover${w.wide?" wide":""}" type="button" aria-label="${w.t} — पन्ने देखें"><img src="img/${w.id}-${w.p[0]}.jpg" alt="${w.t} का पहला पन्ना" loading="lazy"><span class="pages">${w.p.length} नमूना / ${w.total} पन्ने</span></button>
-  <div class="wbody"><div class="tags">${w.tags.map((x,j)=>`<span class="tag${j===0?" b":""}">${x}</span>`).join("")}</div><h3>${w.t}</h3><p>${w.d}</p><div class="acts"><button class="open" type="button">पन्ने पढ़ें →</button><a class="open" href="pdf/${PDF[w.id]}.pdf" target="_blank" rel="noopener">नमूना PDF ↓</a></div></div>`;
-  const go=()=>openLB(w.p.map(n=>`img/${w.id}-${n}.jpg`),w.t);
-  el.querySelector(".cover").onclick=go;el.querySelector(".open").onclick=go;
-  box.appendChild(el);
+
+/* पंखा */
+const FAN=["timeline_en","khabri","bhugol","pannon","timeline_hi"];
+const fan=document.getElementById("fan");
+FAN.forEach((id,i)=>{
+  const b=BOOKS.find(x=>x.id===id);
+  const el=document.createElement("button");
+  el.type="button";el.className="c"+(i+1);
+  el.setAttribute("aria-label",b.t+", पन्ने खोलें");
+  el.innerHTML=`<img src="img/t/${id}.webp" alt="" width="560" height="793" ${i===2?'fetchpriority="high"':''}>`;
+  el.onclick=()=>{pick(BOOKS.indexOf(b));document.getElementById("kitaben").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth"})};
+  fan.appendChild(el);
 });
-const lb=document.getElementById("lb"),lbi=document.getElementById("lbi"),lbt=document.getElementById("lbt");
+requestAnimationFrame(()=>setTimeout(()=>fan.classList.add("open"),120));
+
+/* अलमारी और मेज़ */
+const shelf=document.getElementById("shelf"),track=document.getElementById("track"),desk=document.getElementById("desk"),count=document.getElementById("count");
+let cur=0,pages=[];
+BOOKS.forEach((b,i)=>{
+  const el=document.createElement("button");
+  el.type="button";el.setAttribute("role","tab");el.setAttribute("aria-selected","false");el.setAttribute("aria-controls","desk");
+  el.innerHTML=`<span class="cv"><img src="img/t/${b.id}.webp" alt="" loading="lazy"></span><span class="nm">${b.short}</span>`;
+  el.onclick=()=>pick(i);
+  shelf.appendChild(el);
+});
+const minis=document.getElementById("minis");
+function pick(i){
+  cur=i;const b=BOOKS[i];const u=b.unit||"पन्ने";
+  [...shelf.children].forEach((c,j)=>c.setAttribute("aria-selected",j===i));
+  desk.classList.toggle("wide",!!b.wide);
+  pages=b.p.map(n=>`img/${b.id}-${n}.jpg`);
+  track.innerHTML=pages.map((src,j)=>`<figure><button type="button" aria-label="पन्ना ${j+1} बड़ा देखें"><img src="${src}" alt="${b.t}, नमूना पन्ना ${j+1}" ${j?'loading="lazy"':''}><span class="zoomhint">बड़ा देखें</span></button></figure>`).join("");
+  track.scrollLeft=0;
+  [...track.querySelectorAll("button")].forEach((x,j)=>x.onclick=()=>openLB(pages,b.t,j));
+  minis.innerHTML=pages.map((src,j)=>`<button type="button" aria-label="पन्ना ${j+1} पर जाएँ"><img src="${src}" alt="" loading="lazy"></button>`).join("");
+  [...minis.children].forEach((x,j)=>x.onclick=()=>goTo(j));
+  document.getElementById("b-kind").textContent=b.kind;
+  document.getElementById("b-title").textContent=b.t;
+  document.getElementById("b-desc").textContent=b.d;
+  document.getElementById("b-facts").innerHTML=`<dt>भाषा</dt><dd>${b.lang}</dd><dt>कुल ${u}</dt><dd>${b.total}</dd><dt>यहाँ दिख रहे</dt><dd>${b.p.length} नमूना ${u}</dd><dt>किसके लिए</dt><dd>${b.for}</dd>`;
+  document.getElementById("b-pdf").href=`pdf/${b.pdf}.pdf`;
+  document.querySelector(".wa-book").href=waMsg(`नमस्कार आदित्य जी, आपका पोर्टफ़ोलियो देखा। "${b.t}" की पूरी PDF भेज दीजिए।`);
+  upd();
+}
+function step(){const f=track.firstElementChild;if(!f)return 1;const g=parseFloat(getComputedStyle(track).columnGap)||0;return f.offsetWidth+g}
+function idx(){return Math.max(0,Math.min(pages.length-1,Math.round(track.scrollLeft/step())))}
+function upd(){const n=idx();count.textContent=`पन्ना ${n+1} / ${pages.length}`;[...minis.children].forEach((x,j)=>x.setAttribute("aria-current",j===n))}
+function goTo(n){n=Math.max(0,Math.min(pages.length-1,n));track.scrollTo({left:n*step(),behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth"})}
+function go(d){goTo(idx()+d)}
+track.addEventListener("scroll",()=>{clearTimeout(track._t);track._t=setTimeout(upd,60)},{passive:true});
+document.getElementById("prev").onclick=()=>go(-1);
+document.getElementById("next").onclick=()=>go(1);
+track.addEventListener("keydown",e=>{if(e.key==="ArrowRight"){e.preventDefault();go(1)}if(e.key==="ArrowLeft"){e.preventDefault();go(-1)}});
+const fromHash=BOOKS.findIndex(b=>"#"+b.id===location.hash);
+pick(fromHash>=0?fromHash:0);
+if(fromHash>=0){setTimeout(()=>document.getElementById("kitaben").scrollIntoView(),60)}
+
+/* दो भाषाओं की तुलना */
+const cmp=document.getElementById("cmp"),rng=cmp.querySelector("input");
+rng.addEventListener("input",()=>{cmp.dataset.touched=1;cmp.style.setProperty("--x",rng.value+"%")});
+if("IntersectionObserver" in window&&!matchMedia("(prefers-reduced-motion:reduce)").matches){
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(!e.isIntersecting)return;io.disconnect();
+    const keys=[52,18,84,52],dur=2200,t0=performance.now();
+    (function f(t){if(cmp.dataset.touched)return;const k=Math.min(1,(t-t0)/dur)*(keys.length-1),i=Math.min(keys.length-2,Math.floor(k)),r=k-i,e2=r<.5?2*r*r:1-Math.pow(-2*r+2,2)/2,v=keys[i]+(keys[i+1]-keys[i])*e2;cmp.style.setProperty("--x",v+"%");rng.value=v;if(k<keys.length-1)requestAnimationFrame(f)})(t0);
+  })},{threshold:.55});
+  io.observe(cmp);
+}
+/* मोबाइल की निचली पट्टी: मुख्य बटन दिखना बंद होने पर ही */
+const dock=document.querySelector(".dock"),heroActs=document.querySelector(".hero .acts");
+if("IntersectionObserver" in window){new IntersectionObserver(es=>dock.classList.toggle("show",!es[0].isIntersecting&&es[0].boundingClientRect.top<0)).observe(heroActs)}else{dock.classList.add("show")}
+
+/* प्रश्न */
+const QS=[
+ {topic:{hi:"आधुनिक भारत, उत्तर प्रदेश से जुड़ा",en:"Modern India"},
+  lead:{hi:"निम्नलिखित कथनों पर विचार कीजिए:",en:"Consider the following statements:"},
+  st:{hi:["12 अगस्त 1765 की इलाहाबाद की प्रथम संधि रॉबर्ट क्लाइव और अवध के नवाब शुजाउद्दौला के बीच हुई थी।","16 अगस्त 1765 की इलाहाबाद की द्वितीय संधि क्लाइव और मुग़ल बादशाह शाह आलम द्वितीय के बीच हुई थी।","बंगाल में द्वैध शासन 1765 से 1772 तक चला।"],en:["The First Treaty of Allahabad (12 August 1765) was signed between Robert Clive and Shuja-ud-Daula, the Nawab of Awadh.","The Second Treaty of Allahabad (16 August 1765) was signed between Clive and the Mughal Emperor Shah Alam II.","Dual government in Bengal lasted from 1765 to 1772."]},
+  ask:{hi:"उपर्युक्त कथनों में से कितने सही हैं?",en:"How many of the above statements are correct?"},
+  o:[{hi:"केवल एक",en:"Only one"},{hi:"केवल दो",en:"Only two"},{hi:"सभी तीन",en:"All three"},{hi:"कोई भी नहीं",en:"None"}],a:0,
+  x:{hi:"केवल कथन 3 सही है। इलाहाबाद की प्रथम संधि (12 अगस्त) शाह आलम द्वितीय के साथ हुई थी, जिसमें कंपनी को बंगाल, बिहार और उड़ीसा की दीवानी मिली। द्वितीय संधि (16 अगस्त) अवध के नवाब शुजाउद्दौला के साथ हुई। प्रश्न में दोनों संधियों के पक्ष आपस में बदल दिए गए हैं, यही इसका जाल है।",en:"Only statement 3 is correct. The First Treaty of Allahabad (12 August) was with Shah Alam II, who granted the Company the Diwani of Bengal, Bihar and Orissa. The Second Treaty (16 August) was with Shuja-ud-Daula of Awadh. The question swaps the parties of the two treaties; that is the trap."}},
+ {topic:{hi:"भौतिकी",en:"Physics"},
+  lead:{hi:"निम्नलिखित कथनों पर विचार कीजिए:",en:"Consider the following statements:"},
+  st:{hi:["न्यूटन ने वर्ष 1687 में अपने ग्रंथ 'फ़िलॉसफ़ी नेचुरेलिस प्रिंसिपिया मैथेमेटिका' में गति के नियम प्रस्तुत किए थे।","बंदूक से गोली चलाने पर पीछे की ओर झटका लगना न्यूटन के गति के द्वितीय नियम का प्रत्यक्ष उदाहरण है।"],en:["Newton presented the laws of motion in 1687 in his work Philosophiae Naturalis Principia Mathematica.","The recoil felt when a gun fires a bullet is a direct example of Newton's second law of motion."]},
+  ask:{hi:"उपर्युक्त में से कौन-सा/से कथन सही है/हैं?",en:"Which of the statements given above is/are correct?"},
+  o:[{hi:"केवल कथन 1",en:"Only statement 1"},{hi:"केवल कथन 2",en:"Only statement 2"},{hi:"कथन 1 और 2 दोनों",en:"Both 1 and 2"},{hi:"न तो 1, न ही 2",en:"Neither 1 nor 2"}],a:0,
+  x:{hi:"कथन 1 सही है। कथन 2 ग़लत है, क्योंकि बंदूक का पीछे की ओर झटका क्रिया-प्रतिक्रिया का उदाहरण है, यानी न्यूटन का तृतीय नियम। बंदूक गोली को जितने बल से आगे धकेलती है, गोली भी बंदूक को उतने ही बल से पीछे धकेलती है। इसे संवेग संरक्षण से भी समझाया जाता है।",en:"Statement 1 is correct. Statement 2 is wrong: the recoil of a gun is an example of action and reaction, that is, Newton's third law. The gun pushes the bullet forward and the bullet pushes the gun back with an equal force. It is also explained through conservation of momentum."}},
+ {topic:{hi:"आधुनिक भारत",en:"Modern India"},
+  lead:{hi:"निम्नलिखित कथनों पर विचार कीजिए:",en:"Consider the following statements:"},
+  st:{hi:["वर्ष 1849 में पंजाब पर शासन के लिए लॉर्ड डलहौज़ी ने तीन सदस्यों का एक बोर्ड बनाया, जिसके अध्यक्ष जॉन लॉरेंस थे।","महाराजा दलीप सिंह का निधन फ़्रांस में हुआ था और उनका अंतिम संस्कार इंग्लैंड में किया गया था।"],en:["In 1849, Lord Dalhousie set up a three-member board to govern Punjab, headed by John Lawrence.","Maharaja Duleep Singh died in France and was buried in England."]},
+  ask:{hi:"उपर्युक्त में से कौन-सा/से कथन सही है/हैं?",en:"Which of the statements given above is/are correct?"},
+  o:[{hi:"केवल कथन 1",en:"Only statement 1"},{hi:"केवल कथन 2",en:"Only statement 2"},{hi:"कथन 1 और 2 दोनों",en:"Both 1 and 2"},{hi:"न तो 1, न ही 2",en:"Neither 1 nor 2"}],a:1,
+  x:{hi:"केवल कथन 2 सही है। 1849 के प्रशासनिक बोर्ड के अध्यक्ष सर हेनरी लॉरेंस थे; उनके भाई जॉन लॉरेंस और चार्ल्स मैन्सेल इसके सदस्य थे। परीक्षा में अक्सर दोनों भाइयों के नाम आपस में अदल-बदलकर फँसाया जाता है। दलीप सिंह का निधन 1893 में पेरिस में हुआ और उन्हें इंग्लैंड के एल्वेडन में ईसाई रीति से दफ़नाया गया।",en:"Only statement 2 is correct. The 1849 Board of Administration was headed by Sir Henry Lawrence; his brother John Lawrence and Charles Mansel were its members. Swapping the two brothers is a common trap. Duleep Singh died in Paris in 1893 and was buried with Christian rites at Elveden in England."}}
+];
+let qi=0,lang="hi",chosen=null;
+const qtabs=document.getElementById("qtabs");
+QS.forEach((q,i)=>{const b=document.createElement("button");b.type="button";b.textContent="प्रश्न "+(i+1);b.setAttribute("aria-pressed",i===0);b.onclick=()=>{qi=i;chosen=null;drawQ()};qtabs.appendChild(b)});
+document.querySelectorAll(".lang button").forEach(b=>b.onclick=()=>{lang=b.dataset.l;document.querySelectorAll(".lang button").forEach(x=>x.setAttribute("aria-pressed",x===b));drawQ()});
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function drawQ(){
+  const q=QS[qi];
+  [...qtabs.children].forEach((b,i)=>{b.setAttribute("aria-pressed",i===qi);b.textContent=(lang==="hi"?"प्रश्न ":"Q")+(i+1)});
+  document.getElementById("qtopic").textContent=q.topic[lang];
+  document.getElementById("qtext").innerHTML=`<p>${esc(q.lead[lang])}</p><ol>${q.st[lang].map(s=>`<li>${esc(s)}</li>`).join("")}</ol><p>${esc(q.ask[lang])}</p>`;
+  const opts=document.getElementById("opts");
+  opts.className="opts"+(chosen!==null?" done":"");
+  opts.innerHTML=q.o.map((o,i)=>{let c="opt";if(chosen!==null){if(i===q.a)c+=" right";else if(i===chosen)c+=" wrong"}return `<button type="button" class="${c}" data-i="${i}" ${chosen!==null?'aria-disabled="true"':''}><span class="k">${"abcd"[i]}</span><span>${esc(o[lang])}</span></button>`}).join("");
+  [...opts.children].forEach(b=>b.onclick=()=>{if(chosen!==null)return;chosen=+b.dataset.i;drawQ()});
+  const ex=document.getElementById("expl");
+  if(chosen===null){ex.hidden=true}else{
+    const ok=chosen===q.a;
+    ex.hidden=false;
+    ex.innerHTML=`<b>${lang==="hi"?(ok?"सही उत्तर।":"यहीं जाल था। सही उत्तर है ("+"abcd"[q.a]+")"):(ok?"Correct.":"That was the trap. The correct answer is ("+"abcd"[q.a]+")")}</b>${esc(q.x[lang])}`;
+  }
+}
+drawQ();
+
+/* वीडियो */
+document.getElementById("play").onclick=()=>{
+  document.getElementById("player").innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/R2eaHH3eSEg?autoplay=1&rel=0" title="आदित्य चौहान की कक्षा" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
+};
+
+/* रिज़्यूमे */
+const CVS=[
+ {id:"cv_Content_Hindi",t:"कंटेंट डेवलपर (हिंदी)",d:"हिंदी माध्यम की कोचिंग और प्रकाशकों के लिए",pdf:"Aditya_Chauhan_CV_Content_Hindi"},
+ {id:"cv_Content_English",t:"Content Developer",d:"अंग्रेज़ी रिज़्यूमे, एडटेक और द्विभाषी पदों के लिए",pdf:"Aditya_Chauhan_CV_Content_English"},
+ {id:"cv_Faculty_Hindi",t:"शिक्षक / फ़ैकल्टी",d:"ऑनलाइन या ऑफ़लाइन पढ़ाने के पदों के लिए",pdf:"Aditya_Chauhan_CV_Faculty_Hindi"}
+];
+const cvs=document.getElementById("cvs");
+CVS.forEach(c=>{
+  const el=document.createElement("article");el.className="cvc";
+  el.innerHTML=`<button class="thumb" type="button" aria-label="${c.t} रिज़्यूमे पढ़ें"><img src="img/t/${c.id}.webp" alt="${c.t} रिज़्यूमे का पहला पन्ना" loading="lazy"></button><h3>${c.t}</h3><p>${c.d}</p><div class="acts"><a class="btn btn-ink" href="pdf/${c.pdf}.pdf" target="_blank" rel="noopener"><svg><use href="#i-dl"/></svg>PDF</a><button class="btn btn-ghost rd" type="button">पढ़ें</button></div>`;
+  const open=()=>openLB([1,2].map(n=>`img/${c.id}-${n}.jpg`),c.t+" रिज़्यूमे",0);
+  el.querySelector(".thumb").onclick=open;el.querySelector(".rd").onclick=open;
+  cvs.appendChild(el);
+});
+
+/* पूरे पर्दे का दर्शक */
+const lb=document.getElementById("lb"),lbi=document.getElementById("lbi"),lbt=document.getElementById("lbt"),lbz=document.getElementById("lbz");
 let L=[],k=0,T="",last=null;
-function show(){lbi.src=L[k];lbi.alt=`${T} — पन्ना ${k+1}`;lbt.textContent=`${T} · ${k+1} / ${L.length}`}
-function openLB(list,title){L=list;k=0;T=title;last=document.activeElement;show();lb.hidden=false;document.getElementById("lbx").focus()}
-function closeLB(){lb.hidden=true;if(last)last.focus()}
+function show(){lbi.src=L[k];lbi.alt=`${T}, पन्ना ${k+1}`;lbt.textContent=`${T}  (${k+1}/${L.length})`;document.getElementById("lbimg").scrollTo(0,0);document.querySelector(".lbnav").hidden=L.length<2}
+function openLB(list,title,start){L=list;k=start||0;T=title;last=document.activeElement;lb.classList.remove("big");lbz.textContent="बड़ा करें";show();lb.hidden=false;document.body.style.overflow="hidden";document.getElementById("lbx").focus()}
+function closeLB(){lb.hidden=true;document.body.style.overflow="";if(last)last.focus()}
 document.getElementById("lbx").onclick=closeLB;
+lbz.onclick=()=>{const b=lb.classList.toggle("big");lbz.textContent=b?"छोटा करें":"बड़ा करें"};
 document.getElementById("lbn").onclick=()=>{k=(k+1)%L.length;show()};
 document.getElementById("lbp").onclick=()=>{k=(k-1+L.length)%L.length;show()};
 document.addEventListener("keydown",e=>{if(lb.hidden)return;if(e.key==="Escape")closeLB();if(e.key==="ArrowRight"){k=(k+1)%L.length;show()}if(e.key==="ArrowLeft"){k=(k-1+L.length)%L.length;show()}});
-lb.addEventListener("click",e=>{if(e.target===lb)closeLB()});
-
-const cvp=document.getElementById("cvpages");
-function cv(id){cvp.innerHTML="";[1,2].forEach(n=>{const b=document.createElement("button");b.type="button";b.setAttribute("aria-label",`रिज़्यूमे पन्ना ${n} बड़ा देखें`);b.innerHTML=`<img src="img/${id}-${n}.jpg" alt="रिज़्यूमे पन्ना ${n}" loading="lazy">`;b.onclick=()=>{openLB([1,2].map(m=>`img/${id}-${m}.jpg`),"रिज़्यूमे");k=n-1;show()};cvp.appendChild(b)})}
-document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected",x===t));cv(t.dataset.cv)});
-cv("cv_Content_Hindi");
-
-document.querySelectorAll(".copy").forEach(b=>b.onclick=async()=>{
-  const v=b.dataset.copy;
-  try{await navigator.clipboard.writeText(v);b.textContent="कॉपी हो गया"}
-  catch(e){const r=document.createRange();r.selectNodeContents(b.previousElementSibling.querySelector("b"));const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent="चुना गया"}
-  setTimeout(()=>b.textContent="कॉपी",1800);
-});
+lb.addEventListener("click",e=>{if(e.target===lb||e.target.id==="lbimg")closeLB()});
 </script>
-
 </body>
 </html>
