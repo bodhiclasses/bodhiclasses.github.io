@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="description" content="आदित्य चौहान — प्रतियोगी परीक्षाओं के लिए हिंदी व English कंटेंट डेवलपर और शिक्षक। काम के नमूने और रिज़्यूमे।">
+<title>आदित्य चौहान पोर्टफ़ोलियो</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Mukta:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: an exam-paper portfolio — OMR-bubble markers, question-paper rules, work shown as real pages */
+:root{
+  --paper:#f5f6f9; --sheet:#ffffff; --ink:#18223a; --muted:#59627a; --line:#d9dde8;
+  --omr:#c8324b; --omr-soft:#fbe9ec; --navy:#23407a; --navy-soft:#e8edf7;
+  --f-display:"Tiro Devanagari Hindi", "Noto Serif Devanagari", Georgia, serif;
+  --f-body:"Mukta", "Noto Sans Devanagari", system-ui, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#11151f; --sheet:#181e2b; --ink:#e7eaf2; --muted:#a3abc0; --line:#2c3446;
+  --omr:#ff7a8e; --omr-soft:#3a1d25; --navy:#9db6ec; --navy-soft:#1f2a42; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#11151f; --sheet:#181e2b; --ink:#e7eaf2; --muted:#a3abc0; --line:#2c3446;
+  --omr:#ff7a8e; --omr-soft:#3a1d25; --navy:#9db6ec; --navy-soft:#1f2a42; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;margin:0}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:20px;padding-block:28px 56px}
+h1,h2,h3{font-family:var(--f-display);font-weight:400;text-wrap:balance;margin:0}
+a{color:var(--navy)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--omr);outline-offset:3px}
+.eyebrow{font-family:var(--f-mono);font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--omr)}
+.en{display:block;font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;margin-top:2px}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.35fr 1fr;gap:28px;align-items:end;border-bottom:2px solid var(--ink);padding-bottom:26px}
+.hero h1{font-size:clamp(40px,7vw,68px);line-height:1.05;margin-top:8px}
+.hero .role{font-size:20px;font-weight:600;margin-top:12px;max-width:34ch}
+.hero p{color:var(--muted);margin:12px 0 0;max-width:58ch}
+.contact{background:var(--sheet);border:1px solid var(--line);padding:18px;display:grid;gap:10px;min-width:0}
+.crow{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.crow b{font-family:var(--f-mono);font-size:15px;font-weight:500;user-select:all;word-break:break-all}
+.crow small{color:var(--muted);font-size:13px}
+.copy{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:3px 10px;cursor:pointer}
+.copy:hover{border-color:var(--omr)}
+.avail{font-size:14px;color:var(--muted);border-top:1px dashed var(--line);padding-top:10px}
+
+/* OMR stats */
+.omr{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);background:var(--sheet);margin-top:26px}
+.q{padding:14px 16px;border-right:1px solid var(--line);min-width:0}
+.q:last-child{border-right:0}
+.q .num{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.bub{display:flex;gap:6px;margin:8px 0 6px}
+.bub i{width:18px;height:18px;border:1.5px solid var(--omr);border-radius:50%;display:inline-block}
+.bub i.on{background:var(--omr)}
+.q strong{font-family:var(--f-display);font-size:30px;font-weight:400;line-height:1.1;display:block}
+.q span{font-size:14px;color:var(--muted);line-height:1.35;display:block}
+
+section{margin-top:56px}
+.shead{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:22px}
+.shead h2{font-size:clamp(28px,4vw,38px)}
+.shead p{margin:0;color:var(--muted);max-width:46ch;font-size:15px}
+
+/* work */
+.works{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.work{background:var(--sheet);border:1px solid var(--line);display:flex;flex-direction:column;min-width:0}
+.work button.cover{all:unset;cursor:zoom-in;display:block;background:var(--navy-soft);aspect-ratio:3/4;overflow:hidden;position:relative;max-width:100%}
+.work button.cover.wide{aspect-ratio:4/3}
+.work img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;transition:transform .3s}
+.work button.cover:hover img{transform:scale(1.02)}
+.pages{position:absolute;right:10px;bottom:10px;background:var(--sheet);color:var(--ink);font-family:var(--f-mono);font-size:12px;padding:3px 8px;border:1px solid var(--line)}
+.wbody{padding:14px 16px 16px;display:grid;gap:6px}
+.wbody h3{font-size:21px;line-height:1.3}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:12.5px;border:1px solid var(--line);padding:1px 8px;color:var(--muted)}
+.tag.b{border-color:var(--omr);color:var(--omr)}
+.wbody p{margin:0;font-size:15px;color:var(--muted)}
+.open{font:inherit;font-size:14px;font-weight:600;background:none;border:0;color:var(--navy);padding:0;cursor:pointer;justify-self:start;text-decoration:underline;text-underline-offset:3px}
+.acts{display:flex;gap:18px;flex-wrap:wrap}
+.fullnote{margin-top:22px;background:var(--omr-soft);border-left:3px solid var(--omr);padding:14px 18px;font-size:16px}
+
+/* live */
+.live{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.lk{display:block;background:var(--sheet);border:1px solid var(--line);padding:16px;text-decoration:none;color:var(--ink);min-width:0}
+.lk:hover{border-color:var(--navy)}
+.lk b{font-size:17px;display:block}
+.lk span{font-family:var(--f-mono);font-size:12.5px;color:var(--navy);word-break:break-all}
+.lk p{margin:6px 0 0;font-size:14px;color:var(--muted)}
+
+/* services */
+.svc{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.svc ol{margin:0;padding-left:22px}
+.svc li{margin-bottom:6px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--sheet);padding:4px 12px;font-size:15px}
+.svc h3{font-size:22px;margin-bottom:12px}
+
+/* cv */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.tab{font:inherit;font-size:15px;border:1px solid var(--line);background:var(--sheet);color:var(--ink);padding:6px 14px;cursor:pointer}
+.tab[aria-selected="true"]{border-color:var(--omr);color:var(--omr);font-weight:600}
+.cvpages{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.cvpages button{all:unset;cursor:zoom-in;border:1px solid var(--line);background:#fff;display:block;max-width:100%}
+.cvpages img{display:block;width:100%}
+
+.cvdl{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.dl{border:1px solid var(--navy);color:var(--navy);padding:6px 14px;text-decoration:none;font-size:15px;background:var(--sheet)}
+.dl:hover{background:var(--navy-soft)}
+/* process */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);background:var(--sheet)}
+.step{padding:16px;border-right:1px solid var(--line);min-width:0}
+.step:last-child{border-right:0}
+.step .num{font-family:var(--f-mono);font-size:12px;color:var(--omr)}
+.step b{display:block;font-size:17px;margin:4px 0}
+.step p{margin:0;font-size:14.5px;color:var(--muted)}
+
+footer{margin-top:56px;border-top:2px solid var(--ink);padding-top:18px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:15px}
+footer b{font-family:var(--f-mono);font-weight:500}
+
+/* lightbox */
+.lb{position:fixed;inset:0;background:rgba(10,13,20,.92);z-index:50;display:flex;flex-direction:column;padding:calc(12px + env(safe-area-inset-top,0px)) 12px calc(12px + env(safe-area-inset-bottom,0px))}
+.lbbar{display:flex;justify-content:space-between;align-items:center;color:#fff;gap:10px;font-size:15px}
+.lbbar button{font:inherit;background:#fff;color:#18223a;border:0;padding:6px 14px;cursor:pointer}
+.lbimg{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;margin:10px 0;overflow:auto}
+.lbimg img{max-width:100%;max-height:100%;object-fit:contain;background:#fff}
+.lbnav{display:flex;justify-content:center;gap:10px}
+.lbnav button{font:inherit;background:#fff;color:#18223a;border:0;padding:8px 18px;cursor:pointer;min-width:90px}
+
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr}
+  .works{grid-template-columns:1fr 1fr}
+  .omr{grid-template-columns:1fr 1fr}
+  .q:nth-child(2){border-right:0}.q:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .steps{grid-template-columns:1fr 1fr}
+  .step:nth-child(2){border-right:0}.step:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .svc{grid-template-columns:1fr}
+}
+@media (max-width:540px){
+  body{font-size:16px}
+  .works,.cvpages{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="hero">
+    <div>
+      <div class="eyebrow">पोर्टफ़ोलियो · Portfolio</div>
+      <h1>आदित्य चौहान</h1>
+      <div class="role">कंटेंट डेवलपर, विषय-विशेषज्ञ और शिक्षक — प्रतियोगी परीक्षाओं के लिए</div>
+      <span class="en">Content Developer · SME · Faculty — Hindi, English &amp; Bilingual</span>
+      <p>3 साल से कोचिंग संस्थानों के लिए नोट्स, किताबें, द्विभाषी टेस्ट-सीरीज़, करेंट अफ़ेयर्स और ऑनलाइन टेस्ट बना रहा हूँ — घर से, समय पर, संस्थान की अपनी ब्रांडिंग में। नीचे मेरा असली काम है, पन्ना-दर-पन्ना।</p>
+    </div>
+    <div class="contact" aria-label="संपर्क">
+      <div class="crow"><div><small>मोबाइल / WhatsApp</small><br><b id="ph">6398665410</b></div><button class="copy" data-copy="6398665410" type="button">कॉपी</button></div>
+      <div class="crow"><div><small>ई-मेल</small><br><b id="em">aditya31chauhan@gmail.com</b></div><button class="copy" data-copy="aditya31chauhan@gmail.com" type="button">कॉपी</button></div>
+      <div class="avail">घर से (रिमोट) काम पहली पसंद · उपयुक्त प्रस्ताव पर दिल्ली, नोएडा या लखनऊ में कार्य हेतु तैयार · अनुबंध, फ़्रीलांस या पूर्णकालिक</div>
+    </div>
+  </header>
+
+  <div class="omr" role="list">
+    <div class="q" role="listitem"><div class="num">Q.1</div><div class="bub"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div><strong>4 बार</strong><span>UPPCS मुख्य परीक्षा लिखी (2024 सहित)</span></div>
+    <div class="q" role="listitem"><div class="num">Q.2</div><div class="bub"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div><strong>3 साल</strong><span>कोचिंग संस्थानों के लिए कंटेंट</span></div>
+    <div class="q" role="listitem"><div class="num">Q.3</div><div class="bub"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div><strong>5 साल</strong><span>शिक्षण, सरकारी फ़ैकल्टी सहित</span></div>
+    <div class="q" role="listitem"><div class="num">Q.4</div><div class="bub"><i class="on"></i><i class="on"></i><i></i><i></i></div><strong>2 भाषाएँ</strong><span>हिंदी, English और द्विभाषी</span></div>
+  </div>
+
+  <section id="kaam">
+    <div class="shead">
+      <div><h2>काम के नमूने</h2><span class="en">Work samples — tap any cover to read the pages</span></div>
+      <p>हर नमूना मेरा लिखा और डिज़ाइन किया हुआ है। यहाँ हर किताब के शुरुआती पन्ने हैं; पूरी किताब माँगने पर भेज दूँगा।</p>
+    </div>
+    <div class="works" id="works"></div>
+    <div class="fullnote"><b>पूरी किताबें तैयार हैं।</b> यहाँ दिखे सभी नमूनों की पूरी PDF, और कई अन्य विषयों (NCERT आधारित नोट्स, UP विशेष, इतिहास, पर्यावरण, करेंट अफ़ेयर्स) की पूरी किताबें मेरे पास हैं। देखना चाहें तो ई-मेल या WhatsApp पर बताइए।</div>
+  </section>
+
+  <section id="live">
+    <div class="shead"><div><h2>जीवित काम — अभी खोलकर देखिए</h2><span class="en">Live work</span></div></div>
+    <div class="live">
+      <a class="lk" href="https://jahostudy.github.io/test/pcs/2026-angad-day-28.html" target="_blank" rel="noopener"><b>ऑनलाइन टेस्ट</b><span>jahostudy.github.io/test/pcs/…</span><p>मेरे द्वारा डिज़ाइन व संकलित — 25 मिनट टाइमर, भाषा-चयन, हर प्रश्न की व्याख्या, दैनिक रैंक और टॉप-20 लीडरबोर्ड।</p></a>
+      <a class="lk" href="https://youtu.be/R2eaHH3eSEg" target="_blank" rel="noopener"><b>पढ़ाते हुए वीडियो</b><span>youtu.be/R2eaHH3eSEg</span><p>कक्षा की असली रिकॉर्डिंग।</p></a>
+      <a class="lk" href="https://bodhiclasses.org" target="_blank" rel="noopener"><b>बोधि क्लासेस वेबसाइट</b><span>bodhiclasses.org</span><p>विषयवार नोट्स और ऑनलाइन टेस्ट — लेखन और निर्माण मेरा।</p></a>
+      <a class="lk" href="https://t.me/bodhiclassesupsc" target="_blank" rel="noopener"><b>टेलीग्राम चैनल</b><span>t.me/bodhiclassesupsc</span><p>दैनिक PIB, नोट्स और टेस्ट PDF।</p></a>
+      <a class="lk" href="https://www.youtube.com/@BodhiClasses" target="_blank" rel="noopener"><b>YouTube</b><span>@BodhiClasses</span><p>रिकॉर्डेड कक्षाएँ, स्लाइड और नक्शों के साथ।</p></a>
+    </div>
+  </section>
+
+  <section id="seva">
+    <div class="shead"><div><h2>आपके संस्थान के लिए क्या बना सकता हूँ</h2><span class="en">What I can build for your institute</span></div></div>
+    <div class="svc">
+      <div>
+        <h3>कंटेंट</h3>
+        <ol>
+          <li>विषयवार नोट्स और पूरी किताबें — हिंदी, English या द्विभाषी</li>
+          <li>द्विभाषी MCQ टेस्ट-सीरीज़ और प्रश्न-बैंक — 2-कथन, 3-कथन, सुमेलन, कालक्रम जैसे असली पैटर्न</li>
+          <li>दैनिक और मासिक करेंट अफ़ेयर्स (PIB आधारित), तथ्य-जाँच के साथ</li>
+          <li>कक्षा और YouTube के लिए विज़ुअल स्लाइड-डेक — नक्शे, टाइमलाइन, डायग्राम</li>
+          <li>ऑनलाइन टेस्ट वेबसाइट और टेलीग्राम क्विज़-समूहों का संचालन</li>
+          <li>हिंदी ⇄ English अनुवाद और कंटेंट समीक्षा</li>
+          <li>हिंदी और GS की कक्षाएँ — ऑनलाइन या ऑफ़लाइन</li>
+        </ol>
+      </div>
+      <div>
+        <h3>परीक्षाएँ</h3>
+        <div class="chips"><span class="chip">UPSC</span><span class="chip">सभी राज्य PCS</span><span class="chip">SSC</span><span class="chip">रेलवे</span><span class="chip">बैंकिंग</span><span class="chip">UPSSSC</span><span class="chip">TET / शिक्षक भर्ती</span><span class="chip">पुलिस</span><span class="chip">रक्षा</span></div>
+        <h3 style="margin-top:24px">विषय — विशेष पकड़</h3>
+        <div class="chips"><span class="chip">राजव्यवस्था</span><span class="chip">इतिहास व कला-संस्कृति</span><span class="chip">पर्यावरण</span><span class="chip">भूगोल</span><span class="chip">नीतिशास्त्र व निबंध</span><span class="chip">करेंट अफ़ेयर्स</span><span class="chip">हिंदी भाषा व साहित्य</span><span class="chip">सामान्य विज्ञान</span><span class="chip">UP विशेष</span></div>
+        <p style="color:var(--muted);font-size:15px;margin-top:12px">किसी और विषय या परीक्षा का पाठ्यक्रम और स्रोत दीजिए — उसी स्तर का कंटेंट मिलेगा।</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="tarika">
+    <div class="shead"><div><h2>साथ काम कैसे शुरू होगा</h2><span class="en">How we start</span></div></div>
+    <div class="steps">
+      <div class="step"><div class="num">01</div><b>ज़रूरत बताइए</b><p>कौन-सी परीक्षा, विषय, भाषा और फ़ॉर्मैट।</p></div>
+      <div class="step"><div class="num">02</div><b>मुफ़्त नमूना</b><p>आपके ब्रांड में 2-3 पन्नों का नमूना, ताकि आप गुणवत्ता परख सकें।</p></div>
+      <div class="step"><div class="num">03</div><b>दर और समय-सीमा</b><p>काम की मात्रा के हिसाब से दर और डिलीवरी तय।</p></div>
+      <div class="step"><div class="num">04</div><b>नियमित डिलीवरी</b><p>तथ्य-जाँच के साथ, तय समय पर, आपके फ़ॉर्मैट में।</p></div>
+    </div>
+  </section>
+
+  <section id="cv">
+    <div class="shead"><div><h2>रिज़्यूमे</h2><span class="en">Résumé — Hindi &amp; English</span></div></div>
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" aria-selected="true" data-cv="cv_Content_Hindi" type="button">कंटेंट डेवलपर — हिंदी</button>
+      <button class="tab" role="tab" aria-selected="false" data-cv="cv_Content_English" type="button">Content Developer — English</button>
+      <button class="tab" role="tab" aria-selected="false" data-cv="cv_Faculty_Hindi" type="button">फ़ैकल्टी — हिंदी</button>
+    </div>
+    <div class="cvdl"><a class="dl" href="pdf/Aditya_Chauhan_CV_Content_Hindi.pdf" target="_blank" rel="noopener">कंटेंट डेवलपर रिज़्यूमे (हिंदी) PDF ↓</a><a class="dl" href="pdf/Aditya_Chauhan_CV_Content_English.pdf" target="_blank" rel="noopener">Content Developer CV (English) PDF ↓</a><a class="dl" href="pdf/Aditya_Chauhan_CV_Faculty_Hindi.pdf" target="_blank" rel="noopener">फ़ैकल्टी रिज़्यूमे (हिंदी) PDF ↓</a></div>
+    <div class="cvpages" id="cvpages"></div>
+  </section>
+
+  <footer>
+    <span>आदित्य चौहान · मैनपुरी, उत्तर प्रदेश</span>
+    <span><b>6398665410</b> · <b>aditya31chauhan@gmail.com</b></span>
+  </footer>
+</div>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="पन्ने">
+  <div class="lbbar"><span id="lbt"></span><button id="lbx" type="button">बंद करें</button></div>
+  <div class="lbimg"><img id="lbi" alt=""></div>
+  <div class="lbnav"><button id="lbp" type="button">← पिछला</button><button id="lbn" type="button">अगला →</button></div>
+</div>
+
+<script>
+const PDF={"bhugol": "Sample_Bhugol_Jaldharayen", "timeline_hi": "Sample_Adhunik_Bharat_Samayrekha", "timeline_en": "Sample_Modern_India_Timeline_EN", "khabri": "Sample_Pariksha_Khabri_Sep2026", "pannon": "Sample_Pannon_Ki_Bhavishyavani", "day28": "Sample_Visual_Slides_Day28"};
+const W=[
+ {id:"bhugol",t:"जलधाराएँ, स्थानीय पवनें एवं घास के मैदान",tags:["भूगोल","हिंदी","नोट्स-पुस्तक"],d:"प्रारंभिक परीक्षा के लिए पूरा अध्याय — नक्शे, आरेख और तुलनात्मक बॉक्स के साथ।",p:[1,2,3,4,5,6],total:24},
+ {id:"timeline_hi",t:"आधुनिक भारत की समयरेखा 1707–1947",tags:["इतिहास","हिंदी","विज़ुअल पुस्तक"],d:"240 वर्ष एक घड़ी पर — आठ युग, युद्ध-पट्टी, अधिनियमों की सीढ़ी और गवर्नर-जनरल व वायसराय की पूरी कतार।",p:[1,2,3,4,5],total:17},
+ {id:"timeline_en",t:"Modern India Timeline 1707–1947",tags:["History","English","Visual book"],d:"The same book in English — proof of equal-quality bilingual output.",p:[1,2,3,4],total:18},
+ {id:"khabri",t:"परीक्षा ख़बरी — सितंबर 2026",tags:["करेंट अफ़ेयर्स","हिंदी","मासिक संकलन"],d:"जय हो स्टडी के लिए तैयार मासिक समसामयिकी पुस्तिका — विषय-सूची से लेकर परीक्षा-उपयोगी तथ्य-स्पष्टीकरण तक।",p:[1,3,4,5,6,7],total:44},
+ {id:"pannon",t:"पन्नों की भविष्यवाणी",tags:["UPPCS 2026","हिंदी","पुस्तक-लेखक"],d:"चर्चित किताबें और उनके लेखक — कौन-सी किताब परीक्षा में किस मोड़ से पूछी जा सकती है, और अंत में 20 प्रश्न।",p:[1,2,3,4,5,6],total:13},
+ {id:"day28",t:"विज़ुअल स्लाइड — डे 28",tags:["विज्ञान","द्विभाषी","स्लाइड"],d:"कक्षा और टेलीग्राम के लिए एक-विषय-एक-स्लाइड वाले विज़ुअल पन्ने — विटामिन, प्रोटोज़ोआ रोग आदि।",p:[1,2,3,4,5,6],total:26}
+];
+const box=document.getElementById("works");
+W.forEach((w,i)=>{
+  const el=document.createElement("article");el.className="work";
+  el.innerHTML=`<button class="cover${w.wide?" wide":""}" type="button" aria-label="${w.t} — पन्ने देखें"><img src="img/${w.id}-${w.p[0]}.jpg" alt="${w.t} का पहला पन्ना" loading="lazy"><span class="pages">${w.p.length} नमूना / ${w.total} पन्ने</span></button>
+  <div class="wbody"><div class="tags">${w.tags.map((x,j)=>`<span class="tag${j===0?" b":""}">${x}</span>`).join("")}</div><h3>${w.t}</h3><p>${w.d}</p><div class="acts"><button class="open" type="button">पन्ने पढ़ें →</button><a class="open" href="pdf/${PDF[w.id]}.pdf" target="_blank" rel="noopener">नमूना PDF ↓</a></div></div>`;
+  const go=()=>openLB(w.p.map(n=>`img/${w.id}-${n}.jpg`),w.t);
+  el.querySelector(".cover").onclick=go;el.querySelector(".open").onclick=go;
+  box.appendChild(el);
+});
+const lb=document.getElementById("lb"),lbi=document.getElementById("lbi"),lbt=document.getElementById("lbt");
+let L=[],k=0,T="",last=null;
+function show(){lbi.src=L[k];lbi.alt=`${T} — पन्ना ${k+1}`;lbt.textContent=`${T} · ${k+1} / ${L.length}`}
+function openLB(list,title){L=list;k=0;T=title;last=document.activeElement;show();lb.hidden=false;document.getElementById("lbx").focus()}
+function closeLB(){lb.hidden=true;if(last)last.focus()}
+document.getElementById("lbx").onclick=closeLB;
+document.getElementById("lbn").onclick=()=>{k=(k+1)%L.length;show()};
+document.getElementById("lbp").onclick=()=>{k=(k-1+L.length)%L.length;show()};
+document.addEventListener("keydown",e=>{if(lb.hidden)return;if(e.key==="Escape")closeLB();if(e.key==="ArrowRight"){k=(k+1)%L.length;show()}if(e.key==="ArrowLeft"){k=(k-1+L.length)%L.length;show()}});
+lb.addEventListener("click",e=>{if(e.target===lb)closeLB()});
+
+const cvp=document.getElementById("cvpages");
+function cv(id){cvp.innerHTML="";[1,2].forEach(n=>{const b=document.createElement("button");b.type="button";b.setAttribute("aria-label",`रिज़्यूमे पन्ना ${n} बड़ा देखें`);b.innerHTML=`<img src="img/${id}-${n}.jpg" alt="रिज़्यूमे पन्ना ${n}" loading="lazy">`;b.onclick=()=>{openLB([1,2].map(m=>`img/${id}-${m}.jpg`),"रिज़्यूमे");k=n-1;show()};cvp.appendChild(b)})}
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected",x===t));cv(t.dataset.cv)});
+cv("cv_Content_Hindi");
+
+document.querySelectorAll(".copy").forEach(b=>b.onclick=async()=>{
+  const v=b.dataset.copy;
+  try{await navigator.clipboard.writeText(v);b.textContent="कॉपी हो गया"}
+  catch(e){const r=document.createRange();r.selectNodeContents(b.previousElementSibling.querySelector("b"));const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent="चुना गया"}
+  setTimeout(()=>b.textContent="कॉपी",1800);
+});
+</script>
+
+</body>
+</html>
