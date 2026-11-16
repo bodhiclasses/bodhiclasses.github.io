@@ -79,6 +79,14 @@ body[data-mode=ed] #ed{display:block}
 body.finger .pg{touch-action:none}
 #ov{position:absolute;left:0;top:calc(var(--tb) + var(--st));pointer-events:none;z-index:10}
 #addpg{flex:none;border:2px dashed #b9b9c8;background:none;border-radius:14px;padding:16px 30px;color:var(--mut);font-size:16px;font-weight:600;display:flex;gap:8px;align-items:center}
+#view{scrollbar-width:none}#view::-webkit-scrollbar{display:none}
+#fs{position:absolute;right:5px;top:0;width:34px;height:60px;z-index:16;border:none;border-radius:17px;background:#fff;box-shadow:0 2px 10px rgba(20,20,40,.3),0 0 0 1px rgba(0,0,0,.06);display:flex;align-items:center;justify-content:center;color:#55556a;touch-action:none;opacity:0;pointer-events:none;transition:opacity .25s;padding:0}
+#fs::before{content:"";position:absolute;inset:-10px -6px -10px -14px}
+#fs.show{opacity:1;pointer-events:auto}
+#fs.drag{background:var(--acc);color:#fff;opacity:1}
+#fs svg{width:20px;height:20px}
+#fsb{position:absolute;right:50px;top:0;z-index:16;background:rgba(22,22,30,.92);color:#fff;border-radius:14px;padding:10px 16px;font-size:18px;font-weight:700;white-space:nowrap;pointer-events:none;display:none}
+#fsb.show{display:block}
 #pill{position:absolute;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:15;border:none;background:rgba(30,30,40,.78);color:#fff;border-radius:20px;padding:8px 16px;font-size:14px;font-weight:600;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 
 /* ---------- पॉपओवर, संवाद, सूचना ---------- */
@@ -154,6 +162,7 @@ body.finger .pg{touch-action:none}
   </div>
   <div id="view"><div id="pages"></div></div>
   <canvas id="ov"></canvas>
+  <button id="fs" aria-label="तेज़ स्क्रॉल"></button><div id="fsb"></div>
   <button id="pill">–</button>
 </div>
 
@@ -383,7 +392,7 @@ async function openDoc(d){
   E.pages.forEach(P=>obs.observe(P.el));
   if(d.pos&&E.pages[d.pos[0]]){const P=E.pages[d.pos[0]];view.scrollTop=P.el.offsetTop+d.pos[1]*P.h*zoom}else view.scrollTop=0;
   view.scrollLeft=Math.max(0,(box.scrollWidth-view.clientWidth)/2);
-  d.opened=Date.now();DB.put('docs',d.id,d);renderBar();updatePill();toast('');
+  d.opened=Date.now();DB.put('docs',d.id,d);renderBar();updatePill();toast('');fsUpdate(true);
  }catch(e){console.error(e);E.doc=null;document.body.dataset.mode='lib';toast('यह फ़ाइल नहीं खुल पाई')}
 }
 async function closeDoc(){
@@ -597,7 +606,23 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden){saveNow();
 function pageAtY(y){const ps=E.pages;let lo=0,hi=ps.length-1;while(lo<hi){const m=(lo+hi+1)>>1;if(ps[m].el.offsetTop<=y)lo=m;else hi=m-1}return lo}
 function curPage(){return E.pages.length?pageAtY(view.scrollTop+view.clientHeight/3):0}
 function updatePill(){$('#pill').textContent=E.pages.length?(curPage()+1)+' / '+E.pages.length:'–'}
-let spR=0;view.addEventListener('scroll',()=>{if(!spR)spR=requestAnimationFrame(()=>{spR=0;updatePill();if(LZ.length)reqPaint()});clearTimeout(posT);posT=setTimeout(()=>{if(E.doc){savePos();DB.put('docs',E.doc.id,E.doc)}},1200)},{passive:true});
+/* ----- तेज़ स्क्रॉल का हत्था ----- */
+const fs=$('#fs'),fsb=$('#fsb');let fsT=null,fsDrag=null;
+fs.innerHTML=svg('M8 9l4-4 4 4|M8 15l4 4 4-4');
+const fsTrack=()=>({top:view.offsetTop+8,h:Math.max(1,view.clientHeight-16-60)});
+function fsUpdate(show){
+ const max=view.scrollHeight-view.clientHeight;
+ if(!E.doc||max<view.clientHeight*.6){fs.classList.remove('show');return}
+ const t=fsTrack(),y=t.top+t.h*clamp(view.scrollTop/max,0,1);fs.style.transform='translateY('+y+'px)';
+ if(fsDrag){fsb.textContent='पन्ना '+(curPage()+1)+' / '+E.pages.length;fsb.style.transform='translateY('+(y+8)+'px)'}
+ if(show){fs.classList.add('show');clearTimeout(fsT);if(!fsDrag)fsT=setTimeout(()=>fs.classList.remove('show'),2200)}}
+fs.addEventListener('pointerdown',e=>{e.preventDefault();closePop();try{fs.setPointerCapture(e.pointerId)}catch(x){}
+ fsDrag={id:e.pointerId,dy:e.clientY-fs.getBoundingClientRect().top};fs.classList.add('drag');fsb.classList.add('show');clearTimeout(fsT);fsUpdate(true)});
+fs.addEventListener('pointermove',e=>{if(!fsDrag||e.pointerId!==fsDrag.id)return;const t=fsTrack(),max=view.scrollHeight-view.clientHeight;
+ view.scrollTop=clamp((e.clientY-fsDrag.dy-t.top)/t.h,0,1)*max;fsUpdate(true)});
+const fsEnd=e=>{if(!fsDrag||e.pointerId!==fsDrag.id)return;fsDrag=null;fs.classList.remove('drag');fsb.classList.remove('show');fsUpdate(true)};
+fs.addEventListener('pointerup',fsEnd);fs.addEventListener('pointercancel',fsEnd);
+let spR=0;view.addEventListener('scroll',()=>{if(!spR)spR=requestAnimationFrame(()=>{spR=0;updatePill();fsUpdate(true);if(LZ.length)reqPaint()});clearTimeout(posT);posT=setTimeout(()=>{if(E.doc){savePos();DB.put('docs',E.doc.id,E.doc)}},1200)},{passive:true});
 
 /* ----- ज़ूम ----- */
 let rfT=null;
@@ -612,7 +637,7 @@ function setZoom(z,cx,cy){
 view.addEventListener('wheel',e=>{if(e.ctrlKey||e.metaKey){e.preventDefault();setZoom(zoom*Math.exp(-e.deltaY*.01),e.clientX,e.clientY)}},{passive:false});
 document.addEventListener('gesturestart',e=>e.preventDefault());
 document.addEventListener('gesturechange',e=>e.preventDefault());
-window.addEventListener('resize',()=>{if(E.doc){sizeOv();reqPaint()}});
+window.addEventListener('resize',()=>{if(E.doc){sizeOv();reqPaint();fsUpdate(false)}});
 
 /* ----- उँगलियों के इशारे: दो उँगली से ज़ूम और खिसकाना, टैप से पीछे / आगे ----- */
 const fingers=e=>[...e.touches].filter(t=>t.touchType!=='stylus');
